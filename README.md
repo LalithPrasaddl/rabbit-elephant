@@ -2,7 +2,7 @@
 
 A children's bedtime story site built as static HTML, deployed on GitHub Pages.
 
-**Live site:** _add your URL here_
+**Live site:** https://lalithprasaddl.github.io/rabbit-elephant/index.html
 
 ## Stories
 

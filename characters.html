@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meet the Characters — Rabbit &amp; Elephant</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/characters.css" />
+</head>
+<body>
+
+  <nav class="site-nav">
+    <a href="index.html" class="nav-logo">
+      <span class="logo-emoji">🐰🐘</span> Rabbit &amp; Elephant
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Stories</a></li>
+      <li><a href="characters.html">Characters</a></li>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+    <div class="page-hero">
+      <h1>Meet the Characters</h1>
+      <p>The friends behind every story — full of heart, hunger, and harmless mischief.</p>
+    </div>
+
+    <div class="characters-grid" id="characters-grid"></div>
+  </main>
+
+  <footer class="site-footer">
+    Made with ❤️ for little readers everywhere
+  </footer>
+
+  <script src="assets/data/characters-data.js"></script>
+  <script src="assets/js/nav.js"></script>
+  <script>
+    const grid = document.getElementById('characters-grid');
+
+    // Inline SVG portraits keyed by character id
+    const portraits = {
+      rabbit: `
+        <svg viewBox="0 0 220 280" xmlns="http://www.w3.org/2000/svg">
+          <!-- Left ear -->
+          <ellipse cx="80" cy="72" rx="18" ry="55" fill="#F0E8DC" stroke="#D9CFBF" stroke-width="2"/>
+          <ellipse cx="80" cy="75" rx="10" ry="44" fill="#FFB3C6"/>
+          <!-- Right ear -->
+          <ellipse cx="140" cy="72" rx="18" ry="55" fill="#F0E8DC" stroke="#D9CFBF" stroke-width="2"/>
+          <ellipse cx="140" cy="75" rx="10" ry="44" fill="#FFB3C6"/>
+          <!-- Body -->
+          <ellipse cx="110" cy="210" rx="52" ry="58" fill="#F0E8DC" stroke="#D9CFBF" stroke-width="2"/>
+          <!-- Head -->
+          <circle cx="110" cy="145" r="48" fill="#F0E8DC" stroke="#D9CFBF" stroke-width="2"/>
+          <!-- Left eye -->
+          <circle cx="93" cy="138" r="9" fill="#2D3748"/>
+          <circle cx="96" cy="135" r="3.5" fill="#fff"/>
+          <!-- Right eye -->
+          <circle cx="127" cy="138" r="9" fill="#2D3748"/>
+          <circle cx="130" cy="135" r="3.5" fill="#fff"/>
+          <!-- Nose -->
+          <ellipse cx="110" cy="153" rx="7" ry="5" fill="#FF9BAE"/>
+          <!-- Smile -->
+          <path d="M 100 160 Q 110 168 120 160" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <!-- Blush -->
+          <circle cx="86" cy="155" r="10" fill="#FFB3C6" opacity="0.4"/>
+          <circle cx="134" cy="155" r="10" fill="#FFB3C6" opacity="0.4"/>
+          <!-- Tail -->
+          <circle cx="162" cy="215" r="14" fill="#fff" stroke="#D9CFBF" stroke-width="1.5"/>
+          <!-- Arms -->
+          <ellipse cx="65" cy="198" rx="14" ry="22" fill="#F0E8DC" stroke="#D9CFBF" stroke-width="1.5" transform="rotate(-20 65 198)"/>
+          <ellipse cx="155" cy="198" rx="14" ry="22" fill="#F0E8DC" stroke="#D9CFBF" stroke-width="1.5" transform="rotate(20 155 198)"/>
+          <!-- Feet -->
+          <ellipse cx="86" cy="262" rx="22" ry="12" fill="#F0E8DC" stroke="#D9CFBF" stroke-width="1.5"/>
+          <ellipse cx="134" cy="262" rx="22" ry="12" fill="#F0E8DC" stroke="#D9CFBF" stroke-width="1.5"/>
+        </svg>`,
+
+      elephant: `
+        <svg viewBox="0 0 240 290" xmlns="http://www.w3.org/2000/svg">
+          <!-- Left ear -->
+          <ellipse cx="54" cy="115" rx="40" ry="55" fill="#C5D8E0" stroke="#9DB8C5" stroke-width="2"/>
+          <!-- Right ear -->
+          <ellipse cx="186" cy="115" rx="40" ry="55" fill="#C5D8E0" stroke="#9DB8C5" stroke-width="2"/>
+          <!-- Body -->
+          <ellipse cx="120" cy="218" rx="72" ry="58" fill="#A8C0CC" stroke="#8AAAB8" stroke-width="2"/>
+          <!-- Head -->
+          <circle cx="120" cy="128" r="62" fill="#A8C0CC" stroke="#8AAAB8" stroke-width="2"/>
+          <!-- Trunk -->
+          <path d="M 103 182 Q 82 210 80 240" stroke="#A8C0CC" stroke-width="22" fill="none" stroke-linecap="round"/>
+          <path d="M 103 182 Q 82 210 80 240" stroke="#8AAAB8" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <!-- Trunk tip -->
+          <ellipse cx="80" cy="242" rx="14" ry="8" fill="#A8C0CC" stroke="#8AAAB8" stroke-width="1.5"/>
+          <!-- Left eye -->
+          <circle cx="99" cy="115" r="10" fill="#2D3748"/>
+          <circle cx="103" cy="111" r="4" fill="#fff"/>
+          <!-- Right eye -->
+          <circle cx="141" cy="115" r="10" fill="#2D3748"/>
+          <circle cx="145" cy="111" r="4" fill="#fff"/>
+          <!-- Smile -->
+          <path d="M 105 150 Q 120 162 135 150" stroke="#2D3748" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <!-- Blush -->
+          <circle cx="86" cy="148" r="12" fill="#FFB3C6" opacity="0.3"/>
+          <circle cx="154" cy="148" r="12" fill="#FFB3C6" opacity="0.3"/>
+          <!-- Feet -->
+          <ellipse cx="76" cy="270" rx="24" ry="13" fill="#A8C0CC" stroke="#8AAAB8" stroke-width="1.5"/>
+          <ellipse cx="164" cy="270" rx="24" ry="13" fill="#A8C0CC" stroke="#8AAAB8" stroke-width="1.5"/>
+          <!-- Toenails -->
+          <ellipse cx="68" cy="274" rx="5" ry="3" fill="#8AAAB8"/>
+          <ellipse cx="76" cy="276" rx="5" ry="3" fill="#8AAAB8"/>
+          <ellipse cx="84" cy="274" rx="5" ry="3" fill="#8AAAB8"/>
+          <ellipse cx="156" cy="274" rx="5" ry="3" fill="#8AAAB8"/>
+          <ellipse cx="164" cy="276" rx="5" ry="3" fill="#8AAAB8"/>
+          <ellipse cx="172" cy="274" rx="5" ry="3" fill="#8AAAB8"/>
+        </svg>`
+    };
+
+    CHARACTERS.forEach(c => {
+      const traitsHTML = c.personality.map(t =>
+        `<span class="char-trait" style="background:${c.chipColor}44;color:${c.bgColor === '#FFF0F5' ? '#C0456A' : '#2A6080'}">${t}</span>`
+      ).join('');
+
+      const appsHTML = c.appearances.map(a =>
+        `<span class="char-appearance-chip">${a}</span>`
+      ).join('');
+
+      const card = document.createElement('div');
+      card.className = 'character-card';
+      card.innerHTML = `
+        <div class="char-portrait" style="background:${c.bgColor}">
+          ${portraits[c.id] || ''}
+        </div>
+        <div class="char-body">
+          <div>
+            <div class="char-name">${c.name}</div>
+            <div class="char-pronouns">${c.pronouns}</div>
+          </div>
+          <div class="char-tagline">${c.tagline}</div>
+          <div class="char-traits">${traitsHTML}</div>
+          <div>
+            <div class="char-section-label">Favourite Food</div>
+            <div class="char-section-value">${c.favoriteFood}</div>
+          </div>
+          <div>
+            <div class="char-section-label">Known For</div>
+            <div class="char-section-value">${c.quirk}</div>
+          </div>
+          <div class="char-quote">${c.quote}</div>
+          <div>
+            <div class="char-section-label">Appears In</div>
+            <div class="char-appearances">${appsHTML}</div>
+          </div>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  </script>
+
+</body>
+</html>

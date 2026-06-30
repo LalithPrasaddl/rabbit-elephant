@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Hungry Friends — Rabbit &amp; Elephant</title>
+  <link rel="stylesheet" href="../../assets/css/main.css" />
+  <link rel="stylesheet" href="../../assets/css/book.css" />
+</head>
+<body>
+
+  <nav class="site-nav">
+    <a href="../../index.html" class="nav-logo">
+      <span class="logo-emoji">🐰🐘</span> Rabbit &amp; Elephant
+    </a>
+    <ul class="nav-links">
+      <li><a href="../../index.html">Stories</a></li>
+      <li><a href="../../characters.html">Characters</a></li>
+    </ul>
+  </nav>
+
+  <div class="reader-wrapper">
+    <a href="../../index.html" class="reader-back">← Back to Stories</a>
+
+    <div class="book-container">
+      <div class="book-progress">
+        <div class="book-progress-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+
+      <div class="book-pages">
+
+        <!-- PAGE 0: COVER -->
+        <div class="page page-cover">
+          <div class="cover-illustration">
+            <svg viewBox="0 0 500 240" xmlns="http://www.w3.org/2000/svg">
+              <!-- Sky -->
+              <rect width="500" height="240" fill="#FFF3E0"/>
+              <!-- Sun -->
+              <circle cx="250" cy="55" r="38" fill="#FFD166" opacity="0.9"/>
+              <circle cx="250" cy="55" r="28" fill="#FFE680"/>
+              <!-- Sun rays -->
+              <g stroke="#FFD166" stroke-width="3" stroke-linecap="round" opacity="0.7">
+                <line x1="250" y1="6" x2="250" y2="0"/><line x1="250" y1="104" x2="250" y2="110"/>
+                <line x1="299" y1="55" x2="305" y2="55"/><line x1="201" y1="55" x2="195" y2="55"/>
+                <line x1="285" y1="20" x2="289" y2="14"/><line x1="215" y1="90" x2="211" y2="96"/>
+                <line x1="285" y1="90" x2="289" y2="96"/><line x1="215" y1="20" x2="211" y2="14"/>
+              </g>
+              <!-- Ground -->
+              <ellipse cx="250" cy="220" rx="240" ry="35" fill="#A8D88A"/>
+              <rect x="0" y="200" width="500" height="40" fill="#7BC67E"/>
+              <!-- Flowers -->
+              <circle cx="60" cy="198" r="8" fill="#FF6B6B"/>
+              <circle cx="60" cy="198" r="4" fill="#FFD166"/>
+              <circle cx="440" cy="198" r="8" fill="#FF9BAE"/>
+              <circle cx="440" cy="198" r="4" fill="#FFD166"/>
+              <circle cx="150" cy="202" r="6" fill="#C77DFF"/>
+              <circle cx="350" cy="202" r="6" fill="#74C8E4"/>
+
+              <!-- RABBIT (left side) -->
+              <!-- Ears -->
+              <ellipse cx="118" cy="95" rx="10" ry="30" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="118" cy="98" rx="5.5" ry="24" fill="#FFB3C6"/>
+              <ellipse cx="134" cy="92" rx="10" ry="30" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="134" cy="95" rx="5.5" ry="24" fill="#FFB3C6"/>
+              <!-- Body -->
+              <ellipse cx="126" cy="178" rx="30" ry="36" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <!-- Head -->
+              <circle cx="126" cy="135" r="28" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <!-- Eyes -->
+              <circle cx="116" cy="129" r="6" fill="#2D3748"/>
+              <circle cx="118" cy="127" r="2.5" fill="#fff"/>
+              <circle cx="136" cy="129" r="6" fill="#2D3748"/>
+              <circle cx="138" cy="127" r="2.5" fill="#fff"/>
+              <!-- Nose -->
+              <ellipse cx="126" cy="139" rx="5" ry="4" fill="#FF9BAE"/>
+              <!-- Big smile -->
+              <path d="M 114 145 Q 126 155 138 145" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <!-- Blush -->
+              <circle cx="110" cy="140" r="9" fill="#FFB3C6" opacity="0.4"/>
+              <circle cx="142" cy="140" r="9" fill="#FFB3C6" opacity="0.4"/>
+              <!-- Arms waving -->
+              <ellipse cx="100" cy="166" rx="10" ry="20" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(-35 100 166)"/>
+              <ellipse cx="152" cy="166" rx="10" ry="20" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(35 152 166)"/>
+              <!-- Legs -->
+              <ellipse cx="112" cy="207" rx="14" ry="10" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="140" cy="207" rx="14" ry="10" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <!-- Tail -->
+              <circle cx="156" cy="180" r="10" fill="#fff" stroke="#D0C8B8" stroke-width="1"/>
+
+              <!-- ELEPHANT (right side) -->
+              <!-- Left ear -->
+              <ellipse cx="320" cy="135" rx="32" ry="44" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <!-- Right ear -->
+              <ellipse cx="420" cy="135" rx="32" ry="44" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <!-- Body -->
+              <ellipse cx="370" cy="188" rx="62" ry="42" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <!-- Head -->
+              <circle cx="370" cy="130" r="52" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <!-- Trunk -->
+              <path d="M 352 172 Q 330 188 328 210" stroke="#A8C0CC" stroke-width="18" fill="none" stroke-linecap="round"/>
+              <path d="M 352 172 Q 330 188 328 210" stroke="#88A0AC" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <!-- Eyes -->
+              <circle cx="352" cy="120" r="8" fill="#2D3748"/>
+              <circle cx="355" cy="117" r="3" fill="#fff"/>
+              <circle cx="388" cy="120" r="8" fill="#2D3748"/>
+              <circle cx="391" cy="117" r="3" fill="#fff"/>
+              <!-- Big smile -->
+              <path d="M 355 150 Q 370 162 385 150" stroke="#2D3748" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <!-- Blush -->
+              <circle cx="340" cy="148" r="12" fill="#FFB3C6" opacity="0.3"/>
+              <circle cx="400" cy="148" r="12" fill="#FFB3C6" opacity="0.3"/>
+              <!-- Legs -->
+              <ellipse cx="332" cy="225" rx="22" ry="12" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="408" cy="225" rx="22" ry="12" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+
+              <!-- Seeds between them -->
+              <ellipse cx="230" cy="210" rx="6" ry="4" fill="#7A5C2E"/>
+              <ellipse cx="248" cy="215" rx="5" ry="3.5" fill="#7A5C2E"/>
+              <ellipse cx="265" cy="208" rx="6" ry="4" fill="#7A5C2E"/>
+              <!-- Small sprout -->
+              <line x1="250" y1="200" x2="250" y2="185" stroke="#4A9B4A" stroke-width="2.5" stroke-linecap="round"/>
+              <ellipse cx="250" cy="182" rx="7" ry="10" fill="#5AB55A"/>
+            </svg>
+          </div>
+          <h1 class="cover-title">The Hungry Friends</h1>
+          <p class="cover-subtitle">A silly story about seeds, snacks, and sneaky elephants</p>
+          <div class="cover-characters">
+            <span class="cover-char-chip">🐰 Rabbit</span>
+            <span class="cover-char-chip">🐘 Elephant</span>
+          </div>
+        </div>
+
+        <!-- PAGE 1: Planting seeds -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <!-- Sky -->
+              <rect width="500" height="210" fill="#B8E4F7"/>
+              <!-- Clouds -->
+              <ellipse cx="90" cy="55" rx="50" ry="22" fill="white" opacity="0.92"/>
+              <ellipse cx="120" cy="46" rx="32" ry="20" fill="white" opacity="0.92"/>
+              <ellipse cx="360" cy="68" rx="42" ry="18" fill="white" opacity="0.85"/>
+              <ellipse cx="388" cy="60" rx="26" ry="16" fill="white" opacity="0.85"/>
+              <!-- Sun -->
+              <circle cx="445" cy="58" r="38" fill="#FFD166"/>
+              <circle cx="445" cy="58" r="28" fill="#FFE680"/>
+              <!-- Birds -->
+              <path d="M 168 44 Q 176 38 184 44" stroke="#7A8FA6" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M 195 60 Q 203 54 211 60" stroke="#7A8FA6" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <!-- Ground -->
+              <rect x="0" y="210" width="500" height="150" fill="#7BC67E"/>
+              <!-- Soil rows -->
+              <ellipse cx="130" cy="280" rx="90" ry="14" fill="#8B5E3C" opacity="0.6"/>
+              <ellipse cx="370" cy="280" rx="90" ry="14" fill="#8B5E3C" opacity="0.6"/>
+              <!-- Sprouts -->
+              <line x1="220" y1="272" x2="220" y2="255" stroke="#3D8B3D" stroke-width="2.5" stroke-linecap="round"/>
+              <ellipse cx="220" cy="252" rx="7" ry="10" fill="#55B055"/>
+              <line x1="255" y1="275" x2="255" y2="258" stroke="#3D8B3D" stroke-width="2.5" stroke-linecap="round"/>
+              <ellipse cx="255" cy="255" rx="7" ry="10" fill="#55B055"/>
+              <line x1="282" y1="270" x2="282" y2="253" stroke="#3D8B3D" stroke-width="2.5" stroke-linecap="round"/>
+              <ellipse cx="282" cy="250" rx="7" ry="10" fill="#55B055"/>
+
+              <!-- RABBIT bent over planting (left) -->
+              <!-- Ears (angled) -->
+              <ellipse cx="82" cy="188" rx="9" ry="26" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(-30 82 188)"/>
+              <ellipse cx="82" cy="191" rx="5" ry="20" fill="#FFB3C6" transform="rotate(-30 82 191)"/>
+              <ellipse cx="98" cy="184" rx="9" ry="26" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(-15 98 184)"/>
+              <ellipse cx="98" cy="187" rx="5" ry="20" fill="#FFB3C6" transform="rotate(-15 98 187)"/>
+              <!-- Head (tilted forward) -->
+              <circle cx="90" cy="225" r="26" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <!-- Body (leaning) -->
+              <ellipse cx="115" cy="260" rx="30" ry="25" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(-30 115 260)"/>
+              <!-- Eye (side view) -->
+              <circle cx="80" cy="221" r="5" fill="#2D3748"/>
+              <circle cx="82" cy="219" r="2" fill="#fff"/>
+              <!-- Nose -->
+              <ellipse cx="72" cy="228" rx="4" ry="3" fill="#FF9BAE"/>
+              <!-- Blush -->
+              <circle cx="72" cy="224" r="7" fill="#FFB3C6" opacity="0.4"/>
+              <!-- Arm digging down -->
+              <path d="M 102 255 Q 108 272 103 286" stroke="#F0E8DC" stroke-width="11" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M 102 255 Q 108 272 103 286" stroke="#D0C8B8" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <!-- Seed -->
+              <ellipse cx="103" cy="289" rx="5" ry="4" fill="#7A5C2E"/>
+              <!-- Back leg -->
+              <ellipse cx="140" cy="268" rx="18" ry="10" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <!-- Tail -->
+              <circle cx="142" cy="248" r="10" fill="#fff" stroke="#D0C8B8" stroke-width="1"/>
+
+              <!-- ELEPHANT planting with trunk (right) -->
+              <!-- Left ear -->
+              <ellipse cx="304" cy="205" rx="30" ry="42" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <!-- Right ear -->
+              <ellipse cx="408" cy="205" rx="30" ry="42" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <!-- Body -->
+              <ellipse cx="356" cy="278" rx="60" ry="46" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <!-- Head -->
+              <circle cx="356" cy="205" r="50" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <!-- Trunk curving down to ground -->
+              <path d="M 338 246 Q 316 275 318 305" stroke="#A8C0CC" stroke-width="20" fill="none" stroke-linecap="round"/>
+              <path d="M 338 246 Q 316 275 318 305" stroke="#88A0AC" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <!-- Seed at trunk tip -->
+              <ellipse cx="318" cy="308" rx="6" ry="4.5" fill="#7A5C2E"/>
+              <!-- Eyes (happy) -->
+              <circle cx="340" cy="194" r="7.5" fill="#2D3748"/>
+              <circle cx="343" cy="191" r="2.5" fill="#fff"/>
+              <circle cx="372" cy="194" r="7.5" fill="#2D3748"/>
+              <circle cx="375" cy="191" r="2.5" fill="#fff"/>
+              <!-- Smile -->
+              <path d="M 344 225 Q 356 234 368 225" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <!-- Blush -->
+              <circle cx="328" cy="222" r="11" fill="#FFB3C6" opacity="0.3"/>
+              <circle cx="384" cy="222" r="11" fill="#FFB3C6" opacity="0.3"/>
+              <!-- Legs -->
+              <ellipse cx="320" cy="318" rx="22" ry="12" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="392" cy="318" rx="22" ry="12" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 1</div>
+            <p class="story-text">
+              Rabbit and Elephant were the very best of friends. One sunny morning, they headed out to their big green field to plant seeds.<br><br>
+              Dig, plop, cover. Dig, plop, cover.<br><br>
+              The seeds went in one by one — and the hard work was actually quite fun!
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 2: Getting hungry + ordering -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <!-- Sky + ground -->
+              <rect width="500" height="200" fill="#C8EEF8"/>
+              <rect x="0" y="200" width="500" height="160" fill="#7BC67E"/>
+              <!-- Sun (warmer afternoon) -->
+              <circle cx="430" cy="65" r="35" fill="#FFBA00"/>
+              <!-- RABBIT sitting, hand on tummy (left) -->
+              <!-- Ears -->
+              <ellipse cx="112" cy="148" rx="10" ry="30" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="112" cy="151" rx="5.5" ry="24" fill="#FFB3C6"/>
+              <ellipse cx="128" cy="145" rx="10" ry="30" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="128" cy="148" rx="5.5" ry="24" fill="#FFB3C6"/>
+              <!-- Head -->
+              <circle cx="120" cy="198" r="30" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <!-- Body (sitting) -->
+              <ellipse cx="120" cy="255" rx="32" ry="38" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <!-- Eyes (exaggerated hungry) -->
+              <circle cx="108" cy="193" r="8" fill="#2D3748"/>
+              <circle cx="111" cy="190" r="3" fill="#fff"/>
+              <circle cx="132" cy="193" r="8" fill="#2D3748"/>
+              <circle cx="135" cy="190" r="3" fill="#fff"/>
+              <!-- Nose -->
+              <ellipse cx="120" cy="204" rx="5" ry="4" fill="#FF9BAE"/>
+              <!-- Wavy hungry mouth -->
+              <path d="M 108 212 Q 114 208 120 212 Q 126 216 132 212" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <!-- Blush -->
+              <circle cx="103" cy="204" r="9" fill="#FFB3C6" opacity="0.4"/>
+              <circle cx="137" cy="204" r="9" fill="#FFB3C6" opacity="0.4"/>
+              <!-- Hand on tummy -->
+              <ellipse cx="99" cy="248" rx="10" ry="22" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(20 99 248)"/>
+              <!-- Tummy rumble lines -->
+              <path d="M 107 258 Q 120 252 133 258" stroke="#FF6B6B" stroke-width="2" fill="none" stroke-linecap="round" stroke-dasharray="4 3" opacity="0.6"/>
+              <!-- Feet -->
+              <ellipse cx="104" cy="290" rx="16" ry="10" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="136" cy="290" rx="16" ry="10" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <!-- Thought bubble: Carrot Halwa -->
+              <circle cx="80" cy="148" r="6" fill="white" stroke="#D0C8B8" stroke-width="1.5" opacity="0.9"/>
+              <circle cx="68" cy="130" r="9" fill="white" stroke="#D0C8B8" stroke-width="1.5" opacity="0.9"/>
+              <ellipse cx="52" cy="108" rx="22" ry="18" fill="white" stroke="#D0C8B8" stroke-width="1.5" opacity="0.9"/>
+              <!-- Carrot halwa in bubble -->
+              <ellipse cx="52" cy="112" rx="14" ry="8" fill="#FF8C42"/>
+              <ellipse cx="52" cy="109" rx="12" ry="6" fill="#FFA55A"/>
+              <line x1="44" y1="102" x2="41" y2="96" stroke="#FF6B6B" stroke-width="2" stroke-linecap="round"/>
+              <line x1="52" y1="100" x2="52" y2="94" stroke="#FF6B6B" stroke-width="2" stroke-linecap="round"/>
+              <line x1="60" y1="102" x2="63" y2="96" stroke="#FF6B6B" stroke-width="2" stroke-linecap="round"/>
+
+              <!-- ELEPHANT (right, excited) -->
+              <!-- Ears -->
+              <ellipse cx="308" cy="200" rx="32" ry="46" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="420" cy="200" rx="32" ry="46" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <!-- Body -->
+              <ellipse cx="364" cy="272" rx="62" ry="46" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <!-- Head -->
+              <circle cx="364" cy="198" r="52" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <!-- Trunk (raised excited) -->
+              <path d="M 346 244 Q 320 235 314 215" stroke="#A8C0CC" stroke-width="20" fill="none" stroke-linecap="round"/>
+              <path d="M 346 244 Q 320 235 314 215" stroke="#88A0AC" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <!-- Eyes (big happy) -->
+              <circle cx="348" cy="186" r="9" fill="#2D3748"/>
+              <circle cx="352" cy="183" r="3.5" fill="#fff"/>
+              <circle cx="380" cy="186" r="9" fill="#2D3748"/>
+              <circle cx="384" cy="183" r="3.5" fill="#fff"/>
+              <!-- Big smile -->
+              <path d="M 350 220 Q 364 233 378 220" stroke="#2D3748" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <!-- Blush -->
+              <circle cx="335" cy="216" r="13" fill="#FFB3C6" opacity="0.3"/>
+              <circle cx="393" cy="216" r="13" fill="#FFB3C6" opacity="0.3"/>
+              <!-- Legs -->
+              <ellipse cx="326" cy="314" rx="22" ry="12" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="402" cy="314" rx="22" ry="12" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+              <!-- Thought bubble: fruit bowl -->
+              <circle cx="408" cy="153" r="7" fill="white" stroke="#D0C8B8" stroke-width="1.5" opacity="0.9"/>
+              <circle cx="424" cy="133" r="10" fill="white" stroke="#D0C8B8" stroke-width="1.5" opacity="0.9"/>
+              <ellipse cx="446" cy="108" rx="26" ry="20" fill="white" stroke="#D0C8B8" stroke-width="1.5" opacity="0.9"/>
+              <!-- Fruit bowl in bubble -->
+              <ellipse cx="446" cy="114" rx="18" ry="10" fill="#FFD166"/>
+              <!-- Fruits -->
+              <circle cx="436" cy="107" r="5" fill="#FF6B6B"/>
+              <circle cx="446" cy="104" r="5" fill="#7BC67E"/>
+              <circle cx="456" cy="107" r="5" fill="#C77DFF"/>
+              <circle cx="441" cy="112" r="4" fill="#FFD166"/>
+              <circle cx="451" cy="111" r="4" fill="#FF9BAE"/>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 2</div>
+            <p class="story-text">
+              After a while, Rabbit sat up and patted her tummy. <em>"My tummy is GROWLING!"</em> she said. <em>"I'm SO hungry!"</em><br><br>
+              <em>"Me too!"</em> said Elephant. <em>"Let's order some food!"</em><br><br>
+              Elephant's eyes lit up. <em>"A big fruit salad for me!"</em><br><br>
+              <em>"And CARROT HALWA for me!"</em> cheered Rabbit, hopping with excitement.
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 3: Ordering on phone -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <!-- Background: field -->
+              <rect width="500" height="205" fill="#C8EEF8"/>
+              <rect x="0" y="205" width="500" height="155" fill="#7BC67E"/>
+              <!-- Sun -->
+              <circle cx="60" cy="60" r="32" fill="#FFD166"/>
+
+              <!-- ELEPHANT holding phone (center-right) -->
+              <ellipse cx="318" cy="192" rx="30" ry="44" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="432" cy="192" rx="30" ry="44" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="375" cy="268" rx="60" ry="46" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <circle cx="375" cy="192" r="50" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <!-- Arm holding phone up -->
+              <path d="M 398 238 Q 420 220 432 200" stroke="#A8C0CC" stroke-width="22" fill="none" stroke-linecap="round"/>
+              <path d="M 398 238 Q 420 220 432 200" stroke="#88A0AC" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <!-- Phone -->
+              <rect x="422" y="174" width="36" height="52" rx="6" fill="#2D3748"/>
+              <rect x="425" y="178" width="30" height="40" rx="3" fill="#74C8E4"/>
+              <!-- App on phone -->
+              <circle cx="435" cy="188" r="5" fill="#FF6B6B"/>
+              <circle cx="445" cy="188" r="5" fill="#FFD166"/>
+              <rect x="430" y="196" width="20" height="3" rx="1.5" fill="white" opacity="0.7"/>
+              <rect x="430" y="202" width="14" height="3" rx="1.5" fill="white" opacity="0.5"/>
+              <!-- Trunk (pointing at phone) -->
+              <path d="M 356 237 Q 390 230 420 210" stroke="#A8C0CC" stroke-width="18" fill="none" stroke-linecap="round"/>
+              <path d="M 356 237 Q 390 230 420 210" stroke="#88A0AC" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <!-- Eyes (focused) -->
+              <circle cx="358" cy="180" r="8" fill="#2D3748"/>
+              <circle cx="361" cy="177" r="3" fill="#fff"/>
+              <circle cx="392" cy="180" r="8" fill="#2D3748"/>
+              <circle cx="395" cy="177" r="3" fill="#fff"/>
+              <path d="M 362 210 Q 375 220 388 210" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <ellipse cx="340" cy="208" rx="12" ry="8" fill="#FFB3C6" opacity="0.3"/>
+              <ellipse cx="410" cy="208" rx="12" ry="8" fill="#FFB3C6" opacity="0.3"/>
+              <!-- Legs -->
+              <ellipse cx="338" cy="308" rx="22" ry="12" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="412" cy="308" rx="22" ry="12" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+
+              <!-- RABBIT (left, looking at phone excitedly) -->
+              <ellipse cx="118" cy="152" rx="9" ry="26" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="118" cy="155" rx="5" ry="21" fill="#FFB3C6"/>
+              <ellipse cx="134" cy="149" rx="9" ry="26" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="134" cy="152" rx="5" ry="21" fill="#FFB3C6"/>
+              <circle cx="126" cy="198" r="28" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="126" cy="252" rx="30" ry="36" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <circle cx="114" cy="193" r="7" fill="#2D3748"/>
+              <circle cx="117" cy="190" r="2.5" fill="#fff"/>
+              <circle cx="138" cy="193" r="7" fill="#2D3748"/>
+              <circle cx="141" cy="190" r="2.5" fill="#fff"/>
+              <ellipse cx="126" cy="203" rx="5" ry="4" fill="#FF9BAE"/>
+              <!-- Big grin -->
+              <path d="M 112 210 Q 126 222 140 210" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <circle cx="103" cy="202" r="8" fill="#FFB3C6" opacity="0.4"/>
+              <circle cx="149" cy="202" r="8" fill="#FFB3C6" opacity="0.4"/>
+              <!-- Arm pointing at phone -->
+              <path d="M 150 238 Q 200 220 260 215" stroke="#F0E8DC" stroke-width="12" fill="none" stroke-linecap="round"/>
+              <path d="M 150 238 Q 200 220 260 215" stroke="#D0C8B8" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <!-- Feet -->
+              <ellipse cx="108" cy="284" rx="16" ry="10" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="140" cy="284" rx="16" ry="10" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <!-- Tail -->
+              <circle cx="156" cy="250" r="10" fill="#fff" stroke="#D0C8B8" stroke-width="1"/>
+
+              <!-- Click stars near phone -->
+              <text x="400" y="165" font-size="18" fill="#FFD166">✦</text>
+              <text x="385" y="152" font-size="12" fill="#FF9BAE">✦</text>
+              <text x="416" y="155" font-size="14" fill="#74C8E4">✦</text>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 3</div>
+            <p class="story-text">
+              Elephant pulled out his phone and tapped away. Click, click, click — both dishes ordered in minutes!<br><br>
+              <em>"It'll be here soon,"</em> said Elephant happily.<br><br>
+              <em>"Better wash our hands first!"</em> said Rabbit, and they both trotted off to the old field tap.
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 4: Washing hands + Elephant gets tempted -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <!-- Background -->
+              <rect width="500" height="200" fill="#D0EDF8"/>
+              <rect x="0" y="200" width="500" height="160" fill="#7BC67E"/>
+              <!-- Water tap/post -->
+              <rect x="218" y="140" width="12" height="100" rx="4" fill="#8BAABF"/>
+              <rect x="200" y="140" width="48" height="12" rx="4" fill="#6A8FA8"/>
+              <path d="M 224 152 Q 224 175 215 180" stroke="#74C8E4" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.8"/>
+              <!-- Water drops -->
+              <ellipse cx="213" cy="185" rx="4" ry="6" fill="#74C8E4" opacity="0.7"/>
+              <ellipse cx="208" cy="196" rx="3" ry="5" fill="#74C8E4" opacity="0.5"/>
+
+              <!-- ELEPHANT washing hands (center-left) -->
+              <ellipse cx="155" cy="195" rx="26" ry="38" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="240" cy="195" rx="26" ry="38" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="198" cy="262" rx="54" ry="44" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <circle cx="198" cy="195" r="46" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <!-- Trunk at tap -->
+              <path d="M 182 234 Q 192 228 210 235" stroke="#A8C0CC" stroke-width="18" fill="none" stroke-linecap="round"/>
+              <path d="M 182 234 Q 192 228 210 235" stroke="#88A0AC" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <!-- Eyes (relaxed, humming) -->
+              <ellipse cx="183" cy="183" rx="7" ry="5" fill="#2D3748"/>
+              <ellipse cx="213" cy="183" rx="7" ry="5" fill="#2D3748"/>
+              <circle cx="185" cy="181" r="2" fill="#fff"/>
+              <circle cx="215" cy="181" r="2" fill="#fff"/>
+              <!-- Smile + music note -->
+              <path d="M 186 206 Q 198 215 210 206" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <text x="245" y="178" font-size="22" fill="#A8C0CC" opacity="0.8">♪</text>
+              <ellipse cx="170" cy="206" rx="11" ry="7" fill="#FFB3C6" opacity="0.3"/>
+              <ellipse cx="226" cy="206" rx="11" ry="7" fill="#FFB3C6" opacity="0.3"/>
+              <!-- Legs -->
+              <ellipse cx="166" cy="302" rx="20" ry="11" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="230" cy="302" rx="20" ry="11" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+
+              <!-- DELIVERY BAG (right foreground) -->
+              <rect x="340" y="240" width="80" height="70" rx="10" fill="#FFD166" stroke="#E8B800" stroke-width="2"/>
+              <rect x="356" y="225" width="48" height="20" rx="4" fill="#E8B800"/>
+              <!-- Handle -->
+              <path d="M 364 225 Q 380 205 396 225" stroke="#E8B800" stroke-width="5" fill="none" stroke-linecap="round"/>
+              <!-- Label on bag -->
+              <text x="360" y="270" font-size="13" fill="#7A5C00" font-family="sans-serif" font-weight="bold">🍱</text>
+              <text x="357" y="288" font-size="10" fill="#7A5C00" font-family="sans-serif">DELIVERY</text>
+
+              <!-- Small Rabbit in background at tap -->
+              <circle cx="295" cy="228" r="14" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="289" cy="207" rx="5" ry="15" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1"/>
+              <ellipse cx="289" cy="209" rx="2.5" ry="11" fill="#FFB3C6"/>
+              <ellipse cx="299" cy="205" rx="5" ry="15" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1"/>
+              <ellipse cx="299" cy="207" rx="2.5" ry="11" fill="#FFB3C6"/>
+              <circle cx="290" cy="225" r="3.5" fill="#2D3748"/>
+              <ellipse cx="295" cy="250" rx="16" ry="20" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1"/>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 4</div>
+            <p class="story-text">
+              Elephant went first — he scrubbed, splashed, and hummed a little song. Rabbit was still washing when the delivery arrived.<br><br>
+              Elephant walked over to pick up both parcels. He peeked inside his fruit salad. <em>"Mmm!"</em><br><br>
+              Then he peeked at Rabbit's Carrot Halwa. Golden. Warm. Sweet-smelling. And just like that… <em>the whole bowl was gone.</em>
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 5: Rabbit finds empty bowl -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <!-- Background -->
+              <rect width="500" height="360" fill="#FFF9F0"/>
+              <!-- Ground -->
+              <rect x="0" y="280" width="500" height="80" fill="#A8D88A"/>
+
+              <!-- RABBIT holding empty bowl, shocked -->
+              <!-- Ears -->
+              <ellipse cx="198" cy="68" rx="14" ry="42" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="2"/>
+              <ellipse cx="198" cy="72" rx="7.5" ry="34" fill="#FFB3C6"/>
+              <ellipse cx="226" cy="62" rx="14" ry="42" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="2"/>
+              <ellipse cx="226" cy="66" rx="7.5" ry="34" fill="#FFB3C6"/>
+              <!-- Head -->
+              <circle cx="212" cy="138" r="42" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="2"/>
+              <!-- Body -->
+              <ellipse cx="212" cy="218" rx="46" ry="52" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="2"/>
+              <!-- SHOCKED eyes (huge) -->
+              <circle cx="193" cy="128" r="15" fill="white" stroke="#D0C8B8" stroke-width="1.5"/>
+              <circle cx="193" cy="131" r="9" fill="#2D3748"/>
+              <circle cx="196" cy="128" r="3.5" fill="#fff"/>
+              <circle cx="231" cy="128" r="15" fill="white" stroke="#D0C8B8" stroke-width="1.5"/>
+              <circle cx="231" cy="131" r="9" fill="#2D3748"/>
+              <circle cx="234" cy="128" r="3.5" fill="#fff"/>
+              <!-- Gasp mouth (O shape) -->
+              <ellipse cx="212" cy="155" rx="10" ry="8" fill="#2D3748"/>
+              <ellipse cx="212" cy="155" rx="6" ry="5" fill="#FF9BAE"/>
+              <!-- Blush (bright) -->
+              <circle cx="178" cy="148" r="13" fill="#FF6B6B" opacity="0.25"/>
+              <circle cx="246" cy="148" r="13" fill="#FF6B6B" opacity="0.25"/>
+              <!-- Arms holding bowl -->
+              <ellipse cx="168" cy="220" rx="12" ry="28" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(20 168 220)"/>
+              <ellipse cx="256" cy="220" rx="12" ry="28" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(-20 256 220)"/>
+              <!-- Feet -->
+              <ellipse cx="190" cy="268" rx="20" ry="12" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="234" cy="268" rx="20" ry="12" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <!-- Tail -->
+              <circle cx="258" cy="215" r="14" fill="#fff" stroke="#D0C8B8" stroke-width="1"/>
+
+              <!-- EMPTY BOWL (held out) -->
+              <ellipse cx="212" cy="255" rx="52" ry="18" fill="#E8D5B0" stroke="#C4A87A" stroke-width="2"/>
+              <path d="M 160 255 Q 160 278 212 282 Q 264 278 264 255" fill="#D4BC90" stroke="#C4A87A" stroke-width="2"/>
+              <!-- Empty (just a reflection) -->
+              <ellipse cx="200" cy="258" rx="12" ry="5" fill="white" opacity="0.3"/>
+              <!-- EMPTY label suggestion: nothing inside -->
+
+              <!-- Question marks floating -->
+              <text x="80" y="160" font-size="40" fill="#FFD166" opacity="0.9" font-family="sans-serif">?</text>
+              <text x="330" y="140" font-size="32" fill="#FFD166" opacity="0.8" font-family="sans-serif">?</text>
+              <text x="310" y="200" font-size="24" fill="#FF9BAE" opacity="0.7" font-family="sans-serif">?</text>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 5</div>
+            <p class="story-text">
+              Rabbit came running back, hands still a little damp. She grabbed her parcel, tore it open, and looked inside.<br><br>
+              Empty.<br><br>
+              Completely, entirely, totally <em>EMPTY.</em><br><br>
+              <em>"What… happened to my Carrot Halwa?"</em> she asked, blinking at the hollow bowl.
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 6: No idea → confession -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <!-- Background -->
+              <rect width="500" height="360" fill="#FFF3F0"/>
+              <rect x="0" y="285" width="500" height="75" fill="#A8D88A"/>
+
+              <!-- RABBIT (left, stern face) -->
+              <ellipse cx="108" cy="92" rx="10" ry="28" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="108" cy="95" rx="5.5" ry="22" fill="#FFB3C6"/>
+              <ellipse cx="122" cy="88" rx="10" ry="28" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="122" cy="91" rx="5.5" ry="22" fill="#FFB3C6"/>
+              <circle cx="115" cy="138" r="30" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="115" cy="200" rx="32" ry="40" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <!-- Stern eyes (narrowed) -->
+              <ellipse cx="104" cy="133" rx="8" ry="6" fill="#2D3748"/>
+              <ellipse cx="126" cy="133" rx="8" ry="6" fill="#2D3748"/>
+              <ellipse cx="106" cy="131" rx="3" ry="2" fill="#fff"/>
+              <ellipse cx="128" cy="131" rx="3" ry="2" fill="#fff"/>
+              <!-- Frown brows -->
+              <path d="M 98 124 Q 108 119 118 124" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <!-- Stern mouth -->
+              <path d="M 105 148 Q 115 143 125 148" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <!-- Hands on hips -->
+              <ellipse cx="88" cy="198" rx="10" ry="22" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(25 88 198)"/>
+              <ellipse cx="142" cy="198" rx="10" ry="22" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(-25 142 198)"/>
+              <!-- Feet -->
+              <ellipse cx="100" cy="238" rx="15" ry="9" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="128" cy="238" rx="15" ry="9" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <circle cx="148" cy="198" r="9" fill="#fff" stroke="#D0C8B8" stroke-width="1"/>
+
+              <!-- ELEPHANT (right, guilty drooping ears) -->
+              <!-- Drooping left ear -->
+              <ellipse cx="300" cy="215" rx="26" ry="42" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5" transform="rotate(25 300 215)"/>
+              <!-- Drooping right ear -->
+              <ellipse cx="430" cy="215" rx="26" ry="42" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5" transform="rotate(-25 430 215)"/>
+              <!-- Body -->
+              <ellipse cx="365" cy="278" rx="60" ry="46" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <!-- Head -->
+              <circle cx="365" cy="200" r="50" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <!-- Trunk hanging low (sad) -->
+              <path d="M 348 242 Q 340 270 345 295" stroke="#A8C0CC" stroke-width="18" fill="none" stroke-linecap="round"/>
+              <path d="M 348 242 Q 340 270 345 295" stroke="#88A0AC" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <!-- Sad/guilty eyes (looking down) -->
+              <ellipse cx="349" cy="193" rx="8" ry="7" fill="#2D3748"/>
+              <circle cx="352" cy="190" r="2.5" fill="#fff"/>
+              <ellipse cx="381" cy="193" rx="8" ry="7" fill="#2D3748"/>
+              <circle cx="384" cy="190" r="2.5" fill="#fff"/>
+              <!-- Downward slant brows (guilty) -->
+              <path d="M 341 182 Q 353 186 360 182" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <path d="M 374 182 Q 381 186 389 182" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <!-- Wavy sorry mouth -->
+              <path d="M 352 218 Q 358 213 365 218 Q 372 223 379 218" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <!-- Legs -->
+              <ellipse cx="328" cy="318" rx="22" ry="12" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="402" cy="318" rx="22" ry="12" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+
+              <!-- Sweat drop on elephant -->
+              <ellipse cx="408" cy="168" rx="6" ry="9" fill="#74C8E4" opacity="0.8"/>
+              <path d="M 405 168 Q 408 160 411 168" fill="#74C8E4" opacity="0.8"/>
+
+              <!-- Speech bubble: "No idea!" -->
+              <ellipse cx="255" cy="135" rx="62" ry="28" fill="white" stroke="#D0C8B8" stroke-width="2"/>
+              <polygon points="280,160 292,178 268,162" fill="white" stroke="#D0C8B8" stroke-width="2"/>
+              <polygon points="280,160 292,178 268,162" fill="white"/>
+              <text x="232" y="133" font-size="14" fill="#2D3748" font-family="sans-serif" font-weight="bold">No idea! 😇</text>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 6</div>
+            <p class="story-text">
+              <em>"No idea!"</em> said Elephant, with his most innocent smile.<br><br>
+              Rabbit stared. And stared. And stared some more.<br><br>
+              Elephant's ears began to droop. His trunk began to fidget.<br><br>
+              Finally, he said quietly: <em>"It smelled so amazing… I ate the whole thing. I'm really, truly sorry."</em><br><br>
+              <em>"But I was SO looking forward to it!"</em> said Rabbit sadly.
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 7: Sharing fruit bowl -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <!-- Warm golden background -->
+              <rect width="500" height="360" fill="#FFF8E8"/>
+              <!-- Ground -->
+              <rect x="0" y="270" width="500" height="90" fill="#8BC87E"/>
+              <!-- Tree trunk -->
+              <rect x="218" y="80" width="34" height="200" rx="14" fill="#8B5E3C"/>
+              <!-- Tree canopy -->
+              <ellipse cx="235" cy="90" rx="85" ry="72" fill="#5AB55A"/>
+              <ellipse cx="195" cy="100" rx="60" ry="52" fill="#6DC86D"/>
+              <ellipse cx="275" cy="100" rx="60" ry="52" fill="#6DC86D"/>
+              <ellipse cx="235" cy="70" rx="65" ry="50" fill="#7BC67E"/>
+              <!-- Fruit on tree -->
+              <circle cx="190" cy="78" r="10" fill="#FF6B6B"/>
+              <circle cx="265" cy="72" r="10" fill="#FF6B6B"/>
+              <circle cx="228" cy="60" r="8" fill="#FFD166"/>
+              <!-- Sun peeking -->
+              <circle cx="430" cy="55" r="40" fill="#FFD166" opacity="0.8"/>
+
+              <!-- RABBIT (left, sitting content) -->
+              <ellipse cx="112" cy="218" rx="9" ry="26" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="112" cy="221" rx="5" ry="21" fill="#FFB3C6"/>
+              <ellipse cx="126" cy="215" rx="9" ry="26" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="126" cy="218" rx="5" ry="21" fill="#FFB3C6"/>
+              <circle cx="119" cy="262" r="28" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="119" cy="312" rx="30" ry="32" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <!-- Happy relieved eyes (soft) -->
+              <ellipse cx="108" cy="257" rx="7" ry="6" fill="#2D3748"/>
+              <circle cx="110" cy="255" r="2.5" fill="#fff"/>
+              <ellipse cx="130" cy="257" rx="7" ry="6" fill="#2D3748"/>
+              <circle cx="132" cy="255" r="2.5" fill="#fff"/>
+              <path d="M 107 270 Q 119 280 131 270" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <circle cx="100" cy="267" r="8" fill="#FFB3C6" opacity="0.4"/>
+              <circle cx="138" cy="267" r="8" fill="#FFB3C6" opacity="0.4"/>
+              <!-- Tail -->
+              <circle cx="148" cy="310" r="10" fill="#fff" stroke="#D0C8B8" stroke-width="1"/>
+              <!-- Arm reaching for bowl -->
+              <path d="M 144 302 Q 175 300 195 302" stroke="#F0E8DC" stroke-width="11" fill="none" stroke-linecap="round"/>
+
+              <!-- FRUIT BOWL (center) -->
+              <ellipse cx="250" cy="308" rx="55" ry="20" fill="#E8D5B0" stroke="#C4A87A" stroke-width="2"/>
+              <path d="M 195 308 Q 195 332 250 336 Q 305 332 305 308" fill="#D4BC90" stroke="#C4A87A" stroke-width="2"/>
+              <!-- Colorful fruits in bowl -->
+              <circle cx="228" cy="298" r="10" fill="#FF6B6B"/>
+              <circle cx="248" cy="294" r="10" fill="#7BC67E"/>
+              <circle cx="268" cy="298" r="10" fill="#C77DFF"/>
+              <circle cx="238" cy="306" r="9" fill="#FFD166"/>
+              <circle cx="258" cy="305" r="9" fill="#FF9BAE"/>
+              <circle cx="248" cy="296" r="7" fill="#74C8E4"/>
+
+              <!-- ELEPHANT (right, smiling, offering bowl) -->
+              <ellipse cx="330" cy="222" rx="28" ry="40" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="436" cy="222" rx="28" ry="40" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="383" cy="288" rx="58" ry="44" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <circle cx="383" cy="218" r="48" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <!-- Trunk pointing at bowl -->
+              <path d="M 366 258 Q 340 278 300 305" stroke="#A8C0CC" stroke-width="18" fill="none" stroke-linecap="round"/>
+              <path d="M 366 258 Q 340 278 300 305" stroke="#88A0AC" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <!-- Kind eyes -->
+              <ellipse cx="367" cy="206" rx="8" ry="7" fill="#2D3748"/>
+              <circle cx="370" cy="203" r="2.5" fill="#fff"/>
+              <ellipse cx="399" cy="206" rx="8" ry="7" fill="#2D3748"/>
+              <circle cx="402" cy="203" r="2.5" fill="#fff"/>
+              <path d="M 370 230 Q 383 242 396 230" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <circle cx="354" cy="228" r="11" fill="#FFB3C6" opacity="0.3"/>
+              <circle cx="412" cy="228" r="11" fill="#FFB3C6" opacity="0.3"/>
+              <ellipse cx="348" cy="328" rx="20" ry="11" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="418" cy="328" rx="20" ry="11" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+
+              <!-- Small hearts floating -->
+              <text x="165" y="225" font-size="18" fill="#FF6B6B" opacity="0.8">♥</text>
+              <text x="300" y="200" font-size="14" fill="#FF9BAE" opacity="0.7">♥</text>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 7</div>
+            <p class="story-text">
+              Elephant pushed his big fruit bowl across with his trunk. <em>"Please share mine. I truly am sorry."</em><br><br>
+              Rabbit let out a long, long sigh.<br><br>
+              Then smiled — just a tiny smile.<br><br>
+              They shared the fruit bowl, bite by bite, side by side under the shady tree. Then headed right back to planting seeds.
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 8: Day 2 – Rabbit asks for fruit bowl -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <!-- Fresh morning sky -->
+              <defs>
+                <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#B8E4F7"/>
+                  <stop offset="100%" stop-color="#E8F6FF"/>
+                </linearGradient>
+              </defs>
+              <rect width="500" height="210" fill="url(#sky2)"/>
+              <!-- Morning sun (lower, softer) -->
+              <circle cx="60" cy="72" r="42" fill="#FFD166"/>
+              <circle cx="60" cy="72" r="30" fill="#FFE680"/>
+              <!-- Sun rays -->
+              <g stroke="#FFD166" stroke-width="3" stroke-linecap="round" opacity="0.6">
+                <line x1="60" y1="20" x2="60" y2="12"/><line x1="60" y1="124" x2="60" y2="132"/>
+                <line x1="108" y1="72" x2="116" y2="72"/><line x1="12" y1="72" x2="4" y2="72"/>
+                <line x1="94" y1="38" x2="100" y2="32"/><line x1="26" y1="106" x2="20" y2="112"/>
+              </g>
+              <!-- "Day 2" banner -->
+              <rect x="180" y="25" width="140" height="36" rx="18" fill="#FFD166"/>
+              <text x="250" y="48" text-anchor="middle" font-size="16" fill="#7A5C00" font-family="sans-serif" font-weight="bold">Day 2! ☀️</text>
+              <!-- Clouds -->
+              <ellipse cx="320" cy="60" rx="55" ry="22" fill="white" opacity="0.9"/>
+              <ellipse cx="350" cy="50" rx="35" ry="20" fill="white" opacity="0.9"/>
+              <!-- Ground -->
+              <rect x="0" y="210" width="500" height="150" fill="#7BC67E"/>
+              <!-- Sprouts (more grown) -->
+              <line x1="220" y1="210" x2="220" y2="188" stroke="#3D8B3D" stroke-width="3" stroke-linecap="round"/>
+              <ellipse cx="220" cy="184" rx="9" ry="13" fill="#55B055"/>
+              <line x1="260" y1="210" x2="260" y2="190" stroke="#3D8B3D" stroke-width="3" stroke-linecap="round"/>
+              <ellipse cx="260" cy="186" rx="9" ry="13" fill="#55B055"/>
+              <line x1="300" y1="210" x2="300" y2="192" stroke="#3D8B3D" stroke-width="3" stroke-linecap="round"/>
+              <ellipse cx="300" cy="188" rx="9" ry="13" fill="#55B055"/>
+
+              <!-- RABBIT (left, sparkly excited eyes) -->
+              <ellipse cx="108" cy="160" rx="10" ry="28" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="108" cy="163" rx="5.5" ry="22" fill="#FFB3C6"/>
+              <ellipse cx="124" cy="157" rx="10" ry="28" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="124" cy="160" rx="5.5" ry="22" fill="#FFB3C6"/>
+              <circle cx="116" cy="207" r="30" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="116" cy="266" rx="32" ry="38" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <!-- Sparkling eyes -->
+              <circle cx="104" cy="201" r="9" fill="#2D3748"/>
+              <circle cx="107" cy="198" r="3.5" fill="#fff"/>
+              <text x="96" y="197" font-size="8" fill="#FFD166">✦</text>
+              <circle cx="128" cy="201" r="9" fill="#2D3748"/>
+              <circle cx="131" cy="198" r="3.5" fill="#fff"/>
+              <text x="120" y="197" font-size="8" fill="#FFD166">✦</text>
+              <!-- Big excited smile -->
+              <path d="M 102 218 Q 116 230 130 218" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <circle cx="98" cy="212" r="9" fill="#FFB3C6" opacity="0.4"/>
+              <circle cx="134" cy="212" r="9" fill="#FFB3C6" opacity="0.4"/>
+              <!-- Arm pointing at elephant (asking) -->
+              <path d="M 144 258 Q 200 248 255 248" stroke="#F0E8DC" stroke-width="12" fill="none" stroke-linecap="round"/>
+              <path d="M 144 258 Q 200 248 255 248" stroke="#D0C8B8" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <!-- Feet -->
+              <ellipse cx="100" cy="300" rx="16" ry="10" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="130" cy="300" rx="16" ry="10" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <circle cx="148" cy="264" r="10" fill="#fff" stroke="#D0C8B8" stroke-width="1"/>
+              <!-- Sparkles -->
+              <text x="60" y="195" font-size="20" fill="#FFD166">✦</text>
+              <text x="70" y="215" font-size="14" fill="#FF9BAE">✦</text>
+              <text x="48" y="220" font-size="16" fill="#74C8E4">✦</text>
+
+              <!-- ELEPHANT (right, grinning, phone out) -->
+              <ellipse cx="322" cy="200" rx="28" ry="42" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="432" cy="200" rx="28" ry="42" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="377" cy="278" rx="58" ry="44" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <circle cx="377" cy="198" r="50" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <!-- Arm with phone -->
+              <path d="M 400 245 Q 425 228 440 210" stroke="#A8C0CC" stroke-width="22" fill="none" stroke-linecap="round"/>
+              <!-- Phone -->
+              <rect x="430" y="185" width="34" height="50" rx="6" fill="#2D3748"/>
+              <rect x="433" y="189" width="28" height="38" rx="3" fill="#74C8E4"/>
+              <circle cx="447" cy="199" r="6" fill="#FF6B6B"/>
+              <circle cx="447" cy="212" r="6" fill="#7BC67E"/>
+              <!-- Trunk casual -->
+              <path d="M 360 242 Q 344 258 348 280" stroke="#A8C0CC" stroke-width="18" fill="none" stroke-linecap="round"/>
+              <path d="M 360 242 Q 344 258 348 280" stroke="#88A0AC" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <!-- Eyes (happy) -->
+              <circle cx="360" cy="186" r="8" fill="#2D3748"/>
+              <circle cx="363" cy="183" r="3" fill="#fff"/>
+              <circle cx="394" cy="186" r="8" fill="#2D3748"/>
+              <circle cx="397" cy="183" r="3" fill="#fff"/>
+              <path d="M 362 218 Q 377 230 392 218" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <circle cx="347" cy="215" r="11" fill="#FFB3C6" opacity="0.3"/>
+              <circle cx="407" cy="215" r="11" fill="#FFB3C6" opacity="0.3"/>
+              <ellipse cx="342" cy="318" rx="20" ry="11" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="412" cy="318" rx="20" ry="11" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 8</div>
+            <p class="story-text">
+              The very next morning, Rabbit's eyes twinkled as they walked to the field.<br><br>
+              <em>"Elephant!"</em> she said. <em>"That fruit salad yesterday was actually really good! Can we order the same today? One for you, one small one for me?"</em><br><br>
+              Elephant grinned and placed the order on his phone right away.
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 9: Elephant's cunning swap -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <!-- Background: slightly mischievous warm tone -->
+              <rect width="500" height="360" fill="#FFF5E8"/>
+              <rect x="0" y="280" width="500" height="80" fill="#A8D88A"/>
+              <!-- Rabbit visible at tap in background (small, blurred suggestion) -->
+              <circle cx="430" cy="255" r="12" fill="#F0E8DC" opacity="0.6"/>
+              <ellipse cx="426" cy="237" rx="5" ry="14" fill="#F0E8DC" opacity="0.6"/>
+              <ellipse cx="434" cy="235" rx="5" ry="14" fill="#F0E8DC" opacity="0.6"/>
+              <rect x="444" y="235" width="8" height="55" rx="3" fill="#8BAABF" opacity="0.6"/>
+              <text x="408" y="230" font-size="10" fill="#88A0AC" opacity="0.6" font-family="sans-serif">tap</text>
+
+              <!-- ELEPHANT center, sneaky grin -->
+              <!-- Left ear -->
+              <ellipse cx="248" cy="155" rx="32" ry="48" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <!-- Right ear -->
+              <ellipse cx="366" cy="155" rx="32" ry="48" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <!-- Body -->
+              <ellipse cx="307" cy="240" rx="66" ry="50" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <!-- Head -->
+              <circle cx="307" cy="152" r="58" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <!-- Trunk down between two bowls -->
+              <path d="M 288 202 Q 270 230 268 258" stroke="#A8C0CC" stroke-width="20" fill="none" stroke-linecap="round"/>
+              <path d="M 288 202 Q 270 230 268 258" stroke="#88A0AC" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <!-- SNEAKY expression -->
+              <!-- Squint eyes (one bigger) -->
+              <ellipse cx="288" cy="140" rx="11" ry="8" fill="#2D3748"/>
+              <circle cx="291" cy="137" r="3.5" fill="#fff"/>
+              <ellipse cx="326" cy="138" rx="7" ry="9" fill="#2D3748"/>
+              <circle cx="329" cy="135" r="3" fill="#fff"/>
+              <!-- Raised eyebrow (scheming) -->
+              <path d="M 280 126 Q 294 120 302 126" stroke="#2D3748" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <!-- Big sneaky grin -->
+              <path d="M 290 172 Q 307 186 324 172" stroke="#2D3748" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <!-- Little teeth (cheeky) -->
+              <rect x="298" y="173" width="8" height="7" rx="2" fill="white"/>
+              <rect x="308" y="173" width="8" height="7" rx="2" fill="white"/>
+              <!-- Legs -->
+              <ellipse cx="268" cy="286" rx="24" ry="13" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="346" cy="286" rx="24" ry="13" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+
+              <!-- TWO CONTAINERS: original fruit bowl (being eaten) + rabbit's bowl -->
+              <!-- Fruit bowl (elephant eating from it, partly gone) -->
+              <ellipse cx="172" cy="295" rx="46" ry="16" fill="#E8D5B0" stroke="#C4A87A" stroke-width="2"/>
+              <path d="M 126 295 Q 126 316 172 320 Q 218 316 218 295" fill="#D4BC90" stroke="#C4A87A" stroke-width="2"/>
+              <!-- A few remaining fruits -->
+              <circle cx="160" cy="286" r="8" fill="#FF6B6B"/>
+              <circle cx="178" cy="283" r="8" fill="#7BC67E"/>
+              <circle cx="194" cy="287" r="8" fill="#C77DFF"/>
+
+              <!-- Rabbit's container (pancakes going in) -->
+              <ellipse cx="385" cy="295" rx="46" ry="16" fill="#E8D5B0" stroke="#C4A87A" stroke-width="2"/>
+              <path d="M 339 295 Q 339 316 385 320 Q 431 316 431 295" fill="#D4BC90" stroke="#C4A87A" stroke-width="2"/>
+              <!-- Pancakes stack -->
+              <ellipse cx="385" cy="290" rx="32" ry="8" fill="#D4A843"/>
+              <ellipse cx="385" cy="284" rx="30" ry="7" fill="#E8C060"/>
+              <ellipse cx="385" cy="278" rx="28" ry="7" fill="#D4A843"/>
+              <ellipse cx="385" cy="272" rx="26" ry="6" fill="#F0CC70"/>
+              <!-- Butter on top -->
+              <rect x="375" y="267" width="20" height="8" rx="3" fill="#FFE680"/>
+
+              <!-- Bag in background (elephant's lunch bag) -->
+              <rect x="57" y="240" width="55" height="45" rx="8" fill="#8B5E3C" opacity="0.8"/>
+              <text x="68" y="268" font-size="20">🥞</text>
+              <text x="52" y="230" font-size="10" fill="#7A5C2E" font-family="sans-serif" font-weight="bold">my lunch</text>
+
+              <!-- Arrows showing the sneaky swap -->
+              <path d="M 235 285 Q 255 265 270 280" stroke="#FF6B6B" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-dasharray="6 4"/>
+              <polygon points="267,272 278,282 270,286" fill="#FF6B6B"/>
+
+              <!-- Sneaky sweat drop -->
+              <ellipse cx="358" cy="110" rx="7" ry="10" fill="#74C8E4" opacity="0.7"/>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 9</div>
+            <p class="story-text">
+              But then — Elephant remembered something. He had packed his own lunch today! A big stack of golden pancakes sat in his bag.<br><br>
+              A slow, sneaky grin spread across his face.<br><br>
+              While Rabbit was at the tap, Elephant ate her fruit bowl… and quietly tucked his pancakes into her empty container. 😏
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 10: Rabbit finds pancakes -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <!-- Background -->
+              <rect width="500" height="360" fill="#FFF9F0"/>
+              <rect x="0" y="285" width="500" height="75" fill="#A8D88A"/>
+
+              <!-- RABBIT holding open container with pancakes, tilting head -->
+              <!-- Ears (tilted) -->
+              <ellipse cx="200" cy="60" rx="13" ry="38" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="2" transform="rotate(-15 200 60)"/>
+              <ellipse cx="200" cy="64" rx="7" ry="30" fill="#FFB3C6" transform="rotate(-15 200 64)"/>
+              <ellipse cx="228" cy="56" rx="13" ry="38" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="2" transform="rotate(10 228 56)"/>
+              <ellipse cx="228" cy="60" rx="7" ry="30" fill="#FFB3C6" transform="rotate(10 228 60)"/>
+              <!-- Head (tilted) -->
+              <circle cx="214" cy="140" r="42" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="2" transform="rotate(12 214 140)"/>
+              <!-- Body -->
+              <ellipse cx="214" cy="222" rx="46" ry="52" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="2"/>
+              <!-- Confused eyes (different sizes, tilted) -->
+              <circle cx="196" cy="133" r="12" fill="white" stroke="#D0C8B8" stroke-width="1.5"/>
+              <circle cx="196" cy="135" r="7" fill="#2D3748"/>
+              <circle cx="199" cy="132" r="2.5" fill="#fff"/>
+              <circle cx="232" cy="130" r="9" fill="white" stroke="#D0C8B8" stroke-width="1.5"/>
+              <circle cx="232" cy="132" r="5" fill="#2D3748"/>
+              <circle cx="234" cy="130" r="2" fill="#fff"/>
+              <!-- Confused squiggle brow -->
+              <path d="M 188 120 Q 196 115 204 120" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <!-- Mouth (flat confused) -->
+              <path d="M 200 152 Q 214 152 228 152" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <!-- Blush -->
+              <circle cx="182" cy="146" r="12" fill="#FFB3C6" opacity="0.35"/>
+              <circle cx="246" cy="146" r="12" fill="#FFB3C6" opacity="0.35"/>
+              <!-- Arms holding container open -->
+              <ellipse cx="172" cy="232" rx="12" ry="28" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(15 172 232)"/>
+              <ellipse cx="256" cy="232" rx="12" ry="28" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(-15 256 232)"/>
+              <!-- Feet -->
+              <ellipse cx="194" cy="272" rx="20" ry="12" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="234" cy="272" rx="20" ry="12" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <circle cx="260" cy="220" r="14" fill="#fff" stroke="#D0C8B8" stroke-width="1"/>
+
+              <!-- Open delivery box -->
+              <rect x="152" y="260" width="124" height="70" rx="10" fill="#FFD166" stroke="#E8B800" stroke-width="2"/>
+              <!-- Box lid open -->
+              <rect x="152" y="235" width="124" height="30" rx="6" fill="#FFD166" stroke="#E8B800" stroke-width="2" transform="rotate(-40 152 255)"/>
+              <!-- Pancake stack inside box -->
+              <ellipse cx="214" cy="275" rx="48" ry="12" fill="#D4A843"/>
+              <ellipse cx="214" cy="265" rx="44" ry="11" fill="#E8C060"/>
+              <ellipse cx="214" cy="255" rx="40" ry="10" fill="#D4A843"/>
+              <ellipse cx="214" cy="246" rx="36" ry="9" fill="#F0CC70"/>
+              <!-- Butter + syrup -->
+              <rect x="204" y="240" width="20" height="8" rx="3" fill="#FFE680"/>
+              <path d="M 200 248 Q 210 256 225 250" stroke="#D4A843" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+              <!-- Question marks + confusion stars -->
+              <text x="68" y="140" font-size="38" fill="#FFD166" opacity="0.9" font-family="sans-serif">?</text>
+              <text x="340" y="130" font-size="30" fill="#FFD166" opacity="0.8" font-family="sans-serif">?</text>
+              <text x="330" y="185" font-size="22" fill="#FF9BAE" opacity="0.7" font-family="sans-serif">?</text>
+              <!-- Swirl confusion -->
+              <path d="M 355 150 Q 370 130 385 150 Q 400 170 385 185" stroke="#D0C8B8" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 10</div>
+            <p class="story-text">
+              Rabbit bounced back and tore open her box excitedly. She stopped. Blinked. Tilted her head sideways.<br><br>
+              Pancakes.<br><br>
+              <em>"But I ordered a fruit bowl!"</em> she said slowly, looking up at Elephant.<br><br>
+              <em>"How did pancakes get in here?"</em>
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 11: Confession + frustration -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <!-- Background (warm, a bit heated) -->
+              <rect width="500" height="360" fill="#FFF5F0"/>
+              <rect x="0" y="285" width="500" height="75" fill="#A8D88A"/>
+
+              <!-- RABBIT (left, paws in air, FRUSTRATED) -->
+              <ellipse cx="108" cy="90" rx="10" ry="28" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="108" cy="93" rx="5.5" ry="22" fill="#FFB3C6"/>
+              <ellipse cx="124" cy="86" rx="10" ry="28" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="124" cy="89" rx="5.5" ry="22" fill="#FFB3C6"/>
+              <circle cx="116" cy="138" r="30" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="116" cy="202" rx="32" ry="42" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <!-- Frustrated eyes -->
+              <ellipse cx="103" cy="132" rx="9" ry="7" fill="#2D3748"/>
+              <circle cx="106" cy="129" r="2.5" fill="#fff"/>
+              <ellipse cx="129" cy="132" rx="9" ry="7" fill="#2D3748"/>
+              <circle cx="132" cy="129" r="2.5" fill="#fff"/>
+              <!-- Angry V-brows -->
+              <path d="M 94 120 Q 107 113 116 120" stroke="#2D3748" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <path d="M 116 120 Q 125 113 134 118" stroke="#2D3748" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <!-- Open frustrated mouth -->
+              <path d="M 100 150 Q 116 163 132 150" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <ellipse cx="116" cy="153" rx="8" ry="5" fill="#FF9BAE" opacity="0.6"/>
+              <!-- Bright blush -->
+              <circle cx="96" cy="143" r="11" fill="#FF6B6B" opacity="0.3"/>
+              <circle cx="136" cy="143" r="11" fill="#FF6B6B" opacity="0.3"/>
+              <!-- BOTH ARMS UP IN AIR -->
+              <ellipse cx="78" cy="180" rx="10" ry="25" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(-50 78 180)"/>
+              <ellipse cx="154" cy="180" rx="10" ry="25" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(50 154 180)"/>
+              <!-- Feet -->
+              <ellipse cx="100" cy="242" rx="15" ry="9" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="130" cy="242" rx="15" ry="9" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <circle cx="148" cy="200" r="9" fill="#fff" stroke="#D0C8B8" stroke-width="1"/>
+              <!-- Exclamation marks -->
+              <text x="40" y="138" font-size="36" fill="#FF6B6B" opacity="0.9" font-family="sans-serif" font-weight="bold">!</text>
+              <text x="58" y="108" font-size="28" fill="#FF9BAE" opacity="0.8" font-family="sans-serif" font-weight="bold">!</text>
+
+              <!-- ELEPHANT (right, explaining with trunk gestures) -->
+              <ellipse cx="318" cy="178" rx="30" ry="44" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="430" cy="178" rx="30" ry="44" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="374" cy="260" rx="60" ry="46" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <circle cx="374" cy="176" r="50" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <!-- Trunk gesturing (explaining) -->
+              <path d="M 356 218 Q 335 205 322 188" stroke="#A8C0CC" stroke-width="18" fill="none" stroke-linecap="round"/>
+              <path d="M 356 218 Q 335 205 322 188" stroke="#88A0AC" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <!-- Eyes (apologetic squint) -->
+              <ellipse cx="357" cy="163" rx="9" ry="7" fill="#2D3748"/>
+              <circle cx="360" cy="160" r="2.5" fill="#fff"/>
+              <ellipse cx="391" cy="163" rx="9" ry="7" fill="#2D3748"/>
+              <circle cx="394" cy="160" r="2.5" fill="#fff"/>
+              <!-- Apologetic brows -->
+              <path d="M 348 150 Q 360 155 368 150" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <path d="M 376 150 Q 384 155 394 150" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <!-- Nervous smile -->
+              <path d="M 360 194 Q 374 205 388 194" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <circle cx="342" cy="192" r="12" fill="#FFB3C6" opacity="0.3"/>
+              <circle cx="406" cy="192" r="12" fill="#FFB3C6" opacity="0.3"/>
+              <!-- Sweat drops -->
+              <ellipse cx="420" cy="138" rx="6" ry="10" fill="#74C8E4" opacity="0.8"/>
+              <ellipse cx="430" cy="155" rx="5" ry="8" fill="#74C8E4" opacity="0.6"/>
+              <!-- Legs -->
+              <ellipse cx="338" cy="300" rx="22" ry="12" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="410" cy="300" rx="22" ry="12" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+
+              <!-- Speech from elephant -->
+              <ellipse cx="248" cy="125" rx="72" ry="32" fill="white" stroke="#D0C8B8" stroke-width="2" opacity="0.95"/>
+              <polygon points="282,154 296,172 268,156" fill="white" stroke="#D0C8B8" stroke-width="2"/>
+              <polygon points="282,154 296,172 268,156" fill="white"/>
+              <text x="200" y="119" font-size="11" fill="#2D3748" font-family="sans-serif" font-weight="bold">I forgot my lunch</text>
+              <text x="200" y="135" font-size="11" fill="#2D3748" font-family="sans-serif">was already packed! 😬</text>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 11</div>
+            <p class="story-text">
+              Elephant explained everything — the lunch from home, the irresistible fruit bowl, the sneaky pancake swap.<br><br>
+              <em>"And besides,"</em> he added, <em>"I don't even like pancakes that much!"</em><br><br>
+              Rabbit threw her paws straight up in the air.<br><br>
+              <em>"AGAIN, Elephant?!"</em><br><br>
+              There was a lot of sighing. A lot of trunk-shrugging. But finally — an agreement.
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 12: Happy ending -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <!-- Warm golden afternoon -->
+              <defs>
+                <linearGradient id="sky3" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#FFE8B0"/>
+                  <stop offset="100%" stop-color="#FFF5D8"/>
+                </linearGradient>
+              </defs>
+              <rect width="500" height="210" fill="url(#sky3)"/>
+              <rect x="0" y="210" width="500" height="150" fill="#6DB860"/>
+              <!-- Setting sun -->
+              <circle cx="450" cy="85" r="50" fill="#FFB830" opacity="0.8"/>
+              <circle cx="450" cy="85" r="36" fill="#FFD166" opacity="0.9"/>
+              <!-- Tree -->
+              <rect x="220" y="85" width="30" height="180" rx="12" fill="#8B5E3C"/>
+              <ellipse cx="235" cy="98" rx="95" ry="80" fill="#4A9B4A"/>
+              <ellipse cx="198" cy="108" rx="68" ry="60" fill="#5AB55A"/>
+              <ellipse cx="272" cy="108" rx="68" ry="60" fill="#5AB55A"/>
+              <ellipse cx="235" cy="80" rx="72" ry="58" fill="#6DC86D"/>
+              <!-- Fruit on tree -->
+              <circle cx="188" cy="86" r="11" fill="#FF6B6B"/>
+              <circle cx="272" cy="80" r="11" fill="#FF6B6B"/>
+              <circle cx="230" cy="68" r="9" fill="#FFD166"/>
+
+              <!-- ZZZ (both napping under tree) -->
+              <text x="155" y="225" font-size="22" fill="#A8C0CC" opacity="0.7" font-family="sans-serif" font-weight="bold">z</text>
+              <text x="175" y="205" font-size="28" fill="#A8C0CC" opacity="0.75" font-family="sans-serif" font-weight="bold">z</text>
+              <text x="200" y="182" font-size="34" fill="#A8C0CC" opacity="0.8" font-family="sans-serif" font-weight="bold">Z</text>
+
+              <!-- RABBIT napping (left, leaning against tree) -->
+              <ellipse cx="112" cy="198" rx="9" ry="25" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="112" cy="201" rx="5" ry="20" fill="#FFB3C6"/>
+              <ellipse cx="126" cy="195" rx="9" ry="25" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="126" cy="198" rx="5" ry="20" fill="#FFB3C6"/>
+              <circle cx="119" cy="238" r="28" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="119" cy="288" rx="30" ry="38" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <!-- Sleeping eyes (closed) -->
+              <path d="M 108 234 Q 119 240 130 234" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <!-- Sleeping smile -->
+              <path d="M 107 248 Q 119 257 131 248" stroke="#2D3748" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <circle cx="100" cy="246" r="8" fill="#FFB3C6" opacity="0.4"/>
+              <circle cx="138" cy="246" r="8" fill="#FFB3C6" opacity="0.4"/>
+              <circle cx="148" cy="285" r="10" fill="#fff" stroke="#D0C8B8" stroke-width="1"/>
+              <!-- Half-eaten food -->
+              <ellipse cx="90" cy="322" rx="28" ry="10" fill="#E8D5B0" stroke="#C4A87A" stroke-width="1.5"/>
+              <path d="M 62 322 Q 62 334 90 337 Q 118 334 118 322" fill="#D4BC90" stroke="#C4A87A" stroke-width="1.5"/>
+              <!-- Half pancake + half fruit -->
+              <ellipse cx="82" cy="318" rx="16" ry="5" fill="#E8C060"/>
+              <circle cx="100" cy="316" r="6" fill="#FF6B6B"/>
+              <circle cx="110" cy="320" r="5" fill="#7BC67E"/>
+
+              <!-- ELEPHANT napping (right, trunk draped) -->
+              <ellipse cx="322" cy="210" rx="28" ry="42" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="430" cy="210" rx="28" ry="42" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="376" cy="278" rx="62" ry="48" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <circle cx="376" cy="208" r="50" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <!-- Trunk draped down, relaxed -->
+              <path d="M 358 248 Q 345 270 355 300" stroke="#A8C0CC" stroke-width="18" fill="none" stroke-linecap="round"/>
+              <path d="M 358 248 Q 345 270 355 300" stroke="#88A0AC" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <!-- Sleeping eyes -->
+              <path d="M 360 197 Q 372 204 384 197" stroke="#2D3748" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <!-- Sleeping smile -->
+              <path d="M 360 224 Q 376 236 392 224" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <circle cx="344" cy="222" r="12" fill="#FFB3C6" opacity="0.3"/>
+              <circle cx="408" cy="222" r="12" fill="#FFB3C6" opacity="0.3"/>
+              <ellipse cx="340" cy="322" rx="22" ry="12" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="412" cy="322" rx="22" ry="12" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+              <!-- Elephant's bowl (half pancake + half fruit) -->
+              <ellipse cx="432" cy="322" rx="34" ry="12" fill="#E8D5B0" stroke="#C4A87A" stroke-width="1.5"/>
+              <path d="M 398 322 Q 398 336 432 339 Q 466 336 466 322" fill="#D4BC90" stroke="#C4A87A" stroke-width="1.5"/>
+              <ellipse cx="420" cy="318" rx="14" ry="5" fill="#E8C060"/>
+              <circle cx="440" cy="316" r="6" fill="#C77DFF"/>
+              <circle cx="450" cy="320" r="5" fill="#FF6B6B"/>
+
+              <!-- Stars and hearts -->
+              <text x="300" y="68" font-size="18" fill="#FFD166" opacity="0.9">✦</text>
+              <text x="152" y="162" font-size="16" fill="#FF9BAE" opacity="0.8">♥</text>
+              <text x="168" y="148" font-size="12" fill="#74C8E4" opacity="0.7">♥</text>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 12</div>
+            <p class="story-text">
+              Half pancake and half fruit bowl — each!<br><br>
+              They sat under their favourite shady tree, eating every last bite. Then, full and perfectly happy, they both dozed off for a little nap — snoring softly in the afternoon sun.<br><br>
+              When they woke up, they looked at each other and burst out laughing. Then, side by side, they went right back to planting seeds.<br><br>
+              Just like always. <em>✨ The End ✨</em>
+            </p>
+          </div>
+        </div>
+
+      </div><!-- /book-pages -->
+
+      <div class="book-nav">
+        <button class="book-nav-btn" id="btn-prev" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+          Back
+        </button>
+        <span class="page-counter" id="page-counter">Cover</span>
+        <button class="book-nav-btn" id="btn-next">
+          Next
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </button>
+      </div>
+
+    </div><!-- /book-container -->
+
+    <p class="swipe-hint">← Swipe to turn pages →</p>
+
+  </div><!-- /reader-wrapper -->
+
+  <script src="../../assets/js/nav.js"></script>
+  <script src="../../assets/js/book.js"></script>
+
+</body>
+</html>

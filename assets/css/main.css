@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap');
+
+:root {
+  --color-bg: #FFF9F0;
+  --color-surface: #FFFFFF;
+  --color-primary: #FF6B6B;
+  --color-primary-dark: #E85555;
+  --color-secondary: #FFD166;
+  --color-accent: #06C98A;
+  --color-sky: #74C8E4;
+  --color-purple: #C77DFF;
+  --color-text: #2D3748;
+  --color-text-muted: #718096;
+  --color-border: #EAE0D5;
+
+  --font-display: 'Fredoka One', cursive;
+  --font-body: 'Nunito', sans-serif;
+
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.07);
+  --shadow-md: 0 6px 24px rgba(0,0,0,0.10);
+  --shadow-lg: 0 12px 48px rgba(0,0,0,0.14);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── NAV ── */
+.site-nav {
+  background: #fff;
+  border-bottom: 2px solid var(--color-border);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  box-shadow: var(--shadow-sm);
+}
+
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--color-primary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 0.3px;
+}
+
+.nav-logo .logo-emoji { font-size: 1.5rem; }
+
+.nav-links {
+  display: flex;
+  gap: 4px;
+  list-style: none;
+}
+
+.nav-links a {
+  display: block;
+  text-decoration: none;
+  color: var(--color-text-muted);
+  font-weight: 700;
+  font-size: 0.92rem;
+  padding: 6px 16px;
+  border-radius: 20px;
+  transition: background 0.18s, color 0.18s;
+}
+
+.nav-links a:hover { background: #FFF3D6; color: var(--color-text); }
+.nav-links a.active { background: var(--color-secondary); color: var(--color-text); }
+
+/* ── FOOTER ── */
+.site-footer {
+  background: #fff;
+  border-top: 2px solid var(--color-border);
+  padding: 18px 24px;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: auto;
+}
+
+/* ── MAIN WRAPPER ── */
+.main-content {
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 36px 24px 48px;
+}
+
+/* ── PAGE HERO ── */
+.page-hero {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.page-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  color: var(--color-text);
+  margin-bottom: 10px;
+}
+
+.page-hero p {
+  color: var(--color-text-muted);
+  font-size: 1.05rem;
+  font-weight: 600;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* ── UTILITY ── */
+.tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: #F0EBE3;
+  color: var(--color-text-muted);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .site-nav { padding: 0 16px; height: 56px; }
+  .nav-logo { font-size: 1.1rem; }
+  .nav-links a { font-size: 0.85rem; padding: 5px 12px; }
+  .main-content { padding: 24px 16px 40px; }
+  .page-hero h1 { font-size: 1.8rem; }
+}

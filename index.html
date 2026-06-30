@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rabbit & Elephant — Bedtime Stories</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/book.css" />
+</head>
+<body>
+
+  <nav class="site-nav">
+    <a href="index.html" class="nav-logo">
+      <span class="logo-emoji">🐰🐘</span> Rabbit &amp; Elephant
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Stories</a></li>
+      <li><a href="characters.html">Characters</a></li>
+    </ul>
+  </nav>
+
+  <main class="main-content">
+    <div class="page-hero">
+      <h1>🌙 Bedtime Stories</h1>
+      <p>Funny, silly, and always heartwarming — one story at a time.</p>
+    </div>
+
+    <div class="bookshelf-grid" id="bookshelf"></div>
+  </main>
+
+  <footer class="site-footer">
+    Made with ❤️ for little readers everywhere
+  </footer>
+
+  <script src="assets/data/stories-data.js"></script>
+  <script src="assets/js/nav.js"></script>
+  <script>
+    const grid = document.getElementById('bookshelf');
+
+    STORIES.forEach(story => {
+      const card = document.createElement('div');
+      card.className = 'story-card' + (story.comingSoon ? ' coming-soon' : '');
+
+      const tagsHTML = story.tags.map(t => `<span class="tag">${t}</span>`).join('');
+      const ctaHTML = story.comingSoon
+        ? ''
+        : `<a class="card-cta" href="${story.path}">Read Now →</a>`;
+
+      card.innerHTML = `
+        <div class="card-cover" style="background: linear-gradient(135deg, ${story.cardColor}CC, ${story.cardColor}66);">
+          <div class="card-cover-shimmer"></div>
+          <span style="position:relative;z-index:1">${story.emoji}</span>
+        </div>
+        <div class="card-body">
+          <div class="card-title">${story.title}</div>
+          <div class="card-subtitle">${story.subtitle}</div>
+          <p class="card-desc">${story.description}</p>
+          <div class="card-meta">
+            <div class="card-tags">${tagsHTML}</div>
+            ${story.readTime ? `<span class="card-read-time">📖 ${story.readTime}</span>` : ''}
+          </div>
+          ${ctaHTML}
+        </div>
+      `;
+
+      if (!story.comingSoon) {
+        card.addEventListener('click', e => {
+          if (!e.target.closest('.card-cta')) window.location.href = story.path;
+        });
+      }
+
+      grid.appendChild(card);
+    });
+  </script>
+
+</body>
+</html>

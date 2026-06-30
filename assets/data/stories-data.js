@@ -13,17 +13,17 @@ const STORIES = [
     comingSoon: false
   },
   {
-    id: 'coming-soon-2',
-    title: 'Coming Soon…',
-    subtitle: 'A new adventure is on the way!',
-    emoji: '✨',
-    description: 'Rabbit and Elephant are cooking up another exciting bedtime story. Check back soon!',
-    tags: [],
-    characters: [],
-    readTime: '',
-    path: '#',
-    cardColor: '#E8E0D5',
-    comingSoon: true
+    id: '02-ouch-the-big-thorn',
+    title: 'Ouch! The Big Thorn',
+    subtitle: 'A story about friendship and a very brave squirrel doctor',
+    emoji: '🌿',
+    description: 'On a walk down the road, Elephant steps on a huge thorn. Rabbit springs into action — truck, hospital, and a tiny doctor with very big tweezers!',
+    tags: ['Friendship', 'Caring', 'Bravery'],
+    characters: ['Rabbit', 'Elephant', 'Dr. Squirrel'],
+    readTime: '6 min read',
+    path: 'stories/02-ouch-the-big-thorn/',
+    cardColor: '#06C98A',
+    comingSoon: false
   },
   {
     id: 'coming-soon-3',

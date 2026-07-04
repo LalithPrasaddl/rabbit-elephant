@@ -180,29 +180,61 @@
 .book-pages {
   position: relative;
   overflow: hidden;
+  perspective: 2000px;
   /* height is controlled by content on mobile, fixed on desktop */
 }
 
 /* ── COVER PAGE ── */
-.page { display: none; }
-
-.page.active {
-  display: flex;
-  animation: pageEnterNext 0.38s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+.page {
+  display: none;
+  background: #fff;
 }
 
-.page.active.dir-prev {
-  animation: pageEnterPrev 0.38s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+.page.show { display: flex; }
+
+/* The outgoing page: flips up on its spine edge like a real page turn,
+   and vanishes once it's edge-on (backface-visibility: hidden) instead
+   of showing a mirrored reverse side. */
+.page.flip-next-out,
+.page.flip-prev-out {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  backface-visibility: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.22);
 }
 
-@keyframes pageEnterNext {
-  from { opacity: 0; transform: translateX(32px); }
-  to   { opacity: 1; transform: translateX(0); }
+.page.flip-next-out {
+  transform-origin: left center;
+  animation: flipOutNext 0.56s cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards;
 }
 
-@keyframes pageEnterPrev {
-  from { opacity: 0; transform: translateX(-32px); }
-  to   { opacity: 1; transform: translateX(0); }
+.page.flip-prev-out {
+  transform-origin: right center;
+  animation: flipOutPrev 0.56s cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards;
+}
+
+/* The incoming page: already in place underneath, settles in as the
+   flipping page clears out of the way. */
+.page.reveal-in {
+  animation: pageRevealIn 0.42s ease-out forwards;
+}
+
+@keyframes flipOutNext {
+  0%   { transform: rotateY(0deg); filter: brightness(1); }
+  55%  { filter: brightness(0.75); }
+  100% { transform: rotateY(-180deg); filter: brightness(1); }
+}
+
+@keyframes flipOutPrev {
+  0%   { transform: rotateY(0deg); filter: brightness(1); }
+  55%  { filter: brightness(0.75); }
+  100% { transform: rotateY(180deg); filter: brightness(1); }
+}
+
+@keyframes pageRevealIn {
+  0%   { opacity: 0.7; transform: scale(0.98); }
+  100% { opacity: 1; transform: scale(1); }
 }
 
 /* Cover layout */

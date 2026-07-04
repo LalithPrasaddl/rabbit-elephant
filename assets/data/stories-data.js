@@ -26,7 +26,20 @@ const STORIES = [
     comingSoon: false
   },
   {
-    id: 'coming-soon-3',
+    id: '03-snow-much-help',
+    title: 'Snow Much Help!',
+    subtitle: 'A story about kindness, mistakes, and second chances',
+    emoji: '❄️',
+    description: 'A snowstorm fills the hospital with patients, and Rabbit and Elephant volunteer to help out. Their first day does not go smoothly — but they get a second chance to make it right.',
+    tags: ['Kindness', 'Teamwork', 'Trying Again'],
+    characters: ['Rabbit', 'Elephant', 'Dr. Squirrel', 'Dr. Sheep', 'Nurse Giraffe'],
+    readTime: '8 min read',
+    path: 'stories/03-snow-much-help/',
+    cardColor: '#74C8E4',
+    comingSoon: false
+  },
+  {
+    id: 'coming-soon-4',
     title: 'Coming Soon…',
     subtitle: 'More fun is brewing!',
     emoji: '🌟',

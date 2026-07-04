@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Snow Much Help! — Rabbit &amp; Elephant</title>
+  <link rel="stylesheet" href="../../assets/css/main.css" />
+  <link rel="stylesheet" href="../../assets/css/book.css" />
+</head>
+<body>
+
+  <nav class="site-nav">
+    <a href="../../index.html" class="nav-logo">
+      <span class="logo-emoji">🐰🐘</span> Rabbit &amp; Elephant
+    </a>
+    <ul class="nav-links">
+      <li><a href="../../index.html">Stories</a></li>
+      <li><a href="../../characters.html">Characters</a></li>
+    </ul>
+  </nav>
+
+  <div class="reader-wrapper">
+    <a href="../../index.html" class="reader-back">← Back to Stories</a>
+
+    <div class="book-container">
+      <div class="book-progress">
+        <div class="book-progress-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+
+      <div class="book-pages">
+
+        <!-- PAGE 0: COVER -->
+        <div class="page page-cover">
+          <div class="cover-illustration">
+            <svg viewBox="0 0 500 240" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sky-cover3" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#B8CFE2"/>
+                  <stop offset="100%" stop-color="#EDF4F8"/>
+                </linearGradient>
+                <linearGradient id="ground-cover3" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#FFFFFF"/>
+                  <stop offset="100%" stop-color="#DCE8F0"/>
+                </linearGradient>
+              </defs>
+              <!-- Sky -->
+              <rect width="500" height="240" fill="url(#sky-cover3)"/>
+              <!-- Snow-capped trees -->
+              <g>
+                <polygon points="46,150 20,195 72,195" fill="#3D7A4A"/>
+                <polygon points="46,130 24,168 68,168" fill="#4A9159"/>
+                <polygon points="46,112 30,144 62,144" fill="#57A566"/>
+                <path d="M 30 144 Q 46 136 62 144" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" opacity="0.9"/>
+                <path d="M 24 168 Q 46 158 68 168" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" opacity="0.9"/>
+              </g>
+              <g>
+                <polygon points="450,158 428,197 472,197" fill="#3D7A4A"/>
+                <polygon points="450,140 432,172 468,172" fill="#4A9159"/>
+                <path d="M 432 172 Q 450 164 468 172" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" opacity="0.9"/>
+              </g>
+              <!-- Ground -->
+              <path d="M0,178 Q125,164 250,176 T500,174 L500,240 L0,240 Z" fill="url(#ground-cover3)"/>
+              <!-- Snow drifts texture -->
+              <path d="M0,190 Q125,180 250,190 T500,188 L500,204 L0,204 Z" fill="white" opacity="0.5"/>
+
+              <!-- Falling snow -->
+              <g fill="white" opacity="0.9">
+                <circle cx="40" cy="40" r="4"/><circle cx="90" cy="70" r="3"/><circle cx="150" cy="30" r="3.5"/>
+                <circle cx="210" cy="60" r="3"/><circle cx="270" cy="35" r="4"/><circle cx="330" cy="65" r="3"/>
+                <circle cx="380" cy="30" r="3.5"/><circle cx="420" cy="80" r="3"/><circle cx="470" cy="45" r="4"/>
+                <circle cx="20" cy="100" r="3"/><circle cx="470" cy="110" r="3"/><circle cx="250" cy="20" r="3"/>
+              </g>
+
+              <!-- RABBIT (left, bundled in scarf, waving) -->
+              <ellipse cx="126" cy="95" rx="10" ry="30" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="126" cy="98" rx="5.5" ry="24" fill="#FFB3C6"/>
+              <ellipse cx="142" cy="92" rx="10" ry="30" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="142" cy="95" rx="5.5" ry="24" fill="#FFB3C6"/>
+              <ellipse cx="134" cy="178" rx="30" ry="36" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <circle cx="134" cy="135" r="28" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <circle cx="124" cy="129" r="6" fill="#2D3748"/>
+              <circle cx="126" cy="127" r="2.5" fill="#fff"/>
+              <circle cx="144" cy="129" r="6" fill="#2D3748"/>
+              <circle cx="146" cy="127" r="2.5" fill="#fff"/>
+              <ellipse cx="134" cy="139" rx="5" ry="4" fill="#FF9BAE"/>
+              <path d="M 122 145 Q 134 155 146 145" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <circle cx="118" cy="140" r="9" fill="#FFB3C6" opacity="0.4"/>
+              <circle cx="150" cy="140" r="9" fill="#FFB3C6" opacity="0.4"/>
+              <!-- Scarf -->
+              <path d="M 110 158 Q 134 168 158 158 L 156 170 Q 134 180 112 170 Z" fill="#FF6B6B"/>
+              <ellipse cx="152" cy="172" rx="6" ry="12" fill="#FF6B6B" transform="rotate(20 152 172)"/>
+              <!-- Arms waving -->
+              <ellipse cx="108" cy="166" rx="10" ry="20" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(-35 108 166)"/>
+              <ellipse cx="160" cy="166" rx="10" ry="20" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(35 160 166)"/>
+              <!-- Legs -->
+              <ellipse cx="120" cy="207" rx="14" ry="10" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="148" cy="207" rx="14" ry="10" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <circle cx="164" cy="180" r="10" fill="#fff" stroke="#D0C8B8" stroke-width="1"/>
+
+              <!-- ELEPHANT (right, bundled in scarf) -->
+              <ellipse cx="328" cy="135" rx="32" ry="44" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="428" cy="135" rx="32" ry="44" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="378" cy="188" rx="62" ry="42" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <circle cx="378" cy="130" r="52" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <path d="M 360 172 Q 338 188 336 210" stroke="#A8C0CC" stroke-width="18" fill="none" stroke-linecap="round"/>
+              <path d="M 360 172 Q 338 188 336 210" stroke="#88A0AC" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <circle cx="360" cy="120" r="8" fill="#2D3748"/>
+              <circle cx="363" cy="117" r="3" fill="#fff"/>
+              <circle cx="396" cy="120" r="8" fill="#2D3748"/>
+              <circle cx="399" cy="117" r="3" fill="#fff"/>
+              <path d="M 363 150 Q 378 162 393 150" stroke="#2D3748" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <circle cx="348" cy="148" r="12" fill="#FFB3C6" opacity="0.3"/>
+              <circle cx="408" cy="148" r="12" fill="#FFB3C6" opacity="0.3"/>
+              <!-- Scarf -->
+              <path d="M 340 158 Q 378 172 416 158 L 412 174 Q 378 186 344 174 Z" fill="#74C8E4"/>
+              <ellipse cx="410" cy="178" rx="7" ry="14" fill="#74C8E4" transform="rotate(15 410 178)"/>
+              <!-- Legs -->
+              <ellipse cx="340" cy="225" rx="22" ry="12" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="416" cy="225" rx="22" ry="12" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <h1 class="cover-title">Snow Much Help!</h1>
+          <p class="cover-subtitle">A story about kindness, mistakes, and second chances</p>
+          <div class="cover-characters">
+            <span class="cover-char-chip">🐰 Rabbit</span>
+            <span class="cover-char-chip">🐘 Elephant</span>
+            <span class="cover-char-chip">🐿️ Dr. Squirrel</span>
+            <span class="cover-char-chip">🐑 Dr. Sheep</span>
+            <span class="cover-char-chip">🦒 Nurse Giraffe</span>
+          </div>
+        </div>
+
+        <!-- PAGE 1: Snowfall, animals playing without warm clothes -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sky-p1c" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#B8CFE2"/>
+                  <stop offset="100%" stop-color="#EDF4F8"/>
+                </linearGradient>
+                <linearGradient id="ground-p1c" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#FFFFFF"/>
+                  <stop offset="100%" stop-color="#DCE8F0"/>
+                </linearGradient>
+              </defs>
+              <rect width="500" height="220" fill="url(#sky-p1c)"/>
+              <!-- Snow-capped trees -->
+              <g>
+                <polygon points="60,140 30,210 90,210" fill="#3D7A4A"/>
+                <polygon points="60,115 36,175 84,175" fill="#4A9159"/>
+                <path d="M 36 175 Q 60 165 84 175" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" opacity="0.9"/>
+              </g>
+              <g>
+                <polygon points="440,150 412,214 468,214" fill="#3D7A4A"/>
+                <polygon points="440,128 418,180 462,180" fill="#4A9159"/>
+                <path d="M 418 180 Q 440 171 462 180" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" opacity="0.9"/>
+              </g>
+              <!-- Ground -->
+              <path d="M0,214 Q125,198 250,212 T500,210 L500,360 L0,360 Z" fill="url(#ground-p1c)"/>
+              <path d="M0,230 Q125,220 250,230 T500,228 L500,246 L0,246 Z" fill="white" opacity="0.6"/>
+              <!-- Falling snow -->
+              <g fill="white" opacity="0.9">
+                <circle cx="40" cy="40" r="4"/><circle cx="100" cy="80" r="3"/><circle cx="170" cy="30" r="3.5"/>
+                <circle cx="230" cy="65" r="3"/><circle cx="300" cy="35" r="4"/><circle cx="360" cy="70" r="3"/>
+                <circle cx="420" cy="30" r="3.5"/><circle cx="470" cy="90" r="3"/><circle cx="20" cy="110" r="3"/>
+              </g>
+
+              <!-- Snowman (center back) -->
+              <circle cx="250" cy="255" r="30" fill="white" stroke="#DCE8F0" stroke-width="2"/>
+              <circle cx="250" cy="212" r="20" fill="white" stroke="#DCE8F0" stroke-width="2"/>
+              <polygon points="250,215 262,220 250,224" fill="#FF8C42"/>
+              <circle cx="242" cy="208" r="2" fill="#2D3748"/>
+              <circle cx="258" cy="208" r="2" fill="#2D3748"/>
+              <circle cx="238" cy="248" r="2.5" fill="#2D3748"/>
+              <circle cx="250" cy="252" r="2.5" fill="#2D3748"/>
+              <circle cx="262" cy="256" r="2.5" fill="#2D3748"/>
+
+              <!-- Fox sledding (left) -->
+              <ellipse cx="110" cy="298" rx="34" ry="10" fill="#8B5E3C"/>
+              <ellipse cx="118" cy="284" rx="20" ry="15" fill="#F4915A"/>
+              <ellipse cx="120" cy="288" rx="10" ry="7" fill="white"/>
+              <circle cx="132" cy="272" r="12" fill="#F4915A"/>
+              <polygon points="124,262 128,250 134,263" fill="#F4915A"/>
+              <polygon points="136,261 142,249 146,263" fill="#F4915A"/>
+              <circle cx="128" cy="271" r="2" fill="#2D3748"/>
+              <circle cx="137" cy="270" r="2" fill="#2D3748"/>
+              <path d="M 96 292 Q 60 300 30 292" stroke="#D0C8B8" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
+
+              <!-- Squirrel making a snow angel (right) -->
+              <ellipse cx="400" cy="305" rx="34" ry="16" fill="#C07840"/>
+              <circle cx="400" cy="282" r="14" fill="#D4956C"/>
+              <circle cx="395" cy="279" r="2" fill="#2D3748"/>
+              <circle cx="405" cy="279" r="2" fill="#2D3748"/>
+              <path d="M 393 288 Q 400 292 407 288" stroke="#2D3748" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <path d="M 370 300 Q 355 292 348 280" stroke="#D4956C" stroke-width="7" fill="none" stroke-linecap="round"/>
+              <path d="M 430 300 Q 445 292 452 280" stroke="#D4956C" stroke-width="7" fill="none" stroke-linecap="round"/>
+
+              <!-- Snowballs mid-air -->
+              <circle cx="180" cy="240" r="8" fill="white" stroke="#DCE8F0" stroke-width="1.5"/>
+              <circle cx="330" cy="230" r="7" fill="white" stroke="#DCE8F0" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 1</div>
+            <p class="story-text">
+              Deep in the forest, snow began to fall — softly at first, then thicker and thicker, until the whole forest was blanketed in white.<br><br>
+              All the animals rushed outside to play! They built snowmen, threw snowballs, and slid down icy hills — without a single scarf or mitten between them.
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 2: Rabbit and Elephant cozy at home -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="wall-p2c" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#FFEFD8"/>
+                  <stop offset="100%" stop-color="#FFF8ED"/>
+                </linearGradient>
+              </defs>
+              <rect width="500" height="360" fill="url(#wall-p2c)"/>
+              <rect x="0" y="300" width="500" height="60" fill="#E8D5B8"/>
+              <!-- Window showing snow outside -->
+              <rect x="20" y="30" width="120" height="100" rx="6" fill="#B8CFE2" stroke="#8B5E3C" stroke-width="5"/>
+              <line x1="80" y1="30" x2="80" y2="130" stroke="#8B5E3C" stroke-width="4"/>
+              <line x1="20" y1="80" x2="140" y2="80" stroke="#8B5E3C" stroke-width="4"/>
+              <circle cx="45" cy="55" r="3" fill="white" opacity="0.9"/>
+              <circle cx="65" cy="100" r="3" fill="white" opacity="0.9"/>
+              <circle cx="105" cy="60" r="3" fill="white" opacity="0.9"/>
+              <circle cx="120" cy="105" r="3" fill="white" opacity="0.9"/>
+
+              <!-- Fireplace (right) -->
+              <rect x="380" y="150" width="100" height="130" rx="8" fill="#B8876A" stroke="#8B5E3C" stroke-width="3"/>
+              <rect x="400" y="200" width="60" height="70" rx="6" fill="#4A2818"/>
+              <path d="M 415 260 Q 420 240 412 225 Q 425 232 428 215 Q 438 230 434 250 Q 440 245 438 232 Q 448 250 435 262 Z" fill="#FF8C42"/>
+              <path d="M 420 255 Q 424 244 418 234 Q 426 238 430 226 Q 434 240 428 250 Z" fill="#FFD166"/>
+
+              <!-- Rug -->
+              <ellipse cx="230" cy="290" rx="130" ry="30" fill="#FF9BAE" opacity="0.5"/>
+
+              <!-- RABBIT sitting with soup bowl -->
+              <ellipse cx="188" cy="210" rx="10" ry="28" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="188" cy="213" rx="5.5" ry="22" fill="#FFB3C6"/>
+              <ellipse cx="204" cy="206" rx="10" ry="28" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="204" cy="209" rx="5.5" ry="22" fill="#FFB3C6"/>
+              <circle cx="196" cy="256" r="28" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="196" cy="310" rx="32" ry="34" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="184" cy="251" rx="7" ry="6" fill="#2D3748"/>
+              <circle cx="186" cy="249" r="2.5" fill="#fff"/>
+              <ellipse cx="206" cy="251" rx="7" ry="6" fill="#2D3748"/>
+              <circle cx="208" cy="249" r="2.5" fill="#fff"/>
+              <path d="M 184 264 Q 196 272 208 264" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <circle cx="176" cy="260" r="8" fill="#FFB3C6" opacity="0.4"/>
+              <circle cx="216" cy="260" r="8" fill="#FFB3C6" opacity="0.4"/>
+              <!-- Arms holding bowl -->
+              <path d="M 172 300 Q 196 296 220 300" stroke="#F0E8DC" stroke-width="11" fill="none" stroke-linecap="round"/>
+              <!-- Soup bowl -->
+              <ellipse cx="196" cy="304" rx="34" ry="12" fill="#E8D5B0" stroke="#C4A87A" stroke-width="2"/>
+              <ellipse cx="196" cy="300" rx="26" ry="7" fill="#FF9BAE"/>
+              <path d="M 186 292 Q 190 282 184 276" stroke="#D0C8B8" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.6"/>
+              <path d="M 206 292 Q 210 282 204 276" stroke="#D0C8B8" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.6"/>
+
+              <!-- ELEPHANT sitting with soup, cozy -->
+              <ellipse cx="330" cy="248" rx="28" ry="40" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="410" cy="248" rx="28" ry="40" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="368" cy="300" rx="58" ry="44" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <circle cx="368" cy="238" r="48" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <path d="M 352 274 Q 336 292 340 312" stroke="#A8C0CC" stroke-width="16" fill="none" stroke-linecap="round"/>
+              <path d="M 352 274 Q 336 292 340 312" stroke="#88A0AC" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <ellipse cx="352" cy="230" rx="8" ry="6" fill="#2D3748"/>
+              <circle cx="355" cy="227" r="2.5" fill="#fff"/>
+              <ellipse cx="384" cy="230" rx="8" ry="6" fill="#2D3748"/>
+              <circle cx="387" cy="227" r="2.5" fill="#fff"/>
+              <path d="M 355 258 Q 368 267 381 258" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <circle cx="340" cy="256" r="11" fill="#FFB3C6" opacity="0.3"/>
+              <circle cx="396" cy="256" r="11" fill="#FFB3C6" opacity="0.3"/>
+              <ellipse cx="336" cy="336" rx="20" ry="11" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="404" cy="336" rx="20" ry="11" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+              <!-- Elephant's soup bowl -->
+              <ellipse cx="320" cy="322" rx="26" ry="10" fill="#E8D5B0" stroke="#C4A87A" stroke-width="1.5"/>
+              <ellipse cx="320" cy="318" rx="19" ry="6" fill="#FF9BAE"/>
+
+              <!-- Cozy steam hearts -->
+              <text x="150" y="200" font-size="14" fill="#FF9BAE" opacity="0.8">♥</text>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 2</div>
+            <p class="story-text">
+              Rabbit and Elephant, however, stayed inside. They had both just come home from the hospital after foot surgery, and their toes were still healing.<br><br>
+              So while everyone else played in the snow, Rabbit and Elephant curled up by the fire with big bowls of warm soup — safe, cosy, and very content.
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 3: Storm worsens, hospital overloaded, call for help -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sky-p3c" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#9FB8CE"/>
+                  <stop offset="100%" stop-color="#DCE8F0"/>
+                </linearGradient>
+              </defs>
+              <rect width="500" height="220" fill="url(#sky-p3c)"/>
+              <!-- Heavier falling snow -->
+              <g fill="white" opacity="0.95">
+                <circle cx="30" cy="30" r="4"/><circle cx="70" cy="70" r="5"/><circle cx="120" cy="20" r="3.5"/>
+                <circle cx="160" cy="60" r="4.5"/><circle cx="200" cy="30" r="4"/><circle cx="240" cy="80" r="3.5"/>
+                <circle cx="280" cy="25" r="4.5"/><circle cx="320" cy="65" r="4"/><circle cx="360" cy="20" r="3.5"/>
+                <circle cx="400" cy="70" r="4.5"/><circle cx="440" cy="35" r="4"/><circle cx="470" cy="85" r="3.5"/>
+                <circle cx="60" cy="120" r="3.5"/><circle cx="180" cy="130" r="3"/><circle cx="330" cy="120" r="3.5"/><circle cx="450" cy="130" r="3"/>
+              </g>
+              <!-- Ground -->
+              <rect x="0" y="220" width="500" height="140" fill="#DCE8F0"/>
+              <path d="M0,220 Q125,206 250,218 T500,216 L500,236 L0,236 Z" fill="white" opacity="0.6"/>
+
+              <!-- HOSPITAL BUILDING -->
+              <rect x="140" y="90" width="260" height="150" rx="6" fill="white" stroke="#C8D0D8" stroke-width="2"/>
+              <rect x="132" y="82" width="276" height="18" rx="4" fill="#E0E0E0" stroke="#C8C8C8" stroke-width="1.5"/>
+              <rect x="240" y="50" width="44" height="44" rx="6" fill="white" stroke="#FF6B6B" stroke-width="2"/>
+              <rect x="258" y="54" width="8" height="36" rx="2" fill="#FF6B6B"/>
+              <rect x="242" y="68" width="40" height="8" rx="2" fill="#FF6B6B"/>
+              <rect x="160" y="110" width="30" height="28" rx="3" fill="#74C8E4" opacity="0.7"/>
+              <rect x="205" y="110" width="30" height="28" rx="3" fill="#74C8E4" opacity="0.7"/>
+              <rect x="325" y="110" width="30" height="28" rx="3" fill="#74C8E4" opacity="0.7"/>
+              <rect x="368" y="110" width="24" height="28" rx="3" fill="#74C8E4" opacity="0.7"/>
+              <rect x="160" y="150" width="30" height="28" rx="3" fill="#74C8E4" opacity="0.5"/>
+              <rect x="368" y="150" width="24" height="28" rx="3" fill="#74C8E4" opacity="0.5"/>
+              <rect x="236" y="178" width="60" height="62" rx="4" fill="#B8E8F8" stroke="#4AA8C8" stroke-width="2"/>
+              <text x="292" y="102" font-size="11" fill="#2D3748" font-family="sans-serif" font-weight="bold">CITY HOSPITAL</text>
+
+              <!-- FULL banner -->
+              <rect x="150" y="245" width="200" height="34" rx="16" fill="#FF6B6B"/>
+              <text x="180" y="267" font-size="15" fill="white" font-family="sans-serif" font-weight="bold">FULLY BOOKED!</text>
+
+              <!-- Small sick animals in a queue outside -->
+              <ellipse cx="60" cy="260" rx="16" ry="20" fill="#8A94A6" stroke="#6A7486" stroke-width="1"/>
+              <circle cx="60" cy="235" r="13" fill="#8A94A6" stroke="#6A7486" stroke-width="1"/>
+              <path d="M 55 236 Q 60 240 65 236" stroke="#2D3748" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <ellipse cx="440" cy="262" rx="15" ry="19" fill="#C8946A" stroke="#8B5E3C" stroke-width="1"/>
+              <circle cx="440" cy="238" r="12" fill="#C8946A" stroke="#8B5E3C" stroke-width="1"/>
+              <path d="M 435 240 Q 440 236 445 240" stroke="#2D3748" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+
+              <!-- Megaphone call for help -->
+              <path d="M 100 300 L 130 288 L 130 322 Z" fill="#FFD166" stroke="#E8B800" stroke-width="1.5"/>
+              <rect x="128" y="298" width="10" height="12" fill="#FFD166" stroke="#E8B800" stroke-width="1.5"/>
+              <text x="140" y="310" font-size="13" fill="#FF6B6B" font-family="sans-serif" font-weight="bold">Help needed!</text>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 3</div>
+            <p class="story-text">
+              But the snow kept falling — for days and days. Soon, animal after animal came down with coughs, colds, and chills from playing out in the cold without warm clothes.<br><br>
+              The hospital filled up fast. Too fast. It sent an urgent message out to the whole forest: <em>"We need healthy helpers — please, anyone who can, come lend a hand!"</em>
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 4: Hospital arrival, Dr Squirrel assigns roles -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="wall-p4c" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#E4F0FC"/>
+                  <stop offset="100%" stop-color="#FBF7F0"/>
+                </linearGradient>
+                <linearGradient id="floor-p4c" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#E8E8F0"/>
+                  <stop offset="100%" stop-color="#DCDCE8"/>
+                </linearGradient>
+              </defs>
+              <rect width="500" height="360" fill="url(#wall-p4c)"/>
+              <rect x="0" y="290" width="500" height="70" fill="url(#floor-p4c)"/>
+              <rect x="0" y="0" width="500" height="8" fill="#D0D8E8"/>
+              <!-- Red cross sign -->
+              <rect x="220" y="30" width="44" height="44" rx="6" fill="white" stroke="#FF6B6B" stroke-width="2"/>
+              <rect x="238" y="34" width="8" height="36" rx="2" fill="#FF6B6B"/>
+              <rect x="222" y="48" width="40" height="8" rx="2" fill="#FF6B6B"/>
+              <!-- Snow visible through entrance window -->
+              <rect x="380" y="60" width="90" height="120" rx="5" fill="#DCE8F0" stroke="#B0C0D8" stroke-width="2"/>
+              <circle cx="400" cy="90" r="3" fill="white"/><circle cx="430" cy="120" r="3" fill="white"/>
+              <circle cx="450" cy="80" r="3" fill="white"/><circle cx="415" cy="150" r="3" fill="white"/>
+
+              <!-- DR SQUIRREL (right, greeting - clear of Elephant) -->
+              <path d="M 390 285 Q 368 250 383 225 Q 396 205 413 215 Q 423 222 418 238 Q 410 255 396 265 Q 386 272 390 285" fill="#C07840" stroke="#A06030" stroke-width="1.5"/>
+              <ellipse cx="390" cy="282" rx="20" ry="25" fill="white" stroke="#D0D0D0" stroke-width="1.5"/>
+              <circle cx="390" cy="248" r="20" fill="#D4956C" stroke="#B87040" stroke-width="1.5"/>
+              <circle cx="378" cy="232" r="8" fill="#D4956C" stroke="#B87040" stroke-width="1.5"/>
+              <circle cx="378" cy="232" r="4" fill="#C08060"/>
+              <circle cx="402" cy="232" r="8" fill="#D4956C" stroke="#B87040" stroke-width="1.5"/>
+              <circle cx="402" cy="232" r="4" fill="#C08060"/>
+              <rect x="378" y="227" width="24" height="6" rx="2" fill="white" stroke="#D0D0D0" stroke-width="1"/>
+              <rect x="383" y="220" width="14" height="9" rx="2" fill="white" stroke="#D0D0D0" stroke-width="1"/>
+              <rect x="387" y="221" width="3" height="7" rx="1" fill="#FF6B6B"/>
+              <rect x="385" y="224" width="8" height="3" rx="1" fill="#FF6B6B"/>
+              <ellipse cx="382" cy="246" rx="5" ry="5" fill="#2D3748"/>
+              <circle cx="384" cy="244" r="2" fill="#fff"/>
+              <ellipse cx="398" cy="246" rx="5" ry="5" fill="#2D3748"/>
+              <circle cx="400" cy="244" r="2" fill="#fff"/>
+              <ellipse cx="390" cy="252" rx="3" ry="2" fill="#8B4020"/>
+              <path d="M 385 257 Q 390 261 395 257" stroke="#2D3748" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <!-- Arm gesturing welcome toward Rabbit and Elephant -->
+              <path d="M 372 268 Q 335 262 300 252" stroke="#D4956C" stroke-width="8" fill="none" stroke-linecap="round"/>
+
+              <!-- Speech bubble -->
+              <ellipse cx="368" cy="175" rx="90" ry="30" fill="white" stroke="#D0C8B8" stroke-width="1.5" opacity="0.95"/>
+              <path d="M 378 203 Q 384 216 392 226 Q 376 222 368 208 Z" fill="white" stroke="#D0C8B8" stroke-width="1.5"/>
+              <text x="368" y="170" text-anchor="middle" font-size="11" fill="#2D3748" font-family="sans-serif" font-weight="bold">Thank you for coming!</text>
+              <text x="368" y="185" text-anchor="middle" font-size="10" fill="#2D3748" font-family="sans-serif">We really need your help.</text>
+
+              <!-- RABBIT (left, arriving, snow on shoulders) -->
+              <ellipse cx="90" cy="215" rx="9" ry="26" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="90" cy="218" rx="5" ry="20" fill="#FFB3C6"/>
+              <ellipse cx="106" cy="211" rx="9" ry="26" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="106" cy="214" rx="5" ry="20" fill="#FFB3C6"/>
+              <circle cx="98" cy="258" r="26" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="98" cy="310" rx="28" ry="34" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <circle cx="88" cy="253" r="7" fill="#2D3748"/>
+              <circle cx="90" cy="251" r="2.5" fill="#fff"/>
+              <circle cx="108" cy="253" r="7" fill="#2D3748"/>
+              <circle cx="110" cy="251" r="2.5" fill="#fff"/>
+              <path d="M 87 270 Q 98 279 109 270" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <circle cx="80" cy="264" r="8" fill="#FFB3C6" opacity="0.4"/>
+              <circle cx="116" cy="264" r="8" fill="#FFB3C6" opacity="0.4"/>
+              <ellipse cx="84" cy="340" rx="14" ry="9" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="112" cy="340" rx="14" ry="9" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <circle cx="122" cy="304" r="9" fill="#fff" stroke="#D0C8B8" stroke-width="1"/>
+              <circle cx="90" cy="200" r="3" fill="white"/><circle cx="108" cy="198" r="2.5" fill="white"/>
+
+              <!-- ELEPHANT (left-center, listening attentively) -->
+              <ellipse cx="176" cy="228" rx="26" ry="38" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="256" cy="228" rx="26" ry="38" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="212" cy="292" rx="54" ry="44" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <circle cx="212" cy="228" r="46" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <path d="M 196 265 Q 180 280 184 300" stroke="#A8C0CC" stroke-width="16" fill="none" stroke-linecap="round"/>
+              <path d="M 196 265 Q 180 280 184 300" stroke="#88A0AC" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <circle cx="197" cy="220" r="7.5" fill="#2D3748"/>
+              <circle cx="200" cy="217" r="3" fill="#fff"/>
+              <circle cx="227" cy="220" r="7.5" fill="#2D3748"/>
+              <circle cx="230" cy="217" r="3" fill="#fff"/>
+              <path d="M 199 250 Q 212 259 225 250" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <circle cx="184" cy="247" r="10" fill="#FFB3C6" opacity="0.3"/>
+              <circle cx="240" cy="247" r="10" fill="#FFB3C6" opacity="0.3"/>
+              <ellipse cx="184" cy="330" rx="20" ry="11" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="242" cy="330" rx="20" ry="11" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 4</div>
+            <p class="story-text">
+              Rabbit and Elephant looked at each other. Their toes were healed now, and they knew exactly what to do.<br><br>
+              At the hospital, Dr. Squirrel greeted them with a grateful smile. <em>"Elephant, please help Nurse Giraffe on the ward. Rabbit, please help fetch food and supplies for our patients."</em><br><br>
+              And so, their very first day of helping began.
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 5: Elephant's mask mishap setup with Pig -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="wall-p5c" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#E8F2FC"/>
+                  <stop offset="100%" stop-color="#FBF8F2"/>
+                </linearGradient>
+                <linearGradient id="floor-p5c" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#EAEAF5"/>
+                  <stop offset="100%" stop-color="#DEDEEC"/>
+                </linearGradient>
+              </defs>
+              <rect width="500" height="360" fill="url(#wall-p5c)"/>
+              <rect x="0" y="295" width="500" height="65" fill="url(#floor-p5c)"/>
+              <rect x="0" y="0" width="500" height="10" fill="#74C8E4" opacity="0.4"/>
+
+              <!-- Shelf of masks -->
+              <rect x="20" y="60" width="90" height="70" rx="4" fill="#E8EEF4" stroke="#C0C8D8" stroke-width="1.5"/>
+              <circle cx="45" cy="80" r="10" fill="#B8E8F8" stroke="#4AA8C8" stroke-width="1.5"/>
+              <circle cx="75" cy="80" r="10" fill="#B8E8F8" stroke="#4AA8C8" stroke-width="1.5"/>
+              <circle cx="60" cy="108" r="16" fill="#B8E8F8" stroke="#4AA8C8" stroke-width="2"/>
+
+              <!-- Exam bed -->
+              <rect x="130" y="255" width="280" height="40" rx="8" fill="#E0EEF8" stroke="#A8C0D8" stroke-width="2"/>
+              <rect x="150" y="293" width="18" height="26" rx="4" fill="#C0D4E4"/>
+              <rect x="370" y="293" width="18" height="26" rx="4" fill="#C0D4E4"/>
+
+              <!-- PIG on bed, unaware -->
+              <ellipse cx="290" cy="255" rx="60" ry="34" fill="#FFC4D6" stroke="#E89AB0" stroke-width="1.5"/>
+              <circle cx="220" cy="240" r="30" fill="#FFC4D6" stroke="#E89AB0" stroke-width="1.5"/>
+              <ellipse cx="205" cy="222" rx="8" ry="10" fill="#FFC4D6" stroke="#E89AB0" stroke-width="1.5"/>
+              <ellipse cx="235" cy="222" rx="8" ry="10" fill="#FFC4D6" stroke="#E89AB0" stroke-width="1.5"/>
+              <ellipse cx="212" cy="245" rx="9" ry="6" fill="#FF8FA3"/>
+              <circle cx="209" cy="243" r="1.5" fill="#B85A70"/>
+              <circle cx="215" cy="243" r="1.5" fill="#B85A70"/>
+              <circle cx="208" cy="230" r="4" fill="#2D3748"/>
+              <circle cx="232" cy="230" r="4" fill="#2D3748"/>
+              <path d="M 210 250 Q 218 254 226 250" stroke="#2D3748" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <!-- Curly tail -->
+              <path d="M 348 235 Q 358 225 352 218 Q 346 224 350 230" stroke="#E89AB0" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+              <!-- ELEPHANT-SIZED mask on tiny Pig snout (comedically oversized) -->
+              <ellipse cx="212" cy="246" rx="26" ry="22" fill="#B8E8F8" stroke="#4AA8C8" stroke-width="2.5" opacity="0.9"/>
+              <rect x="234" y="240" width="18" height="10" rx="4" fill="#4AA8C8"/>
+
+              <!-- ELEPHANT (right, chatting with Nurse Giraffe, not looking) -->
+              <ellipse cx="360" cy="185" rx="24" ry="34" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5" transform="rotate(10 360 185)"/>
+              <ellipse cx="420" cy="178" rx="24" ry="34" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5" transform="rotate(-10 420 178)"/>
+              <ellipse cx="392" cy="238" rx="50" ry="40" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <circle cx="388" cy="178" r="42" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <path d="M 405 210 Q 420 222 418 240" stroke="#A8C0CC" stroke-width="14" fill="none" stroke-linecap="round"/>
+              <path d="M 405 210 Q 420 222 418 240" stroke="#88A0AC" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <!-- Looking away toward giraffe (eyes turned right) -->
+              <ellipse cx="378" cy="172" rx="6" ry="6" fill="#2D3748"/>
+              <circle cx="381" cy="170" r="2" fill="#fff"/>
+              <ellipse cx="402" cy="172" rx="6" ry="6" fill="#2D3748"/>
+              <circle cx="405" cy="170" r="2" fill="#fff"/>
+              <path d="M 380 198 Q 391 205 402 198" stroke="#2D3748" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <circle cx="368" cy="196" r="9" fill="#FFB3C6" opacity="0.3"/>
+              <circle cx="412" cy="196" r="9" fill="#FFB3C6" opacity="0.3"/>
+
+              <!-- NURSE GIRAFFE (far right, tall, talking) -->
+              <ellipse cx="466" cy="270" rx="26" ry="46" fill="#E8C078" stroke="#C08840" stroke-width="1.5"/>
+              <path d="M 458 150 Q 452 210 458 228" stroke="#E8C078" stroke-width="26" fill="none" stroke-linecap="round"/>
+              <path d="M 458 150 Q 452 210 458 228" stroke="#C08840" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.6"/>
+              <circle cx="456" cy="128" r="24" fill="#E8C078" stroke="#C08840" stroke-width="1.5"/>
+              <ellipse cx="448" cy="104" rx="4" ry="9" fill="#C08840"/>
+              <circle cx="448" cy="99" r="4" fill="#8B6020"/>
+              <ellipse cx="466" cy="104" rx="4" ry="9" fill="#C08840"/>
+              <circle cx="466" cy="99" r="4" fill="#8B6020"/>
+              <!-- Patches -->
+              <ellipse cx="446" cy="180" rx="10" ry="8" fill="#C08840" opacity="0.7"/>
+              <ellipse cx="470" cy="230" rx="9" ry="7" fill="#C08840" opacity="0.7"/>
+              <ellipse cx="452" cy="290" rx="9" ry="7" fill="#C08840" opacity="0.6"/>
+              <!-- Nurse cap -->
+              <rect x="444" y="112" width="26" height="7" rx="2" fill="white" stroke="#D0D0D0" stroke-width="1"/>
+              <rect x="450" y="105" width="14" height="9" rx="2" fill="white" stroke="#D0D0D0" stroke-width="1"/>
+              <rect x="454" y="106" width="3" height="7" rx="1" fill="#FF6B6B"/>
+              <rect x="452" y="109" width="8" height="3" rx="1" fill="#FF6B6B"/>
+              <!-- Eyes -->
+              <circle cx="448" cy="124" r="4.5" fill="#2D3748"/>
+              <circle cx="450" cy="122" r="1.5" fill="#fff"/>
+              <circle cx="464" cy="124" r="4.5" fill="#2D3748"/>
+              <circle cx="466" cy="122" r="1.5" fill="#fff"/>
+              <path d="M 450 136 Q 456 140 462 136" stroke="#2D3748" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <!-- Legs -->
+              <ellipse cx="452" cy="330" rx="10" ry="24" fill="#E8C078" stroke="#C08840" stroke-width="1.5"/>
+              <ellipse cx="480" cy="330" rx="10" ry="24" fill="#E8C078" stroke="#C08840" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 5</div>
+            <p class="story-text">
+              Nurse Giraffe brought Elephant to Pig's bedside. <em>"Pig needs a breathing mask,"</em> she said, and hurried off to fetch supplies.<br><br>
+              Elephant looked at the shelf of masks and picked the biggest one — his own size! — and popped it right onto Pig's snout.<br><br>
+              Then he turned to chat with Nurse Giraffe, not noticing the machine humming to life behind him…
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 6: Mishap and fix -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="wall-p6c" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#E8F2FC"/>
+                  <stop offset="100%" stop-color="#FBF8F2"/>
+                </linearGradient>
+              </defs>
+              <rect width="500" height="360" fill="url(#wall-p6c)"/>
+              <rect x="0" y="295" width="500" height="65" fill="#EAEAF5"/>
+
+              <!-- Impact stars near wall -->
+              <text x="60" y="150" font-size="26" fill="#FFD166" opacity="0.9">✦</text>
+              <text x="100" y="120" font-size="18" fill="#FF9BAE" opacity="0.85">✦</text>
+              <text x="40" y="200" font-size="16" fill="#74C8E4" opacity="0.8">✦</text>
+              <text x="70" y="100" font-size="30" fill="#FF6B6B" font-family="sans-serif" font-weight="bold" opacity="0.9">THUD!</text>
+
+              <!-- PIG against the wall (dazed) -->
+              <ellipse cx="90" cy="210" rx="34" ry="30" fill="#FFC4D6" stroke="#E89AB0" stroke-width="1.5"/>
+              <ellipse cx="70" cy="195" rx="8" ry="10" fill="#FFC4D6" stroke="#E89AB0" stroke-width="1.5"/>
+              <ellipse cx="100" cy="192" rx="8" ry="10" fill="#FFC4D6" stroke="#E89AB0" stroke-width="1.5"/>
+              <ellipse cx="80" cy="212" rx="9" ry="6" fill="#FF8FA3"/>
+              <path d="M 65 200 L 73 206 M 73 200 L 65 206" stroke="#2D3748" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M 95 200 L 103 206 M 103 200 L 95 206" stroke="#2D3748" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M 108 214 q 10 6 4 14" stroke="#74C8E4" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
+              <path d="M 112 220 q 8 4 2 12" stroke="#74C8E4" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.5"/>
+
+              <!-- Toppled mask on floor -->
+              <ellipse cx="150" cy="290" rx="20" ry="14" fill="#B8E8F8" stroke="#4AA8C8" stroke-width="2" opacity="0.8" transform="rotate(20 150 290)"/>
+
+              <!-- Exam bed (empty now) -->
+              <rect x="180" y="255" width="240" height="40" rx="8" fill="#E0EEF8" stroke="#A8C0D8" stroke-width="2"/>
+              <rect x="200" y="293" width="18" height="26" rx="4" fill="#C0D4E4"/>
+              <rect x="380" y="293" width="18" height="26" rx="4" fill="#C0D4E4"/>
+
+              <!-- ELEPHANT rushing to help, alarmed -->
+              <ellipse cx="330" cy="200" rx="26" ry="38" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="410" cy="200" rx="26" ry="38" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="370" cy="262" rx="54" ry="44" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <circle cx="370" cy="198" r="46" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <path d="M 350 236 Q 300 250 260 250" stroke="#A8C0CC" stroke-width="16" fill="none" stroke-linecap="round"/>
+              <path d="M 350 236 Q 300 250 260 250" stroke="#88A0AC" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <!-- Wide shocked eyes -->
+              <circle cx="352" cy="190" r="10" fill="white" stroke="#D0C8B8" stroke-width="1"/>
+              <circle cx="352" cy="192" r="5.5" fill="#2D3748"/>
+              <circle cx="388" cy="190" r="10" fill="white" stroke="#D0C8B8" stroke-width="1"/>
+              <circle cx="388" cy="192" r="5.5" fill="#2D3748"/>
+              <ellipse cx="370" cy="222" rx="8" ry="7" fill="#2D3748"/>
+              <ellipse cx="370" cy="222" rx="5" ry="4" fill="#FF9BAE"/>
+              <ellipse cx="356" cy="330" rx="20" ry="11" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="400" cy="330" rx="20" ry="11" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+
+              <!-- Correct small mask, ready in Elephant's trunk-reach -->
+              <ellipse cx="255" cy="252" rx="12" ry="9" fill="#B8E8F8" stroke="#4AA8C8" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 6</div>
+            <p class="story-text">
+              The oversized mask blasted a huge gust of air — and Pig went flying clean off the bed, landing against the wall with a loud <em>THUD!</em><br><br>
+              Elephant spun around. <em>"Oh no — sorry, Pig!"</em> He scooped Pig up gently, tucked him back into bed, and — after checking carefully with Nurse Giraffe — fitted him with the right, Pig-sized mask.<br><br>
+              Elephant's first day was off to a rather rocky start.
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 7: Rabbit's soup/ice-cream mixup -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="wall-p7c" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#E8F2FC"/>
+                  <stop offset="100%" stop-color="#FBF8F2"/>
+                </linearGradient>
+                <linearGradient id="floor-p7c" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#EAEAF5"/>
+                  <stop offset="100%" stop-color="#DEDEEC"/>
+                </linearGradient>
+              </defs>
+              <rect width="500" height="360" fill="url(#wall-p7c)"/>
+              <rect x="0" y="295" width="500" height="65" fill="url(#floor-p7c)"/>
+
+              <!-- Two beds -->
+              <rect x="20" y="230" width="170" height="34" rx="8" fill="#E0EEF8" stroke="#A8C0D8" stroke-width="2"/>
+              <rect x="310" y="230" width="170" height="34" rx="8" fill="#E0EEF8" stroke="#A8C0D8" stroke-width="2"/>
+
+              <!-- Need icons above beds -->
+              <text x="95" y="205" font-size="22" fill="#FF6B6B" font-family="sans-serif">🌶️</text>
+              <text x="390" y="205" font-size="22" fill="#74C8E4">❄️</text>
+
+              <!-- DEER on left bed (needs warm soup) -->
+              <ellipse cx="95" cy="230" rx="46" ry="22" fill="#C8946A" stroke="#8B5E3C" stroke-width="1.5"/>
+              <circle cx="60" cy="215" r="20" fill="#C8946A" stroke="#8B5E3C" stroke-width="1.5"/>
+              <path d="M 48 200 Q 42 185 48 178 M 48 200 Q 54 188 58 184" stroke="#8B5E3C" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <path d="M 68 200 Q 74 185 68 178 M 68 200 Q 62 188 58 184" stroke="#8B5E3C" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <ellipse cx="52" cy="216" rx="9" ry="12" fill="#F0DCC8"/>
+              <circle cx="50" cy="210" r="3" fill="#2D3748"/>
+              <circle cx="68" cy="210" r="3" fill="#2D3748"/>
+              <ellipse cx="58" cy="222" rx="3" ry="2" fill="#5A3A20"/>
+
+              <!-- FOX on right bed (needs ice cream) -->
+              <ellipse cx="390" cy="230" rx="46" ry="22" fill="#F4915A" stroke="#C8703C" stroke-width="1.5"/>
+              <circle cx="425" cy="215" r="20" fill="#F4915A" stroke="#C8703C" stroke-width="1.5"/>
+              <polygon points="412,198 408,182 420,196" fill="#F4915A" stroke="#C8703C" stroke-width="1"/>
+              <polygon points="432,196 442,182 438,198" fill="#F4915A" stroke="#C8703C" stroke-width="1"/>
+              <ellipse cx="425" cy="220" rx="9" ry="7" fill="white"/>
+              <circle cx="419" cy="210" r="3" fill="#2D3748"/>
+              <circle cx="431" cy="210" r="3" fill="#2D3748"/>
+              <ellipse cx="425" cy="220" rx="3" ry="2" fill="#8B4020"/>
+
+              <!-- RABBIT in the middle, rushed, holding both items -->
+              <ellipse cx="248" cy="175" rx="9" ry="26" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(-10 248 175)"/>
+              <ellipse cx="264" cy="172" rx="9" ry="26" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(10 264 172)"/>
+              <circle cx="256" cy="220" r="27" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="256" cy="275" rx="30" ry="36" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="245" cy="214" rx="7" ry="6" fill="#2D3748"/>
+              <circle cx="247" cy="212" r="2.5" fill="#fff"/>
+              <ellipse cx="267" cy="214" rx="7" ry="6" fill="#2D3748"/>
+              <circle cx="269" cy="212" r="2.5" fill="#fff"/>
+              <path d="M 244 230 Q 256 236 268 230" stroke="#2D3748" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <circle cx="236" cy="224" r="8" fill="#FFB3C6" opacity="0.4"/>
+              <circle cx="276" cy="224" r="8" fill="#FFB3C6" opacity="0.4"/>
+              <ellipse cx="242" cy="305" rx="15" ry="9" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="270" cy="305" rx="15" ry="9" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+
+              <!-- Arm to Deer with ice cream (wrong!) -->
+              <path d="M 228 260 Q 170 250 130 245" stroke="#F0E8DC" stroke-width="10" fill="none" stroke-linecap="round"/>
+              <ellipse cx="120" cy="243" rx="14" ry="10" fill="#FFE0E8" stroke="#D8A8B8" stroke-width="1.5"/>
+              <path d="M 115 236 Q 120 225 125 236" fill="#FFB8C6"/>
+
+              <!-- Arm to Fox with soup (wrong!) -->
+              <path d="M 284 260 Q 330 250 360 245" stroke="#F0E8DC" stroke-width="10" fill="none" stroke-linecap="round"/>
+              <ellipse cx="372" cy="245" rx="16" ry="9" fill="#E8D5B0" stroke="#C4A87A" stroke-width="1.5"/>
+              <ellipse cx="372" cy="241" rx="11" ry="5" fill="#FF6B4A"/>
+
+              <!-- Crossed swap arrows -->
+              <path d="M 150 200 Q 250 160 350 200" stroke="#FF6B6B" stroke-width="2" fill="none" stroke-linecap="round" stroke-dasharray="6 5" opacity="0.7"/>
+              <text x="240" y="165" font-size="14" fill="#FF6B6B" font-family="sans-serif" font-weight="bold">?!</text>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 7</div>
+            <p class="story-text">
+              Across the hall, Rabbit had her own assignment. Deer had a cold and needed warm chilli soup. Fox had a fever and needed cooling ice cream.<br><br>
+              Rabbit dashed off, arms full of both — but in her hurry, she mixed them up completely: icy-cold ice cream for shivering Deer, and fiery hot chilli soup for feverish Fox!
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 8: Mishap fallout, Dr Sheep fixes it -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="wall-p8c" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#E8F2FC"/>
+                  <stop offset="100%" stop-color="#FBF8F2"/>
+                </linearGradient>
+              </defs>
+              <rect width="500" height="360" fill="url(#wall-p8c)"/>
+              <rect x="0" y="295" width="500" height="65" fill="#EAEAF5"/>
+
+              <!-- Two beds -->
+              <rect x="10" y="235" width="160" height="34" rx="8" fill="#E0EEF8" stroke="#A8C0D8" stroke-width="2"/>
+              <rect x="330" y="235" width="160" height="34" rx="8" fill="#E0EEF8" stroke="#A8C0D8" stroke-width="2"/>
+
+              <!-- DEER shivering, blue-tinged, holding ice cream -->
+              <ellipse cx="90" cy="235" rx="44" ry="21" fill="#9FB8CE" stroke="#7A96AC" stroke-width="1.5"/>
+              <circle cx="56" cy="221" r="19" fill="#9FB8CE" stroke="#7A96AC" stroke-width="1.5"/>
+              <path d="M 44 206 Q 38 192 44 185 M 44 206 Q 50 194 54 190" stroke="#7A96AC" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <path d="M 64 206 Q 70 192 64 185 M 64 206 Q 58 194 54 190" stroke="#7A96AC" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <path d="M 48 218 Q 56 214 64 218" stroke="#2D3748" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M 48 226 Q 56 236 64 226" stroke="#2D3748" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <ellipse cx="118" cy="230" rx="12" ry="9" fill="#FFE0E8" stroke="#D8A8B8" stroke-width="1.5"/>
+              <text x="30" y="185" font-size="16" fill="#74C8E4">❄️❄️</text>
+
+              <!-- FOX flushed, steaming, holding soup -->
+              <ellipse cx="410" cy="235" rx="44" ry="21" fill="#FF8060" stroke="#D8603C" stroke-width="1.5"/>
+              <circle cx="444" cy="221" r="19" fill="#FF8060" stroke="#D8603C" stroke-width="1.5"/>
+              <polygon points="432,206 428,192 439,205" fill="#FF8060" stroke="#D8603C" stroke-width="1"/>
+              <polygon points="452,205 461,192 456,206" fill="#FF8060" stroke="#D8603C" stroke-width="1"/>
+              <ellipse cx="444" cy="226" rx="8" ry="6" fill="white"/>
+              <path d="M 434 216 Q 444 212 454 216" stroke="#2D3748" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M 436 230 Q 444 226 452 230" stroke="#2D3748" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <path d="M 425 195 q 5 -10 -2 -18" stroke="#D8D8D8" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.7"/>
+              <path d="M 440 190 q 5 -10 -2 -18" stroke="#D8D8D8" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.6"/>
+              <ellipse cx="384" cy="230" rx="14" ry="8" fill="#E8D5B0" stroke="#C4A87A" stroke-width="1.5"/>
+              <ellipse cx="384" cy="226" rx="9" ry="4" fill="#FF6B4A"/>
+
+              <!-- DR SHEEP rushing in (center) -->
+              <ellipse cx="255" cy="270" rx="38" ry="42" fill="white" stroke="#D8D8D8" stroke-width="1.5"/>
+              <circle cx="228" cy="252" r="15" fill="white" stroke="#D8D8D8" stroke-width="1.5"/>
+              <circle cx="242" cy="240" r="13" fill="white" stroke="#D8D8D8" stroke-width="1.5"/>
+              <circle cx="260" cy="236" r="14" fill="white" stroke="#D8D8D8" stroke-width="1.5"/>
+              <circle cx="278" cy="242" r="13" fill="white" stroke="#D8D8D8" stroke-width="1.5"/>
+              <circle cx="288" cy="256" r="14" fill="white" stroke="#D8D8D8" stroke-width="1.5"/>
+              <!-- Face -->
+              <ellipse cx="257" cy="252" rx="24" ry="19" fill="#4A4A52"/>
+              <ellipse cx="238" cy="240" rx="6" ry="9" fill="#4A4A52" transform="rotate(-20 238 240)"/>
+              <ellipse cx="276" cy="240" rx="6" ry="9" fill="#4A4A52" transform="rotate(20 276 240)"/>
+              <circle cx="249" cy="250" r="4" fill="white"/>
+              <circle cx="250" cy="250" r="2" fill="#2D3748"/>
+              <circle cx="265" cy="250" r="4" fill="white"/>
+              <circle cx="266" cy="250" r="2" fill="#2D3748"/>
+              <ellipse cx="257" cy="258" rx="3" ry="2" fill="#FFB3C6"/>
+              <path d="M 250 263 Q 257 267 264 263" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <!-- Stethoscope -->
+              <path d="M 240 278 Q 232 290 240 298 Q 248 304 254 298" stroke="#4A4A52" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <circle cx="257" cy="298" r="4" fill="#4A4A52"/>
+              <!-- Legs -->
+              <ellipse cx="238" cy="330" rx="8" ry="18" fill="#4A4A52"/>
+              <ellipse cx="272" cy="330" rx="8" ry="18" fill="#4A4A52"/>
+              <!-- Arms reaching for bowls, mid-swap -->
+              <path d="M 222 275 Q 190 265 170 258" stroke="#4A4A52" stroke-width="7" fill="none" stroke-linecap="round"/>
+              <path d="M 292 275 Q 324 265 344 258" stroke="#4A4A52" stroke-width="7" fill="none" stroke-linecap="round"/>
+
+              <!-- Exclamation -->
+              <text x="240" y="205" font-size="24" fill="#FF6B6B" font-family="sans-serif" font-weight="bold">Oh dear!</text>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 8</div>
+            <p class="story-text">
+              Poor Deer shivered even harder with each cold spoonful, while Fox turned redder and redder with every spicy sip. Both patients felt much, much worse.<br><br>
+              Dr. Sheep came rushing in at once. <em>"Oh dear — wrong dishes!"</em> She swapped the bowls right away, tucked a blanket around Deer, and fanned Fox with a leaf until both patients settled back down.
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 9: Elephant's second mixup with Wolf and Giraffe patient -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="wall-p9c" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#E8F2FC"/>
+                  <stop offset="100%" stop-color="#FBF8F2"/>
+                </linearGradient>
+                <linearGradient id="floor-p9c" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#EAEAF5"/>
+                  <stop offset="100%" stop-color="#DEDEEC"/>
+                </linearGradient>
+              </defs>
+              <rect width="500" height="360" fill="url(#wall-p9c)"/>
+              <rect x="0" y="295" width="500" height="65" fill="url(#floor-p9c)"/>
+
+              <!-- Two beds -->
+              <rect x="10" y="235" width="160" height="34" rx="8" fill="#E0EEF8" stroke="#A8C0D8" stroke-width="2"/>
+              <rect x="330" y="235" width="160" height="34" rx="8" fill="#E0EEF8" stroke="#A8C0D8" stroke-width="2"/>
+
+              <!-- GIRAFFE PATIENT (left bed, fever, gown, no nurse cap) -->
+              <ellipse cx="90" cy="230" rx="20" ry="34" fill="#D8B888" stroke="#B08840" stroke-width="1.5"/>
+              <circle cx="86" cy="185" r="17" fill="#D8B888" stroke="#B08840" stroke-width="1.5"/>
+              <ellipse cx="78" cy="168" rx="3" ry="7" fill="#B08840"/>
+              <circle cx="78" cy="163" r="3" fill="#8B6020"/>
+              <ellipse cx="94" cy="168" rx="3" ry="7" fill="#B08840"/>
+              <circle cx="94" cy="163" r="3" fill="#8B6020"/>
+              <circle cx="80" cy="182" r="3.5" fill="#2D3748"/>
+              <circle cx="92" cy="182" r="3.5" fill="#2D3748"/>
+              <path d="M 78 194 Q 86 190 94 194" stroke="#2D3748" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <ellipse cx="86" cy="210" rx="9" ry="6" fill="#FFB3C6" opacity="0.35"/>
+              <rect x="60" y="235" width="60" height="28" rx="6" fill="white" stroke="#E0E0E0" stroke-width="1.5" opacity="0.9"/>
+
+              <!-- WOLF (right bed, cold) -->
+              <ellipse cx="410" cy="235" rx="44" ry="21" fill="#8A94A6" stroke="#6A7486" stroke-width="1.5"/>
+              <circle cx="444" cy="220" r="19" fill="#8A94A6" stroke="#6A7486" stroke-width="1.5"/>
+              <polygon points="432,203 428,188 440,202" fill="#8A94A6" stroke="#6A7486" stroke-width="1"/>
+              <polygon points="452,202 462,188 456,203" fill="#8A94A6" stroke="#6A7486" stroke-width="1"/>
+              <ellipse cx="444" cy="225" rx="8" ry="6" fill="#B8C0CC"/>
+              <circle cx="438" cy="215" r="3" fill="#2D3748"/>
+              <circle cx="450" cy="215" r="3" fill="#2D3748"/>
+              <path d="M 435 195 Q 444 190 453 195" stroke="#2D3748" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <ellipse cx="444" cy="230" rx="3" ry="2" fill="#4A4A52"/>
+
+              <!-- ELEPHANT (center) giving mixed-up meds -->
+              <ellipse cx="250" cy="200" rx="26" ry="38" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="330" cy="200" rx="26" ry="38" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="290" cy="262" rx="54" ry="44" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <circle cx="290" cy="198" r="46" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <ellipse cx="277" cy="190" rx="7.5" ry="6" fill="#2D3748"/>
+              <circle cx="280" cy="187" r="3" fill="#fff"/>
+              <ellipse cx="307" cy="190" rx="7.5" ry="6" fill="#2D3748"/>
+              <circle cx="310" cy="187" r="3" fill="#fff"/>
+              <path d="M 279 220 Q 290 228 301 220" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <circle cx="264" cy="217" r="10" fill="#FFB3C6" opacity="0.3"/>
+              <circle cx="316" cy="217" r="10" fill="#FFB3C6" opacity="0.3"/>
+              <ellipse cx="264" cy="330" rx="20" ry="11" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="316" cy="330" rx="20" ry="11" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+
+              <!-- Arm to giraffe patient with tablets (wrong item) -->
+              <path d="M 230 232 Q 180 235 140 240" stroke="#A8C0CC" stroke-width="12" fill="none" stroke-linecap="round"/>
+              <path d="M 230 232 Q 180 235 140 240" stroke="#88A0AC" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <rect x="128" y="232" width="16" height="10" rx="3" fill="white" stroke="#C0C0C0" stroke-width="1"/>
+
+              <!-- Trunk to wolf with GIANT injection (wrong size) -->
+              <path d="M 320 235 Q 370 232 400 236" stroke="#A8C0CC" stroke-width="14" fill="none" stroke-linecap="round"/>
+              <path d="M 320 235 Q 370 232 400 236" stroke="#88A0AC" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <rect x="398" y="222" width="10" height="34" rx="3" fill="#B8E8F8" stroke="#4AA8C8" stroke-width="1.5"/>
+              <rect x="401" y="216" width="4" height="8" fill="#4AA8C8"/>
+
+              <!-- Wolf yelp -->
+              <text x="452" y="180" font-size="26" fill="#FF6B6B" font-family="sans-serif" font-weight="bold">OWOOO!</text>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 9</div>
+            <p class="story-text">
+              Elephant was sent to help in one more room, where a giraffe patient with a fever needed an injection, and Wolf with a cold needed tablets.<br><br>
+              But Elephant mixed them up too — he gave Wolf's cold tablets to the giraffe, and grabbed the big giraffe-sized injection meant for the fever… and gave it straight to Wolf!<br><br>
+              Wolf let out a howl so loud the whole hospital heard it.
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 10: Office scene, one more chance -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="wall-p10c" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#EFEAF8"/>
+                  <stop offset="100%" stop-color="#FBF8F2"/>
+                </linearGradient>
+              </defs>
+              <rect width="500" height="360" fill="url(#wall-p10c)"/>
+              <rect x="0" y="300" width="500" height="60" fill="#E4E0EC"/>
+              <!-- Diplomas -->
+              <rect x="40" y="40" width="50" height="36" rx="3" fill="white" stroke="#C8C0D8" stroke-width="2"/>
+              <rect x="100" y="40" width="50" height="36" rx="3" fill="white" stroke="#C8C0D8" stroke-width="2"/>
+
+              <!-- Desk -->
+              <rect x="150" y="230" width="320" height="24" rx="4" fill="#C4A87A" stroke="#A88860" stroke-width="2"/>
+              <rect x="160" y="254" width="16" height="46" rx="3" fill="#B0946A"/>
+              <rect x="450" y="254" width="16" height="46" rx="3" fill="#B0946A"/>
+              <rect x="330" y="215" width="60" height="18" rx="3" fill="#E8D5A0" stroke="#C0A060" stroke-width="1.5"/>
+
+              <!-- DR SHEEP behind desk -->
+              <ellipse cx="400" cy="200" rx="34" ry="38" fill="white" stroke="#D8D8D8" stroke-width="1.5"/>
+              <circle cx="378" cy="184" r="13" fill="white" stroke="#D8D8D8" stroke-width="1.5"/>
+              <circle cx="391" cy="174" r="12" fill="white" stroke="#D8D8D8" stroke-width="1.5"/>
+              <circle cx="406" cy="171" r="13" fill="white" stroke="#D8D8D8" stroke-width="1.5"/>
+              <circle cx="421" cy="176" r="12" fill="white" stroke="#D8D8D8" stroke-width="1.5"/>
+              <circle cx="430" cy="188" r="13" fill="white" stroke="#D8D8D8" stroke-width="1.5"/>
+              <ellipse cx="401" cy="186" rx="22" ry="17" fill="#4A4A52"/>
+              <ellipse cx="384" cy="176" rx="5" ry="8" fill="#4A4A52" transform="rotate(-20 384 176)"/>
+              <ellipse cx="418" cy="176" rx="5" ry="8" fill="#4A4A52" transform="rotate(20 418 176)"/>
+              <circle cx="393" cy="185" r="3.5" fill="white"/>
+              <circle cx="394" cy="185" r="1.5" fill="#2D3748"/>
+              <circle cx="408" cy="185" r="3.5" fill="white"/>
+              <circle cx="409" cy="185" r="1.5" fill="#2D3748"/>
+              <ellipse cx="401" cy="192" rx="2.5" ry="1.5" fill="#FFB3C6"/>
+              <path d="M 395 196 Q 401 199 407 196" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <path d="M 386 210 Q 380 220 386 226 Q 392 231 397 226" stroke="#4A4A52" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <circle cx="400" cy="227" r="3.5" fill="#4A4A52"/>
+
+              <!-- RABBIT and ELEPHANT, sad/hopeful, standing before desk -->
+              <ellipse cx="100" cy="220" rx="9" ry="26" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(-8 100 220)"/>
+              <ellipse cx="116" cy="218" rx="9" ry="26" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(8 116 218)"/>
+              <circle cx="108" cy="264" r="26" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="108" cy="316" rx="28" ry="34" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="99" cy="260" rx="6" ry="7" fill="#2D3748"/>
+              <ellipse cx="117" cy="260" rx="6" ry="7" fill="#2D3748"/>
+              <path d="M 98 278 Q 108 274 118 278" stroke="#2D3748" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <circle cx="92" cy="272" r="7" fill="#FFB3C6" opacity="0.35"/>
+              <circle cx="124" cy="272" r="7" fill="#FFB3C6" opacity="0.35"/>
+
+              <ellipse cx="200" cy="235" rx="26" ry="36" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="272" cy="235" rx="26" ry="36" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="236" cy="292" rx="52" ry="42" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <circle cx="236" cy="232" r="44" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <path d="M 220 266 Q 205 280 210 298" stroke="#A8C0CC" stroke-width="15" fill="none" stroke-linecap="round"/>
+              <path d="M 220 266 Q 205 280 210 298" stroke="#88A0AC" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <ellipse cx="222" cy="224" rx="7" ry="6" fill="#2D3748"/>
+              <ellipse cx="250" cy="224" rx="7" ry="6" fill="#2D3748"/>
+              <path d="M 221 252 Q 236 246 251 252" stroke="#2D3748" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <circle cx="208" cy="250" r="9" fill="#FFB3C6" opacity="0.3"/>
+              <circle cx="264" cy="250" r="9" fill="#FFB3C6" opacity="0.3"/>
+
+              <!-- Speech bubble: one more chance -->
+              <ellipse cx="240" cy="130" rx="90" ry="30" fill="white" stroke="#D0C8B8" stroke-width="1.5" opacity="0.95"/>
+              <path d="M 260 156 Q 250 168 240 178 Q 254 174 264 162 Z" fill="white" stroke="#D0C8B8" stroke-width="1.5"/>
+              <text x="240" y="126" text-anchor="middle" font-size="11" fill="#2D3748" font-family="sans-serif" font-weight="bold">Please, one more chance?</text>
+              <text x="240" y="141" text-anchor="middle" font-size="10" fill="#2D3748" font-family="sans-serif">We really want to help.</text>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 10</div>
+            <p class="story-text">
+              Dr. Sheep called Rabbit and Elephant into her office. She thanked them kindly for trying so hard — but gently suggested that maybe, today, they should just go home.<br><br>
+              Rabbit and Elephant looked at each other, feeling very sad. <em>"Please,"</em> said Elephant, <em>"just one more chance?"</em><br><br>
+              Dr. Sheep thought for a moment, then smiled. <em>"One more chance. Let's see how you do."</em>
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 11: Elephant's redemption - Lion's bandage -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="wall-p11c" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#E8F2FC"/>
+                  <stop offset="100%" stop-color="#FBF8F2"/>
+                </linearGradient>
+                <linearGradient id="floor-p11c" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#EAEAF5"/>
+                  <stop offset="100%" stop-color="#DEDEEC"/>
+                </linearGradient>
+              </defs>
+              <rect width="500" height="360" fill="url(#wall-p11c)"/>
+              <rect x="0" y="295" width="500" height="65" fill="url(#floor-p11c)"/>
+              <rect x="0" y="0" width="500" height="10" fill="#74C8E4" opacity="0.3"/>
+
+              <!-- Exam table -->
+              <rect x="60" y="245" width="300" height="42" rx="8" fill="#E0EEF8" stroke="#A8C0D8" stroke-width="2"/>
+              <rect x="80" y="287" width="18" height="26" rx="4" fill="#C0D4E4"/>
+              <rect x="320" y="287" width="18" height="26" rx="4" fill="#C0D4E4"/>
+
+              <!-- LION lying calmly on table -->
+              <ellipse cx="200" cy="245" rx="120" ry="34" fill="#E8B860" stroke="#C8963E" stroke-width="1.5"/>
+              <!-- Mane -->
+              <g fill="#D4863A" opacity="0.9">
+                <circle cx="60" cy="200" r="16"/><circle cx="48" cy="220" r="15"/><circle cx="46" cy="244" r="16"/>
+                <circle cx="54" cy="266" r="15"/><circle cx="70" cy="282" r="14"/><circle cx="90" cy="192" r="14"/>
+                <circle cx="76" cy="288" r="13"/>
+              </g>
+              <circle cx="72" cy="235" r="40" fill="#E8B860" stroke="#C8963E" stroke-width="1.5"/>
+              <!-- Sleepy calm eyes -->
+              <path d="M 56 228 Q 64 233 72 228" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <path d="M 78 228 Q 86 233 94 228" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <ellipse cx="70" cy="248" rx="6" ry="4" fill="#8B4020"/>
+              <path d="M 62 254 Q 70 260 78 254" stroke="#2D3748" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <!-- Leg with old bandage being changed -->
+              <ellipse cx="260" cy="278" rx="30" ry="16" fill="#E8B860" stroke="#C8963E" stroke-width="1.5"/>
+              <rect x="242" y="264" width="46" height="24" rx="6" fill="white" stroke="#E0E0E0" stroke-width="2"/>
+
+              <!-- ELEPHANT, careful and focused -->
+              <ellipse cx="400" cy="200" rx="26" ry="38" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="470" cy="200" rx="26" ry="38" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="432" cy="262" rx="54" ry="44" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <circle cx="428" cy="198" r="46" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <path d="M 405 236 Q 370 258 330 272" stroke="#A8C0CC" stroke-width="15" fill="none" stroke-linecap="round"/>
+              <path d="M 405 236 Q 370 258 330 272" stroke="#88A0AC" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <!-- Small fresh bandage roll at trunk tip -->
+              <ellipse cx="322" cy="273" rx="10" ry="8" fill="white" stroke="#E0E0E0" stroke-width="1.5"/>
+              <!-- Focused eyes -->
+              <ellipse cx="412" cy="188" rx="7" ry="6" fill="#2D3748"/>
+              <circle cx="414" cy="186" r="2.5" fill="#fff"/>
+              <ellipse cx="440" cy="188" rx="7" ry="6" fill="#2D3748"/>
+              <circle cx="442" cy="186" r="2.5" fill="#fff"/>
+              <path d="M 413 216 Q 426 222 439 216" stroke="#2D3748" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <circle cx="398" cy="214" r="9" fill="#FFB3C6" opacity="0.3"/>
+              <circle cx="454" cy="214" r="9" fill="#FFB3C6" opacity="0.3"/>
+              <ellipse cx="404" cy="330" rx="20" ry="11" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="456" cy="330" rx="20" ry="11" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+
+              <!-- Small calm sparkles (going well) -->
+              <text x="330" y="130" font-size="16" fill="#06C98A" opacity="0.8">✦</text>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 11</div>
+            <p class="story-text">
+              This time, Elephant was sent to Lion's room to change his bandage. He worked slowly and carefully — unwrapping the old bandage, gently cleaning the wound, and wrapping on a fresh, neat one.<br><br>
+              Lion gave a satisfied nod. Elephant had gotten it exactly right.
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 12: Rabbit's redemption - driving Tortoise home -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sky-p12c" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#B8CFE2"/>
+                  <stop offset="100%" stop-color="#EDF4F8"/>
+                </linearGradient>
+                <linearGradient id="ground-p12c" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#FFFFFF"/>
+                  <stop offset="100%" stop-color="#DCE8F0"/>
+                </linearGradient>
+              </defs>
+              <rect width="500" height="215" fill="url(#sky-p12c)"/>
+              <g fill="white" opacity="0.85">
+                <circle cx="60" cy="40" r="3"/><circle cx="140" cy="60" r="3.5"/><circle cx="400" cy="35" r="3"/><circle cx="460" cy="70" r="3.5"/>
+              </g>
+              <!-- House ahead -->
+              <rect x="390" y="120" width="80" height="65" rx="4" fill="#FFD166" stroke="#E8B800" stroke-width="2"/>
+              <polygon points="380,123 430,85 480,123" fill="#FF6B6B" stroke="#CC4444" stroke-width="2"/>
+              <rect x="415" y="150" width="18" height="28" rx="3" fill="#8B5E3C"/>
+              <path d="M 388 160 Q 410 156 412 175" fill="none" stroke="white" stroke-width="4" opacity="0.8"/>
+              <!-- Ground -->
+              <path d="M0,213 Q125,199 250,211 T500,209 L500,360 L0,360 Z" fill="url(#ground-p12c)"/>
+              <!-- Road -->
+              <rect x="0" y="222" width="500" height="138" fill="#B8B8B8"/>
+              <rect x="40" y="283" width="30" height="10" rx="3" fill="#FFD166" opacity="0.7"/>
+              <rect x="110" y="283" width="30" height="10" rx="3" fill="#FFD166" opacity="0.7"/>
+              <rect x="180" y="283" width="30" height="10" rx="3" fill="#FFD166" opacity="0.7"/>
+
+              <!-- TRUCK -->
+              <rect x="150" y="235" width="230" height="82" rx="8" fill="#FFD166" stroke="#E8B800" stroke-width="2.5"/>
+              <line x1="215" y1="235" x2="215" y2="317" stroke="#E8B800" stroke-width="1.5" opacity="0.6"/>
+              <line x1="280" y1="235" x2="280" y2="317" stroke="#E8B800" stroke-width="1.5" opacity="0.6"/>
+              <line x1="335" y1="235" x2="335" y2="317" stroke="#E8B800" stroke-width="1.5" opacity="0.6"/>
+              <rect x="40" y="248" width="112" height="70" rx="8" fill="#74C8E4" stroke="#4AA8C8" stroke-width="2.5"/>
+              <rect x="50" y="254" width="92" height="44" rx="5" fill="#B8E8F8" stroke="#4AA8C8" stroke-width="1.5"/>
+
+              <!-- Rabbit driving -->
+              <ellipse cx="100" cy="254" rx="5" ry="14" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1"/>
+              <ellipse cx="112" cy="252" rx="5" ry="14" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1"/>
+              <circle cx="106" cy="274" r="16" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1"/>
+              <circle cx="99" cy="271" r="4" fill="#2D3748"/>
+              <circle cx="113" cy="271" r="4" fill="#2D3748"/>
+              <path d="M 99 282 Q 106 286 113 282" stroke="#2D3748" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <circle cx="72" cy="288" r="10" fill="none" stroke="#4AA8C8" stroke-width="2.5"/>
+              <line x1="72" y1="278" x2="72" y2="298" stroke="#4AA8C8" stroke-width="2"/>
+
+              <!-- TORTOISE in cargo bed, cosy with blanket -->
+              <ellipse cx="270" cy="278" rx="46" ry="24" fill="#6FA85E" stroke="#4F8A44" stroke-width="2"/>
+              <path d="M 234 278 Q 270 264 306 278" fill="none" stroke="#4F8A44" stroke-width="1.5" opacity="0.6"/>
+              <path d="M 246 288 L 254 270 M 270 292 L 270 268 M 294 288 L 286 270" stroke="#4F8A44" stroke-width="1.5" opacity="0.6"/>
+              <circle cx="232" cy="272" r="16" fill="#8FBF7E" stroke="#4F8A44" stroke-width="1.5"/>
+              <circle cx="226" cy="269" r="2.5" fill="#2D3748"/>
+              <circle cx="238" cy="269" r="2.5" fill="#2D3748"/>
+              <path d="M 224 278 Q 232 282 240 278" stroke="#2D3748" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <rect x="216" y="262" width="10" height="4" rx="2" fill="#4A4A52" opacity="0.7"/>
+              <rect x="238" y="262" width="10" height="4" rx="2" fill="#4A4A52" opacity="0.7"/>
+              <path d="M 300 290 Q 270 300 240 290" stroke="#74C8E4" stroke-width="10" fill="none" stroke-linecap="round" opacity="0.5"/>
+
+              <!-- Truck wheels -->
+              <circle cx="90" cy="320" r="20" fill="#2D3748" stroke="#1A1A1A" stroke-width="2"/>
+              <circle cx="90" cy="320" r="10" fill="#555"/>
+              <circle cx="320" cy="320" r="20" fill="#2D3748" stroke="#1A1A1A" stroke-width="2"/>
+              <circle cx="320" cy="320" r="10" fill="#555"/>
+              <circle cx="360" cy="320" r="20" fill="#2D3748" stroke="#1A1A1A" stroke-width="2"/>
+              <circle cx="360" cy="320" r="10" fill="#555"/>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 12</div>
+            <p class="story-text">
+              Meanwhile, Rabbit was asked to drive old Tortoise — who had just had back surgery — safely home. She packed up all of Tortoise's things, helped him gently into the back of the truck, and drove slowly and carefully through the snowy roads.<br><br>
+              She dropped Tortoise safely at his front door, then drove straight back to the hospital to see if anyone else needed help.
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 13: End of day, chocolates, happy ending -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sky-p13c" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#FFD9A0"/>
+                  <stop offset="60%" stop-color="#FFC680"/>
+                  <stop offset="100%" stop-color="#FFEFD8"/>
+                </linearGradient>
+              </defs>
+              <rect width="500" height="220" fill="url(#sky-p13c)"/>
+              <circle cx="420" cy="80" r="46" fill="#FFB830" opacity="0.7"/>
+              <circle cx="420" cy="80" r="32" fill="#FFD166" opacity="0.9"/>
+              <!-- Snowy ground, evening -->
+              <rect x="0" y="220" width="500" height="140" fill="#E8EEF4"/>
+              <path d="M0,220 Q125,206 250,218 T500,216 L500,236 L0,236 Z" fill="white" opacity="0.7"/>
+              <!-- Hospital silhouette (background, small) -->
+              <rect x="20" y="140" width="90" height="80" rx="4" fill="#D8E0EC" opacity="0.8"/>
+              <rect x="55" y="115" width="22" height="22" rx="4" fill="white" stroke="#FF6B6B" stroke-width="1.5" opacity="0.9"/>
+
+              <!-- DR SHEEP waving goodbye (left-center) -->
+              <ellipse cx="230" cy="255" rx="30" ry="34" fill="white" stroke="#D8D8D8" stroke-width="1.5"/>
+              <circle cx="212" cy="240" r="12" fill="white" stroke="#D8D8D8" stroke-width="1.5"/>
+              <circle cx="223" cy="231" r="11" fill="white" stroke="#D8D8D8" stroke-width="1.5"/>
+              <circle cx="236" cy="229" r="12" fill="white" stroke="#D8D8D8" stroke-width="1.5"/>
+              <circle cx="249" cy="234" r="11" fill="white" stroke="#D8D8D8" stroke-width="1.5"/>
+              <ellipse cx="230" cy="240" rx="19" ry="15" fill="#4A4A52"/>
+              <ellipse cx="216" cy="231" rx="4" ry="7" fill="#4A4A52" transform="rotate(-20 216 231)"/>
+              <ellipse cx="244" cy="231" rx="4" ry="7" fill="#4A4A52" transform="rotate(20 244 231)"/>
+              <path d="M 220 238 Q 225 242 230 238" stroke="white" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+              <path d="M 230 238 Q 235 242 240 238" stroke="white" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+              <path d="M 222 246 Q 230 250 238 246" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <path d="M 205 268 Q 190 258 184 246" stroke="#4A4A52" stroke-width="6" fill="none" stroke-linecap="round"/>
+              <ellipse cx="220" cy="326" rx="7" ry="16" fill="#4A4A52"/>
+              <ellipse cx="242" cy="326" rx="7" ry="16" fill="#4A4A52"/>
+
+              <!-- RABBIT and ELEPHANT walking home, each holding a chocolate -->
+              <ellipse cx="336" cy="235" rx="8" ry="24" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="350" cy="232" rx="8" ry="24" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <circle cx="343" cy="276" r="24" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="343" cy="324" rx="26" ry="30" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <circle cx="334" cy="272" r="6" fill="#2D3748"/>
+              <circle cx="336" cy="270" r="2" fill="#fff"/>
+              <circle cx="352" cy="272" r="6" fill="#2D3748"/>
+              <circle cx="354" cy="270" r="2" fill="#fff"/>
+              <path d="M 333 286 Q 343 294 353 286" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <circle cx="326" cy="282" r="7" fill="#FFB3C6" opacity="0.4"/>
+              <circle cx="360" cy="282" r="7" fill="#FFB3C6" opacity="0.4"/>
+              <rect x="316" y="298" width="12" height="10" rx="2" fill="#8B5E3C" transform="rotate(-10 316 298)"/>
+
+              <ellipse cx="420" cy="248" rx="24" ry="34" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="480" cy="248" rx="24" ry="34" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="450" cy="302" rx="50" ry="40" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <circle cx="450" cy="248" r="42" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <path d="M 436 282 Q 424 296 428 312" stroke="#A8C0CC" stroke-width="14" fill="none" stroke-linecap="round"/>
+              <path d="M 436 282 Q 424 296 428 312" stroke="#88A0AC" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <circle cx="438" cy="238" r="7" fill="#2D3748"/>
+              <circle cx="441" cy="235" r="3" fill="#fff"/>
+              <circle cx="464" cy="238" r="7" fill="#2D3748"/>
+              <circle cx="467" cy="235" r="3" fill="#fff"/>
+              <path d="M 439 264 Q 450 274 461 264" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <circle cx="426" cy="262" r="9" fill="#FFB3C6" opacity="0.3"/>
+              <circle cx="474" cy="262" r="9" fill="#FFB3C6" opacity="0.3"/>
+              <rect x="415" y="308" width="12" height="10" rx="2" fill="#8B5E3C" transform="rotate(-10 415 308)"/>
+
+              <!-- Hearts + sparkles -->
+              <text x="300" y="180" font-size="18" fill="#FF9BAE" opacity="0.85">♥</text>
+              <text x="380" y="160" font-size="14" fill="#FFD166" opacity="0.8">✦</text>
+              <text x="270" y="150" font-size="16" fill="#06C98A" opacity="0.75">✦</text>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 13</div>
+            <p class="story-text">
+              For the rest of the day, there wasn't a single mishap. At the end of it all, Dr. Sheep gathered Rabbit and Elephant together. <em>"Thank you both, truly,"</em> she said, handing them each a chocolate. <em>"Same time tomorrow?"</em><br><br>
+              Rabbit and Elephant grinned from ear to ear (and ear to trunk). All the way home, they chattered happily about their busy day — already looking forward to coming back and helping again. <em>✨ The End ✨</em>
+            </p>
+          </div>
+        </div>
+
+      </div><!-- /book-pages -->
+
+      <div class="book-nav">
+        <button class="book-nav-btn" id="btn-prev" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+          Back
+        </button>
+        <span class="page-counter" id="page-counter">Cover</span>
+        <button class="book-nav-btn" id="btn-next">
+          Next
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </button>
+      </div>
+
+    </div><!-- /book-container -->
+
+    <p class="swipe-hint">← Swipe to turn pages →</p>
+
+  </div><!-- /reader-wrapper -->
+
+  <script src="../../assets/js/nav.js"></script>
+  <script src="../../assets/js/book.js"></script>
+
+</body>
+</html>

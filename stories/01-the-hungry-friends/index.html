@@ -33,8 +33,32 @@
         <div class="page page-cover">
           <div class="cover-illustration">
             <svg viewBox="0 0 500 240" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sky-cover" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#BFE9FB"/>
+                  <stop offset="65%" stop-color="#E8F7FF"/>
+                  <stop offset="100%" stop-color="#FFF6E0"/>
+                </linearGradient>
+                <linearGradient id="ground-cover" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#9BDD84"/>
+                  <stop offset="100%" stop-color="#6BBE64"/>
+                </linearGradient>
+              </defs>
               <!-- Sky -->
-              <rect width="500" height="240" fill="#FFF3E0"/>
+              <rect width="500" height="240" fill="url(#sky-cover)"/>
+              <!-- Soft rainbow -->
+              <path d="M 40 205 A 210 210 0 0 1 460 205" fill="none" stroke="#FF9BAE" stroke-width="6" opacity="0.35"/>
+              <path d="M 55 205 A 195 195 0 0 1 445 205" fill="none" stroke="#FFD166" stroke-width="6" opacity="0.35"/>
+              <path d="M 70 205 A 180 180 0 0 1 430 205" fill="none" stroke="#74C8E4" stroke-width="6" opacity="0.35"/>
+              <!-- Clouds -->
+              <g opacity="0.9">
+                <ellipse cx="72" cy="46" rx="34" ry="15" fill="#fff"/>
+                <ellipse cx="94" cy="38" rx="22" ry="14" fill="#fff"/>
+              </g>
+              <g opacity="0.85">
+                <ellipse cx="410" cy="38" rx="30" ry="13" fill="#fff"/>
+                <ellipse cx="430" cy="32" rx="19" ry="12" fill="#fff"/>
+              </g>
               <!-- Sun -->
               <circle cx="250" cy="55" r="38" fill="#FFD166" opacity="0.9"/>
               <circle cx="250" cy="55" r="28" fill="#FFE680"/>
@@ -46,15 +70,20 @@
                 <line x1="285" y1="90" x2="289" y2="96"/><line x1="215" y1="20" x2="211" y2="14"/>
               </g>
               <!-- Ground -->
-              <ellipse cx="250" cy="220" rx="240" ry="35" fill="#A8D88A"/>
-              <rect x="0" y="200" width="500" height="40" fill="#7BC67E"/>
+              <path d="M0,208 Q125,192 250,206 T500,204 L500,240 L0,240 Z" fill="url(#ground-cover)"/>
+              <path d="M0,222 Q125,212 250,222 T500,220 L500,236 L0,236 Z" fill="#4FA84E" opacity="0.35"/>
+              <!-- Grass tufts -->
+              <g stroke="#4FA84E" stroke-width="2" stroke-linecap="round" opacity="0.6">
+                <path d="M20,218 q3,-8 6,0"/><path d="M35,222 q3,-8 6,0"/>
+                <path d="M370,220 q3,-8 6,0"/><path d="M460,218 q3,-8 6,0"/>
+              </g>
               <!-- Flowers -->
-              <circle cx="60" cy="198" r="8" fill="#FF6B6B"/>
-              <circle cx="60" cy="198" r="4" fill="#FFD166"/>
-              <circle cx="440" cy="198" r="8" fill="#FF9BAE"/>
-              <circle cx="440" cy="198" r="4" fill="#FFD166"/>
-              <circle cx="150" cy="202" r="6" fill="#C77DFF"/>
-              <circle cx="350" cy="202" r="6" fill="#74C8E4"/>
+              <circle cx="60" cy="204" r="8" fill="#FF6B6B"/>
+              <circle cx="60" cy="204" r="4" fill="#FFD166"/>
+              <circle cx="440" cy="202" r="8" fill="#FF9BAE"/>
+              <circle cx="440" cy="202" r="4" fill="#FFD166"/>
+              <circle cx="150" cy="208" r="6" fill="#C77DFF"/>
+              <circle cx="350" cy="207" r="6" fill="#74C8E4"/>
 
               <!-- RABBIT (left side) -->
               <!-- Ears -->
@@ -134,8 +163,18 @@
         <div class="page page-spread">
           <div class="page-illustration">
             <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sky-p1" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#A8DEF5"/>
+                  <stop offset="100%" stop-color="#E8F8FF"/>
+                </linearGradient>
+                <linearGradient id="ground-p1" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#8ECB7E"/>
+                  <stop offset="100%" stop-color="#63AE5B"/>
+                </linearGradient>
+              </defs>
               <!-- Sky -->
-              <rect width="500" height="210" fill="#B8E4F7"/>
+              <rect width="500" height="215" fill="url(#sky-p1)"/>
               <!-- Clouds -->
               <ellipse cx="90" cy="55" rx="50" ry="22" fill="white" opacity="0.92"/>
               <ellipse cx="120" cy="46" rx="32" ry="20" fill="white" opacity="0.92"/>
@@ -148,7 +187,16 @@
               <path d="M 168 44 Q 176 38 184 44" stroke="#7A8FA6" stroke-width="2" fill="none" stroke-linecap="round"/>
               <path d="M 195 60 Q 203 54 211 60" stroke="#7A8FA6" stroke-width="2" fill="none" stroke-linecap="round"/>
               <!-- Ground -->
-              <rect x="0" y="210" width="500" height="150" fill="#7BC67E"/>
+              <path d="M0,206 Q125,190 250,204 T500,202 L500,360 L0,360 Z" fill="url(#ground-p1)"/>
+              <path d="M0,222 Q125,210 250,222 T500,220 L500,246 L0,246 Z" fill="#4A9B4A" opacity="0.3"/>
+              <!-- Grass tufts -->
+              <g stroke="#4A9B4A" stroke-width="2" stroke-linecap="round" opacity="0.55">
+                <path d="M40,214 q3,-9 6,0"/><path d="M60,220 q3,-9 6,0"/>
+                <path d="M420,212 q3,-9 6,0"/><path d="M450,218 q3,-9 6,0"/>
+              </g>
+              <!-- Small flowers -->
+              <circle cx="45" cy="230" r="5" fill="#FF9BAE"/><circle cx="45" cy="230" r="2.5" fill="#FFD166"/>
+              <circle cx="460" cy="235" r="5" fill="#C77DFF"/><circle cx="460" cy="235" r="2.5" fill="#FFD166"/>
               <!-- Soil rows -->
               <ellipse cx="130" cy="280" rx="90" ry="14" fill="#8B5E3C" opacity="0.6"/>
               <ellipse cx="370" cy="280" rx="90" ry="14" fill="#8B5E3C" opacity="0.6"/>
@@ -230,11 +278,34 @@
         <div class="page page-spread">
           <div class="page-illustration">
             <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
-              <!-- Sky + ground -->
-              <rect width="500" height="200" fill="#C8EEF8"/>
-              <rect x="0" y="200" width="500" height="160" fill="#7BC67E"/>
+              <defs>
+                <linearGradient id="sky-p2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#BEEAF9"/>
+                  <stop offset="100%" stop-color="#EAF9FF"/>
+                </linearGradient>
+                <linearGradient id="ground-p2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#8ECB7E"/>
+                  <stop offset="100%" stop-color="#63AE5B"/>
+                </linearGradient>
+              </defs>
+              <!-- Sky -->
+              <rect width="500" height="205" fill="url(#sky-p2)"/>
+              <!-- Clouds -->
+              <ellipse cx="80" cy="50" rx="42" ry="18" fill="white" opacity="0.9"/>
+              <ellipse cx="105" cy="42" rx="26" ry="16" fill="white" opacity="0.9"/>
+              <ellipse cx="330" cy="130" rx="34" ry="14" fill="white" opacity="0.7"/>
               <!-- Sun (warmer afternoon) -->
               <circle cx="430" cy="65" r="35" fill="#FFBA00"/>
+              <circle cx="430" cy="65" r="24" fill="#FFD166"/>
+              <!-- Ground -->
+              <path d="M0,196 Q125,182 250,194 T500,192 L500,360 L0,360 Z" fill="url(#ground-p2)"/>
+              <path d="M0,212 Q125,200 250,212 T500,210 L500,236 L0,236 Z" fill="#4A9B4A" opacity="0.3"/>
+              <g stroke="#4A9B4A" stroke-width="2" stroke-linecap="round" opacity="0.55">
+                <path d="M30,204 q3,-9 6,0"/><path d="M55,210 q3,-9 6,0"/>
+                <path d="M440,206 q3,-9 6,0"/>
+              </g>
+              <circle cx="35" cy="222" r="5" fill="#FFD166"/><circle cx="35" cy="222" r="2.5" fill="#FF6B6B"/>
+              <circle cx="470" cy="228" r="5" fill="#C77DFF"/><circle cx="470" cy="228" r="2.5" fill="#FFD166"/>
               <!-- RABBIT sitting, hand on tummy (left) -->
               <!-- Ears -->
               <ellipse cx="112" cy="148" rx="10" ry="30" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
@@ -328,11 +399,32 @@
         <div class="page page-spread">
           <div class="page-illustration">
             <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sky-p3" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#BEEAF9"/>
+                  <stop offset="100%" stop-color="#EAF9FF"/>
+                </linearGradient>
+                <linearGradient id="ground-p3" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#8ECB7E"/>
+                  <stop offset="100%" stop-color="#63AE5B"/>
+                </linearGradient>
+              </defs>
               <!-- Background: field -->
-              <rect width="500" height="205" fill="#C8EEF8"/>
-              <rect x="0" y="205" width="500" height="155" fill="#7BC67E"/>
+              <rect width="500" height="210" fill="url(#sky-p3)"/>
+              <!-- Clouds -->
+              <ellipse cx="180" cy="42" rx="38" ry="16" fill="white" opacity="0.9"/>
+              <ellipse cx="205" cy="35" rx="24" ry="14" fill="white" opacity="0.9"/>
+              <ellipse cx="430" cy="105" rx="30" ry="13" fill="white" opacity="0.65"/>
               <!-- Sun -->
               <circle cx="60" cy="60" r="32" fill="#FFD166"/>
+              <circle cx="60" cy="60" r="22" fill="#FFE680"/>
+              <!-- Ground -->
+              <path d="M0,202 Q125,188 250,200 T500,198 L500,360 L0,360 Z" fill="url(#ground-p3)"/>
+              <path d="M0,218 Q125,206 250,218 T500,216 L500,242 L0,242 Z" fill="#4A9B4A" opacity="0.3"/>
+              <g stroke="#4A9B4A" stroke-width="2" stroke-linecap="round" opacity="0.55">
+                <path d="M470,208 q3,-9 6,0"/><path d="M25,214 q3,-9 6,0"/>
+              </g>
+              <circle cx="470" cy="228" r="5" fill="#FF9BAE"/><circle cx="470" cy="228" r="2.5" fill="#FFD166"/>
 
               <!-- ELEPHANT holding phone (center-right) -->
               <ellipse cx="318" cy="192" rx="30" ry="44" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
@@ -410,9 +502,30 @@
         <div class="page page-spread">
           <div class="page-illustration">
             <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sky-p4" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#C4EBFA"/>
+                  <stop offset="100%" stop-color="#EAF9FF"/>
+                </linearGradient>
+                <linearGradient id="ground-p4" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#8ECB7E"/>
+                  <stop offset="100%" stop-color="#63AE5B"/>
+                </linearGradient>
+              </defs>
               <!-- Background -->
-              <rect width="500" height="200" fill="#D0EDF8"/>
-              <rect x="0" y="200" width="500" height="160" fill="#7BC67E"/>
+              <rect width="500" height="205" fill="url(#sky-p4)"/>
+              <!-- Clouds -->
+              <ellipse cx="70" cy="45" rx="36" ry="15" fill="white" opacity="0.9"/>
+              <ellipse cx="94" cy="38" rx="22" ry="13" fill="white" opacity="0.9"/>
+              <!-- Sun -->
+              <circle cx="450" cy="55" r="34" fill="#FFD166"/>
+              <circle cx="450" cy="55" r="24" fill="#FFE680"/>
+              <!-- Ground -->
+              <path d="M0,198 Q125,184 250,196 T500,194 L500,360 L0,360 Z" fill="url(#ground-p4)"/>
+              <path d="M0,214 Q125,202 250,214 T500,212 L500,238 L0,238 Z" fill="#4A9B4A" opacity="0.3"/>
+              <g stroke="#4A9B4A" stroke-width="2" stroke-linecap="round" opacity="0.55">
+                <path d="M40,206 q3,-9 6,0"/><path d="M465,204 q3,-9 6,0"/>
+              </g>
               <!-- Water tap/post -->
               <rect x="218" y="140" width="12" height="100" rx="4" fill="#8BAABF"/>
               <rect x="200" y="140" width="48" height="12" rx="4" fill="#6A8FA8"/>
@@ -476,10 +589,31 @@
         <div class="page page-spread">
           <div class="page-illustration">
             <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
-              <!-- Background -->
-              <rect width="500" height="360" fill="#FFF9F0"/>
+              <defs>
+                <linearGradient id="sky-p5" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#FFE3D6"/>
+                  <stop offset="100%" stop-color="#FFF6EE"/>
+                </linearGradient>
+                <linearGradient id="ground-p5" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#9BDD84"/>
+                  <stop offset="100%" stop-color="#6BBE64"/>
+                </linearGradient>
+              </defs>
+              <!-- Sky -->
+              <rect width="500" height="285" fill="url(#sky-p5)"/>
+              <!-- Soft sun -->
+              <circle cx="430" cy="60" r="34" fill="#FFD166" opacity="0.85"/>
+              <circle cx="430" cy="60" r="24" fill="#FFE680" opacity="0.9"/>
+              <!-- Clouds -->
+              <ellipse cx="80" cy="55" rx="36" ry="15" fill="white" opacity="0.85"/>
+              <ellipse cx="104" cy="48" rx="22" ry="13" fill="white" opacity="0.85"/>
               <!-- Ground -->
-              <rect x="0" y="280" width="500" height="80" fill="#A8D88A"/>
+              <path d="M0,278 Q125,264 250,276 T500,274 L500,360 L0,360 Z" fill="url(#ground-p5)"/>
+              <path d="M0,294 Q125,282 250,294 T500,292 L500,318 L0,318 Z" fill="#4A9B4A" opacity="0.3"/>
+              <g stroke="#4A9B4A" stroke-width="2" stroke-linecap="round" opacity="0.55">
+                <path d="M40,286 q3,-9 6,0"/><path d="M460,288 q3,-9 6,0"/>
+              </g>
+              <circle cx="440" cy="300" r="5" fill="#FF9BAE"/><circle cx="440" cy="300" r="2.5" fill="#FFD166"/>
 
               <!-- RABBIT holding empty bowl, shocked -->
               <!-- Ears -->
@@ -541,9 +675,27 @@
         <div class="page page-spread">
           <div class="page-illustration">
             <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
-              <!-- Background -->
-              <rect width="500" height="360" fill="#FFF3F0"/>
-              <rect x="0" y="285" width="500" height="75" fill="#A8D88A"/>
+              <defs>
+                <linearGradient id="sky-p6" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#FFE6DC"/>
+                  <stop offset="100%" stop-color="#FFF6EE"/>
+                </linearGradient>
+                <linearGradient id="ground-p6" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#9BDD84"/>
+                  <stop offset="100%" stop-color="#6BBE64"/>
+                </linearGradient>
+              </defs>
+              <!-- Sky -->
+              <rect width="500" height="290" fill="url(#sky-p6)"/>
+              <ellipse cx="60" cy="50" rx="34" ry="14" fill="white" opacity="0.8"/>
+              <ellipse cx="82" cy="44" rx="20" ry="12" fill="white" opacity="0.8"/>
+              <circle cx="440" cy="65" r="30" fill="#FFD166" opacity="0.8"/>
+              <!-- Ground -->
+              <path d="M0,283 Q125,269 250,281 T500,279 L500,360 L0,360 Z" fill="url(#ground-p6)"/>
+              <path d="M0,298 Q125,286 250,298 T500,296 L500,322 L0,322 Z" fill="#4A9B4A" opacity="0.3"/>
+              <g stroke="#4A9B4A" stroke-width="2" stroke-linecap="round" opacity="0.55">
+                <path d="M35,290 q3,-9 6,0"/><path d="M465,292 q3,-9 6,0"/>
+              </g>
 
               <!-- RABBIT (left, stern face) -->
               <ellipse cx="108" cy="92" rx="10" ry="28" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
@@ -600,10 +752,9 @@
               <path d="M 405 168 Q 408 160 411 168" fill="#74C8E4" opacity="0.8"/>
 
               <!-- Speech bubble: "No idea!" -->
-              <ellipse cx="255" cy="135" rx="62" ry="28" fill="white" stroke="#D0C8B8" stroke-width="2"/>
-              <polygon points="280,160 292,178 268,162" fill="white" stroke="#D0C8B8" stroke-width="2"/>
-              <polygon points="280,160 292,178 268,162" fill="white"/>
-              <text x="232" y="133" font-size="14" fill="#2D3748" font-family="sans-serif" font-weight="bold">No idea! 😇</text>
+              <ellipse cx="248" cy="128" rx="84" ry="32" fill="white" stroke="#D0C8B8" stroke-width="2"/>
+              <path d="M 292 152 Q 300 165 312 175 Q 296 172 284 160 Z" fill="white" stroke="#D0C8B8" stroke-width="2"/>
+              <text x="248" y="134" text-anchor="middle" font-size="15" fill="#2D3748" font-family="sans-serif" font-weight="bold">No idea! 😇</text>
             </svg>
           </div>
           <div class="page-text">
@@ -622,10 +773,24 @@
         <div class="page page-spread">
           <div class="page-illustration">
             <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sky-p7" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#FFEFCB"/>
+                  <stop offset="100%" stop-color="#FFF8E8"/>
+                </linearGradient>
+                <linearGradient id="ground-p7" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#9ED88C"/>
+                  <stop offset="100%" stop-color="#6FBE64"/>
+                </linearGradient>
+              </defs>
               <!-- Warm golden background -->
-              <rect width="500" height="360" fill="#FFF8E8"/>
+              <rect width="500" height="270" fill="url(#sky-p7)"/>
+              <!-- Clouds -->
+              <ellipse cx="70" cy="48" rx="34" ry="14" fill="white" opacity="0.75"/>
+              <ellipse cx="93" cy="42" rx="20" ry="12" fill="white" opacity="0.75"/>
               <!-- Ground -->
-              <rect x="0" y="270" width="500" height="90" fill="#8BC87E"/>
+              <path d="M0,264 Q125,250 250,262 T500,260 L500,360 L0,360 Z" fill="url(#ground-p7)"/>
+              <path d="M0,278 Q125,268 250,278 T500,276 L500,300 L0,300 Z" fill="#4A9B4A" opacity="0.28"/>
               <!-- Tree trunk -->
               <rect x="218" y="80" width="34" height="200" rx="14" fill="#8B5E3C"/>
               <!-- Tree canopy -->
@@ -734,7 +899,14 @@
               <ellipse cx="320" cy="60" rx="55" ry="22" fill="white" opacity="0.9"/>
               <ellipse cx="350" cy="50" rx="35" ry="20" fill="white" opacity="0.9"/>
               <!-- Ground -->
-              <rect x="0" y="210" width="500" height="150" fill="#7BC67E"/>
+              <defs>
+                <linearGradient id="ground-p8" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#8ECB7E"/>
+                  <stop offset="100%" stop-color="#63AE5B"/>
+                </linearGradient>
+              </defs>
+              <path d="M0,206 Q125,192 250,204 T500,202 L500,360 L0,360 Z" fill="url(#ground-p8)"/>
+              <path d="M0,222 Q125,210 250,222 T500,220 L500,246 L0,246 Z" fill="#4A9B4A" opacity="0.3"/>
               <!-- Sprouts (more grown) -->
               <line x1="220" y1="210" x2="220" y2="188" stroke="#3D8B3D" stroke-width="3" stroke-linecap="round"/>
               <ellipse cx="220" cy="184" rx="9" ry="13" fill="#55B055"/>
@@ -814,9 +986,23 @@
         <div class="page page-spread">
           <div class="page-illustration">
             <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sky-p9" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#FFECC8"/>
+                  <stop offset="100%" stop-color="#FFF5E8"/>
+                </linearGradient>
+                <linearGradient id="ground-p9" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#9BDD84"/>
+                  <stop offset="100%" stop-color="#6BBE64"/>
+                </linearGradient>
+              </defs>
               <!-- Background: slightly mischievous warm tone -->
-              <rect width="500" height="360" fill="#FFF5E8"/>
-              <rect x="0" y="280" width="500" height="80" fill="#A8D88A"/>
+              <rect width="500" height="280" fill="url(#sky-p9)"/>
+              <ellipse cx="60" cy="45" rx="34" ry="14" fill="white" opacity="0.7"/>
+              <ellipse cx="82" cy="39" rx="20" ry="12" fill="white" opacity="0.7"/>
+              <circle cx="450" cy="55" r="32" fill="#FFD166" opacity="0.85"/>
+              <path d="M0,272 Q125,258 250,270 T500,268 L500,360 L0,360 Z" fill="url(#ground-p9)"/>
+              <path d="M0,288 Q125,276 250,288 T500,286 L500,312 L0,312 Z" fill="#4A9B4A" opacity="0.3"/>
               <!-- Rabbit visible at tap in background (small, blurred suggestion) -->
               <circle cx="430" cy="255" r="12" fill="#F0E8DC" opacity="0.6"/>
               <ellipse cx="426" cy="237" rx="5" ry="14" fill="#F0E8DC" opacity="0.6"/>
@@ -833,9 +1019,11 @@
               <ellipse cx="307" cy="240" rx="66" ry="50" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
               <!-- Head -->
               <circle cx="307" cy="152" r="58" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
-              <!-- Trunk down between two bowls -->
-              <path d="M 288 202 Q 270 230 268 258" stroke="#A8C0CC" stroke-width="20" fill="none" stroke-linecap="round"/>
-              <path d="M 288 202 Q 270 230 268 258" stroke="#88A0AC" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <!-- Trunk reaching into the fruit bowl (mid-bite) -->
+              <path d="M 280 200 Q 235 245 190 282" stroke="#A8C0CC" stroke-width="20" fill="none" stroke-linecap="round"/>
+              <path d="M 280 200 Q 235 245 190 282" stroke="#88A0AC" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <!-- A fruit lifted mid-air toward the mouth -->
+              <circle cx="205" cy="255" r="7" fill="#7BC67E"/>
               <!-- SNEAKY expression -->
               <!-- Squint eyes (one bigger) -->
               <ellipse cx="288" cy="140" rx="11" ry="8" fill="#2D3748"/>
@@ -878,9 +1066,9 @@
               <text x="68" y="268" font-size="20">🥞</text>
               <text x="52" y="230" font-size="10" fill="#7A5C2E" font-family="sans-serif" font-weight="bold">my lunch</text>
 
-              <!-- Arrows showing the sneaky swap -->
-              <path d="M 235 285 Q 255 265 270 280" stroke="#FF6B6B" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-dasharray="6 4"/>
-              <polygon points="267,272 278,282 270,286" fill="#FF6B6B"/>
+              <!-- Arrow showing the sneaky swap: pancakes moving into rabbit's bowl -->
+              <path d="M 220 268 Q 300 225 375 262" stroke="#FF6B6B" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-dasharray="7 5"/>
+              <polygon points="370,253 384,264 368,271" fill="#FF6B6B"/>
 
               <!-- Sneaky sweat drop -->
               <ellipse cx="358" cy="110" rx="7" ry="10" fill="#74C8E4" opacity="0.7"/>
@@ -900,9 +1088,27 @@
         <div class="page page-spread">
           <div class="page-illustration">
             <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
-              <!-- Background -->
-              <rect width="500" height="360" fill="#FFF9F0"/>
-              <rect x="0" y="285" width="500" height="75" fill="#A8D88A"/>
+              <defs>
+                <linearGradient id="sky-p10" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#C9EAFB"/>
+                  <stop offset="100%" stop-color="#FFF6EE"/>
+                </linearGradient>
+                <linearGradient id="ground-p10" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#9BDD84"/>
+                  <stop offset="100%" stop-color="#6BBE64"/>
+                </linearGradient>
+              </defs>
+              <!-- Sky -->
+              <rect width="500" height="290" fill="url(#sky-p10)"/>
+              <ellipse cx="420" cy="50" rx="34" ry="14" fill="white" opacity="0.8"/>
+              <ellipse cx="442" cy="44" rx="20" ry="12" fill="white" opacity="0.8"/>
+              <circle cx="60" cy="60" r="30" fill="#FFD166" opacity="0.85"/>
+              <!-- Ground -->
+              <path d="M0,283 Q125,269 250,281 T500,279 L500,360 L0,360 Z" fill="url(#ground-p10)"/>
+              <path d="M0,298 Q125,286 250,298 T500,296 L500,322 L0,322 Z" fill="#4A9B4A" opacity="0.3"/>
+              <g stroke="#4A9B4A" stroke-width="2" stroke-linecap="round" opacity="0.55">
+                <path d="M35,290 q3,-9 6,0"/><path d="M465,292 q3,-9 6,0"/>
+              </g>
 
               <!-- RABBIT holding open container with pancakes, tilting head -->
               <!-- Ears (tilted) -->
@@ -972,9 +1178,23 @@
         <div class="page page-spread">
           <div class="page-illustration">
             <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sky-p11" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#FFE0D2"/>
+                  <stop offset="100%" stop-color="#FFF6EE"/>
+                </linearGradient>
+                <linearGradient id="ground-p11" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#9BDD84"/>
+                  <stop offset="100%" stop-color="#6BBE64"/>
+                </linearGradient>
+              </defs>
               <!-- Background (warm, a bit heated) -->
-              <rect width="500" height="360" fill="#FFF5F0"/>
-              <rect x="0" y="285" width="500" height="75" fill="#A8D88A"/>
+              <rect width="500" height="290" fill="url(#sky-p11)"/>
+              <ellipse cx="450" cy="55" rx="34" ry="14" fill="white" opacity="0.7"/>
+              <ellipse cx="472" cy="49" rx="20" ry="12" fill="white" opacity="0.7"/>
+              <!-- Ground -->
+              <path d="M0,283 Q125,269 250,281 T500,279 L500,360 L0,360 Z" fill="url(#ground-p11)"/>
+              <path d="M0,298 Q125,286 250,298 T500,296 L500,322 L0,322 Z" fill="#4A9B4A" opacity="0.3"/>
 
               <!-- RABBIT (left, paws in air, FRUSTRATED) -->
               <ellipse cx="108" cy="90" rx="10" ry="28" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
@@ -1036,11 +1256,10 @@
               <ellipse cx="410" cy="300" rx="22" ry="12" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
 
               <!-- Speech from elephant -->
-              <ellipse cx="248" cy="125" rx="72" ry="32" fill="white" stroke="#D0C8B8" stroke-width="2" opacity="0.95"/>
-              <polygon points="282,154 296,172 268,156" fill="white" stroke="#D0C8B8" stroke-width="2"/>
-              <polygon points="282,154 296,172 268,156" fill="white"/>
-              <text x="200" y="119" font-size="11" fill="#2D3748" font-family="sans-serif" font-weight="bold">I forgot my lunch</text>
-              <text x="200" y="135" font-size="11" fill="#2D3748" font-family="sans-serif">was already packed! 😬</text>
+              <ellipse cx="250" cy="120" rx="94" ry="36" fill="white" stroke="#D0C8B8" stroke-width="2" opacity="0.95"/>
+              <path d="M 288 150 Q 298 164 312 174 Q 294 170 280 158 Z" fill="white" stroke="#D0C8B8" stroke-width="2"/>
+              <text x="250" y="115" text-anchor="middle" font-size="12" fill="#2D3748" font-family="sans-serif" font-weight="bold">I forgot my lunch</text>
+              <text x="250" y="133" text-anchor="middle" font-size="12" fill="#2D3748" font-family="sans-serif">was already packed! 😬</text>
             </svg>
           </div>
           <div class="page-text">
@@ -1065,9 +1284,14 @@
                   <stop offset="0%" stop-color="#FFE8B0"/>
                   <stop offset="100%" stop-color="#FFF5D8"/>
                 </linearGradient>
+                <linearGradient id="ground-p12" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#8ECB7E"/>
+                  <stop offset="100%" stop-color="#5FAE58"/>
+                </linearGradient>
               </defs>
               <rect width="500" height="210" fill="url(#sky3)"/>
-              <rect x="0" y="210" width="500" height="150" fill="#6DB860"/>
+              <path d="M0,206 Q125,192 250,204 T500,202 L500,360 L0,360 Z" fill="url(#ground-p12)"/>
+              <path d="M0,222 Q125,210 250,222 T500,220 L500,246 L0,246 Z" fill="#4A9B4A" opacity="0.28"/>
               <!-- Setting sun -->
               <circle cx="450" cy="85" r="50" fill="#FFB830" opacity="0.8"/>
               <circle cx="450" cy="85" r="36" fill="#FFD166" opacity="0.9"/>

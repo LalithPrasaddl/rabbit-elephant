@@ -2,7 +2,7 @@ class BookReader {
   constructor() {
     this.pages = Array.from(document.querySelectorAll('.page'));
     this.total = this.pages.length;
-    this.current = 0;
+    this.current = -1;
     this.animating = false;
     this.touchStartX = 0;
     this.touchStartY = 0;
@@ -19,25 +19,35 @@ class BookReader {
   }
 
   showPage(index, direction) {
-    if (this.animating || index < 0 || index >= this.total) return;
+    if (this.animating || index < 0 || index >= this.total || index === this.current) return;
+
+    if (direction === null) {
+      // Initial load — no previous page to transition from, just show it.
+      this.pages[index].classList.add('show');
+      this.current = index;
+      this.updateUI();
+      return;
+    }
+
     this.animating = true;
-
-    this.pages[this.current].style.display = 'none';
-    this.pages[this.current].classList.remove('active', 'dir-prev');
-
+    const goingNext = direction === 'next';
+    const fromPage = this.pages[this.current];
     this.current = index;
-    const page = this.pages[this.current];
-    page.style.display = '';
-    page.classList.remove('dir-prev');
+    const toPage = this.pages[this.current];
 
-    if (direction === 'prev') page.classList.add('dir-prev');
+    // Both pages are visible at once: the outgoing one flips away on
+    // its spine edge, revealing the incoming one already sitting beneath it.
+    toPage.classList.add('show', 'reveal-in');
+    fromPage.classList.add('show');
+    void fromPage.offsetWidth; // force reflow so the flip animation triggers
+    fromPage.classList.add(goingNext ? 'flip-next-out' : 'flip-prev-out');
 
-    // Force reflow so animation triggers
-    void page.offsetWidth;
-    page.classList.add('active');
-
-    // Re-enable after animation
-    setTimeout(() => { this.animating = false; }, 420);
+    const FLIP_DURATION = 560;
+    setTimeout(() => {
+      fromPage.classList.remove('show', 'flip-next-out', 'flip-prev-out');
+      toPage.classList.remove('reveal-in');
+      this.animating = false;
+    }, FLIP_DURATION);
 
     this.updateUI();
   }

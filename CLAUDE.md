@@ -41,9 +41,20 @@ rabbit-elephant/
 - `--color-accent: #06C98A` (mint green)
 - `--color-bg: #FFF9F0` (warm cream)
 
-**Illustrations:** Inline SVG art per page, `viewBox="0 0 500 360"`. Characters use consistent color palette:
+**Illustrations:** Inline SVG art per page, `viewBox="0 0 500 360"` (cover uses `0 0 500 240`). Characters use consistent color palette:
 - Rabbit: body `#F0E8DC`, ear interior `#FFB3C6`, nose `#FF9BAE`
 - Elephant: body `#A8C0CC`, ears `#C5D8E0`
+
+**Background template (standard for every page, every story):** Never fill a page background with a single flat `<rect>`. Every illustration should feel like the same warm, sunny meadow, using this layered recipe:
+1. **Sky** — a `<linearGradient>` (unique `id` per `<svg>`, e.g. `sky-p3`) from a soft saturated color at the top to a pale near-white at the bottom. Pick the top color by mood, not randomly: cheerful/morning scenes ≈ `#BEE7FB`→`#EAF9FF`; warm/golden-hour or happy-ending scenes ≈ `#FFE8B0`→`#FFF5D8`; quieter emotional beats (confusion, mild frustration, a small mishap) ≈ a soft warm peach `#FFE3D6`→`#FFF6EE` — still warm and safe-feeling, never dark or dull, since the audience is 2–4 year olds.
+2. **Sun** — 2 concentric circles (outer saturated, inner pale) somewhere in the sky; add short radiating `<line>` rays for the "cover"-style hero shots.
+3. **Clouds** — 2–3 soft white overlapping ellipses (`opacity 0.7–0.9`), placed asymmetrically so the sky never looks empty.
+4. **Ground** — a `<path>` with a gentle wavy top edge (quadratic `Q...T...` curve, not a hard rectangle line) filled with a green `<linearGradient>` (lighter top, darker bottom), plus a second, more-transparent wavy band beneath it for depth, plus a few grass-tuft strokes and flower dots (small circle-in-circle using the existing accent palette: `#FF6B6B`, `#FFD166`, `#C77DFF`, `#74C8E4`, `#FF9BAE`).
+5. Keep the ground's top y-coordinate matched to where characters' feet/legs already sit in that page — the wavy curve should vary only ±15px around that line so characters don't appear to float or sink.
+
+**Speech/thought bubble rule:** Always set `text-anchor="middle"` and position the `<text>` x at the bubble's `cx`. Size the bubble generously: budget roughly 8–9px of width per character at font-size 14–15 (bold), plus ~25–30px of padding on each side, and split long lines into two `<text>` elements rather than letting one line run long. Never eyeball a narrow bubble against left-aligned text — that's how text overflows the bubble edge.
+
+**Pose clarity:** When a character is described performing a specific physical action (reaching into a bowl, swapping an item, gesturing while explaining), make sure the relevant limb/trunk path actually terminates at or overlaps the object involved, rather than stopping short in empty space nearby.
 
 **Page flip:** CSS animation (`pageEnterNext` / `pageEnterPrev`) triggered by JS adding/removing `.active` and `.dir-prev` classes. All pages are `display:none` except the active one.
 
@@ -98,6 +109,8 @@ In GitHub repo → Settings → Pages → Source: `main` branch, folder `/` (roo
 | # | Title | Status |
 |---|-------|--------|
 | 01 | The Hungry Friends | ✅ Live |
+| 02 | Ouch! The Big Thorn | ✅ Live |
+| 03 | Snow Much Help! | ✅ Live |
 
 ## Current characters
 
@@ -105,3 +118,6 @@ In GitHub repo → Settings → Pages → Source: `main` branch, folder `/` (roo
 |-----------|---------------|-----------------|
 | Rabbit | Carrot Halwa | The Hungry Friends |
 | Elephant | Fruit Salad | The Hungry Friends |
+| Dr. Squirrel | Acorn Pudding | Ouch! The Big Thorn |
+| Dr. Sheep | Clover Tea | Snow Much Help! |
+| Nurse Giraffe | Acacia Leaf Salad | Snow Much Help! |

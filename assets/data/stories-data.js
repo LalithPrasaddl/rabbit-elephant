@@ -39,7 +39,20 @@ const STORIES = [
     comingSoon: false
   },
   {
-    id: 'coming-soon-4',
+    id: '04-watch-your-step',
+    title: 'Watch Your Step!',
+    subtitle: 'A story about thorns, teamwork, and paying attention',
+    emoji: '🚜',
+    description: 'Elephant is so busy chatting about lunch that he steps right on a thorn — and it takes a JCB to free him. Rabbit learns the hard way that the same lesson applies to tiny feet too.',
+    tags: ['Focus', 'Friendship', 'Learning from Mistakes'],
+    characters: ['Rabbit', 'Elephant', 'Dr. Sheep'],
+    readTime: '8 min read',
+    path: 'stories/04-watch-your-step/',
+    cardColor: '#C77DFF',
+    comingSoon: false
+  },
+  {
+    id: 'coming-soon-5',
     title: 'Coming Soon…',
     subtitle: 'More fun is brewing!',
     emoji: '🌟',

@@ -111,6 +111,7 @@ In GitHub repo → Settings → Pages → Source: `main` branch, folder `/` (roo
 | 01 | The Hungry Friends | ✅ Live |
 | 02 | Ouch! The Big Thorn | ✅ Live |
 | 03 | Snow Much Help! | ✅ Live |
+| 04 | Watch Your Step! | ✅ Live |
 
 ## Current characters
 

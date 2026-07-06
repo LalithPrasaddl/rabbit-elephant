@@ -10,7 +10,7 @@ const CHARACTERS = [
     favoriteFood: 'Carrot Halwa 🥕',
     quirk: 'Never gives up asking questions — even when the answer is written all over Elephant\'s face!',
     quote: '"My tummy is GROWLING!"',
-    appearances: ['The Hungry Friends', 'Ouch! The Big Thorn']
+    appearances: ['The Hungry Friends', 'Ouch! The Big Thorn', 'Watch Your Step!']
   },
   {
     id: 'elephant',
@@ -23,7 +23,7 @@ const CHARACTERS = [
     favoriteFood: 'Fruit Salad 🍇',
     quirk: 'Means well — but his tummy sometimes overrules his brain. He always makes it right in the end!',
     quote: '"No idea... okay, fine, I ate it."',
-    appearances: ['The Hungry Friends', 'Ouch! The Big Thorn']
+    appearances: ['The Hungry Friends', 'Ouch! The Big Thorn', 'Watch Your Step!']
   },
   {
     id: 'squirrel',
@@ -49,7 +49,7 @@ const CHARACTERS = [
     favoriteFood: 'Clover Tea 🍵',
     quirk: 'Gives everyone exactly one more chance — and somehow, it always turns out to be the right call.',
     quote: '"One more chance. Let\'s see how you do."',
-    appearances: ['Snow Much Help!']
+    appearances: ['Snow Much Help!', 'Watch Your Step!']
   },
   {
     id: 'giraffe',

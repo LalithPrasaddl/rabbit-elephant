@@ -112,6 +112,7 @@ In GitHub repo → Settings → Pages → Source: `main` branch, folder `/` (roo
 | 02 | Ouch! The Big Thorn | ✅ Live |
 | 03 | Snow Much Help! | ✅ Live |
 | 04 | Watch Your Step! | ✅ Live |
+| 05 | Splash! The Pool Party | ✅ Live |
 
 ## Current characters
 

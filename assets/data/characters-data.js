@@ -10,7 +10,7 @@ const CHARACTERS = [
     favoriteFood: 'Carrot Halwa 🥕',
     quirk: 'Never gives up asking questions — even when the answer is written all over Elephant\'s face!',
     quote: '"My tummy is GROWLING!"',
-    appearances: ['The Hungry Friends', 'Ouch! The Big Thorn', 'Watch Your Step!']
+    appearances: ['The Hungry Friends', 'Ouch! The Big Thorn', 'Watch Your Step!', 'Splash! The Pool Party']
   },
   {
     id: 'elephant',
@@ -23,7 +23,7 @@ const CHARACTERS = [
     favoriteFood: 'Fruit Salad 🍇',
     quirk: 'Means well — but his tummy sometimes overrules his brain. He always makes it right in the end!',
     quote: '"No idea... okay, fine, I ate it."',
-    appearances: ['The Hungry Friends', 'Ouch! The Big Thorn', 'Watch Your Step!']
+    appearances: ['The Hungry Friends', 'Ouch! The Big Thorn', 'Watch Your Step!', 'Splash! The Pool Party']
   },
   {
     id: 'squirrel',

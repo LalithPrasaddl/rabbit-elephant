@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Splash! The Pool Party — Rabbit &amp; Elephant</title>
+  <link rel="stylesheet" href="../../assets/css/main.css" />
+  <link rel="stylesheet" href="../../assets/css/book.css" />
+</head>
+<body>
+
+  <nav class="site-nav">
+    <a href="../../index.html" class="nav-logo">
+      <span class="logo-emoji">🐰🐘</span> Rabbit &amp; Elephant
+    </a>
+    <ul class="nav-links">
+      <li><a href="../../index.html">Stories</a></li>
+      <li><a href="../../characters.html">Characters</a></li>
+    </ul>
+  </nav>
+
+  <div class="reader-wrapper">
+    <a href="../../index.html" class="reader-back">← Back to Stories</a>
+
+    <div class="book-container">
+      <div class="book-progress">
+        <div class="book-progress-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+
+      <div class="book-pages">
+
+        <!-- PAGE 0: COVER -->
+        <div class="page page-cover">
+          <div class="cover-illustration">
+            <svg viewBox="0 0 500 240" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sky-c0" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#FFE8B0"/>
+                  <stop offset="100%" stop-color="#FFF5D8"/>
+                </linearGradient>
+                <linearGradient id="ground-c0" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#9BDD84"/>
+                  <stop offset="100%" stop-color="#6BBE64"/>
+                </linearGradient>
+                <linearGradient id="pool-c0" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#8CE0F0"/>
+                  <stop offset="100%" stop-color="#3EA8C8"/>
+                </linearGradient>
+              </defs>
+              <rect width="500" height="240" fill="url(#sky-c0)"/>
+              <circle cx="70" cy="48" r="34" fill="#FFD166"/>
+              <circle cx="70" cy="48" r="24" fill="#FFE680"/>
+              <line x1="70" y1="4" x2="70" y2="16" stroke="#FFD166" stroke-width="3" stroke-linecap="round"/>
+              <line x1="38" y1="18" x2="30" y2="10" stroke="#FFD166" stroke-width="3" stroke-linecap="round"/>
+              <ellipse cx="420" cy="42" rx="46" ry="18" fill="white" opacity="0.85"/>
+              <ellipse cx="450" cy="34" rx="28" ry="14" fill="white" opacity="0.85"/>
+              <path d="M0,178 Q125,164 250,176 T500,174 L500,240 L0,240 Z" fill="url(#ground-c0)"/>
+              <path d="M0,192 Q125,182 250,192 T500,190 L500,210 L0,210 Z" fill="#4A9B4A" opacity="0.3"/>
+              <!-- Big round pool -->
+              <ellipse cx="250" cy="196" rx="160" ry="34" fill="url(#pool-c0)" stroke="#2E8FA8" stroke-width="3"/>
+              <ellipse cx="250" cy="190" rx="140" ry="24" fill="#B8ECF8" opacity="0.5"/>
+              <path d="M120,192 q10,-6 20,0 t20,0 t20,0" stroke="white" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+              <path d="M320,196 q10,-6 20,0 t20,0" stroke="white" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+              <circle cx="30" cy="200" r="5" fill="#FF9BAE"/><circle cx="30" cy="200" r="2.5" fill="#FFD166"/>
+              <circle cx="475" cy="205" r="5" fill="#C77DFF"/><circle cx="475" cy="205" r="2.5" fill="#FFD166"/>
+
+              <!-- ELEPHANT mid-splash, arms/trunk up, big grin -->
+              <ellipse cx="356" cy="150" rx="26" ry="36" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5" transform="rotate(-18 356 150)"/>
+              <ellipse cx="404" cy="140" rx="26" ry="36" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5" transform="rotate(14 404 140)"/>
+              <ellipse cx="382" cy="196" rx="52" ry="38" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <circle cx="382" cy="136" r="42" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <path d="M 362 158 Q 350 130 358 104" stroke="#A8C0CC" stroke-width="15" fill="none" stroke-linecap="round"/>
+              <path d="M 362 158 Q 350 130 358 104" stroke="#88A0AC" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <ellipse cx="358" cy="100" rx="5.5" ry="4" fill="#7A5C2E"/>
+              <circle cx="368" cy="124" r="7" fill="#2D3748"/>
+              <circle cx="366" cy="122" r="2.5" fill="#fff"/>
+              <circle cx="396" cy="122" r="7" fill="#2D3748"/>
+              <circle cx="394" cy="120" r="2.5" fill="#fff"/>
+              <path d="M 370 148 Q 382 158 394 148" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <circle cx="354" cy="146" r="10" fill="#FFB3C6" opacity="0.3"/>
+              <circle cx="410" cy="146" r="10" fill="#FFB3C6" opacity="0.3"/>
+              <ellipse cx="358" cy="228" rx="20" ry="12" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="408" cy="230" rx="20" ry="12" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+
+              <!-- Splash droplets -->
+              <ellipse cx="330" cy="176" rx="6" ry="10" fill="#8CE0F0" opacity="0.9" transform="rotate(-20 330 176)"/>
+              <ellipse cx="440" cy="172" rx="6" ry="10" fill="#8CE0F0" opacity="0.9" transform="rotate(25 440 172)"/>
+              <ellipse cx="300" cy="160" rx="5" ry="8" fill="#8CE0F0" opacity="0.8" transform="rotate(-10 300 160)"/>
+
+              <!-- RABBIT flying up in the splash, arms out, startled but happy -->
+              <ellipse cx="150" cy="108" rx="8" ry="24" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(-25 150 108)"/>
+              <ellipse cx="150" cy="111" rx="4.5" ry="18" fill="#FFB3C6" transform="rotate(-25 150 111)"/>
+              <ellipse cx="168" cy="104" rx="8" ry="24" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(15 168 104)"/>
+              <ellipse cx="168" cy="107" rx="4.5" ry="18" fill="#FFB3C6" transform="rotate(15 168 107)"/>
+              <circle cx="160" cy="148" r="25" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="160" cy="192" rx="27" ry="30" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <circle cx="150" cy="142" r="8" fill="white" stroke="#D0C8B8" stroke-width="1"/>
+              <circle cx="150" cy="144" r="4.5" fill="#2D3748"/>
+              <circle cx="170" cy="142" r="8" fill="white" stroke="#D0C8B8" stroke-width="1"/>
+              <circle cx="170" cy="144" r="4.5" fill="#2D3748"/>
+              <ellipse cx="160" cy="156" rx="4" ry="3" fill="#FF9BAE"/>
+              <ellipse cx="160" cy="168" rx="8" ry="6" fill="#2D3748"/>
+              <circle cx="140" cy="150" r="7" fill="#FFB3C6" opacity="0.4"/>
+              <circle cx="180" cy="150" r="7" fill="#FFB3C6" opacity="0.4"/>
+              <!-- Arms flung up -->
+              <path d="M 140 178 Q 118 160 108 140" stroke="#F0E8DC" stroke-width="9" fill="none" stroke-linecap="round"/>
+              <path d="M 180 178 Q 202 160 212 140" stroke="#F0E8DC" stroke-width="9" fill="none" stroke-linecap="round"/>
+              <ellipse cx="146" cy="214" rx="14" ry="9" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="174" cy="214" rx="14" ry="9" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+
+              <!-- Speech bubble -->
+              <ellipse cx="250" cy="58" rx="88" ry="28" fill="white" stroke="#D0C8B8" stroke-width="1.5" opacity="0.95"/>
+              <path d="M 240 84 Q 246 96 254 106 Q 240 100 232 88 Z" fill="white" stroke="#D0C8B8" stroke-width="1.5"/>
+              <text x="250" y="54" text-anchor="middle" font-size="12" fill="#2D3748" font-family="sans-serif" font-weight="bold">WHEEEEE!</text>
+              <text x="250" y="70" text-anchor="middle" font-size="10" fill="#2D3748" font-family="sans-serif">Too big a splash!</text>
+            </svg>
+          </div>
+          <h1 class="cover-title">Splash! The Pool Party</h1>
+          <p class="cover-subtitle">A story about respecting space, saying sorry, and making new friends</p>
+          <div class="cover-characters">
+            <span class="cover-char-chip">🐰 Rabbit</span>
+            <span class="cover-char-chip">🐘 Elephant</span>
+          </div>
+        </div>
+
+        <!-- PAGE 1: Announcement + arrivals -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sky-p1" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#BEE7FB"/>
+                  <stop offset="100%" stop-color="#EAF9FF"/>
+                </linearGradient>
+                <linearGradient id="ground-p1" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#8ECB7E"/>
+                  <stop offset="100%" stop-color="#63AE5B"/>
+                </linearGradient>
+              </defs>
+              <rect width="500" height="215" fill="url(#sky-p1)"/>
+              <circle cx="440" cy="50" r="34" fill="#FFD166"/>
+              <circle cx="440" cy="50" r="24" fill="#FFE680"/>
+              <ellipse cx="80" cy="45" rx="46" ry="18" fill="white" opacity="0.9"/>
+              <ellipse cx="110" cy="36" rx="28" ry="15" fill="white" opacity="0.9"/>
+              <ellipse cx="240" cy="34" rx="30" ry="13" fill="white" opacity="0.8"/>
+              <path d="M0,208 Q125,194 250,206 T500,204 L500,360 L0,360 Z" fill="url(#ground-p1)"/>
+              <path d="M0,224 Q125,212 250,224 T500,222 L500,246 L0,246 Z" fill="#4A9B4A" opacity="0.3"/>
+              <circle cx="40" cy="234" r="5" fill="#FF9BAE"/><circle cx="40" cy="234" r="2.5" fill="#FFD166"/>
+              <circle cx="465" cy="238" r="5" fill="#74C8E4"/><circle cx="465" cy="238" r="2.5" fill="#FFD166"/>
+
+              <!-- Signboard -->
+              <rect x="196" y="130" width="108" height="60" rx="6" fill="#FFF9F0" stroke="#D0C8B8" stroke-width="2.5"/>
+              <rect x="240" y="188" width="10" height="40" fill="#8B5E3C"/>
+              <text x="250" y="152" text-anchor="middle" font-size="12" fill="#FF6B6B" font-family="sans-serif" font-weight="bold">POOL PARTY</text>
+              <text x="250" y="166" text-anchor="middle" font-size="10" fill="#2D3748" font-family="sans-serif" font-weight="bold">TODAY!</text>
+              <text x="250" y="180" text-anchor="middle" font-size="8" fill="#63AE5B" font-family="sans-serif">All animals welcome</text>
+
+              <!-- Elephant's little car (left) -->
+              <rect x="30" y="240" width="110" height="48" rx="12" fill="#FF9BAE" stroke="#D66E86" stroke-width="2.5"/>
+              <rect x="46" y="216" width="76" height="34" rx="10" fill="#FF9BAE" stroke="#D66E86" stroke-width="2.5"/>
+              <rect x="52" y="222" width="28" height="20" rx="4" fill="#E8F8FF" stroke="#D66E86" stroke-width="1"/>
+              <rect x="86" y="222" width="28" height="20" rx="4" fill="#E8F8FF" stroke="#D66E86" stroke-width="1"/>
+              <circle cx="55" cy="292" r="15" fill="#2D3748" stroke="#1A1A1A" stroke-width="1.5"/>
+              <circle cx="118" cy="292" r="15" fill="#2D3748" stroke="#1A1A1A" stroke-width="1.5"/>
+              <!-- Elephant peeking out, big smile, waving trunk -->
+              <circle cx="88" cy="234" r="26" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="64" cy="228" rx="12" ry="18" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1"/>
+              <ellipse cx="112" cy="228" rx="12" ry="18" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1"/>
+              <path d="M 80 250 Q 66 262 60 278" stroke="#A8C0CC" stroke-width="10" fill="none" stroke-linecap="round"/>
+              <path d="M 80 250 Q 66 262 60 278" stroke="#88A0AC" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <circle cx="80" cy="228" r="5.5" fill="#2D3748"/>
+              <circle cx="98" cy="228" r="5.5" fill="#2D3748"/>
+              <path d="M 82 244 Q 90 250 98 244" stroke="#2D3748" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+              <!-- Rabbit's bouncy bus (right) -->
+              <rect x="360" y="228" width="120" height="56" rx="10" fill="#FFD166" stroke="#E8B800" stroke-width="2.5"/>
+              <rect x="372" y="236" width="26" height="24" rx="4" fill="#E8F8FF" stroke="#E8B800" stroke-width="1"/>
+              <rect x="404" y="236" width="26" height="24" rx="4" fill="#E8F8FF" stroke="#E8B800" stroke-width="1"/>
+              <rect x="436" y="236" width="26" height="24" rx="4" fill="#E8F8FF" stroke="#E8B800" stroke-width="1"/>
+              <circle cx="384" cy="290" r="15" fill="#2D3748" stroke="#1A1A1A" stroke-width="1.5"/>
+              <circle cx="456" cy="290" r="15" fill="#2D3748" stroke="#1A1A1A" stroke-width="1.5"/>
+              <!-- Rabbit hopping off the bus, ears flapping -->
+              <ellipse cx="330" cy="238" rx="8" ry="24" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(-30 330 238)"/>
+              <ellipse cx="330" cy="241" rx="4.5" ry="18" fill="#FFB3C6" transform="rotate(-30 330 241)"/>
+              <ellipse cx="346" cy="234" rx="8" ry="24" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(10 346 234)"/>
+              <ellipse cx="346" cy="237" rx="4.5" ry="18" fill="#FFB3C6" transform="rotate(10 346 237)"/>
+              <circle cx="338" cy="272" r="24" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="338" cy="312" rx="26" ry="28" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <circle cx="330" cy="267" r="5.5" fill="#2D3748"/>
+              <circle cx="332" cy="265" r="2" fill="#fff"/>
+              <circle cx="348" cy="267" r="5.5" fill="#2D3748"/>
+              <circle cx="350" cy="265" r="2" fill="#fff"/>
+              <ellipse cx="339" cy="277" rx="3.5" ry="3" fill="#FF9BAE"/>
+              <path d="M 330 284 Q 339 290 348 284" stroke="#2D3748" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <circle cx="320" cy="276" r="6" fill="#FFB3C6" opacity="0.4"/>
+              <circle cx="356" cy="276" r="6" fill="#FFB3C6" opacity="0.4"/>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 1</div>
+            <p class="story-text">
+              A big sign appeared at the forest resort: "POOL PARTY TODAY! All animals welcome!"<br><br>
+              Elephant zoomed up in his little car, tooting the horn happily. Rabbit hopped off a bouncy bus, her ears flapping in the wind.<br><br>
+              They had never met before. But today, that was about to change!
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 2: Breakfast + Rabbit swims alone -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sky-p2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#BEE7FB"/>
+                  <stop offset="100%" stop-color="#EAF9FF"/>
+                </linearGradient>
+                <linearGradient id="ground-p2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#8ECB7E"/>
+                  <stop offset="100%" stop-color="#63AE5B"/>
+                </linearGradient>
+                <linearGradient id="pool-p2" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#8CE0F0"/>
+                  <stop offset="100%" stop-color="#3EA8C8"/>
+                </linearGradient>
+              </defs>
+              <rect width="500" height="215" fill="url(#sky-p2)"/>
+              <circle cx="90" cy="50" r="32" fill="#FFD166"/>
+              <circle cx="90" cy="50" r="22" fill="#FFE680"/>
+              <ellipse cx="420" cy="42" rx="40" ry="16" fill="white" opacity="0.85"/>
+              <path d="M0,206 Q125,190 250,204 T500,202 L500,360 L0,360 Z" fill="url(#ground-p2)"/>
+              <path d="M0,222 Q125,210 250,222 T500,220 L500,246 L0,246 Z" fill="#4A9B4A" opacity="0.3"/>
+              <!-- Breakfast table, top left -->
+              <rect x="30" y="238" width="90" height="10" rx="4" fill="#8B5E3C"/>
+              <rect x="45" y="248" width="10" height="30" fill="#8B5E3C"/>
+              <rect x="95" y="248" width="10" height="30" fill="#8B5E3C"/>
+              <circle cx="55" cy="232" r="10" fill="#FF9BAE"/>
+              <circle cx="78" cy="230" r="9" fill="#FFD166"/>
+              <circle cx="100" cy="234" r="10" fill="#C77DFF"/>
+              <!-- Pool, taking up right/center -->
+              <ellipse cx="330" cy="270" rx="150" ry="42" fill="url(#pool-p2)" stroke="#2E8FA8" stroke-width="3"/>
+              <ellipse cx="330" cy="262" rx="128" ry="30" fill="#B8ECF8" opacity="0.5"/>
+              <path d="M220,264 q10,-6 20,0 t20,0 t20,0 t20,0" stroke="white" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round"/>
+
+              <!-- RABBIT paddling happily in the pool, alone -->
+              <ellipse cx="300" cy="256" rx="8" ry="20" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(-15 300 256)"/>
+              <ellipse cx="300" cy="258" rx="4.5" ry="15" fill="#FFB3C6" transform="rotate(-15 300 258)"/>
+              <ellipse cx="316" cy="253" rx="8" ry="20" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(10 316 253)"/>
+              <ellipse cx="316" cy="255" rx="4.5" ry="15" fill="#FFB3C6" transform="rotate(10 316 255)"/>
+              <circle cx="308" cy="286" r="24" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="308" cy="320" rx="26" ry="16" fill="#3EA8C8" opacity="0.55"/>
+              <circle cx="299" cy="281" r="5.5" fill="#2D3748"/>
+              <circle cx="301" cy="279" r="2" fill="#fff"/>
+              <circle cx="317" cy="281" r="5.5" fill="#2D3748"/>
+              <circle cx="319" cy="279" r="2" fill="#fff"/>
+              <ellipse cx="308" cy="291" rx="3.5" ry="3" fill="#FF9BAE"/>
+              <path d="M 298 297 Q 308 304 318 297" stroke="#2D3748" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <circle cx="289" cy="290" r="6" fill="#FFB3C6" opacity="0.4"/>
+              <circle cx="327" cy="290" r="6" fill="#FFB3C6" opacity="0.4"/>
+              <!-- Splashy paddling arms -->
+              <path d="M 288 300 Q 268 292 258 280" stroke="#F0E8DC" stroke-width="8" fill="none" stroke-linecap="round"/>
+              <path d="M 328 300 Q 348 292 358 282" stroke="#F0E8DC" stroke-width="8" fill="none" stroke-linecap="round"/>
+              <ellipse cx="256" cy="276" rx="7" ry="5" fill="#8CE0F0" opacity="0.8"/>
+              <ellipse cx="360" cy="278" rx="7" ry="5" fill="#8CE0F0" opacity="0.8"/>
+
+              <!-- Speech bubble -->
+              <ellipse cx="240" cy="108" rx="78" ry="26" fill="white" stroke="#D0C8B8" stroke-width="1.5" opacity="0.95"/>
+              <path d="M 268 132 Q 278 144 288 152 Q 274 148 264 136 Z" fill="white" stroke="#D0C8B8" stroke-width="1.5"/>
+              <text x="240" y="104" text-anchor="middle" font-size="11" fill="#2D3748" font-family="sans-serif" font-weight="bold">This pool is</text>
+              <text x="240" y="119" text-anchor="middle" font-size="11" fill="#2D3748" font-family="sans-serif" font-weight="bold">all mine today!</text>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 2</div>
+            <p class="story-text">
+              After a yummy breakfast of berries and buns, Rabbit couldn't wait one more second.<br><br>
+              She hopped straight into the big, sparkling pool and paddled around all by herself, giggling at her own splashes.<br><br>
+              "This pool is all mine today!" she laughed.
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 3: Elephant cannonballs in -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sky-p3" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#BEE7FB"/>
+                  <stop offset="100%" stop-color="#EAF9FF"/>
+                </linearGradient>
+                <linearGradient id="ground-p3" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#8ECB7E"/>
+                  <stop offset="100%" stop-color="#63AE5B"/>
+                </linearGradient>
+                <linearGradient id="pool-p3" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#8CE0F0"/>
+                  <stop offset="100%" stop-color="#3EA8C8"/>
+                </linearGradient>
+              </defs>
+              <rect width="500" height="215" fill="url(#sky-p3)"/>
+              <circle cx="420" cy="46" r="36" fill="#FFD166"/>
+              <circle cx="420" cy="46" r="26" fill="#FFE680"/>
+              <ellipse cx="90" cy="44" rx="38" ry="15" fill="white" opacity="0.85"/>
+              <path d="M0,206 Q125,190 250,204 T500,202 L500,360 L0,360 Z" fill="url(#ground-p3)"/>
+              <path d="M0,222 Q125,210 250,222 T500,220 L500,246 L0,246 Z" fill="#4A9B4A" opacity="0.3"/>
+              <ellipse cx="270" cy="280" rx="160" ry="44" fill="url(#pool-p3)" stroke="#2E8FA8" stroke-width="3"/>
+              <ellipse cx="270" cy="270" rx="136" ry="30" fill="#B8ECF8" opacity="0.4"/>
+
+              <!-- ELEPHANT mid-air cannonball, tucked, big grin, coming down -->
+              <ellipse cx="358" cy="150" rx="22" ry="30" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5" transform="rotate(20 358 150)"/>
+              <ellipse cx="392" cy="150" rx="22" ry="30" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5" transform="rotate(-16 392 150)"/>
+              <circle cx="378" cy="170" r="46" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <path d="M 356 190 Q 340 208 340 226" stroke="#A8C0CC" stroke-width="14" fill="none" stroke-linecap="round"/>
+              <path d="M 356 190 Q 340 208 340 226" stroke="#88A0AC" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <circle cx="364" cy="158" r="6.5" fill="#2D3748"/>
+              <circle cx="362" cy="156" r="2.5" fill="#fff"/>
+              <circle cx="392" cy="158" r="6.5" fill="#2D3748"/>
+              <circle cx="390" cy="156" r="2.5" fill="#fff"/>
+              <path d="M 366 182 Q 378 192 390 182" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <circle cx="350" cy="178" r="9" fill="#FFB3C6" opacity="0.3"/>
+              <!-- Tucked legs -->
+              <ellipse cx="404" cy="200" rx="20" ry="24" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+
+              <!-- Motion lines -->
+              <path d="M 400 120 q 8 -6 4 -16" stroke="#A8C0CC" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.6"/>
+              <path d="M 420 140 q 10 -4 8 -14" stroke="#A8C0CC" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.6"/>
+
+              <!-- Giant splash / impact -->
+              <ellipse cx="270" cy="272" rx="90" ry="20" fill="#B8ECF8" opacity="0.85"/>
+              <ellipse cx="200" cy="255" rx="10" ry="18" fill="#8CE0F0" opacity="0.9" transform="rotate(-15 200 255)"/>
+              <ellipse cx="150" cy="235" rx="8" ry="16" fill="#8CE0F0" opacity="0.9" transform="rotate(-10 150 235)"/>
+              <ellipse cx="120" cy="210" rx="7" ry="13" fill="#8CE0F0" opacity="0.8" transform="rotate(-8 120 210)"/>
+
+              <!-- RABBIT flying straight up in the geyser of water -->
+              <ellipse cx="120" cy="150" rx="8" ry="22" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(-10 120 150)"/>
+              <ellipse cx="120" cy="152" rx="4.5" ry="16" fill="#FFB3C6" transform="rotate(-10 120 152)"/>
+              <ellipse cx="136" cy="148" rx="8" ry="22" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(8 136 148)"/>
+              <ellipse cx="136" cy="150" rx="4.5" ry="16" fill="#FFB3C6" transform="rotate(8 136 150)"/>
+              <circle cx="128" cy="188" r="23" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="128" cy="228" rx="25" ry="26" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="119" cy="184" rx="5" ry="6" fill="#2D3748"/>
+              <ellipse cx="137" cy="184" rx="5" ry="6" fill="#2D3748"/>
+              <ellipse cx="128" cy="196" rx="4" ry="3" fill="#FF9BAE"/>
+              <ellipse cx="128" cy="206" rx="7" ry="6" fill="#2D3748"/>
+              <circle cx="109" cy="190" r="6" fill="#FFB3C6" opacity="0.4"/>
+              <circle cx="147" cy="190" r="6" fill="#FFB3C6" opacity="0.4"/>
+              <path d="M 112 216 Q 92 200 84 182" stroke="#F0E8DC" stroke-width="8" fill="none" stroke-linecap="round"/>
+              <path d="M 144 216 Q 164 200 172 182" stroke="#F0E8DC" stroke-width="8" fill="none" stroke-linecap="round"/>
+
+              <!-- Impact stars -->
+              <text x="60" y="150" font-size="20" fill="#FFD166" opacity="0.9">✦</text>
+              <text x="200" y="160" font-size="16" fill="#FF6B6B" opacity="0.9">✦</text>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 3</div>
+            <p class="story-text">
+              Elephant finished his breakfast too — and he was SO excited about swimming that he ran full speed toward the pool and jumped!<br><br>
+              SPLOOSH! A humongous wave lifted Rabbit clean out of the water and popped her high into the sky.<br><br>
+              Down she came again with a great big plop.
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 4: Rabbit complains, Elephant explains -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sky-p4" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#FFE3D6"/>
+                  <stop offset="100%" stop-color="#FFF6EE"/>
+                </linearGradient>
+                <linearGradient id="ground-p4" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#8ECB7E"/>
+                  <stop offset="100%" stop-color="#63AE5B"/>
+                </linearGradient>
+                <linearGradient id="pool-p4" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#8CE0F0"/>
+                  <stop offset="100%" stop-color="#3EA8C8"/>
+                </linearGradient>
+              </defs>
+              <rect width="500" height="215" fill="url(#sky-p4)"/>
+              <ellipse cx="100" cy="42" rx="34" ry="14" fill="white" opacity="0.8"/>
+              <path d="M0,206 Q125,190 250,204 T500,202 L500,360 L0,360 Z" fill="url(#ground-p4)"/>
+              <path d="M0,222 Q125,210 250,222 T500,220 L500,246 L0,246 Z" fill="#4A9B4A" opacity="0.3"/>
+              <ellipse cx="330" cy="290" rx="150" ry="40" fill="url(#pool-p4)" stroke="#2E8FA8" stroke-width="3"/>
+              <ellipse cx="330" cy="282" rx="128" ry="28" fill="#B8ECF8" opacity="0.4"/>
+
+              <!-- Small pool in far background, hinting at option -->
+              <ellipse cx="450" cy="250" rx="42" ry="14" fill="url(#pool-p4)" stroke="#2E8FA8" stroke-width="2"/>
+
+              <!-- RABBIT, arms crossed, dripping, annoyed, standing in the water -->
+              <ellipse cx="220" cy="234" rx="8" ry="24" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(-8 220 234)"/>
+              <ellipse cx="220" cy="236" rx="4.5" ry="18" fill="#FFB3C6" transform="rotate(-8 220 236)"/>
+              <ellipse cx="236" cy="232" rx="8" ry="24" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(6 236 232)"/>
+              <ellipse cx="236" cy="234" rx="4.5" ry="18" fill="#FFB3C6" transform="rotate(6 236 234)"/>
+              <circle cx="228" cy="270" r="25" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="228" cy="330" rx="27" ry="30" fill="#3EA8C8" opacity="0.4"/>
+              <path d="M 216 264 Q 222 259 228 264" stroke="#2D3748" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M 228 264 Q 234 259 240 264" stroke="#2D3748" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <ellipse cx="228" cy="278" rx="3.5" ry="3" fill="#FF9BAE"/>
+              <path d="M 218 288 Q 228 282 238 288" stroke="#2D3748" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <circle cx="209" cy="274" r="6" fill="#FFB3C6" opacity="0.4"/>
+              <circle cx="247" cy="274" r="6" fill="#FFB3C6" opacity="0.4"/>
+              <!-- Crossed arms -->
+              <path d="M 210 296 Q 228 306 246 296" stroke="#F0E8DC" stroke-width="9" fill="none" stroke-linecap="round"/>
+              <path d="M 246 296 Q 228 302 210 296" stroke="#D0C8B8" stroke-width="1" fill="none" stroke-linecap="round"/>
+
+              <!-- ELEPHANT, standing in the pool nearby, gesturing toward small pool with trunk -->
+              <ellipse cx="356" cy="196" rx="26" ry="38" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5" transform="rotate(8 356 196)"/>
+              <ellipse cx="416" cy="192" rx="26" ry="38" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5" transform="rotate(-6 416 192)"/>
+              <ellipse cx="392" cy="256" rx="58" ry="42" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <circle cx="386" cy="196" r="48" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <!-- Trunk pointing right, toward the small pool -->
+              <path d="M 410 224 Q 440 226 460 240" stroke="#A8C0CC" stroke-width="16" fill="none" stroke-linecap="round"/>
+              <path d="M 410 224 Q 440 226 460 240" stroke="#88A0AC" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <ellipse cx="462" cy="243" rx="6" ry="4.5" fill="#7A5C2E"/>
+              <circle cx="374" cy="184" r="7" fill="#2D3748"/>
+              <circle cx="372" cy="182" r="2.5" fill="#fff"/>
+              <circle cx="400" cy="184" r="7" fill="#2D3748"/>
+              <circle cx="398" cy="182" r="2.5" fill="#fff"/>
+              <path d="M 378 210 Q 388 215 398 210" stroke="#2D3748" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <circle cx="362" cy="206" r="9" fill="#FFB3C6" opacity="0.3"/>
+              <ellipse cx="392" cy="326" rx="24" ry="14" fill="#3EA8C8" opacity="0.4"/>
+
+              <!-- Rabbit's speech bubble -->
+              <ellipse cx="120" cy="110" rx="82" ry="28" fill="white" stroke="#D0C8B8" stroke-width="1.5" opacity="0.95"/>
+              <path d="M 150 136 Q 160 148 172 158 Q 154 152 144 138 Z" fill="white" stroke="#D0C8B8" stroke-width="1.5"/>
+              <text x="120" y="106" text-anchor="middle" font-size="11" fill="#2D3748" font-family="sans-serif" font-weight="bold">That splash was</text>
+              <text x="120" y="121" text-anchor="middle" font-size="11" fill="#2D3748" font-family="sans-serif" font-weight="bold">way too big!</text>
+
+              <!-- Elephant's speech bubble -->
+              <ellipse cx="440" cy="110" rx="94" ry="34" fill="white" stroke="#D0C8B8" stroke-width="1.5" opacity="0.95"/>
+              <path d="M 410 140 Q 402 152 392 162 Q 408 158 416 144 Z" fill="white" stroke="#D0C8B8" stroke-width="1.5"/>
+              <text x="440" y="102" text-anchor="middle" font-size="10" fill="#2D3748" font-family="sans-serif" font-weight="bold">This pool's for big</text>
+              <text x="440" y="116" text-anchor="middle" font-size="10" fill="#2D3748" font-family="sans-serif" font-weight="bold">animals like me — try</text>
+              <text x="440" y="130" text-anchor="middle" font-size="10" fill="#2D3748" font-family="sans-serif" font-weight="bold">the small pool over there!</text>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 4</div>
+            <p class="story-text">
+              Rabbit paddled over, dripping and grumpy. "That splash was way too big!" she said.<br><br>
+              Elephant looked down at her. "This pool is for big animals like me," he said kindly. "There's a smaller pool right over there, just for little ones."<br><br>
+              But Rabbit crossed her arms and kept swimming right where she was.
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 5: Second splash -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sky-p5" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#FFE3D6"/>
+                  <stop offset="100%" stop-color="#FFF6EE"/>
+                </linearGradient>
+                <linearGradient id="ground-p5" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#8ECB7E"/>
+                  <stop offset="100%" stop-color="#63AE5B"/>
+                </linearGradient>
+                <linearGradient id="pool-p5" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#8CE0F0"/>
+                  <stop offset="100%" stop-color="#3EA8C8"/>
+                </linearGradient>
+              </defs>
+              <rect width="500" height="215" fill="url(#sky-p5)"/>
+              <ellipse cx="410" cy="44" rx="34" ry="14" fill="white" opacity="0.8"/>
+              <path d="M0,206 Q125,190 250,204 T500,202 L500,360 L0,360 Z" fill="url(#ground-p5)"/>
+              <path d="M0,222 Q125,210 250,222 T500,220 L500,246 L0,246 Z" fill="#4A9B4A" opacity="0.3"/>
+              <ellipse cx="270" cy="284" rx="160" ry="44" fill="url(#pool-p5)" stroke="#2E8FA8" stroke-width="3"/>
+              <ellipse cx="270" cy="274" rx="136" ry="30" fill="#B8ECF8" opacity="0.4"/>
+
+              <!-- ELEPHANT again mid-jump, tucked -->
+              <ellipse cx="368" cy="152" rx="22" ry="30" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5" transform="rotate(-14 368 152)"/>
+              <ellipse cx="404" cy="156" rx="22" ry="30" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5" transform="rotate(18 404 156)"/>
+              <circle cx="388" cy="172" r="46" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <path d="M 366 192 Q 350 210 350 228" stroke="#A8C0CC" stroke-width="14" fill="none" stroke-linecap="round"/>
+              <path d="M 366 192 Q 350 210 350 228" stroke="#88A0AC" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <circle cx="374" cy="160" r="6.5" fill="#2D3748"/>
+              <circle cx="372" cy="158" r="2.5" fill="#fff"/>
+              <circle cx="402" cy="160" r="6.5" fill="#2D3748"/>
+              <circle cx="400" cy="158" r="2.5" fill="#fff"/>
+              <path d="M 376 184 Q 388 194 400 184" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <ellipse cx="414" cy="202" rx="20" ry="24" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+
+              <!-- Giant splash, bigger than before -->
+              <ellipse cx="270" cy="276" rx="100" ry="24" fill="#B8ECF8" opacity="0.85"/>
+              <ellipse cx="190" cy="256" rx="11" ry="20" fill="#8CE0F0" opacity="0.9" transform="rotate(-14 190 256)"/>
+              <ellipse cx="140" cy="228" rx="9" ry="17" fill="#8CE0F0" opacity="0.9" transform="rotate(-8 140 228)"/>
+              <ellipse cx="110" cy="196" rx="7" ry="14" fill="#8CE0F0" opacity="0.8" transform="rotate(-6 110 196)"/>
+
+              <!-- RABBIT flying up even higher, dizzy stars, done with it -->
+              <ellipse cx="110" cy="130" rx="8" ry="22" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(-8 110 130)"/>
+              <ellipse cx="110" cy="132" rx="4.5" ry="16" fill="#FFB3C6" transform="rotate(-8 110 132)"/>
+              <ellipse cx="126" cy="128" rx="8" ry="22" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(6 126 128)"/>
+              <ellipse cx="126" cy="130" rx="4.5" ry="16" fill="#FFB3C6" transform="rotate(6 126 130)"/>
+              <circle cx="118" cy="168" r="23" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="118" cy="208" rx="25" ry="26" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <path d="M 108 162 Q 112 158 116 162" stroke="#2D3748" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <path d="M 120 162 Q 124 158 128 162" stroke="#2D3748" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <ellipse cx="118" cy="176" rx="4" ry="3" fill="#FF9BAE"/>
+              <path d="M 108 186 Q 118 180 128 186" stroke="#2D3748" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <circle cx="99" cy="170" r="6" fill="#FFB3C6" opacity="0.4"/>
+              <circle cx="137" cy="170" r="6" fill="#FFB3C6" opacity="0.4"/>
+              <text x="70" y="140" font-size="16" fill="#FFD166">✦</text>
+              <text x="150" y="120" font-size="14" fill="#FF6B6B">✦</text>
+              <text x="90" y="105" font-size="12" fill="#C77DFF">✦</text>
+
+              <!-- Speech bubble -->
+              <ellipse cx="215" cy="90" rx="86" ry="28" fill="white" stroke="#D0C8B8" stroke-width="1.5" opacity="0.95"/>
+              <path d="M 190 116 Q 182 128 172 138 Q 188 134 196 120 Z" fill="white" stroke="#D0C8B8" stroke-width="1.5"/>
+              <text x="215" y="86" text-anchor="middle" font-size="11" fill="#2D3748" font-family="sans-serif" font-weight="bold">Okay, okay —</text>
+              <text x="215" y="101" text-anchor="middle" font-size="11" fill="#2D3748" font-family="sans-serif" font-weight="bold">I get it now!</text>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 5</div>
+            <p class="story-text">
+              Still excited to play, Elephant jumped in again. SPLASH!<br><br>
+              Up went Rabbit, even higher this time, and down she came with an even bigger plop.<br><br>
+              "Okay, okay — I get it now!" she sighed. It really was time to try somewhere else.
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 6: Split scene - small pool and big pool -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sky-p6" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#BEE7FB"/>
+                  <stop offset="100%" stop-color="#EAF9FF"/>
+                </linearGradient>
+                <linearGradient id="ground-p6" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#8ECB7E"/>
+                  <stop offset="100%" stop-color="#63AE5B"/>
+                </linearGradient>
+                <linearGradient id="pool-p6" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#8CE0F0"/>
+                  <stop offset="100%" stop-color="#3EA8C8"/>
+                </linearGradient>
+              </defs>
+              <rect width="500" height="215" fill="url(#sky-p6)"/>
+              <circle cx="250" cy="42" r="30" fill="#FFD166"/>
+              <circle cx="250" cy="42" r="21" fill="#FFE680"/>
+              <ellipse cx="70" cy="40" rx="34" ry="14" fill="white" opacity="0.85"/>
+              <ellipse cx="430" cy="38" rx="34" ry="14" fill="white" opacity="0.85"/>
+              <path d="M0,206 Q125,192 250,204 T500,202 L500,360 L0,360 Z" fill="url(#ground-p6)"/>
+              <path d="M0,222 Q125,210 250,222 T500,220 L500,246 L0,246 Z" fill="#4A9B4A" opacity="0.3"/>
+              <circle cx="250" cy="232" r="5" fill="#FFD166"/><circle cx="250" cy="232" r="2.5" fill="#FF6B6B"/>
+
+              <!-- Small pool, left side -->
+              <ellipse cx="110" cy="270" rx="90" ry="30" fill="url(#pool-p6)" stroke="#2E8FA8" stroke-width="3"/>
+              <ellipse cx="110" cy="262" rx="72" ry="18" fill="#B8ECF8" opacity="0.5"/>
+
+              <!-- RABBIT and SQUIRREL splashing together, small pool -->
+              <ellipse cx="80" cy="248" rx="7" ry="18" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(-20 80 248)"/>
+              <ellipse cx="94" cy="246" rx="7" ry="18" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(12 94 246)"/>
+              <circle cx="87" cy="278" r="20" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="87" cy="310" rx="22" ry="14" fill="#3EA8C8" opacity="0.4"/>
+              <path d="M 80 274 Q 84 270 88 274" stroke="#2D3748" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <path d="M 88 274 Q 92 270 96 274" stroke="#2D3748" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <path d="M 78 288 Q 87 293 96 288" stroke="#2D3748" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <circle cx="70" cy="280" r="5" fill="#FFB3C6" opacity="0.4"/>
+              <circle cx="104" cy="280" r="5" fill="#FFB3C6" opacity="0.4"/>
+              <path d="M 72 296 Q 58 288 50 278" stroke="#F0E8DC" stroke-width="7" fill="none" stroke-linecap="round"/>
+
+              <!-- Squirrel little friend -->
+              <ellipse cx="150" cy="286" rx="16" ry="14" fill="#D4956C" stroke="#B87A54" stroke-width="1.5"/>
+              <path d="M 158 276 Q 178 260 172 240" stroke="#D4956C" stroke-width="10" fill="none" stroke-linecap="round"/>
+              <circle cx="140" cy="278" r="12" fill="#E8B896" stroke="#B87A54" stroke-width="1.5"/>
+              <circle cx="136" cy="275" r="2.5" fill="#2D3748"/>
+              <circle cx="144" cy="275" r="2.5" fill="#2D3748"/>
+              <ellipse cx="140" cy="282" rx="2.5" ry="2" fill="#7A5C2E"/>
+
+              <!-- Small water drops for splash -->
+              <ellipse cx="60" cy="252" rx="5" ry="8" fill="#8CE0F0" opacity="0.8"/>
+              <ellipse cx="130" cy="248" rx="5" ry="8" fill="#8CE0F0" opacity="0.8"/>
+
+              <!-- Big pool, right side -->
+              <ellipse cx="400" cy="272" rx="96" ry="32" fill="url(#pool-p6)" stroke="#2E8FA8" stroke-width="3"/>
+              <ellipse cx="400" cy="264" rx="76" ry="20" fill="#B8ECF8" opacity="0.5"/>
+
+              <!-- ELEPHANT and GIRAFFE playing together, big pool -->
+              <ellipse cx="368" cy="228" rx="20" ry="30" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5" transform="rotate(-10 368 228)"/>
+              <ellipse cx="404" cy="226" rx="20" ry="30" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5" transform="rotate(8 404 226)"/>
+              <circle cx="388" cy="252" r="36" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <path d="M 372 274 Q 358 288 356 302" stroke="#A8C0CC" stroke-width="12" fill="none" stroke-linecap="round"/>
+              <path d="M 372 274 Q 358 288 356 302" stroke="#88A0AC" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <circle cx="378" cy="244" r="5.5" fill="#2D3748"/>
+              <circle cx="398" cy="244" r="5.5" fill="#2D3748"/>
+              <path d="M 380 262 Q 388 268 396 262" stroke="#2D3748" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <ellipse cx="412" cy="304" rx="16" ry="10" fill="#3EA8C8" opacity="0.4"/>
+
+              <!-- Giraffe -->
+              <ellipse cx="460" cy="260" rx="18" ry="26" fill="#E8C078" stroke="#C89848" stroke-width="1.5"/>
+              <rect x="452" y="196" width="14" height="58" rx="6" fill="#E8C078" stroke="#C89848" stroke-width="1.5"/>
+              <circle cx="459" cy="188" r="15" fill="#E8C078" stroke="#C89848" stroke-width="1.5"/>
+              <circle cx="454" cy="184" r="2.5" fill="#2D3748"/>
+              <circle cx="464" cy="184" r="2.5" fill="#2D3748"/>
+              <circle cx="452" cy="176" r="3" fill="#E8C078" stroke="#C89848" stroke-width="1"/>
+              <circle cx="466" cy="176" r="3" fill="#E8C078" stroke="#C89848" stroke-width="1"/>
+              <ellipse cx="446" cy="220" rx="4" ry="6" fill="#C89848" opacity="0.6"/>
+              <ellipse cx="466" cy="234" rx="4" ry="6" fill="#C89848" opacity="0.6"/>
+
+              <ellipse cx="330" cy="240" rx="6" ry="9" fill="#8CE0F0" opacity="0.8"/>
+              <ellipse cx="440" cy="238" rx="6" ry="9" fill="#8CE0F0" opacity="0.8"/>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 6</div>
+            <p class="story-text">
+              Rabbit hopped over to the small pool and met Squirrel and a whole gang of little friends, splashing and laughing together.<br><br>
+              Meanwhile, over in the big pool, Elephant made enormous waves with Giraffe and the other big animals.<br><br>
+              Both pools were full of fun — just the right size for everyone in them.
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 7: Lunch bump-in, apologies -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sky-p7" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#FFE3D6"/>
+                  <stop offset="100%" stop-color="#FFF6EE"/>
+                </linearGradient>
+                <linearGradient id="ground-p7" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#8ECB7E"/>
+                  <stop offset="100%" stop-color="#63AE5B"/>
+                </linearGradient>
+              </defs>
+              <rect width="500" height="215" fill="url(#sky-p7)"/>
+              <ellipse cx="90" cy="42" rx="34" ry="14" fill="white" opacity="0.8"/>
+              <ellipse cx="420" cy="46" rx="30" ry="13" fill="white" opacity="0.8"/>
+              <path d="M0,206 Q125,190 250,204 T500,202 L500,360 L0,360 Z" fill="url(#ground-p7)"/>
+              <path d="M0,222 Q125,210 250,222 T500,220 L500,246 L0,246 Z" fill="#4A9B4A" opacity="0.3"/>
+              <circle cx="40" cy="230" r="5" fill="#FF9BAE"/><circle cx="40" cy="230" r="2.5" fill="#FFD166"/>
+              <circle cx="460" cy="234" r="5" fill="#C77DFF"/><circle cx="460" cy="234" r="2.5" fill="#FFD166"/>
+
+              <!-- Lunch table, buffet style -->
+              <rect x="150" y="256" width="200" height="14" rx="5" fill="#8B5E3C"/>
+              <rect x="165" y="270" width="10" height="34" fill="#8B5E3C"/>
+              <rect x="325" y="270" width="10" height="34" fill="#8B5E3C"/>
+              <circle cx="190" cy="248" r="11" fill="#FFD166"/>
+              <circle cx="220" cy="246" r="10" fill="#FF9BAE"/>
+              <circle cx="250" cy="248" r="11" fill="#74C8E4"/>
+              <circle cx="280" cy="246" r="10" fill="#C77DFF"/>
+              <circle cx="310" cy="248" r="11" fill="#06C98A"/>
+
+              <!-- RABBIT, toweled off, looking sincere -->
+              <ellipse cx="150" cy="230" rx="8" ry="24" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(-10 150 230)"/>
+              <ellipse cx="150" cy="232" rx="4.5" ry="18" fill="#FFB3C6" transform="rotate(-10 150 232)"/>
+              <ellipse cx="166" cy="228" rx="8" ry="24" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(8 166 228)"/>
+              <ellipse cx="166" cy="230" rx="4.5" ry="18" fill="#FFB3C6" transform="rotate(8 166 230)"/>
+              <circle cx="158" cy="266" r="24" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="158" cy="308" rx="26" ry="28" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <path d="M 148 262 Q 152 258 156 262" stroke="#2D3748" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <path d="M 160 262 Q 164 258 168 262" stroke="#2D3748" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <ellipse cx="158" cy="276" rx="3.5" ry="3" fill="#FF9BAE"/>
+              <path d="M 148 284 Q 158 290 168 284" stroke="#2D3748" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <circle cx="139" cy="270" r="6" fill="#FFB3C6" opacity="0.4"/>
+              <circle cx="177" cy="270" r="6" fill="#FFB3C6" opacity="0.4"/>
+              <ellipse cx="172" cy="330" rx="14" ry="9" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+
+              <!-- ELEPHANT, toweled off, looking sincere too -->
+              <ellipse cx="360" cy="232" rx="24" ry="34" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5" transform="rotate(8 360 232)"/>
+              <ellipse cx="416" cy="228" rx="24" ry="34" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5" transform="rotate(-6 416 228)"/>
+              <ellipse cx="392" cy="288" rx="54" ry="40" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <circle cx="386" cy="230" r="44" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <path d="M 368 260 Q 348 278 344 298" stroke="#A8C0CC" stroke-width="15" fill="none" stroke-linecap="round"/>
+              <path d="M 368 260 Q 348 278 344 298" stroke="#88A0AC" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <path d="M 372 220 Q 380 226 388 220" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <path d="M 396 220 Q 404 226 412 220" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <path d="M 374 246 Q 386 252 398 246" stroke="#2D3748" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <circle cx="358" cy="242" r="9" fill="#FFB3C6" opacity="0.3"/>
+
+              <!-- Rabbit's speech bubble -->
+              <ellipse cx="130" cy="120" rx="90" ry="32" fill="white" stroke="#D0C8B8" stroke-width="1.5" opacity="0.95"/>
+              <path d="M 158 148 Q 166 160 176 170 Q 160 166 152 152 Z" fill="white" stroke="#D0C8B8" stroke-width="1.5"/>
+              <text x="130" y="112" text-anchor="middle" font-size="10" fill="#2D3748" font-family="sans-serif" font-weight="bold">I'm sorry I didn't</text>
+              <text x="130" y="126" text-anchor="middle" font-size="10" fill="#2D3748" font-family="sans-serif" font-weight="bold">listen when you</text>
+              <text x="130" y="140" text-anchor="middle" font-size="10" fill="#2D3748" font-family="sans-serif" font-weight="bold">tried to tell me.</text>
+
+              <!-- Elephant's speech bubble -->
+              <ellipse cx="410" cy="112" rx="94" ry="32" fill="white" stroke="#D0C8B8" stroke-width="1.5" opacity="0.95"/>
+              <path d="M 388 140 Q 380 152 370 162 Q 386 158 394 144 Z" fill="white" stroke="#D0C8B8" stroke-width="1.5"/>
+              <text x="410" y="104" text-anchor="middle" font-size="10" fill="#2D3748" font-family="sans-serif" font-weight="bold">And I'm sorry I</text>
+              <text x="410" y="118" text-anchor="middle" font-size="10" fill="#2D3748" font-family="sans-serif" font-weight="bold">wasn't more careful</text>
+              <text x="410" y="132" text-anchor="middle" font-size="10" fill="#2D3748" font-family="sans-serif" font-weight="bold">with my splashes.</text>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 7</div>
+            <p class="story-text">
+              When lunchtime came, Rabbit and Elephant bumped into each other in line.<br><br>
+              "I'm sorry I didn't listen when you tried to tell me," said Rabbit. "And I'm sorry I wasn't more careful with my splashes," said Elephant.<br><br>
+              They both smiled. Saying sorry really did make things better.
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 8: Lunch together + tennis and basketball -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sky-p8" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#FFE8B0"/>
+                  <stop offset="100%" stop-color="#FFF5D8"/>
+                </linearGradient>
+                <linearGradient id="ground-p8" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#9BDD84"/>
+                  <stop offset="100%" stop-color="#6BBE64"/>
+                </linearGradient>
+              </defs>
+              <rect width="500" height="215" fill="url(#sky-p8)"/>
+              <circle cx="420" cy="50" r="36" fill="#FFD166"/>
+              <circle cx="420" cy="50" r="26" fill="#FFE680"/>
+              <ellipse cx="80" cy="44" rx="40" ry="16" fill="white" opacity="0.9"/>
+              <path d="M0,206 Q125,190 250,204 T500,202 L500,360 L0,360 Z" fill="url(#ground-p8)"/>
+              <path d="M0,222 Q125,210 250,222 T500,220 L500,246 L0,246 Z" fill="#4A9B4A" opacity="0.3"/>
+              <circle cx="40" cy="234" r="5" fill="#FF9BAE"/><circle cx="40" cy="234" r="2.5" fill="#FFD166"/>
+              <circle cx="465" cy="238" r="5" fill="#74C8E4"/><circle cx="465" cy="238" r="2.5" fill="#FFD166"/>
+
+              <!-- Tennis net, left -->
+              <line x1="60" y1="250" x2="60" y2="310" stroke="#8B5E3C" stroke-width="5"/>
+              <line x1="60" y1="256" x2="140" y2="256" stroke="white" stroke-width="4" opacity="0.9"/>
+              <line x1="140" y1="250" x2="140" y2="310" stroke="#8B5E3C" stroke-width="5"/>
+
+              <!-- Basketball hoop, right -->
+              <rect x="420" y="220" width="6" height="90" fill="#8B5E3C"/>
+              <rect x="400" y="234" width="34" height="22" rx="2" fill="white" stroke="#D0C8B8" stroke-width="2"/>
+              <ellipse cx="417" cy="258" rx="16" ry="5" fill="none" stroke="#FF6B6B" stroke-width="3"/>
+
+              <!-- RABBIT mid-swing with tennis racket -->
+              <ellipse cx="200" cy="248" rx="8" ry="22" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(-20 200 248)"/>
+              <ellipse cx="216" cy="244" rx="8" ry="22" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(12 216 244)"/>
+              <circle cx="208" cy="284" r="23" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="208" cy="324" rx="25" ry="27" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <path d="M 198 280 Q 202 276 206 280" stroke="#2D3748" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <path d="M 210 280 Q 214 276 218 280" stroke="#2D3748" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <path d="M 198 300 Q 208 306 218 300" stroke="#2D3748" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <circle cx="189" cy="288" r="6" fill="#FFB3C6" opacity="0.4"/>
+              <circle cx="227" cy="288" r="6" fill="#FFB3C6" opacity="0.4"/>
+              <!-- Arm with racket, swinging up -->
+              <path d="M 226 300 Q 246 280 258 258" stroke="#F0E8DC" stroke-width="8" fill="none" stroke-linecap="round"/>
+              <circle cx="264" cy="244" r="16" fill="none" stroke="#FFD166" stroke-width="4"/>
+              <line x1="264" y1="260" x2="264" y2="284" stroke="#8B5E3C" stroke-width="4"/>
+              <circle cx="230" cy="220" r="6" fill="#FFF9F0" stroke="#D0C8B8" stroke-width="1"/>
+
+              <!-- ELEPHANT dunking a basketball with trunk -->
+              <ellipse cx="370" cy="220" rx="22" ry="32" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5" transform="rotate(-8 370 220)"/>
+              <ellipse cx="410" cy="216" rx="22" ry="32" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5" transform="rotate(10 410 216)"/>
+              <ellipse cx="392" cy="272" rx="52" ry="38" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <circle cx="392" cy="218" r="42" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
+              <!-- Trunk raised up toward hoop, holding ball -->
+              <path d="M 402 200 Q 412 178 417 258" stroke="#A8C0CC" stroke-width="14" fill="none" stroke-linecap="round"/>
+              <path d="M 402 200 Q 412 178 417 258" stroke="#88A0AC" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <circle cx="417" cy="256" r="10" fill="#FF9BAE" stroke="#D66E86" stroke-width="1.5"/>
+              <path d="M 407 256 L 427 256 M 417 246 L 417 266" stroke="#D66E86" stroke-width="1"/>
+              <circle cx="380" cy="210" r="6.5" fill="#2D3748"/>
+              <circle cx="378" cy="208" r="2.5" fill="#fff"/>
+              <circle cx="404" cy="210" r="6.5" fill="#2D3748"/>
+              <circle cx="402" cy="208" r="2.5" fill="#fff"/>
+              <path d="M 382 234 Q 392 240 402 234" stroke="#2D3748" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <circle cx="368" cy="228" r="8" fill="#FFB3C6" opacity="0.3"/>
+              <ellipse cx="376" cy="304" rx="18" ry="10" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="416" cy="306" rx="18" ry="10" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+
+              <!-- Speech bubble -->
+              <ellipse cx="300" cy="90" rx="76" ry="26" fill="white" stroke="#D0C8B8" stroke-width="1.5" opacity="0.95"/>
+              <path d="M 280 114 Q 274 126 266 136 Q 280 130 288 118 Z" fill="white" stroke="#D0C8B8" stroke-width="1.5"/>
+              <text x="300" y="86" text-anchor="middle" font-size="11" fill="#2D3748" font-family="sans-serif" font-weight="bold">Best day EVER!</text>
+              <text x="300" y="101" text-anchor="middle" font-size="10" fill="#2D3748" font-family="sans-serif">Nice shot!</text>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 8</div>
+            <p class="story-text">
+              They sat down and shared lunch together, swapping stories and laughing so hard Rabbit nearly fell off her chair.<br><br>
+              Afterward, they played tennis, and then basketball, cheering each other on with every point.<br><br>
+              By the end of the day, they'd had the best time ever.
+            </p>
+          </div>
+        </div>
+
+        <!-- PAGE 9: Ending - ride home, best friends -->
+        <div class="page page-spread">
+          <div class="page-illustration">
+            <svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="sky-p9" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#FFE8B0"/>
+                  <stop offset="100%" stop-color="#FFF5D8"/>
+                </linearGradient>
+                <linearGradient id="ground-p9" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#9BDD84"/>
+                  <stop offset="100%" stop-color="#6BBE64"/>
+                </linearGradient>
+              </defs>
+              <rect width="500" height="215" fill="url(#sky-p9)"/>
+              <circle cx="90" cy="60" r="40" fill="#FFD166"/>
+              <circle cx="90" cy="60" r="28" fill="#FFE680"/>
+              <line x1="90" y1="10" x2="90" y2="24" stroke="#FFD166" stroke-width="3" stroke-linecap="round"/>
+              <line x1="130" y1="28" x2="140" y2="20" stroke="#FFD166" stroke-width="3" stroke-linecap="round"/>
+              <ellipse cx="380" cy="46" rx="42" ry="17" fill="white" opacity="0.9"/>
+              <ellipse cx="410" cy="38" rx="26" ry="14" fill="white" opacity="0.85"/>
+              <path d="M0,206 Q125,190 250,204 T500,202 L500,360 L0,360 Z" fill="url(#ground-p9)"/>
+              <path d="M0,222 Q125,210 250,222 T500,220 L500,246 L0,246 Z" fill="#4A9B4A" opacity="0.3"/>
+              <g stroke="#4A9B4A" stroke-width="2" stroke-linecap="round" opacity="0.55">
+                <path d="M40,214 q3,-9 6,0"/><path d="M60,220 q3,-9 6,0"/>
+                <path d="M430,212 q3,-9 6,0"/><path d="M455,218 q3,-9 6,0"/>
+              </g>
+              <circle cx="45" cy="230" r="5" fill="#C77DFF"/><circle cx="45" cy="230" r="2.5" fill="#FFD166"/>
+              <circle cx="465" cy="234" r="5" fill="#FF9BAE"/><circle cx="465" cy="234" r="2.5" fill="#FFD166"/>
+
+              <!-- Rabbit's little burrow house, right -->
+              <ellipse cx="430" cy="270" rx="46" ry="40" fill="#D8B48A" stroke="#B8935E" stroke-width="2.5"/>
+              <ellipse cx="430" cy="256" rx="20" ry="26" fill="#3A2A18"/>
+              <circle cx="450" cy="248" r="6" fill="#FFD166"/>
+
+              <!-- Elephant's car, parked, both waving -->
+              <rect x="140" y="256" width="120" height="50" rx="12" fill="#FF9BAE" stroke="#D66E86" stroke-width="2.5"/>
+              <rect x="158" y="230" width="82" height="36" rx="10" fill="#FF9BAE" stroke="#D66E86" stroke-width="2.5"/>
+              <rect x="166" y="236" width="30" height="22" rx="4" fill="#E8F8FF" stroke="#D66E86" stroke-width="1"/>
+              <rect x="202" y="236" width="30" height="22" rx="4" fill="#E8F8FF" stroke="#D66E86" stroke-width="1"/>
+              <circle cx="168" cy="310" r="16" fill="#2D3748" stroke="#1A1A1A" stroke-width="1.5"/>
+              <circle cx="234" cy="310" r="16" fill="#2D3748" stroke="#1A1A1A" stroke-width="1.5"/>
+
+              <!-- Elephant driving, trunk out the window waving -->
+              <circle cx="185" cy="248" r="24" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+              <ellipse cx="164" cy="242" rx="11" ry="16" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1"/>
+              <ellipse cx="206" cy="242" rx="11" ry="16" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1"/>
+              <path d="M 178 262 Q 168 246 176 232" stroke="#A8C0CC" stroke-width="9" fill="none" stroke-linecap="round"/>
+              <path d="M 178 262 Q 168 246 176 232" stroke="#88A0AC" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <circle cx="178" cy="244" r="5" fill="#2D3748"/>
+              <circle cx="194" cy="244" r="5" fill="#2D3748"/>
+              <path d="M 180 258 Q 186 262 192 258" stroke="#2D3748" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+
+              <!-- Rabbit hopping out toward her house, waving back -->
+              <ellipse cx="330" cy="252" rx="8" ry="22" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(-18 330 252)"/>
+              <ellipse cx="346" cy="248" rx="8" ry="22" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(12 346 248)"/>
+              <circle cx="338" cy="286" r="23" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <ellipse cx="338" cy="326" rx="25" ry="26" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
+              <path d="M 328 282 Q 332 278 336 282" stroke="#2D3748" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <path d="M 340 282 Q 344 278 348 282" stroke="#2D3748" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+              <ellipse cx="338" cy="296" rx="3.5" ry="3" fill="#FF9BAE"/>
+              <path d="M 328 302 Q 338 308 348 302" stroke="#2D3748" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <circle cx="319" cy="290" r="6" fill="#FFB3C6" opacity="0.4"/>
+              <circle cx="357" cy="290" r="6" fill="#FFB3C6" opacity="0.4"/>
+              <!-- Arm waving up -->
+              <path d="M 320 302 Q 306 288 300 272" stroke="#F0E8DC" stroke-width="7" fill="none" stroke-linecap="round"/>
+
+              <!-- Speech bubble -->
+              <ellipse cx="260" cy="130" rx="98" ry="30" fill="white" stroke="#D0C8B8" stroke-width="1.5" opacity="0.95"/>
+              <path d="M 250 158 Q 244 170 236 180 Q 250 176 258 162 Z" fill="white" stroke="#D0C8B8" stroke-width="1.5"/>
+              <text x="260" y="122" text-anchor="middle" font-size="10" fill="#2D3748" font-family="sans-serif" font-weight="bold">See you tomorrow,</text>
+              <text x="260" y="136" text-anchor="middle" font-size="10" fill="#2D3748" font-family="sans-serif" font-weight="bold">best friend!</text>
+              <text x="260" y="150" text-anchor="middle" font-size="14" fill="#FF6B6B">🐰🐘💛</text>
+            </svg>
+          </div>
+          <div class="page-text">
+            <div class="page-num">Page 9</div>
+            <p class="story-text">
+              As the sun began to set, Elephant asked, "Where do you live? I could give you a ride home."<br><br>
+              Rabbit hopped happily into his car, and he dropped her right at her burrow door.<br><br>
+              From that day on, Rabbit and Elephant were the very best of friends. <em>✨ The End ✨</em>
+            </p>
+          </div>
+        </div>
+
+      </div><!-- /book-pages -->
+
+      <div class="book-nav">
+        <button class="book-nav-btn" id="btn-prev" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+          Back
+        </button>
+        <span class="page-counter" id="page-counter">Cover</span>
+        <button class="book-nav-btn" id="btn-next">
+          Next
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </button>
+      </div>
+
+    </div><!-- /book-container -->
+
+    <p class="swipe-hint">← Swipe to turn pages →</p>
+
+  </div><!-- /reader-wrapper -->
+
+  <script src="../../assets/js/nav.js"></script>
+  <script src="../../assets/js/book.js"></script>
+
+</body>
+</html>

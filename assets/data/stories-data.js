@@ -52,7 +52,20 @@ const STORIES = [
     comingSoon: false
   },
   {
-    id: 'coming-soon-5',
+    id: '05-splash-the-pool-party',
+    title: 'Splash! The Pool Party',
+    subtitle: 'A story about respecting space, saying sorry, and making new friends',
+    emoji: '🏊',
+    description: 'Elephant\'s cannonball sends Rabbit flying at the forest pool party. After a splashy misunderstanding, both learn to say sorry — and become best friends by the end of the day.',
+    tags: ['Respect', 'Apologizing', 'Friendship'],
+    characters: ['Rabbit', 'Elephant'],
+    readTime: '7 min read',
+    path: 'stories/05-splash-the-pool-party/',
+    cardColor: '#FF9BAE',
+    comingSoon: false
+  },
+  {
+    id: 'coming-soon-6',
     title: 'Coming Soon…',
     subtitle: 'More fun is brewing!',
     emoji: '🌟',

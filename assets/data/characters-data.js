@@ -10,7 +10,7 @@ const CHARACTERS = [
     favoriteFood: 'Carrot Halwa 🥕',
     quirk: 'Never gives up asking questions — even when the answer is written all over Elephant\'s face!',
     quote: '"My tummy is GROWLING!"',
-    appearances: ['The Hungry Friends', 'Ouch! The Big Thorn', 'Watch Your Step!', 'Splash! The Pool Party']
+    appearances: ['The Hungry Friends', 'Ouch! The Big Thorn', 'Watch Your Step!', 'Splash! The Pool Party', 'Bonk! The Bumpy Ride Home']
   },
   {
     id: 'elephant',
@@ -23,7 +23,7 @@ const CHARACTERS = [
     favoriteFood: 'Fruit Salad 🍇',
     quirk: 'Means well — but his tummy sometimes overrules his brain. He always makes it right in the end!',
     quote: '"No idea... okay, fine, I ate it."',
-    appearances: ['The Hungry Friends', 'Ouch! The Big Thorn', 'Watch Your Step!', 'Splash! The Pool Party']
+    appearances: ['The Hungry Friends', 'Ouch! The Big Thorn', 'Watch Your Step!', 'Splash! The Pool Party', 'Bonk! The Bumpy Ride Home']
   },
   {
     id: 'squirrel',
@@ -36,7 +36,7 @@ const CHARACTERS = [
     favoriteFood: 'Acorn Pudding 🌰',
     quirk: 'Can remove even the biggest thorn without breaking a sweat — but will absolutely laugh at a good joke between procedures.',
     quote: '"Three days of rest. No running, no planting, no adventures!"',
-    appearances: ['Ouch! The Big Thorn']
+    appearances: ['Ouch! The Big Thorn', 'Bonk! The Bumpy Ride Home']
   },
   {
     id: 'sheep',
@@ -62,6 +62,19 @@ const CHARACTERS = [
     favoriteFood: 'Acacia Leaf Salad 🌿',
     quirk: 'Can spot a mixed-up mask or bandage from all the way across the ward — thanks to that very long neck.',
     quote: '"Let\'s double-check that together, shall we?"',
-    appearances: ['Snow Much Help!']
+    appearances: ['Snow Much Help!', 'Bonk! The Bumpy Ride Home']
+  },
+  {
+    id: 'bear',
+    name: 'Bear',
+    pronouns: 'they/them',
+    tagline: 'Warm, friendly, and a little too easily distracted behind the wheel!',
+    bgColor: '#FBF1E6',
+    chipColor: '#C89A72',
+    personality: ['Cheerful', 'Easily distracted', 'Apologetic', 'Warm-hearted'],
+    favoriteFood: 'Honey Crumble 🍯',
+    quirk: 'Waves at every friend they spot — even when they really should be watching the road!',
+    quote: '"Oh no — I am SO sorry, are you two alright?"',
+    appearances: ['Bonk! The Bumpy Ride Home']
   }
 ];

@@ -113,6 +113,7 @@ In GitHub repo → Settings → Pages → Source: `main` branch, folder `/` (roo
 | 03 | Snow Much Help! | ✅ Live |
 | 04 | Watch Your Step! | ✅ Live |
 | 05 | Splash! The Pool Party | ✅ Live |
+| 06 | Bonk! The Bumpy Ride Home | ✅ Live |
 
 ## Current characters
 
@@ -123,3 +124,4 @@ In GitHub repo → Settings → Pages → Source: `main` branch, folder `/` (roo
 | Dr. Squirrel | Acorn Pudding | Ouch! The Big Thorn |
 | Dr. Sheep | Clover Tea | Snow Much Help! |
 | Nurse Giraffe | Acacia Leaf Salad | Snow Much Help! |
+| Bear | Honey Crumble | Bonk! The Bumpy Ride Home |

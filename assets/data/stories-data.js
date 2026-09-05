@@ -65,7 +65,20 @@ const STORIES = [
     comingSoon: false
   },
   {
-    id: 'coming-soon-6',
+    id: '06-bonk-the-bumpy-ride-home',
+    title: 'Bonk! The Bumpy Ride Home',
+    subtitle: 'A story about keeping calm, and saying sorry when you make a mistake',
+    emoji: '🚗',
+    description: 'A grumpy moment, a bumpy car accident, and a hospital full of hurt feelings — Rabbit, Elephant, Dr. Squirrel, and Nurse Giraffe all learn that sorry can fix almost anything.',
+    tags: ['Staying Calm', 'Apologizing', 'Kindness'],
+    characters: ['Rabbit', 'Elephant', 'Bear', 'Dr. Squirrel', 'Nurse Giraffe'],
+    readTime: '9 min read',
+    path: 'stories/06-bonk-the-bumpy-ride-home/',
+    cardColor: '#FF6B6B',
+    comingSoon: false
+  },
+  {
+    id: 'coming-soon-7',
     title: 'Coming Soon…',
     subtitle: 'More fun is brewing!',
     emoji: '🌟',

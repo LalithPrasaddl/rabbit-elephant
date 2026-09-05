@@ -34,80 +34,61 @@
           <div class="cover-illustration">
             <svg viewBox="0 0 500 240" xmlns="http://www.w3.org/2000/svg">
               <defs>
-                <linearGradient id="sky-c6" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#BEE7FB"/>
-                  <stop offset="100%" stop-color="#EAF9FF"/>
-                </linearGradient>
-                <linearGradient id="ground-c6" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#9BDD84"/>
-                  <stop offset="100%" stop-color="#6BBE64"/>
-                </linearGradient>
+                <linearGradient id="c6-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#BEE7FB"/><stop offset="100%" stop-color="#EAF9FF"/></linearGradient>
+                <linearGradient id="c6-ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8FBB5E"/><stop offset="100%" stop-color="#4A7A38"/></linearGradient>
+                <radialGradient id="c6-sun" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FFF9E6"/><stop offset="40%" stop-color="#FFE7A0" stop-opacity="0.7"/><stop offset="100%" stop-color="#FFE7A0" stop-opacity="0"/></radialGradient>
+                <radialGradient id="c6-rfur" cx="70%" cy="25%" r="90%"><stop offset="0%" stop-color="#FFF8EC"/><stop offset="48%" stop-color="#F3E3C8"/><stop offset="100%" stop-color="#CDB58C"/></radialGradient>
+                <radialGradient id="c6-eskin" cx="70%" cy="24%" r="90%"><stop offset="0%" stop-color="#DCEBEF"/><stop offset="48%" stop-color="#AFC6D0"/><stop offset="100%" stop-color="#71909E"/></radialGradient>
+                <radialGradient id="c6-eear" cx="65%" cy="20%" r="95%"><stop offset="0%" stop-color="#EAF4F6"/><stop offset="100%" stop-color="#9CBCC8"/></radialGradient>
+                <radialGradient id="c6-iris" cx="50%" cy="35%" r="65%"><stop offset="0%" stop-color="#6B4A2E"/><stop offset="100%" stop-color="#2A1B10"/></radialGradient>
+                <radialGradient id="c6-bear" cx="70%" cy="25%" r="90%"><stop offset="0%" stop-color="#F7E9D4"/><stop offset="48%" stop-color="#D9B48A"/><stop offset="100%" stop-color="#A97D52"/></radialGradient>
+                <filter id="c6-b"><feGaussianBlur stdDeviation="3"/></filter>
               </defs>
-              <!-- Sky -->
-              <rect width="500" height="240" fill="url(#sky-c6)"/>
-              <!-- Sun -->
-              <circle cx="66" cy="52" r="34" fill="#FFD166"/>
-              <circle cx="66" cy="52" r="24" fill="#FFE680"/>
-              <!-- Clouds -->
-              <ellipse cx="280" cy="46" rx="50" ry="20" fill="white" opacity="0.9"/>
-              <ellipse cx="308" cy="38" rx="32" ry="16" fill="white" opacity="0.9"/>
-              <ellipse cx="420" cy="60" rx="40" ry="17" fill="white" opacity="0.85"/>
-              <!-- Ground -->
-              <path d="M0,158 Q125,144 250,156 T500,154 L500,240 L0,240 Z" fill="url(#ground-c6)"/>
-              <path d="M0,172 Q125,160 250,172 T500,170 L500,190 L0,190 Z" fill="#4A9B4A" opacity="0.3"/>
-              <g stroke="#4A9B4A" stroke-width="2" stroke-linecap="round" opacity="0.5">
-                <path d="M20,180 q3,-9 6,0"/><path d="M470,184 q3,-9 6,0"/>
+              <rect width="500" height="140" fill="url(#c6-sky)"/>
+              <circle cx="70" cy="36" r="52" fill="url(#c6-sun)"/><circle cx="70" cy="36" r="15" fill="#FFF3D0"/>
+              <ellipse cx="330" cy="30" rx="34" ry="12" fill="#fff" opacity="0.85" filter="url(#c6-b)"/>
+              <path d="M0,138 Q125,124 250,136 T500,132 L500,240 L0,240 Z" fill="url(#c6-ground)"/>
+              <rect x="0" y="176" width="500" height="64" fill="#B8B8B8"/>
+              <rect x="0" y="176" width="500" height="8" fill="#A8A8A8"/>
+              <rect x="60" y="205" width="30" height="8" rx="2" fill="#FFD166" opacity="0.8"/><rect x="220" y="205" width="30" height="8" rx="2" fill="#FFD166" opacity="0.8"/><rect x="380" y="205" width="30" height="8" rx="2" fill="#FFD166" opacity="0.8"/>
+
+              <!-- Bear's little car, background right -->
+              <rect x="392" y="182" width="86" height="26" rx="7" fill="#C77DFF" stroke="#9B5FD1" stroke-width="1.5"/>
+              <circle cx="414" cy="208" r="9" fill="#2D3748"/><circle cx="414" cy="208" r="4.5" fill="#666"/>
+              <circle cx="456" cy="208" r="9" fill="#2D3748"/><circle cx="456" cy="208" r="4.5" fill="#666"/>
+              <circle cx="408" cy="176" r="10" fill="url(#c6-bear)"/>
+              <circle cx="401" cy="169" r="4" fill="url(#c6-bear)"/><circle cx="415" cy="169" r="4" fill="url(#c6-bear)"/>
+              <circle cx="405" cy="176" r="1.6" fill="#2D3748"/><circle cx="411" cy="176" r="1.6" fill="#2D3748"/>
+
+              <!-- their car, foreground -->
+              <rect x="80" y="150" width="230" height="54" rx="15" fill="#FFD166" stroke="#E8B800" stroke-width="2"/>
+              <circle cx="135" cy="206" r="19" fill="#2D3748"/><circle cx="135" cy="206" r="10" fill="#666"/>
+              <circle cx="258" cy="206" r="19" fill="#2D3748"/><circle cx="258" cy="206" r="10" fill="#666"/>
+
+              <!-- Rabbit driving -->
+              <g transform="translate(115,95)">
+                <ellipse cx="0" cy="-8" rx="7" ry="20" fill="url(#c6-rfur)" transform="rotate(-8 0 -8)"/>
+                <ellipse cx="16" cy="-10" rx="7" ry="20" fill="url(#c6-rfur)" transform="rotate(8 16 -10)"/>
+                <circle cx="8" cy="26" r="20" fill="url(#c6-rfur)"/>
+                <ellipse cx="8" cy="56" rx="21" ry="22" fill="url(#c6-rfur)"/>
+                <ellipse cx="0" cy="22" rx="4.4" ry="5" fill="url(#c6-iris)"/><circle cx="1.4" cy="20" r="1.5" fill="#fff"/>
+                <ellipse cx="16" cy="22" rx="4.4" ry="5" fill="url(#c6-iris)"/><circle cx="17.4" cy="20" r="1.5" fill="#fff"/>
+                <ellipse cx="8" cy="32" rx="3" ry="2.4" fill="#E9607E"/>
+                <circle cx="-18" cy="46" r="9" fill="none" stroke="#E8B800" stroke-width="2.6"/>
               </g>
-              <circle cx="30" cy="186" r="3" fill="#FF6B6B"/><circle cx="30" cy="186" r="1.3" fill="#FFD166"/>
-              <!-- Road -->
-              <rect x="30" y="176" width="440" height="50" fill="#B8B8B8"/>
-              <rect x="150" y="196" width="26" height="8" rx="2" fill="#FFD166" opacity="0.8"/>
 
-              <!-- Bear's little car, farther back on the road (foreshadowing) -->
-              <rect x="392" y="180" width="90" height="30" rx="8" fill="#C77DFF" stroke="#9B5FD1" stroke-width="2"/>
-              <circle cx="416" cy="212" r="10" fill="#2D3748"/><circle cx="416" cy="212" r="5" fill="#666"/>
-              <circle cx="460" cy="212" r="10" fill="#2D3748"/><circle cx="460" cy="212" r="5" fill="#666"/>
-              <circle cx="410" cy="172" r="12" fill="#C89A72" stroke="#A5764C" stroke-width="1.5"/>
-              <ellipse cx="401" cy="164" rx="5" ry="5" fill="#C89A72" stroke="#A5764C" stroke-width="1"/>
-              <ellipse cx="419" cy="164" rx="5" ry="5" fill="#C89A72" stroke="#A5764C" stroke-width="1"/>
-              <path d="M 428 168 Q 434 172 430 178" stroke="#C89A72" stroke-width="6" fill="none" stroke-linecap="round"/>
-              <text x="436" y="172" font-size="12" fill="#FFD166" opacity="0.9">✦</text>
-
-              <!-- Their car (foreground, driving) -->
-              <rect x="90" y="150" width="230" height="52" rx="14" fill="#FFD166" stroke="#E8B800" stroke-width="2.5"/>
-              <circle cx="145" cy="204" r="19" fill="#2D3748" stroke="#1A1A1A" stroke-width="2"/><circle cx="145" cy="204" r="10" fill="#666"/>
-              <circle cx="268" cy="204" r="19" fill="#2D3748" stroke="#1A1A1A" stroke-width="2"/><circle cx="268" cy="204" r="10" fill="#666"/>
-
-              <!-- Rabbit driving (left) -->
-              <ellipse cx="132" cy="112" rx="7" ry="21" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(-8 132 112)"/>
-              <ellipse cx="132" cy="114" rx="4" ry="16" fill="#FFB3C6" transform="rotate(-8 132 114)"/>
-              <ellipse cx="148" cy="110" rx="7" ry="21" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(8 148 110)"/>
-              <ellipse cx="148" cy="112" rx="4" ry="16" fill="#FFB3C6" transform="rotate(8 148 112)"/>
-              <circle cx="140" cy="150" r="22" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
-              <ellipse cx="140" cy="188" rx="24" ry="26" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
-              <circle cx="133" cy="146" r="5" fill="#2D3748"/><circle cx="134" cy="144" r="1.7" fill="#fff"/>
-              <circle cx="147" cy="146" r="5" fill="#2D3748"/><circle cx="148" cy="144" r="1.7" fill="#fff"/>
-              <ellipse cx="140" cy="154" rx="3" ry="2.5" fill="#FF9BAE"/>
-              <path d="M 132 160 Q 140 166 148 160" stroke="#2D3748" stroke-width="2" fill="none" stroke-linecap="round"/>
-              <circle cx="123" cy="152" r="6" fill="#FFB3C6" opacity="0.4"/><circle cx="157" cy="152" r="6" fill="#FFB3C6" opacity="0.4"/>
-              <circle cx="115" cy="178" r="10" fill="none" stroke="#E8B800" stroke-width="3"/>
-
-              <!-- Elephant, passenger, calm and recovering (right) -->
-              <ellipse cx="235" cy="130" rx="18" ry="26" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
-              <ellipse cx="283" cy="130" rx="18" ry="26" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
-              <circle cx="259" cy="140" r="32" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
-              <ellipse cx="259" cy="188" rx="34" ry="30" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
-              <path d="M 244 168 Q 220 186 214 208" stroke="#A8C0CC" stroke-width="14" fill="none" stroke-linecap="round"/>
-              <path d="M 244 168 Q 220 186 214 208" stroke="#88A0AC" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-              <ellipse cx="214" cy="210" rx="8" ry="6" fill="white" stroke="#D0D0D0" stroke-width="1.5"/>
-              <line x1="210" y1="207" x2="218" y2="213" stroke="#FF6B6B" stroke-width="2"/><line x1="218" y1="207" x2="210" y2="213" stroke="#FF6B6B" stroke-width="2"/>
-              <circle cx="248" cy="132" r="7" fill="#2D3748"/><circle cx="251" cy="129" r="2.7" fill="#fff"/>
-              <circle cx="272" cy="132" r="7" fill="#2D3748"/><circle cx="275" cy="129" r="2.7" fill="#fff"/>
-              <path d="M 248 155 Q 260 164 272 155" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-              <circle cx="234" cy="152" r="9" fill="#FFB3C6" opacity="0.3"/><circle cx="286" cy="152" r="9" fill="#FFB3C6" opacity="0.3"/>
-
-              <!-- Little heart between them -->
-              <text x="200" y="130" font-size="18" fill="#FF9BAE" opacity="0.9">♥</text>
+              <!-- Elephant passenger -->
+              <g transform="translate(200,74)">
+                <ellipse cx="14" cy="-8" rx="13" ry="18" fill="url(#c6-eskin)"/><ellipse cx="16" cy="-6" rx="8" ry="12" fill="url(#c6-eear)"/>
+                <ellipse cx="66" cy="-8" rx="13" ry="18" fill="url(#c6-eskin)"/><ellipse cx="64" cy="-6" rx="8" ry="12" fill="url(#c6-eear)"/>
+                <circle cx="40" cy="24" r="24" fill="url(#c6-eskin)"/>
+                <ellipse cx="40" cy="66" rx="26" ry="26" fill="url(#c6-eskin)"/>
+                <path d="M 28 42 Q 12 54 10 74" stroke="url(#c6-eskin)" stroke-width="9" fill="none" stroke-linecap="round"/>
+                <ellipse cx="31" cy="20" rx="5" ry="5.6" fill="url(#c6-iris)"/><circle cx="32.4" cy="18" r="1.7" fill="#fff"/>
+                <ellipse cx="49" cy="20" rx="5" ry="5.6" fill="url(#c6-iris)"/><circle cx="50.4" cy="18" r="1.7" fill="#fff"/>
+                <path d="M 30 38 Q 40 44 50 38" stroke="#385460" stroke-width="1.6" fill="none" stroke-linecap="round" opacity="0.6"/>
+                <ellipse cx="18" cy="20" rx="6" ry="4" fill="#F58FAE" opacity="0.3"/><ellipse cx="62" cy="20" rx="6" ry="4" fill="#F58FAE" opacity="0.3"/>
+              </g>
             </svg>
           </div>
           <h1 class="cover-title">Bonk! The Bumpy Ride Home</h1>

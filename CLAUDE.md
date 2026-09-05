@@ -44,8 +44,21 @@ rabbit-elephant/
 **Illustrations:** Inline SVG art per page, `viewBox="0 0 500 360"` (cover uses `0 0 500 240`). Characters use consistent color palette:
 - Rabbit: body `#F0E8DC`, ear interior `#FFB3C6`, nose `#FF9BAE`
 - Elephant: body `#A8C0CC`, ears `#C5D8E0`
+- Bear: body `#C89A72`, muzzle/ear interior `#EAD1B0`, nose `#5C3A21`
 
-**Background template (standard for every page, every story):** Never fill a page background with a single flat `<rect>`. Every illustration should feel like the same warm, sunny meadow, using this layered recipe:
+**Two illustration styles currently coexist** (mid-redesign, as of the "Bonk!" story era):
+- **Legacy flat style** — flat fills + thin grey stroke outlines, used by all in-story page illustrations (every page inside a story folder except the cover, across all 6 stories). Governed by the "Background template" recipe below. Left as-is for now; not yet migrated.
+- **Premium dimensional style** — no outlines, radial-gradient shading with a light source, rim light + ambient occlusion, naturalistic anatomy (visible legs, tails, whiskers, wrinkles, etc.). Used by `characters.html` portraits and (going forward) new story cover illustrations. See "Premium character illustration recipe" below. When touching a character portrait or a story cover, use this style, not the legacy one.
+
+**Premium character illustration recipe** (characters.html portraits, story covers): light source is always upper-right — every `radialGradient` uses `cx="~70%" cy="~25%" r="~90%"`, going from a bright warm highlight through the base tone to a deeper shade at 100%, no stroke outlines anywhere.
+1. **Per major shape** (head, body, ears): fill with a dedicated radial gradient (bright→base→deep), then add a blurred dark ambient-occlusion ellipse toward the lower-left where it meets another form, then a blurred warm-white rim-light stroke along the upper-right silhouette edge.
+2. **Eyes**: a radial-gradient iris (warm brown, center lighter than edge) rather than a flat dark circle, plus two catchlights (one bright white, one small warm-tinted) and a thin brow stroke above.
+3. **Grounding**: one large blurred dark ellipse under the feet as a contact shadow.
+4. **Species-specific realism details** (add what's anatomically appropriate, skip what isn't): visible separated legs/feet with toe or hoof marks, a tail, whiskers, ear-vein lines, trunk/neck wrinkles, tusks — small touches that read as "a real creature," not a toy.
+5. Portraits use `viewBox="0 0 320 360"` (not the older `220×280`/`240×290`), character filling most of the frame with a small margin, feet baseline around y≈330–345.
+6. Prefix all gradient/filter `id`s with `p-<character>-` (e.g. `p-rabbit-fur`) to avoid collisions — all six portraits live in the same DOM.
+
+**Background template (standard for every page, every story — legacy flat style only):** Never fill a page background with a single flat `<rect>`. Every illustration should feel like the same warm, sunny meadow, using this layered recipe:
 1. **Sky** — a `<linearGradient>` (unique `id` per `<svg>`, e.g. `sky-p3`) from a soft saturated color at the top to a pale near-white at the bottom. Pick the top color by mood, not randomly: cheerful/morning scenes ≈ `#BEE7FB`→`#EAF9FF`; warm/golden-hour or happy-ending scenes ≈ `#FFE8B0`→`#FFF5D8`; quieter emotional beats (confusion, mild frustration, a small mishap) ≈ a soft warm peach `#FFE3D6`→`#FFF6EE` — still warm and safe-feeling, never dark or dull, since the audience is 2–4 year olds.
 2. **Sun** — 2 concentric circles (outer saturated, inner pale) somewhere in the sky; add short radiating `<line>` rays for the "cover"-style hero shots.
 3. **Clouds** — 2–3 soft white overlapping ellipses (`opacity 0.7–0.9`), placed asymmetrically so the sky never looks empty.
@@ -85,7 +98,7 @@ rabbit-elephant/
 ## Adding a new character
 
 1. Add an entry to `assets/data/characters-data.js`.
-2. Add a matching SVG portrait in the `portraits` object inside `characters.html` (keyed by `id`). Use `viewBox="0 0 220 280"` for portrait orientation to match existing cards.
+2. Add a matching SVG portrait in the `portraits` object inside `characters.html` (keyed by `id`), following the "Premium character illustration recipe" above. Use `viewBox="0 0 320 360"` to match the current cards.
 
 ## Story page structure
 

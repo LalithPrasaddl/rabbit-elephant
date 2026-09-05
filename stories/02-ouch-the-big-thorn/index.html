@@ -34,81 +34,57 @@
           <div class="cover-illustration">
             <svg viewBox="0 0 500 240" xmlns="http://www.w3.org/2000/svg">
               <defs>
-                <linearGradient id="sky-cover2" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#A8DEF5"/>
-                  <stop offset="100%" stop-color="#E8F8FF"/>
-                </linearGradient>
-                <linearGradient id="ground-cover2" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#9BDD84"/>
-                  <stop offset="100%" stop-color="#6BBE64"/>
-                </linearGradient>
+                <linearGradient id="c2-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#BEE7FB"/><stop offset="100%" stop-color="#EAF9FF"/></linearGradient>
+                <linearGradient id="c2-ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8FBB5E"/><stop offset="100%" stop-color="#4A7A38"/></linearGradient>
+                <radialGradient id="c2-sun" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FFF9E6"/><stop offset="40%" stop-color="#FFE7A0" stop-opacity="0.7"/><stop offset="100%" stop-color="#FFE7A0" stop-opacity="0"/></radialGradient>
+                <radialGradient id="c2-rfur" cx="70%" cy="25%" r="90%"><stop offset="0%" stop-color="#FFF8EC"/><stop offset="48%" stop-color="#F3E3C8"/><stop offset="100%" stop-color="#CDB58C"/></radialGradient>
+                <radialGradient id="c2-rear" cx="65%" cy="20%" r="95%"><stop offset="0%" stop-color="#FFE7EE"/><stop offset="100%" stop-color="#F58FAE"/></radialGradient>
+                <radialGradient id="c2-eskin" cx="70%" cy="24%" r="90%"><stop offset="0%" stop-color="#DCEBEF"/><stop offset="48%" stop-color="#AFC6D0"/><stop offset="100%" stop-color="#71909E"/></radialGradient>
+                <radialGradient id="c2-eear" cx="65%" cy="20%" r="95%"><stop offset="0%" stop-color="#EAF4F6"/><stop offset="100%" stop-color="#9CBCC8"/></radialGradient>
+                <radialGradient id="c2-iris" cx="50%" cy="35%" r="65%"><stop offset="0%" stop-color="#6B4A2E"/><stop offset="100%" stop-color="#2A1B10"/></radialGradient>
+                <filter id="c2-b"><feGaussianBlur stdDeviation="3"/></filter>
               </defs>
-              <!-- Sky -->
-              <rect width="500" height="240" fill="url(#sky-cover2)"/>
-              <!-- Sun -->
-              <circle cx="60" cy="55" r="36" fill="#FFD166"/>
-              <circle cx="60" cy="55" r="26" fill="#FFE680"/>
-              <!-- Clouds -->
-              <ellipse cx="280" cy="50" rx="55" ry="22" fill="white" opacity="0.9"/>
-              <ellipse cx="310" cy="40" rx="35" ry="18" fill="white" opacity="0.9"/>
-              <ellipse cx="420" cy="65" rx="42" ry="18" fill="white" opacity="0.85"/>
-              <!-- Ground / road -->
-              <path d="M0,172 Q125,158 250,170 T500,168 L500,240 L0,240 Z" fill="url(#ground-cover2)"/>
-              <g stroke="#4A9B4A" stroke-width="2" stroke-linecap="round" opacity="0.5">
-                <path d="M20,186 q3,-9 6,0"/><path d="M460,190 q3,-9 6,0"/>
+              <rect width="500" height="150" fill="url(#c2-sky)"/>
+              <circle cx="70" cy="40" r="55" fill="url(#c2-sun)"/><circle cx="70" cy="40" r="16" fill="#FFF3D0"/>
+              <ellipse cx="340" cy="35" rx="36" ry="13" fill="#fff" opacity="0.85" filter="url(#c2-b)"/><ellipse cx="365" cy="30" rx="20" ry="10" fill="#fff" opacity="0.85" filter="url(#c2-b)"/>
+              <g filter="url(#c2-b)"><ellipse cx="460" cy="120" rx="42" ry="36" fill="#4E7F45"/><ellipse cx="480" cy="100" rx="28" ry="26" fill="#5D9250"/><rect x="452" y="150" width="12" height="30" fill="#5B4430"/></g>
+              <path d="M0,138 Q125,124 250,136 T500,132 L500,240 L0,240 Z" fill="url(#c2-ground)"/>
+              <path d="M0,150 Q125,140 250,150 T500,146 L500,166 L0,166 Z" fill="#2E5A28" opacity="0.15" filter="url(#c2-b)"/>
+              <!-- thorn foreshadowing -->
+              <polygon points="252,142 246,164 258,164" fill="#3A6A2A"/><ellipse cx="252" cy="141" rx="5" ry="4" fill="#2A5A1A"/>
+              <g stroke="#79A852" stroke-width="1.4" opacity="0.7" fill="none"><path d="M300,225 q3,-14 6,0"/><path d="M330,230 q3,-16 6,0"/><path d="M60,228 q3,-15 6,0"/></g>
+              <circle cx="80" cy="215" r="4" fill="#C77DFF"/><circle cx="80" cy="215" r="1.8" fill="#fff"/>
+
+              <!-- Elephant -->
+              <g transform="translate(120,44)">
+                <ellipse cx="16" cy="-15" rx="17" ry="24" fill="url(#c2-eskin)"/><ellipse cx="18" cy="-13" rx="11" ry="17" fill="url(#c2-eear)"/>
+                <ellipse cx="82" cy="-15" rx="17" ry="24" fill="url(#c2-eskin)"/><ellipse cx="80" cy="-13" rx="11" ry="17" fill="url(#c2-eear)"/>
+                <ellipse cx="49" cy="66" rx="36" ry="32" fill="url(#c2-eskin)"/>
+                <path d="M 88 30 Q 104 66 92 100" stroke="#F0F8FA" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.4" filter="url(#c2-b)"/>
+                <circle cx="49" cy="12" r="31" fill="url(#c2-eskin)"/>
+                <path d="M 30 34 Q 14 50 12 72" stroke="url(#c2-eskin)" stroke-width="12" fill="none" stroke-linecap="round"/>
+                <ellipse cx="20" cy="24" rx="7" ry="5" fill="#F58FAE" opacity="0.35"/><ellipse cx="76" cy="24" rx="7" ry="5" fill="#F58FAE" opacity="0.35"/>
+                <ellipse cx="38" cy="8" rx="5" ry="5.6" fill="url(#c2-iris)"/><circle cx="40" cy="6" r="1.7" fill="#fff"/>
+                <ellipse cx="62" cy="8" rx="5" ry="5.6" fill="url(#c2-iris)"/><circle cx="64" cy="6" r="1.7" fill="#fff"/>
+                <path d="M 32 26 Q 49 34 66 26" stroke="#385460" stroke-width="1.6" fill="none" stroke-linecap="round" opacity="0.6"/>
+                <ellipse cx="20" cy="98" rx="13" ry="7" fill="url(#c2-eskin)"/><ellipse cx="80" cy="98" rx="13" ry="7" fill="url(#c2-eskin)"/>
               </g>
-              <rect x="80" y="178" width="340" height="38" rx="4" fill="#B8B8B8"/>
-              <!-- Road markings -->
-              <rect x="238" y="190" width="24" height="8" rx="2" fill="#FFD166" opacity="0.8"/>
 
-              <!-- BIG THORN on road (foreshadowing) -->
-              <polygon points="260,178 254,205 266,205" fill="#4A7A3A" opacity="0.85"/>
-              <ellipse cx="260" cy="177" rx="5" ry="4" fill="#3A6A2A" opacity="0.85"/>
-
-              <!-- RABBIT (left, walking and talking) -->
-              <ellipse cx="126" cy="108" rx="9" ry="26" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
-              <ellipse cx="126" cy="111" rx="5" ry="20" fill="#FFB3C6"/>
-              <ellipse cx="140" cy="104" rx="9" ry="26" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
-              <ellipse cx="140" cy="107" rx="5" ry="20" fill="#FFB3C6"/>
-              <circle cx="133" cy="152" r="26" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
-              <ellipse cx="133" cy="198" rx="28" ry="34" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5"/>
-              <circle cx="122" cy="147" r="6" fill="#2D3748"/>
-              <circle cx="124" cy="145" r="2" fill="#fff"/>
-              <circle cx="144" cy="147" r="6" fill="#2D3748"/>
-              <circle cx="146" cy="145" r="2" fill="#fff"/>
-              <ellipse cx="133" cy="157" rx="4" ry="3" fill="#FF9BAE"/>
-              <path d="M 123 163 Q 133 171 143 163" stroke="#2D3748" stroke-width="2" fill="none" stroke-linecap="round"/>
-              <circle cx="114" cy="155" r="7" fill="#FFB3C6" opacity="0.4"/>
-              <circle cx="152" cy="155" r="7" fill="#FFB3C6" opacity="0.4"/>
-              <!-- Arm gesturing (telling story) -->
-              <path d="M 108 188 Q 90 170 82 155" stroke="#F0E8DC" stroke-width="10" fill="none" stroke-linecap="round"/>
-              <path d="M 108 188 Q 90 170 82 155" stroke="#D0C8B8" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-              <!-- Legs walking -->
-              <ellipse cx="120" cy="228" rx="13" ry="9" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(-15 120 228)"/>
-              <ellipse cx="146" cy="228" rx="13" ry="9" fill="#F0E8DC" stroke="#D0C8B8" stroke-width="1.5" transform="rotate(15 146 228)"/>
-              <circle cx="158" cy="195" r="9" fill="#fff" stroke="#D0C8B8" stroke-width="1"/>
-              <!-- Speech bubble -->
-              <ellipse cx="78" cy="88" rx="62" ry="26" fill="white" stroke="#D0C8B8" stroke-width="1.5" opacity="0.95"/>
-              <path d="M 100 110 Q 108 122 118 132 Q 100 128 90 116 Z" fill="white" stroke="#D0C8B8" stroke-width="1.5"/>
-              <text x="78" y="84" text-anchor="middle" font-size="11" fill="#2D3748" font-family="sans-serif" font-weight="bold">...and THEN</text>
-              <text x="78" y="99" text-anchor="middle" font-size="10" fill="#2D3748" font-family="sans-serif">it was huge!</text>
-
-              <!-- ELEPHANT (right, listening) -->
-              <ellipse cx="330" cy="140" rx="26" ry="38" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
-              <ellipse cx="420" cy="140" rx="26" ry="38" fill="#C5D8E0" stroke="#88A0AC" stroke-width="1.5"/>
-              <ellipse cx="375" cy="200" rx="55" ry="40" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
-              <circle cx="375" cy="138" r="46" fill="#A8C0CC" stroke="#88A0AC" stroke-width="2"/>
-              <path d="M 360 174 Q 342 190 340 212" stroke="#A8C0CC" stroke-width="16" fill="none" stroke-linecap="round"/>
-              <path d="M 360 174 Q 342 190 340 212" stroke="#88A0AC" stroke-width="2" fill="none" stroke-linecap="round"/>
-              <circle cx="358" cy="127" r="7" fill="#2D3748"/>
-              <circle cx="361" cy="124" r="2.5" fill="#fff"/>
-              <circle cx="392" cy="127" r="7" fill="#2D3748"/>
-              <circle cx="395" cy="124" r="2.5" fill="#fff"/>
-              <path d="M 362 155 Q 375 164 388 155" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-              <circle cx="344" cy="152" r="10" fill="#FFB3C6" opacity="0.3"/>
-              <circle cx="406" cy="152" r="10" fill="#FFB3C6" opacity="0.3"/>
-              <ellipse cx="348" cy="234" rx="18" ry="10" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
-              <ellipse cx="402" cy="234" rx="18" ry="10" fill="#A8C0CC" stroke="#88A0AC" stroke-width="1.5"/>
+              <!-- Rabbit, alarmed pose (pointing at thorn) -->
+              <g transform="translate(290,60)">
+                <ellipse cx="0" cy="-15" rx="10" ry="34" fill="url(#c2-rfur)" transform="rotate(-18 0 -15)"/>
+                <ellipse cx="0" cy="-12" rx="5.5" ry="27" fill="url(#c2-rear)" transform="rotate(-18 0 -12)"/>
+                <ellipse cx="24" cy="-17" rx="10" ry="34" fill="url(#c2-rfur)" transform="rotate(22 24 -17)"/>
+                <ellipse cx="24" cy="-14" rx="5.5" ry="27" fill="url(#c2-rear)" transform="rotate(22 24 -14)"/>
+                <ellipse cx="14" cy="60" rx="30" ry="32" fill="url(#c2-rfur)"/>
+                <circle cx="16" cy="12" r="27" fill="url(#c2-rfur)"/>
+                <ellipse cx="4" cy="24" rx="8" ry="5.4" fill="#F58FAE" opacity="0.5"/><ellipse cx="28" cy="24" rx="8" ry="5.4" fill="#F58FAE" opacity="0.5"/>
+                <circle cx="8" cy="8" r="5.4" fill="#fff"/><circle cx="8" cy="9" r="3.2" fill="#2D3748"/>
+                <circle cx="24" cy="8" r="5.4" fill="#fff"/><circle cx="24" cy="9" r="3.2" fill="#2D3748"/>
+                <ellipse cx="16" cy="19" rx="3.4" ry="2.8" fill="#2D3748"/>
+                <path d="M -14 46 Q -30 34 -38 60" stroke="url(#c2-rfur)" stroke-width="9" fill="none" stroke-linecap="round"/>
+                <ellipse cx="2" cy="96" rx="11" ry="7" fill="url(#c2-rfur)"/><ellipse cx="26" cy="96" rx="11" ry="7" fill="url(#c2-rfur)"/>
+              </g>
             </svg>
           </div>
           <h1 class="cover-title">Ouch! The Big Thorn</h1>

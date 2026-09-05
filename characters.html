@@ -38,234 +38,258 @@
     const grid = document.getElementById('characters-grid');
 
     // Inline SVG portraits keyed by character id
+    // Portraits: dimensional lighting (sun upper-right), radial-gradient
+    // shading, rim light + ambient occlusion, and naturalistic anatomy —
+    // viewBox 0 0 320 360 across the set (see CLAUDE.md).
     const portraits = {
       rabbit: `
-        <svg viewBox="0 0 220 280" xmlns="http://www.w3.org/2000/svg">
-          <!-- Left ear -->
-          <ellipse cx="80" cy="72" rx="18" ry="55" fill="#F0E8DC" stroke="#D9CFBF" stroke-width="2"/>
-          <ellipse cx="80" cy="75" rx="10" ry="44" fill="#FFB3C6"/>
-          <!-- Right ear -->
-          <ellipse cx="140" cy="72" rx="18" ry="55" fill="#F0E8DC" stroke="#D9CFBF" stroke-width="2"/>
-          <ellipse cx="140" cy="75" rx="10" ry="44" fill="#FFB3C6"/>
-          <!-- Body -->
-          <ellipse cx="110" cy="210" rx="52" ry="58" fill="#F0E8DC" stroke="#D9CFBF" stroke-width="2"/>
-          <!-- Head -->
-          <circle cx="110" cy="145" r="48" fill="#F0E8DC" stroke="#D9CFBF" stroke-width="2"/>
-          <!-- Left eye -->
-          <circle cx="93" cy="138" r="9" fill="#2D3748"/>
-          <circle cx="96" cy="135" r="3.5" fill="#fff"/>
-          <!-- Right eye -->
-          <circle cx="127" cy="138" r="9" fill="#2D3748"/>
-          <circle cx="130" cy="135" r="3.5" fill="#fff"/>
-          <!-- Nose -->
-          <ellipse cx="110" cy="153" rx="7" ry="5" fill="#FF9BAE"/>
-          <!-- Smile -->
-          <path d="M 100 160 Q 110 168 120 160" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-          <!-- Blush -->
-          <circle cx="86" cy="155" r="10" fill="#FFB3C6" opacity="0.4"/>
-          <circle cx="134" cy="155" r="10" fill="#FFB3C6" opacity="0.4"/>
-          <!-- Tail -->
-          <circle cx="162" cy="215" r="14" fill="#fff" stroke="#D9CFBF" stroke-width="1.5"/>
-          <!-- Arms -->
-          <ellipse cx="65" cy="198" rx="14" ry="22" fill="#F0E8DC" stroke="#D9CFBF" stroke-width="1.5" transform="rotate(-20 65 198)"/>
-          <ellipse cx="155" cy="198" rx="14" ry="22" fill="#F0E8DC" stroke="#D9CFBF" stroke-width="1.5" transform="rotate(20 155 198)"/>
-          <!-- Feet -->
-          <ellipse cx="86" cy="262" rx="22" ry="12" fill="#F0E8DC" stroke="#D9CFBF" stroke-width="1.5"/>
-          <ellipse cx="134" cy="262" rx="22" ry="12" fill="#F0E8DC" stroke="#D9CFBF" stroke-width="1.5"/>
-        </svg>`,
-
-      squirrel: `
-        <svg viewBox="0 0 220 280" xmlns="http://www.w3.org/2000/svg">
-          <!-- Big bushy tail (behind body) -->
-          <path d="M 130 255 Q 95 210 112 170 Q 128 138 155 148 Q 172 158 165 180 Q 156 205 138 218 Q 128 228 130 255" fill="#C07840" stroke="#A06030" stroke-width="2"/>
-          <path d="M 130 255 Q 98 218 114 178 Q 128 148 150 156 Q 163 164 158 182 Q 150 204 135 215" fill="#D4904C" opacity="0.55"/>
-          <!-- Doctor coat (body) -->
-          <ellipse cx="110" cy="210" rx="48" ry="55" fill="white" stroke="#D8D8D8" stroke-width="2"/>
-          <!-- Coat details -->
-          <path d="M 95 175 L 108 190 L 110 172" fill="#EBEBEB" stroke="#D0D0D0" stroke-width="1"/>
-          <path d="M 125 175 L 112 190 L 110 172" fill="#EBEBEB" stroke="#D0D0D0" stroke-width="1"/>
-          <!-- Stethoscope -->
-          <path d="M 96 195 Q 88 215 95 226 Q 103 237 115 226 Q 127 215 119 195" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-          <circle cx="107" cy="230" r="6" fill="#2D3748"/>
-          <!-- Head -->
-          <circle cx="110" cy="138" r="44" fill="#D4956C" stroke="#B87040" stroke-width="2"/>
-          <!-- Small round ears -->
-          <circle cx="88" cy="102" rx="18" ry="18" r="18" fill="#D4956C" stroke="#B87040" stroke-width="2"/>
-          <circle cx="88" cy="102" r="10" fill="#C08060"/>
-          <circle cx="132" cy="102" r="18" fill="#D4956C" stroke="#B87040" stroke-width="2"/>
-          <circle cx="132" cy="102" r="10" fill="#C08060"/>
-          <!-- Eyes (kind, warm) -->
-          <circle cx="97" cy="135" r="9" fill="#2D3748"/>
-          <circle cx="101" cy="131" r="3.5" fill="#fff"/>
-          <circle cx="123" cy="135" r="9" fill="#2D3748"/>
-          <circle cx="127" cy="131" r="3.5" fill="#fff"/>
-          <!-- Nose -->
-          <ellipse cx="110" cy="148" rx="5" ry="3.5" fill="#8B4020"/>
-          <!-- Smile -->
-          <path d="M 100 156 Q 110 165 120 156" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-          <!-- Blush -->
-          <circle cx="88" cy="152" r="9" fill="#FFB3C6" opacity="0.35"/>
-          <circle cx="132" cy="152" r="9" fill="#FFB3C6" opacity="0.35"/>
-          <!-- Doctor cap -->
-          <rect x="88" y="96" width="44" height="12" rx="4" fill="white" stroke="#D0D0D0" stroke-width="1.5"/>
-          <rect x="96" y="84" width="28" height="16" rx="4" fill="white" stroke="#D0D0D0" stroke-width="1.5"/>
-          <!-- Red cross on cap -->
-          <rect x="108" y="87" width="5" height="10" rx="1" fill="#FF6B6B"/>
-          <rect x="104" y="91" width="13" height="5" rx="1" fill="#FF6B6B"/>
-          <!-- Arms (holding clipboard) -->
-          <ellipse cx="65" cy="210" rx="14" ry="22" fill="white" stroke="#D8D8D8" stroke-width="1.5" transform="rotate(-15 65 210)"/>
-          <ellipse cx="155" cy="210" rx="14" ry="22" fill="white" stroke="#D8D8D8" stroke-width="1.5" transform="rotate(15 155 210)"/>
-          <!-- Clipboard -->
-          <rect x="136" y="192" width="30" height="40" rx="3" fill="#E8D5A0" stroke="#C0A060" stroke-width="1.5"/>
-          <rect x="139" y="198" width="24" height="3" rx="1" fill="#8B6030" opacity="0.5"/>
-          <rect x="139" y="205" width="24" height="3" rx="1" fill="#8B6030" opacity="0.5"/>
-          <rect x="139" y="212" width="18" height="3" rx="1" fill="#8B6030" opacity="0.5"/>
-          <rect x="144" y="186" width="14" height="9" rx="2" fill="#C0A060"/>
-          <!-- Feet -->
-          <ellipse cx="88" cy="262" rx="18" ry="10" fill="#D4956C" stroke="#B87040" stroke-width="1.5"/>
-          <ellipse cx="130" cy="262" rx="18" ry="10" fill="#D4956C" stroke="#B87040" stroke-width="1.5"/>
+        <svg viewBox="0 0 320 360" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="p-rabbit-blur"><feGaussianBlur stdDeviation="5"/></filter>
+            <radialGradient id="p-rabbit-fur" cx="70%" cy="25%" r="90%"><stop offset="0%" stop-color="#FFF8EC"/><stop offset="48%" stop-color="#F3E3C8"/><stop offset="100%" stop-color="#CDB58C"/></radialGradient>
+            <radialGradient id="p-rabbit-ear" cx="65%" cy="20%" r="95%"><stop offset="0%" stop-color="#FFE7EE"/><stop offset="100%" stop-color="#F58FAE"/></radialGradient>
+            <radialGradient id="p-rabbit-iris" cx="50%" cy="35%" r="65%"><stop offset="0%" stop-color="#6B4A2E"/><stop offset="100%" stop-color="#2A1B10"/></radialGradient>
+          </defs>
+          <ellipse cx="162" cy="336" rx="72" ry="14" fill="#1E3410" opacity="0.22" filter="url(#p-rabbit-blur)"/>
+          <ellipse cx="134" cy="99" rx="24" ry="82" fill="url(#p-rabbit-fur)" transform="rotate(-11 134 99)"/>
+          <ellipse cx="134" cy="106" rx="13" ry="64" fill="url(#p-rabbit-ear)" transform="rotate(-11 134 106)"/>
+          <ellipse cx="190" cy="94" rx="24" ry="82" fill="url(#p-rabbit-fur)" transform="rotate(9 190 94)"/>
+          <ellipse cx="190" cy="101" rx="13" ry="64" fill="url(#p-rabbit-ear)" transform="rotate(9 190 101)"/>
+          <ellipse cx="126" cy="156" rx="16" ry="20" fill="#2A1E12" opacity="0.16" filter="url(#p-rabbit-blur)"/>
+          <ellipse cx="196" cy="152" rx="16" ry="20" fill="#2A1E12" opacity="0.14" filter="url(#p-rabbit-blur)"/>
+          <path d="M 146 26 Q 154 64 150 104" stroke="#FFF6E0" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.55" filter="url(#p-rabbit-blur)"/>
+          <path d="M 200 22 Q 208 60 206 100" stroke="#FFF6E0" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.55" filter="url(#p-rabbit-blur)"/>
+          <ellipse cx="164" cy="264" rx="70" ry="76" fill="url(#p-rabbit-fur)"/>
+          <ellipse cx="126" cy="304" rx="46" ry="52" fill="#7A6440" opacity="0.30" filter="url(#p-rabbit-blur)"/>
+          <path d="M 214 204 Q 234 254 220 314" stroke="#FFF6E0" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.5" filter="url(#p-rabbit-blur)"/>
+          <circle cx="88" cy="236" r="17" fill="url(#p-rabbit-fur)"/><circle cx="78" cy="224" r="9" fill="url(#p-rabbit-fur)"/><circle cx="80" cy="250" r="8" fill="url(#p-rabbit-fur)"/>
+          <ellipse cx="104" cy="256" rx="19" ry="30" fill="url(#p-rabbit-fur)" transform="rotate(-16 104 256)"/>
+          <ellipse cx="226" cy="256" rx="19" ry="30" fill="url(#p-rabbit-fur)" transform="rotate(16 226 256)"/>
+          <g stroke="#B89A6E" stroke-width="1.3" opacity="0.6" stroke-linecap="round">
+            <path d="M 150 188 Q 126 184 106 178"/><path d="M 151 195 Q 127 197 108 198"/>
+            <path d="M 178 188 Q 202 184 222 178"/><path d="M 177 195 Q 201 197 220 198"/>
+          </g>
+          <circle cx="164" cy="168" r="64" fill="url(#p-rabbit-fur)"/>
+          <ellipse cx="132" cy="142" rx="20" ry="16" fill="#2A1E12" opacity="0.10" filter="url(#p-rabbit-blur)"/>
+          <path d="M 214 130 Q 230 168 216 208" stroke="#FFF6E0" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.45" filter="url(#p-rabbit-blur)"/>
+          <ellipse cx="124" cy="188" rx="17" ry="11" fill="#F58FAE" opacity="0.5"/>
+          <ellipse cx="202" cy="188" rx="17" ry="11" fill="#F58FAE" opacity="0.5"/>
+          <ellipse cx="143" cy="164" rx="11" ry="13" fill="url(#p-rabbit-iris)"/><circle cx="147" cy="158" r="3.8" fill="#FFFFFF"/><circle cx="140" cy="169" r="1.8" fill="#FFE7C2" opacity="0.85"/>
+          <path d="M 131 152 Q 143 146 154 152" stroke="#3A2A1A" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/>
+          <ellipse cx="185" cy="164" rx="11" ry="13" fill="url(#p-rabbit-iris)"/><circle cx="189" cy="158" r="3.8" fill="#FFFFFF"/><circle cx="182" cy="169" r="1.8" fill="#FFE7C2" opacity="0.85"/>
+          <path d="M 173 152 Q 185 146 196 152" stroke="#3A2A1A" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/>
+          <ellipse cx="164" cy="184" rx="7.5" ry="6" fill="#E9607E"/>
+          <path d="M 150 198 Q 164 212 178 198" stroke="#8A6A44" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.6"/>
+          <ellipse cx="134" cy="300" rx="22" ry="26" fill="url(#p-rabbit-fur)"/><ellipse cx="192" cy="300" rx="22" ry="26" fill="url(#p-rabbit-fur)"/>
+          <ellipse cx="124" cy="316" rx="16" ry="18" fill="#7A6440" opacity="0.18" filter="url(#p-rabbit-blur)"/>
+          <ellipse cx="132" cy="322" rx="28" ry="16" fill="url(#p-rabbit-fur)"/><ellipse cx="194" cy="322" rx="28" ry="16" fill="url(#p-rabbit-fur)"/>
+          <path d="M 118 324 Q 122 330 126 324" stroke="#B89A6E" stroke-width="1.4" fill="none" opacity="0.5"/>
+          <path d="M 134 326 Q 138 332 142 326" stroke="#B89A6E" stroke-width="1.4" fill="none" opacity="0.5"/>
+          <path d="M 180 324 Q 184 330 188 324" stroke="#B89A6E" stroke-width="1.4" fill="none" opacity="0.5"/>
+          <path d="M 196 326 Q 200 332 204 326" stroke="#B89A6E" stroke-width="1.4" fill="none" opacity="0.5"/>
+          <path d="M 136 64 Q 134 94 136 136" stroke="#E06E92" stroke-width="1.6" fill="none" opacity="0.4"/>
+          <path d="M 190 60 Q 190 92 190 132" stroke="#E06E92" stroke-width="1.6" fill="none" opacity="0.4"/>
         </svg>`,
 
       elephant: `
-        <svg viewBox="0 0 240 290" xmlns="http://www.w3.org/2000/svg">
-          <!-- Left ear -->
-          <ellipse cx="54" cy="115" rx="40" ry="55" fill="#C5D8E0" stroke="#9DB8C5" stroke-width="2"/>
-          <!-- Right ear -->
-          <ellipse cx="186" cy="115" rx="40" ry="55" fill="#C5D8E0" stroke="#9DB8C5" stroke-width="2"/>
-          <!-- Body -->
-          <ellipse cx="120" cy="218" rx="72" ry="58" fill="#A8C0CC" stroke="#8AAAB8" stroke-width="2"/>
-          <!-- Head -->
-          <circle cx="120" cy="128" r="62" fill="#A8C0CC" stroke="#8AAAB8" stroke-width="2"/>
-          <!-- Trunk -->
-          <path d="M 103 182 Q 82 210 80 240" stroke="#A8C0CC" stroke-width="22" fill="none" stroke-linecap="round"/>
-          <path d="M 103 182 Q 82 210 80 240" stroke="#8AAAB8" stroke-width="2" fill="none" stroke-linecap="round"/>
-          <!-- Trunk tip -->
-          <ellipse cx="80" cy="242" rx="14" ry="8" fill="#A8C0CC" stroke="#8AAAB8" stroke-width="1.5"/>
-          <!-- Left eye -->
-          <circle cx="99" cy="115" r="10" fill="#2D3748"/>
-          <circle cx="103" cy="111" r="4" fill="#fff"/>
-          <!-- Right eye -->
-          <circle cx="141" cy="115" r="10" fill="#2D3748"/>
-          <circle cx="145" cy="111" r="4" fill="#fff"/>
-          <!-- Smile -->
-          <path d="M 105 150 Q 120 162 135 150" stroke="#2D3748" stroke-width="3" fill="none" stroke-linecap="round"/>
-          <!-- Blush -->
-          <circle cx="86" cy="148" r="12" fill="#FFB3C6" opacity="0.3"/>
-          <circle cx="154" cy="148" r="12" fill="#FFB3C6" opacity="0.3"/>
-          <!-- Feet -->
-          <ellipse cx="76" cy="270" rx="24" ry="13" fill="#A8C0CC" stroke="#8AAAB8" stroke-width="1.5"/>
-          <ellipse cx="164" cy="270" rx="24" ry="13" fill="#A8C0CC" stroke="#8AAAB8" stroke-width="1.5"/>
-          <!-- Toenails -->
-          <ellipse cx="68" cy="274" rx="5" ry="3" fill="#8AAAB8"/>
-          <ellipse cx="76" cy="276" rx="5" ry="3" fill="#8AAAB8"/>
-          <ellipse cx="84" cy="274" rx="5" ry="3" fill="#8AAAB8"/>
-          <ellipse cx="156" cy="274" rx="5" ry="3" fill="#8AAAB8"/>
-          <ellipse cx="164" cy="276" rx="5" ry="3" fill="#8AAAB8"/>
-          <ellipse cx="172" cy="274" rx="5" ry="3" fill="#8AAAB8"/>
-        </svg>`,
-
-      sheep: `
-        <svg viewBox="0 0 220 280" xmlns="http://www.w3.org/2000/svg">
-          <!-- Wooly body -->
-          <ellipse cx="110" cy="205" rx="50" ry="56" fill="white" stroke="#D8D8D8" stroke-width="2"/>
-          <circle cx="72" cy="176" r="20" fill="white" stroke="#D8D8D8" stroke-width="2"/>
-          <circle cx="92" cy="158" r="18" fill="white" stroke="#D8D8D8" stroke-width="2"/>
-          <circle cx="118" cy="152" r="20" fill="white" stroke="#D8D8D8" stroke-width="2"/>
-          <circle cx="144" cy="160" r="18" fill="white" stroke="#D8D8D8" stroke-width="2"/>
-          <circle cx="158" cy="182" r="20" fill="white" stroke="#D8D8D8" stroke-width="2"/>
-          <!-- Face -->
-          <ellipse cx="112" cy="168" rx="34" ry="27" fill="#4A4A52"/>
-          <ellipse cx="82" cy="152" rx="8" ry="13" fill="#4A4A52" transform="rotate(-20 82 152)"/>
-          <ellipse cx="142" cy="152" rx="8" ry="13" fill="#4A4A52" transform="rotate(20 142 152)"/>
-          <!-- Eyes -->
-          <circle cx="98" cy="164" r="6" fill="white"/>
-          <circle cx="100" cy="164" r="3" fill="#2D3748"/>
-          <circle cx="126" cy="164" r="6" fill="white"/>
-          <circle cx="128" cy="164" r="3" fill="#2D3748"/>
-          <!-- Nose -->
-          <ellipse cx="112" cy="178" rx="4" ry="3" fill="#FFB3C6"/>
-          <!-- Smile -->
-          <path d="M 100 186 Q 112 192 124 186" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
-          <!-- Stethoscope -->
-          <path d="M 88 218 Q 76 236 88 250 Q 100 260 112 250" stroke="#4A4A52" stroke-width="3" fill="none" stroke-linecap="round"/>
-          <circle cx="112" cy="252" r="6" fill="#4A4A52"/>
-          <!-- Legs -->
-          <ellipse cx="88" cy="262" rx="11" ry="24" fill="#4A4A52"/>
-          <ellipse cx="132" cy="262" rx="11" ry="24" fill="#4A4A52"/>
-        </svg>`,
-
-      giraffe: `
-        <svg viewBox="0 0 220 280" xmlns="http://www.w3.org/2000/svg">
-          <!-- Body -->
-          <ellipse cx="112" cy="228" rx="36" ry="42" fill="#E8C078" stroke="#C08840" stroke-width="2"/>
-          <!-- Neck -->
-          <path d="M 96 200 Q 88 120 96 78" stroke="#E8C078" stroke-width="38" fill="none" stroke-linecap="round"/>
-          <path d="M 96 200 Q 88 120 96 78" stroke="#C08840" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/>
-          <!-- Patches -->
-          <ellipse cx="96" cy="140" rx="12" ry="10" fill="#C08840" opacity="0.7"/>
-          <ellipse cx="100" cy="180" rx="10" ry="8" fill="#C08840" opacity="0.6"/>
-          <ellipse cx="92" cy="230" rx="12" ry="10" fill="#C08840" opacity="0.6"/>
-          <ellipse cx="130" cy="245" rx="10" ry="8" fill="#C08840" opacity="0.6"/>
-          <!-- Head -->
-          <circle cx="96" cy="60" r="32" fill="#E8C078" stroke="#C08840" stroke-width="2"/>
-          <!-- Ossicones -->
-          <ellipse cx="82" cy="26" rx="5" ry="12" fill="#C08840"/>
-          <circle cx="82" cy="16" r="5" fill="#8B6020"/>
-          <ellipse cx="110" cy="26" rx="5" ry="12" fill="#C08840"/>
-          <circle cx="110" cy="16" r="5" fill="#8B6020"/>
-          <!-- Nurse cap -->
-          <rect x="74" y="34" width="44" height="10" rx="3" fill="white" stroke="#D0D0D0" stroke-width="1.5"/>
-          <rect x="84" y="24" width="24" height="14" rx="3" fill="white" stroke="#D0D0D0" stroke-width="1.5"/>
-          <rect x="93" y="26" width="5" height="10" rx="1" fill="#FF6B6B"/>
-          <rect x="88" y="30" width="15" height="5" rx="1" fill="#FF6B6B"/>
-          <!-- Eyes -->
-          <circle cx="84" cy="56" r="7" fill="#2D3748"/>
-          <circle cx="87" cy="53" r="2.5" fill="#fff"/>
-          <circle cx="110" cy="56" r="7" fill="#2D3748"/>
-          <circle cx="113" cy="53" r="2.5" fill="#fff"/>
-          <!-- Smile -->
-          <path d="M 84 74 Q 96 82 108 74" stroke="#2D3748" stroke-width="2" fill="none" stroke-linecap="round"/>
-          <!-- Blush -->
-          <circle cx="74" cy="68" r="8" fill="#FFB3C6" opacity="0.35"/>
-          <circle cx="118" cy="68" r="8" fill="#FFB3C6" opacity="0.35"/>
-          <!-- Legs -->
-          <ellipse cx="94" cy="266" rx="12" ry="10" fill="#E8C078" stroke="#C08840" stroke-width="1.5"/>
-          <ellipse cx="132" cy="266" rx="12" ry="10" fill="#E8C078" stroke="#C08840" stroke-width="1.5"/>
+        <svg viewBox="0 0 320 360" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="p-elephant-blur"><feGaussianBlur stdDeviation="5"/></filter>
+            <radialGradient id="p-elephant-skin" cx="70%" cy="24%" r="90%"><stop offset="0%" stop-color="#DCEBEF"/><stop offset="48%" stop-color="#AFC6D0"/><stop offset="100%" stop-color="#71909E"/></radialGradient>
+            <radialGradient id="p-elephant-ear" cx="65%" cy="20%" r="95%"><stop offset="0%" stop-color="#EAF4F6"/><stop offset="100%" stop-color="#9CBCC8"/></radialGradient>
+            <radialGradient id="p-elephant-iris" cx="50%" cy="35%" r="65%"><stop offset="0%" stop-color="#6B4A2E"/><stop offset="100%" stop-color="#2A1B10"/></radialGradient>
+          </defs>
+          <ellipse cx="167" cy="340" rx="88" ry="15" fill="#12262C" opacity="0.24" filter="url(#p-elephant-blur)"/>
+          <ellipse cx="78" cy="156" rx="42" ry="60" fill="url(#p-elephant-skin)"/><ellipse cx="83" cy="160" rx="28" ry="44" fill="url(#p-elephant-ear)"/>
+          <ellipse cx="254" cy="156" rx="42" ry="60" fill="url(#p-elephant-skin)"/><ellipse cx="249" cy="160" rx="28" ry="44" fill="url(#p-elephant-ear)"/>
+          <ellipse cx="96" cy="156" rx="18" ry="54" fill="#3E5C68" opacity="0.22" filter="url(#p-elephant-blur)"/>
+          <path d="M 260 104 Q 278 156 260 208" stroke="#F0F8FA" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.4" filter="url(#p-elephant-blur)"/>
+          <g stroke="#5C7C88" stroke-width="1.4" fill="none" opacity="0.35">
+            <path d="M 78 114 Q 62 152 76 192"/><path d="M 86 112 Q 74 152 84 188"/>
+            <path d="M 254 114 Q 270 152 256 192"/><path d="M 246 112 Q 258 152 248 188"/>
+          </g>
+          <ellipse cx="167" cy="264" rx="88" ry="80" fill="url(#p-elephant-skin)"/>
+          <ellipse cx="122" cy="310" rx="54" ry="56" fill="#42606C" opacity="0.26" filter="url(#p-elephant-blur)"/>
+          <path d="M 230 198 Q 254 254 238 320" stroke="#F0F8FA" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.42" filter="url(#p-elephant-blur)"/>
+          <circle cx="167" cy="156" r="76" fill="url(#p-elephant-skin)"/>
+          <ellipse cx="120" cy="130" rx="24" ry="18" fill="#2A3A40" opacity="0.10" filter="url(#p-elephant-blur)"/>
+          <path d="M 226 112 Q 246 156 228 200" stroke="#F0F8FA" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.4" filter="url(#p-elephant-blur)"/>
+          <path d="M 144 196 Q 106 230 100 282 Q 97 316 111 338" stroke="url(#p-elephant-skin)" stroke-width="34" fill="none" stroke-linecap="round"/>
+          <path d="M 144 196 Q 106 230 100 282 Q 97 316 111 338" stroke="url(#p-elephant-skin)" stroke-width="20" fill="none" stroke-linecap="round"/>
+          <path d="M 132 212 Q 110 240 106 276" stroke="#F0F8FA" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.35" filter="url(#p-elephant-blur)"/>
+          <g stroke="#5C7C88" stroke-width="2" fill="none" opacity="0.3" stroke-linecap="round">
+            <path d="M 120 222 Q 128 226 134 222"/><path d="M 110 248 Q 118 252 124 248"/>
+            <path d="M 103 274 Q 111 278 117 274"/><path d="M 100 302 Q 107 305 113 302"/>
+          </g>
+          <path d="M 140 188 Q 132 204 138 216" stroke="#FBF6EA" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <path d="M 194 188 Q 202 204 196 216" stroke="#FBF6EA" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <ellipse cx="110" cy="174" rx="18" ry="12" fill="#F58FAE" opacity="0.35"/><ellipse cx="224" cy="174" rx="18" ry="12" fill="#F58FAE" opacity="0.35"/>
+          <ellipse cx="138" cy="150" rx="12" ry="14" fill="url(#p-elephant-iris)"/><circle cx="143" cy="143" r="4.2" fill="#FFFFFF"/><circle cx="134" cy="156" r="2" fill="#FFE7C2" opacity="0.85"/>
+          <path d="M 124 136 Q 138 129 151 136" stroke="#25333A" stroke-width="2.2" fill="none" stroke-linecap="round" opacity="0.5"/>
+          <ellipse cx="196" cy="150" rx="12" ry="14" fill="url(#p-elephant-iris)"/><circle cx="201" cy="143" r="4.2" fill="#FFFFFF"/><circle cx="192" cy="156" r="2" fill="#FFE7C2" opacity="0.85"/>
+          <path d="M 182 136 Q 196 129 209 136" stroke="#25333A" stroke-width="2.2" fill="none" stroke-linecap="round" opacity="0.5"/>
+          <path d="M 144 188 Q 167 204 190 188" stroke="#385460" stroke-width="3.4" fill="none" stroke-linecap="round" opacity="0.6"/>
+          <ellipse cx="122" cy="298" rx="28" ry="34" fill="url(#p-elephant-skin)"/><ellipse cx="214" cy="298" rx="28" ry="34" fill="url(#p-elephant-skin)"/>
+          <ellipse cx="108" cy="316" rx="18" ry="20" fill="#3E5C68" opacity="0.18" filter="url(#p-elephant-blur)"/>
+          <ellipse cx="114" cy="326" rx="32" ry="17" fill="url(#p-elephant-skin)"/><ellipse cx="220" cy="326" rx="32" ry="17" fill="url(#p-elephant-skin)"/>
+          <ellipse cx="100" cy="330" rx="5" ry="3.4" fill="#DCE8EC"/><ellipse cx="114" cy="334" rx="5" ry="3.4" fill="#DCE8EC"/><ellipse cx="128" cy="330" rx="5" ry="3.4" fill="#DCE8EC"/>
+          <ellipse cx="206" cy="330" rx="5" ry="3.4" fill="#DCE8EC"/><ellipse cx="220" cy="334" rx="5" ry="3.4" fill="#DCE8EC"/><ellipse cx="234" cy="330" rx="5" ry="3.4" fill="#DCE8EC"/>
         </svg>`,
 
       bear: `
-        <svg viewBox="0 0 220 280" xmlns="http://www.w3.org/2000/svg">
-          <!-- Left ear -->
-          <circle cx="76" cy="70" r="24" fill="#C89A72" stroke="#A5764C" stroke-width="2"/>
-          <circle cx="76" cy="70" r="12" fill="#EAD1B0"/>
-          <!-- Right ear -->
-          <circle cx="144" cy="70" r="24" fill="#C89A72" stroke="#A5764C" stroke-width="2"/>
-          <circle cx="144" cy="70" r="12" fill="#EAD1B0"/>
-          <!-- Body -->
-          <ellipse cx="110" cy="212" rx="54" ry="58" fill="#C89A72" stroke="#A5764C" stroke-width="2"/>
-          <!-- Head -->
-          <circle cx="110" cy="140" r="52" fill="#C89A72" stroke="#A5764C" stroke-width="2"/>
-          <!-- Muzzle -->
-          <ellipse cx="110" cy="156" rx="30" ry="22" fill="#EAD1B0" stroke="#A5764C" stroke-width="1.5"/>
-          <!-- Left eye -->
-          <circle cx="93" cy="128" r="8" fill="#2D3748"/>
-          <circle cx="96" cy="125" r="3" fill="#fff"/>
-          <!-- Right eye -->
-          <circle cx="127" cy="128" r="8" fill="#2D3748"/>
-          <circle cx="130" cy="125" r="3" fill="#fff"/>
-          <!-- Nose -->
-          <ellipse cx="110" cy="150" rx="8" ry="6" fill="#5C3A21"/>
-          <!-- Smile -->
-          <path d="M 98 165 Q 110 172 122 165" stroke="#2D3748" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-          <!-- Blush -->
-          <circle cx="82" cy="150" r="10" fill="#FFB3C6" opacity="0.3"/>
-          <circle cx="138" cy="150" r="10" fill="#FFB3C6" opacity="0.3"/>
-          <!-- Arms -->
-          <ellipse cx="64" cy="200" rx="16" ry="24" fill="#C89A72" stroke="#A5764C" stroke-width="1.5" transform="rotate(-20 64 200)"/>
-          <ellipse cx="156" cy="200" rx="16" ry="24" fill="#C89A72" stroke="#A5764C" stroke-width="1.5" transform="rotate(20 156 200)"/>
-          <!-- Feet -->
-          <ellipse cx="86" cy="264" rx="22" ry="13" fill="#C89A72" stroke="#A5764C" stroke-width="1.5"/>
-          <ellipse cx="134" cy="264" rx="22" ry="13" fill="#C89A72" stroke="#A5764C" stroke-width="1.5"/>
+        <svg viewBox="0 0 320 360" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="p-bear-blur"><feGaussianBlur stdDeviation="5"/></filter>
+            <radialGradient id="p-bear-fur" cx="70%" cy="25%" r="90%"><stop offset="0%" stop-color="#F7E9D4"/><stop offset="48%" stop-color="#D9B48A"/><stop offset="100%" stop-color="#A97D52"/></radialGradient>
+            <radialGradient id="p-bear-ear" cx="65%" cy="20%" r="95%"><stop offset="0%" stop-color="#FBEEDD"/><stop offset="100%" stop-color="#E8C79A"/></radialGradient>
+            <radialGradient id="p-bear-iris" cx="50%" cy="35%" r="65%"><stop offset="0%" stop-color="#5A3E24"/><stop offset="100%" stop-color="#231708"/></radialGradient>
+          </defs>
+          <ellipse cx="162" cy="336" rx="76" ry="15" fill="#2A1A0E" opacity="0.24" filter="url(#p-bear-blur)"/>
+          <circle cx="106" cy="98" r="30" fill="url(#p-bear-fur)"/><circle cx="106" cy="100" r="16" fill="url(#p-bear-ear)"/>
+          <circle cx="216" cy="98" r="30" fill="url(#p-bear-fur)"/><circle cx="216" cy="100" r="16" fill="url(#p-bear-ear)"/>
+          <ellipse cx="98" cy="118" rx="12" ry="14" fill="#5A3E24" opacity="0.16" filter="url(#p-bear-blur)"/>
+          <ellipse cx="222" cy="112" rx="10" ry="12" fill="#FBEEDD" opacity="0.4" filter="url(#p-bear-blur)"/>
+          <circle cx="161" cy="188" r="86" fill="url(#p-bear-fur)"/>
+          <ellipse cx="112" cy="216" rx="34" ry="30" fill="#7A5230" opacity="0.24" filter="url(#p-bear-blur)"/>
+          <path d="M 224 130 Q 244 188 222 244" stroke="#FCF0DC" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.42" filter="url(#p-bear-blur)"/>
+          <ellipse cx="161" cy="212" rx="50" ry="38" fill="url(#p-bear-ear)"/>
+          <ellipse cx="122" cy="230" rx="14" ry="10" fill="#F58FAE" opacity="0.32"/><ellipse cx="200" cy="230" rx="14" ry="10" fill="#F58FAE" opacity="0.32"/>
+          <ellipse cx="140" cy="182" rx="11" ry="13" fill="url(#p-bear-iris)"/><circle cx="144" cy="176" r="3.8" fill="#FFFFFF"/><circle cx="137" cy="187" r="1.8" fill="#FFE7C2" opacity="0.85"/>
+          <ellipse cx="182" cy="182" rx="11" ry="13" fill="url(#p-bear-iris)"/><circle cx="186" cy="176" r="3.8" fill="#FFFFFF"/><circle cx="179" cy="187" r="1.8" fill="#FFE7C2" opacity="0.85"/>
+          <ellipse cx="161" cy="208" rx="12" ry="9" fill="#3E2A18"/><ellipse cx="158" cy="205" rx="3" ry="2" fill="#6B5030" opacity="0.7"/>
+          <path d="M 144 224 Q 161 236 178 224" stroke="#5A3E24" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.6"/>
+          <ellipse cx="164" cy="330" rx="72" ry="72" fill="url(#p-bear-fur)"/>
+          <ellipse cx="120" cy="360" rx="42" ry="40" fill="#7A5230" opacity="0.2" filter="url(#p-bear-blur)"/>
+          <ellipse cx="98" cy="278" rx="20" ry="30" fill="url(#p-bear-fur)" transform="rotate(-16 98 278)"/>
+          <ellipse cx="228" cy="278" rx="20" ry="30" fill="url(#p-bear-fur)" transform="rotate(16 228 278)"/>
+        </svg>`,
+
+      squirrel: `
+        <svg viewBox="0 0 320 360" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="p-squirrel-blur"><feGaussianBlur stdDeviation="5"/></filter>
+            <radialGradient id="p-squirrel-fur" cx="70%" cy="25%" r="90%"><stop offset="0%" stop-color="#F5CFA2"/><stop offset="48%" stop-color="#D4956C"/><stop offset="100%" stop-color="#A2683F"/></radialGradient>
+            <radialGradient id="p-squirrel-coat" cx="65%" cy="20%" r="95%"><stop offset="0%" stop-color="#FFFFFF"/><stop offset="60%" stop-color="#F2EFEA"/><stop offset="100%" stop-color="#D8D2C6"/></radialGradient>
+            <radialGradient id="p-squirrel-iris" cx="50%" cy="35%" r="65%"><stop offset="0%" stop-color="#6B4A2E"/><stop offset="100%" stop-color="#2A1B10"/></radialGradient>
+          </defs>
+          <ellipse cx="158" cy="336" rx="66" ry="14" fill="#2A1A0E" opacity="0.2" filter="url(#p-squirrel-blur)"/>
+
+          <!-- bushy tail: drawn first so the body reads in front of it -->
+          <ellipse cx="222" cy="176" rx="34" ry="98" fill="url(#p-squirrel-fur)" transform="rotate(-16 222 176)"/>
+          <circle cx="240" cy="104" r="19" fill="url(#p-squirrel-fur)"/>
+          <circle cx="246" cy="146" r="17" fill="url(#p-squirrel-fur)"/>
+          <circle cx="240" cy="188" r="15" fill="url(#p-squirrel-fur)"/>
+          <ellipse cx="234" cy="150" rx="14" ry="70" fill="#7A4F2E" opacity="0.2" transform="rotate(-16 234 150)"/>
+          <path d="M 250 110 Q 260 160 244 202" stroke="#F9E2C4" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.5" filter="url(#p-squirrel-blur)"/>
+
+          <!-- body (coat) -->
+          <ellipse cx="152" cy="258" rx="66" ry="74" fill="url(#p-squirrel-coat)"/>
+          <ellipse cx="112" cy="298" rx="40" ry="44" fill="#C8C2B4" opacity="0.34" filter="url(#p-squirrel-blur)"/>
+          <path d="M 202 208 Q 220 258 206 308" stroke="#FFFFFF" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.6" filter="url(#p-squirrel-blur)"/>
+          <path d="M 128 224 Q 116 252 128 270 Q 140 286 152 270 Q 164 252 152 224" stroke="#5A3E24" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="140" cy="284" r="6" fill="#5A3E24"/>
+
+          <!-- head -->
+          <circle cx="152" cy="152" r="56" fill="url(#p-squirrel-fur)"/>
+          <ellipse cx="122" cy="130" rx="16" ry="18" fill="#7A4F2E" opacity="0.16" filter="url(#p-squirrel-blur)"/>
+          <path d="M 198 118 Q 214 152 196 190" stroke="#FCEBD8" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.42" filter="url(#p-squirrel-blur)"/>
+          <circle cx="116" cy="112" r="21" fill="url(#p-squirrel-fur)"/><circle cx="116" cy="114" r="12" fill="#C08060"/>
+          <circle cx="188" cy="112" r="21" fill="url(#p-squirrel-fur)"/><circle cx="188" cy="114" r="12" fill="#C08060"/>
+          <ellipse cx="128" cy="176" rx="10" ry="7" fill="#F58FAE" opacity="0.4"/><ellipse cx="176" cy="176" rx="10" ry="7" fill="#F58FAE" opacity="0.4"/>
+          <ellipse cx="132" cy="150" rx="10" ry="12" fill="url(#p-squirrel-iris)"/><circle cx="136" cy="145" r="3.4" fill="#FFFFFF"/><circle cx="129" cy="155" r="1.6" fill="#FFE7C2" opacity="0.8"/>
+          <ellipse cx="172" cy="150" rx="10" ry="12" fill="url(#p-squirrel-iris)"/><circle cx="176" cy="145" r="3.4" fill="#FFFFFF"/><circle cx="169" cy="155" r="1.6" fill="#FFE7C2" opacity="0.8"/>
+          <path d="M 120 138 Q 132 132 143 138" stroke="#3A2A1A" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.5"/>
+          <path d="M 161 138 Q 172 132 184 138" stroke="#3A2A1A" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.5"/>
+          <ellipse cx="152" cy="166" rx="4.5" ry="3.4" fill="#7A4020"/>
+          <path d="M 140 180 Q 152 190 164 180" stroke="#5A3A1E" stroke-width="2.2" fill="none" stroke-linecap="round" opacity="0.6"/>
+
+          <!-- doctor cap, sitting between the ears -->
+          <rect x="118" y="100" width="68" height="15" rx="5" fill="url(#p-squirrel-coat)"/>
+          <rect x="134" y="84" width="36" height="19" rx="5" fill="url(#p-squirrel-coat)"/>
+          <rect x="148" y="87" width="6" height="13" rx="1.5" fill="#FF6B6B"/><rect x="141" y="93" width="20" height="6" rx="1.5" fill="#FF6B6B"/>
+
+          <!-- arms + small clipboard held in front -->
+          <ellipse cx="94" cy="252" rx="19" ry="28" fill="url(#p-squirrel-coat)" transform="rotate(-14 94 252)"/>
+          <ellipse cx="210" cy="252" rx="19" ry="28" fill="url(#p-squirrel-coat)" transform="rotate(14 210 252)"/>
+          <rect x="118" y="240" width="34" height="44" rx="3" fill="#E8D5A0" transform="rotate(-6 135 262)"/>
+          <rect x="123" y="248" width="24" height="3" rx="1" fill="#8B6030" opacity="0.5" transform="rotate(-6 135 262)"/>
+          <rect x="123" y="256" width="24" height="3" rx="1" fill="#8B6030" opacity="0.5" transform="rotate(-6 135 262)"/>
+
+          <ellipse cx="128" cy="326" rx="24" ry="14" fill="url(#p-squirrel-fur)"/><ellipse cx="176" cy="326" rx="24" ry="14" fill="url(#p-squirrel-fur)"/>
+        </svg>`,
+
+      sheep: `
+        <svg viewBox="0 0 320 360" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="p-sheep-blur"><feGaussianBlur stdDeviation="5"/></filter>
+            <radialGradient id="p-sheep-wool" cx="70%" cy="25%" r="90%"><stop offset="0%" stop-color="#FFFFFF"/><stop offset="55%" stop-color="#EDE9E0"/><stop offset="100%" stop-color="#C6C0AE"/></radialGradient>
+            <radialGradient id="p-sheep-face" cx="65%" cy="25%" r="90%"><stop offset="0%" stop-color="#6E6E7A"/><stop offset="100%" stop-color="#302F38"/></radialGradient>
+          </defs>
+          <ellipse cx="160" cy="336" rx="78" ry="15" fill="#1A1A20" opacity="0.2" filter="url(#p-sheep-blur)"/>
+
+          <ellipse cx="160" cy="256" rx="80" ry="86" fill="url(#p-sheep-wool)"/>
+          <circle cx="86" cy="208" r="36" fill="url(#p-sheep-wool)"/><circle cx="122" cy="172" r="34" fill="url(#p-sheep-wool)"/>
+          <circle cx="162" cy="160" r="36" fill="url(#p-sheep-wool)"/><circle cx="202" cy="172" r="34" fill="url(#p-sheep-wool)"/>
+          <circle cx="238" cy="208" r="36" fill="url(#p-sheep-wool)"/>
+          <ellipse cx="112" cy="304" rx="48" ry="42" fill="#B6AF9A" opacity="0.32" filter="url(#p-sheep-blur)"/>
+          <path d="M 224 158 Q 246 210 224 262" stroke="#FFFFFF" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.55" filter="url(#p-sheep-blur)"/>
+
+          <ellipse cx="162" cy="206" rx="52" ry="40" fill="url(#p-sheep-face)"/>
+          <ellipse cx="118" cy="176" rx="13" ry="20" fill="url(#p-sheep-face)" transform="rotate(-22 118 176)"/>
+          <ellipse cx="206" cy="176" rx="13" ry="20" fill="url(#p-sheep-face)" transform="rotate(22 206 176)"/>
+          <circle cx="142" cy="198" r="8" fill="white"/><circle cx="146" cy="198" r="4.2" fill="#2D3748"/><circle cx="144" cy="196" r="1.3" fill="#fff"/>
+          <circle cx="186" cy="198" r="8" fill="white"/><circle cx="190" cy="198" r="4.2" fill="#2D3748"/><circle cx="188" cy="196" r="1.3" fill="#fff"/>
+          <path d="M 130 184 Q 142 178 154 184" stroke="#1A1A20" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.6"/>
+          <path d="M 174 184 Q 186 178 198 184" stroke="#1A1A20" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.6"/>
+          <ellipse cx="162" cy="216" rx="5.5" ry="4.4" fill="#F58FAE"/>
+          <path d="M 144 228 Q 162 240 180 228" stroke="white" stroke-width="2.6" fill="none" stroke-linecap="round" opacity="0.85"/>
+
+          <path d="M 134 262 Q 116 288 134 310 Q 152 328 170 310" stroke="#3A3A44" stroke-width="4.4" fill="none" stroke-linecap="round"/>
+          <circle cx="170" cy="312" r="8" fill="#3A3A44"/>
+
+          <ellipse cx="130" cy="322" rx="15" ry="32" fill="url(#p-sheep-face)"/><ellipse cx="204" cy="322" rx="15" ry="32" fill="url(#p-sheep-face)"/>
+          <ellipse cx="124" cy="346" rx="12" ry="7" fill="#302F38"/><ellipse cx="210" cy="346" rx="12" ry="7" fill="#302F38"/>
+        </svg>`,
+
+      giraffe: `
+        <svg viewBox="0 0 320 360" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="p-giraffe-blur"><feGaussianBlur stdDeviation="5"/></filter>
+            <radialGradient id="p-giraffe-skin" cx="70%" cy="24%" r="90%"><stop offset="0%" stop-color="#FFEFC4"/><stop offset="48%" stop-color="#E8C078"/><stop offset="100%" stop-color="#B98B3E"/></radialGradient>
+            <radialGradient id="p-giraffe-iris" cx="50%" cy="35%" r="65%"><stop offset="0%" stop-color="#6B4A2E"/><stop offset="100%" stop-color="#2A1B10"/></radialGradient>
+          </defs>
+          <ellipse cx="164" cy="336" rx="66" ry="14" fill="#5A3E10" opacity="0.2" filter="url(#p-giraffe-blur)"/>
+
+          <ellipse cx="168" cy="278" rx="62" ry="66" fill="url(#p-giraffe-skin)"/>
+          <ellipse cx="130" cy="312" rx="36" ry="34" fill="#8A6320" opacity="0.22" filter="url(#p-giraffe-blur)"/>
+          <path d="M 214 234 Q 230 278 216 320" stroke="#FFF3D4" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.45" filter="url(#p-giraffe-blur)"/>
+          <ellipse cx="140" cy="264" rx="15" ry="13" fill="#B98B3E" opacity="0.45"/>
+          <ellipse cx="188" cy="300" rx="14" ry="12" fill="#B98B3E" opacity="0.4"/>
+
+          <ellipse cx="138" cy="326" rx="14" ry="26" fill="url(#p-giraffe-skin)"/><ellipse cx="196" cy="326" rx="14" ry="26" fill="url(#p-giraffe-skin)"/>
+
+          <path d="M 150 234 Q 108 190 130 138 Q 148 96 118 62" stroke="url(#p-giraffe-skin)" stroke-width="42" fill="none" stroke-linecap="round"/>
+          <path d="M 140 210 Q 116 178 126 148" stroke="#8A6320" stroke-width="2" fill="none" opacity="0.25"/>
+          <ellipse cx="124" cy="200" rx="15" ry="13" fill="#B98B3E" opacity="0.5"/>
+          <ellipse cx="112" cy="158" rx="14" ry="12" fill="#B98B3E" opacity="0.48"/>
+          <ellipse cx="132" cy="118" rx="13" ry="11" fill="#B98B3E" opacity="0.42"/>
+          <path d="M 156 190 Q 140 140 150 92" stroke="#FFF3D4" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.4" filter="url(#p-giraffe-blur)"/>
+
+          <circle cx="112" cy="58" r="40" fill="url(#p-giraffe-skin)"/>
+          <ellipse cx="90" cy="40" rx="14" ry="12" fill="#2A1E10" opacity="0.08" filter="url(#p-giraffe-blur)"/>
+          <ellipse cx="126" cy="20" rx="7" ry="16" fill="#B98B3E"/><circle cx="126" cy="6" r="7" fill="#8A6320"/>
+          <ellipse cx="98" cy="16" rx="7" ry="16" fill="#B98B3E"/><circle cx="98" cy="2" r="7" fill="#8A6320"/>
+
+          <rect x="86" y="30" width="52" height="11" rx="4" fill="#FFFFFF"/>
+          <rect x="100" y="16" width="26" height="16" rx="4" fill="#FFFFFF"/>
+          <rect x="109" y="18" width="6" height="12" rx="1.5" fill="#FF6B6B"/><rect x="103" y="22" width="18" height="6" rx="1.5" fill="#FF6B6B"/>
+
+          <ellipse cx="94" cy="60" rx="8" ry="10" fill="url(#p-giraffe-iris)"/><circle cx="98" cy="55" r="3.2" fill="#FFFFFF"/><circle cx="90" cy="63" r="1.4" fill="#FFE7C2" opacity="0.8"/>
+          <ellipse cx="130" cy="60" rx="8" ry="10" fill="url(#p-giraffe-iris)"/><circle cx="134" cy="55" r="3.2" fill="#FFFFFF"/><circle cx="126" cy="63" r="1.4" fill="#FFE7C2" opacity="0.8"/>
+          <path d="M 82 46 Q 74 41 66 44" stroke="#3A2A10" stroke-width="1.6" fill="none" stroke-linecap="round" opacity="0.6"/>
+          <path d="M 138 46 Q 146 41 154 44" stroke="#3A2A10" stroke-width="1.6" fill="none" stroke-linecap="round" opacity="0.6"/>
+          <ellipse cx="80" cy="66" rx="7" ry="5" fill="#F58FAE" opacity="0.4"/><ellipse cx="144" cy="66" rx="7" ry="5" fill="#F58FAE" opacity="0.4"/>
+          <path d="M 96 80 Q 112 90 128 80" stroke="#5A3E10" stroke-width="2.2" fill="none" stroke-linecap="round" opacity="0.6"/>
         </svg>`
     };
 

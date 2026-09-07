@@ -48,6 +48,10 @@ EXPR = {
     'worried':   dict(brow='worried',  mouth='wavy',   lid=.1),
     'sleepy':    dict(brow=None,       mouth='smile',  lid=.9),
     'hurt':      dict(brow='worried',  mouth='open',   lid=.3),
+    # story 01 turns on these two: Elephant is sly, then caught
+    'excited':   dict(brow='raised',   mouth='open',   lid=-.12, blush=True),
+    'sneaky':    dict(brow='cross',    mouth='grin',   lid=.26),
+    'guilty':    dict(brow='worried',  mouth='flat',   lid=.16, blush=True),
 }
 
 
@@ -101,8 +105,8 @@ def _mouth(kind, cy, w):
     if kind == 'smile':
         return f'<path d="M{-w*.5:.1f},{cy:.1f} Q0,{cy+w*.42:.1f} {w*.5:.1f},{cy:.1f}" stroke="{INK}" stroke-width="2.3" fill="none" stroke-linecap="round"/>'
     if kind == 'grin':
-        return (f'<path d="M{-w*.62:.1f},{cy-w*.1:.1f} Q0,{cy+w*.72:.1f} {w*.62:.1f},{cy-w*.1:.1f} Z" fill="{INK}"/>'
-                f'<path d="M{-w*.3:.1f},{cy+w*.34:.1f} Q0,{cy+w*.6:.1f} {w*.3:.1f},{cy+w*.34:.1f} Z" fill="{R_NOSE}" opacity=".75"/>')
+        return (f'<path d="M{-w*.5:.1f},{cy-w*.06:.1f} Q0,{cy+w*.54:.1f} {w*.5:.1f},{cy-w*.06:.1f} Z" fill="#4A3A44"/>'
+                f'<path d="M{-w*.24:.1f},{cy+w*.26:.1f} Q0,{cy+w*.46:.1f} {w*.24:.1f},{cy+w*.26:.1f} Z" fill="{R_NOSE}" opacity=".8"/>')
     if kind == 'flat':
         return f'<path d="M{-w*.42:.1f},{cy:.1f} L{w*.42:.1f},{cy:.1f}" stroke="{INK}" stroke-width="2.3" stroke-linecap="round"/>'
     if kind == 'frown':
@@ -111,9 +115,10 @@ def _mouth(kind, cy, w):
         return f'<path d="M{-w*.5:.1f},{cy:.1f} q{w*.25:.1f},{-w*.24:.1f} {w*.5:.1f},0 q{w*.25:.1f},{w*.24:.1f} {w*.5:.1f},0" stroke="{INK}" stroke-width="2.2" fill="none" stroke-linecap="round"/>'
     if kind == 'oh':
         return f'<ellipse cx="0" cy="{cy+w*.16:.1f}" rx="{w*.24:.1f}" ry="{w*.3:.1f}" fill="{INK}"/>'
-    # open - a shout or a wail
-    return (f'<ellipse cx="0" cy="{cy+w*.2:.1f}" rx="{w*.36:.1f}" ry="{w*.46:.1f}" fill="{INK}"/>'
-            f'<ellipse cx="0" cy="{cy+w*.4:.1f}" rx="{w*.2:.1f}" ry="{w*.2:.1f}" fill="{R_NOSE}" opacity=".7"/>')
+    # open - a shout, a wail, or an excited "I'm SO hungry!". A tall pure-black
+    # oval reads as horror, so keep it wider than it is tall and warm it up.
+    return (f'<ellipse cx="0" cy="{cy+w*.18:.1f}" rx="{w*.34:.1f}" ry="{w*.32:.1f}" fill="#4A3A44"/>'
+            f'<ellipse cx="0" cy="{cy+w*.30:.1f}" rx="{w*.22:.1f}" ry="{w*.16:.1f}" fill="{R_NOSE}" opacity=".85"/>')
 
 
 def _limb(x0, y0, dx, dy, color, line, w, bow=.28):

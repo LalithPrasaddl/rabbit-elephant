@@ -27,11 +27,16 @@ rabbit-elephant/
 │       ├── stories-data.js          ← Story manifest (loaded as global STORIES array)
 │       └── characters-data.js      ← Character definitions (global CHARACTERS array)
 ├── tools/
-│   └── portraits/                   ← Generators for the characters.html portraits
-│       ├── build.py                 ← Regenerates all six + injects into characters.html
-│       ├── furlib.py                ← Fur / fleece / wrinkle / patch generators
-│       ├── common.py                ← Shared eye, filters, mirror wrapper
-│       └── <character>.py           ← One per character
+│   ├── portraits/                   ← Generators for the characters.html portraits
+│   │   ├── build.py                 ← Regenerates all six + injects into characters.html
+│   │   ├── furlib.py                ← Fur / fleece / wrinkle / patch generators (+ DENSITY knob)
+│   │   ├── common.py                ← Shared eye, filters, mirror wrapper
+│   │   └── <character>.py           ← One per character
+│   └── scenes/                      ← Generators for the six story covers
+│       ├── build_covers.py          ← Regenerates all six + injects into stories/*/index.html
+│       ├── scenelib.py              ← Sky, sun, clouds, hills, meadow, snow, pool, car, thorn…
+│       ├── figures.py               ← Loads a portrait generator's figure and places it in a scene
+│       └── covers.py                ← One build_NN() per story cover
 └── stories/
     └── 01-the-hungry-friends/
         └── index.html              ← Self-contained story with inline SVG illustrations
@@ -47,15 +52,14 @@ rabbit-elephant/
 - `--color-accent: #06C98A` (mint green)
 - `--color-bg: #FFF9F0` (warm cream)
 
-**Illustrations:** Inline SVG art per page, `viewBox="0 0 500 360"` (cover uses `0 0 500 240`). Characters use consistent color palette:
+**Illustrations:** Inline SVG art per page, `viewBox="0 0 500 360"` (covers are full-bleed — see "Story covers"). Characters use consistent color palette:
 - Rabbit: body `#F0E8DC`, ear interior `#FFB3C6`, nose `#FF9BAE`
 - Elephant: body `#A8C0CC`, ears `#C5D8E0`
 - Bear: body `#C89A72`, muzzle/ear interior `#EAD1B0`, nose `#5C3A21`
 
-**Three illustration styles currently coexist** (mid-redesign):
+**Two illustration styles currently coexist** (mid-redesign):
 
-- **Generated-texture style** — `characters.html` portraits only. Built by Python generators in `tools/portraits/`, not hand-authored. See "Character portraits" below. **Never hand-edit portrait SVG in `characters.html` — it is generated output and `build.py` will overwrite it.**
-- **Premium dimensional style** — the six story covers (`stories/*/index.html`, the `page-cover` illustration only). Hand-authored: no outlines, radial-gradient shading lit from upper-right, rim light + ambient occlusion. Recipe below.
+- **Generated-texture style** — `characters.html` portraits (`tools/portraits/`) and the six story covers (`tools/scenes/`). Not hand-authored. See "Character portraits" and "Story covers" below. **Never hand-edit either one in the HTML — both are generated output and the next build overwrites them.**
 - **Legacy flat style** — flat fills + thin grey stroke outlines, used by every in-story page illustration (everything past the cover, ~50 scenes). Governed by the "Background template" recipe below. Not yet migrated.
 
 **Character portraits (`characters.html`)** are generated. To change one, edit its generator and rebuild:
@@ -78,11 +82,51 @@ python3 tools/portraits/build.py     # regenerates all six, injects them into ch
 
 Portrait SVG totals ~440 KB raw / ~145 KB gzipped across the six.
 
-**Premium character illustration recipe** (story covers): light source is always upper-right — every `radialGradient` uses `cx="~70%" cy="~25%" r="~90%"`, going from a bright warm highlight through the base tone to a deeper shade at 100%, no stroke outlines anywhere.
-1. **Per major shape** (head, body, ears): fill with a dedicated radial gradient (bright→base→deep), then add a blurred dark ambient-occlusion ellipse toward the lower-left where it meets another form, then a blurred warm-white rim-light stroke along the upper-right silhouette edge.
-2. **Eyes**: a radial-gradient iris (warm brown, center lighter than edge) rather than a flat dark circle, plus two catchlights (one bright white, one small warm-tinted) and a thin brow stroke above.
-3. **Grounding**: one large blurred dark ellipse under the feet as a contact shadow.
-4. **Species-specific realism details** (add what's anatomically appropriate, skip what isn't): visible separated legs/feet with toe or hoof marks, a tail, whiskers, ear-vein lines, trunk/neck wrinkles, tusks — small touches that read as "a real creature," not a toy.
+**Story covers (`stories/*/index.html`, the `.cover-illustration` SVG)** are generated. To change one, edit its scene and rebuild:
+
+```bash
+python3 tools/scenes/build_covers.py          # all six
+python3 tools/scenes/build_covers.py 03 05    # just these
+```
+
+The cover art **bleeds to all four edges of the card** and the title sits on top of
+it, so the reader opens on a full-width picture rather than a boxed thumbnail.
+That means the same SVG has to cover a wide desktop card (960×540) and a tall
+phone card (390×560) with `preserveAspectRatio="slice"`, so the canvas is bigger
+than the composition:
+
+- **Safe frame** — the scene is authored in `500×300` with the horizon at y≈170 and the scene id prefix `cvN-`, exactly as if the cover were still a boxed image. This is what a desktop card shows.
+- **Bleed** — `scenelib.wrap()` emits `viewBox="0 -84 500 557"`: 84 units of extra sky above the frame and 173 below. Only background lives out there. The bleed is weighted downwards on purpose, which puts the desktop window at y 54..335 — the whole scene plus ~60 units of open ground under the characters' feet for the title to sit on.
+- **Phone crop** — a phone shows the full height and crops horizontally to roughly `x 58..442` (`scenelib.SAFE_X`). Anything that matters — a character, the doctor's bag, the beach ball — must sit inside that band or it gets sliced off the edge on mobile.
+
+The page markup the CSS expects (already in all six stories):
+
+```html
+<div class="page page-cover">
+  <div class="cover-illustration"><svg …></svg></div>   <!-- generated; fills the card -->
+  <div class="cover-content">                           <!-- overlaid on the art -->
+    <h1 class="cover-title">…</h1>
+    <p class="cover-subtitle">…</p>
+    <div class="cover-characters">…</div>
+  </div>
+</div>
+```
+
+`.page-cover::after` is the scrim that gives the white title something to sit on.
+It fades out well before the characters' faces — if you darken it much further the
+whole lower half goes muddy.
+
+Other conventions:
+
+1. **Figures are never mirrored.** The portraits are lit from the upper-RIGHT; a flipped figure would be lit from the wrong side, against the scene's sun. Compose with everyone facing right and keep the sun upper-right. Vary a pose with a few degrees of `rot` on `figures.place()` instead.
+2. `figures.load(name, density)` runs the portrait generator with `furlib.DENSITY` turned down (0.34 for covers) — a cover figure is roughly half portrait size, so fewer hairs keeps the *apparent* density the same and keeps the page from ballooning. It restores `tools/portraits/out/` afterwards, so it never disturbs the portrait build.
+3. `figures.place(body, x, ybase, height, rot=…)` anchors on the FEET (`ybase`), not the box. `figures.to_scene(px, py, …)` maps a point in the generator's own coordinates into the scene — use it to hang a prop (Rabbit's scarf in cover 03) on an actual feature rather than eyeballing it.
+4. **Three things stop a placed figure reading as a sticker**, and all three are needed: `scenelib.cast_shadow()` (thrown down-LEFT, since light is upper-right), the `front` layer returned by `meadow()` drawn over the feet, and a final `sunwash()` pass over the whole frame.
+5. Keep the washes light — `sunwash` above ~0.3 and `vignette` above ~0.15 grey out the greens and flatten everything.
+6. Keep the sun above y≈70 out of the desktop window's top edge, and remember anything sized by distance-from-horizon (flowers, grass) needs a cap, or it grows into blobs down in the bleed.
+7. Props live in `scenelib.py` when they're reusable (thorn, car, pool, splash, snowfield, winter_tree, dirt_path) and inline in `covers.py` when they're one-offs (the snowman, the doctor's bag, the clinic sign).
+
+Each cover adds ~115–185 KB of raw SVG to its story page (~43–65 KB gzipped).
 
 **Background template (standard for every page, every story — legacy flat style only):** Never fill a page background with a single flat `<rect>`. Every illustration should feel like the same warm, sunny meadow, using this layered recipe:
 1. **Sky** — a `<linearGradient>` (unique `id` per `<svg>`, e.g. `sky-p3`) from a soft saturated color at the top to a pale near-white at the bottom. Pick the top color by mood, not randomly: cheerful/morning scenes ≈ `#BEE7FB`→`#EAF9FF`; warm/golden-hour or happy-ending scenes ≈ `#FFE8B0`→`#FFF5D8`; quieter emotional beats (confusion, mild frustration, a small mishap) ≈ a soft warm peach `#FFE3D6`→`#FFF6EE` — still warm and safe-feeling, never dark or dull, since the audience is 2–4 year olds.
@@ -102,6 +146,7 @@ Portrait SVG totals ~440 KB raw / ~145 KB gzipped across the six.
 ## Adding a new story
 
 1. Create `stories/NN-story-slug/index.html` — copy the structure from `01-the-hungry-friends/index.html`.
+1b. Add a `build_NN()` to `tools/scenes/covers.py` and register it in `COVERS` (keyed by the story slug), then run `python3 tools/scenes/build_covers.py NN` to generate the cover into the page.
 2. Asset paths from inside a story file use `../../assets/`.
 3. Add an entry to `assets/data/stories-data.js`:
    ```js

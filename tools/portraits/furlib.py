@@ -1,6 +1,16 @@
 """Shared helpers for generating naturalistic animal SVG portraits."""
 import math, random
 
+# Global stroke-count multiplier. 1.0 = portrait density (the characters.html
+# portraits). The scene builder in tools/scenes drops this because a cover figure
+# is drawn at roughly half size: fewer hairs there keeps the *apparent* density
+# the same and keeps the story HTML from ballooning.
+DENSITY = 1.0
+
+
+def _n(n):
+    return max(1, int(round(n * DENSITY)))
+
 # ---------- cubic bezier path with sampling ----------
 class BPath:
     """Closed path built from cubic segments. Can emit `d` and sample edge points+normals."""
@@ -61,7 +71,7 @@ def fur_layers(zones, rng):
         lo, hi = z.get("len", (6, 13))
         curve = z.get("curve", 1.2)
         jitter = z.get("jitter", 0.30)
-        for _ in range(z["n"]):
+        for _ in range(_n(z["n"])):
             t = rng.random()*2*math.pi
             r = math.sqrt(rng.random())
             ux, uy = r*math.cos(t)*rx, r*math.sin(t)*ry
@@ -80,7 +90,7 @@ def fur_layers(zones, rng):
 def edge_fur(path, n, flip, rng, tones, length=(4, 11), spread=0.45, inset=1.0):
     """Hairs sprouting outward along a silhouette so the edge never reads as vector-clean."""
     buckets = {}
-    for (p, tan) in path.sample(n):
+    for (p, tan) in path.sample(_n(n)):
         nx, ny = (tan[1], -tan[0]) if flip else (-tan[1], tan[0])
         x, y = p[0] - nx*inset, p[1] - ny*inset
         base = math.atan2(ny, nx)
@@ -131,7 +141,7 @@ def speckle(zones, rng):
     out = []
     for z in zones:
         cx, cy, rx, ry = z["ell"]
-        for _ in range(z["n"]):
+        for _ in range(_n(z["n"])):
             t = rng.random()*2*math.pi
             r = math.sqrt(rng.random())
             x, y = cx + r*math.cos(t)*rx, cy + r*math.sin(t)*ry
@@ -147,7 +157,7 @@ def curls(zones, rng):
     buckets = {}
     for z in zones:
         cx, cy, rx, ry = z["ell"]
-        for _ in range(z["n"]):
+        for _ in range(_n(z["n"])):
             t = rng.random()*2*math.pi
             r = math.sqrt(rng.random())
             x, y = cx + r*math.cos(t)*rx, cy + r*math.sin(t)*ry
@@ -168,7 +178,7 @@ def blotches(zones, rng):
     out = []
     for z in zones:
         cx, cy, rx, ry = z["ell"]
-        for _ in range(z["n"]):
+        for _ in range(_n(z["n"])):
             t = rng.random()*2*math.pi
             r = math.sqrt(rng.random())
             x, y = cx + r*math.cos(t)*rx, cy + r*math.sin(t)*ry

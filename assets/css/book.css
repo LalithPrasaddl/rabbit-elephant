@@ -238,35 +238,75 @@
 }
 
 /* Cover layout */
+/* The cover art bleeds to all four edges of the card and the title sits on top
+   of it. The SVG carries extra sky above and extra grass below its 500x300 safe
+   frame, so `slice` can cover a wide desktop card and a tall phone card while
+   only ever cropping background - see tools/scenes/scenelib.py. */
 .page-cover {
+  position: relative;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
+  align-items: stretch;
   text-align: center;
-  padding: 40px 32px;
+  padding: 0;
+  overflow: hidden;
   background: linear-gradient(160deg, #FFF3E0 0%, #FFE0B2 50%, #FFF9F0 100%);
-  min-height: 500px;
+  min-height: 540px;
 }
 
 .cover-illustration {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.cover-illustration svg {
+  display: block;
   width: 100%;
-  max-width: 480px;
-  margin-bottom: 24px;
+  height: 100%;
+}
+
+/* Scrim: the title needs a floor to sit on, but it has to fade out well before
+   it reaches the characters' faces. */
+.page-cover::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50%;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    rgba(38, 22, 10, 0.78) 0%,
+    rgba(38, 22, 10, 0.56) 30%,
+    rgba(38, 22, 10, 0.20) 64%,
+    rgba(38, 22, 10, 0) 100%
+  );
+}
+
+.cover-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 32px 34px;
 }
 
 .cover-title {
   font-family: var(--font-display);
   font-size: clamp(2rem, 6vw, 3rem);
-  color: var(--color-text);
+  color: #FFF9F0;
   line-height: 1.15;
   margin-bottom: 8px;
+  text-shadow: 0 2px 18px rgba(30, 16, 6, 0.55), 0 1px 3px rgba(30, 16, 6, 0.5);
 }
 
 .cover-subtitle {
   font-size: 1rem;
-  color: var(--color-text-muted);
+  color: rgba(255, 249, 240, 0.92);
   font-weight: 600;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
+  text-shadow: 0 1px 10px rgba(30, 16, 6, 0.6);
 }
 
 .cover-characters {
@@ -281,9 +321,10 @@
   font-weight: 700;
   padding: 4px 14px;
   border-radius: 20px;
-  background: rgba(255,255,255,0.7);
+  background: rgba(255, 249, 240, 0.92);
   color: var(--color-text);
-  border: 2px solid rgba(0,0,0,0.08);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 2px 10px rgba(30, 16, 6, 0.28);
 }
 
 /* Story page layout */
@@ -425,9 +466,17 @@
     gap: 12px;
   }
 
-  .page-cover { min-height: unset; padding: 28px 20px; }
+  /* Taller than desktop: the art is portrait here, and a story with five
+     character chips needs the room or the text block rides up over the faces. */
+  .page-cover { min-height: 560px; padding: 0; }
+  .page-cover::after { height: 58%; }
+
+  .cover-content { padding: 0 18px 24px; }
 
   .cover-title { font-size: 1.8rem; }
+  .cover-subtitle { font-size: 0.9rem; margin-bottom: 16px; }
+  .cover-characters { gap: 8px; }
+  .cover-char-chip { font-size: 0.72rem; padding: 3px 11px; }
 
   .book-nav { padding: 12px 16px; }
   .book-nav-btn { padding: 8px 16px; font-size: 0.9rem; }

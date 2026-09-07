@@ -330,29 +330,32 @@
 /* Story page layout */
 .page-spread {
   flex-direction: row;
-  min-height: 480px;
+  min-height: 430px;
 }
 
+/* The art is 500x360 landscape and the text column is tall, so the illustration
+   panel gets stretched to the text's height and the picture floats in the middle of
+   it. Giving the art the wider column, dropping the padding and lifting the height
+   cap closes most of that gap; what is left reads as a mat rather than as empty sky,
+   which is why the panel is a neutral cream and not a sky-to-grass gradient. */
 .page-illustration {
-  width: 50%;
+  width: 56%;
   flex-shrink: 0;
-  background: linear-gradient(160deg, #EBF7FF 0%, #E0F2E9 100%);
+  background: #F6EFE4;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
   overflow: hidden;
 }
 
 .page-illustration svg {
   width: 100%;
   height: auto;
-  max-height: 380px;
 }
 
 .page-text {
-  width: 50%;
-  padding: 36px 36px 28px 32px;
+  width: 44%;
+  padding: 32px 32px 26px 28px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -451,14 +454,15 @@
     min-height: unset;
   }
 
+  /* full-bleed on a phone: the picture is the point at this size */
   .page-illustration {
     width: 100%;
-    min-height: 240px;
-    max-height: 300px;
-    padding: 16px;
+    min-height: 0;
+    max-height: none;
+    padding: 0;
   }
 
-  .page-illustration svg { max-height: 240px; }
+  .page-illustration svg { max-height: none; }
 
   .page-text {
     width: 100%;

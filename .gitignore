@@ -1,1 +1,10 @@
 .DS_Store
+
+# Python bytecode from the illustration generators
+__pycache__/
+*.pyc
+
+# Generator scratch output. The generators write their SVG straight into the
+# committed HTML, so everything under out/ is an intermediate or a local preview
+# (contact sheets, before/after comparisons) - never something the site serves.
+tools/*/out/

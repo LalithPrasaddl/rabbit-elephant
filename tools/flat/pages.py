@@ -17,7 +17,18 @@ from characters import (rabbit, elephant, bear, squirrel, giraffe, sheep, critte
                         E_BODY, E_LINE, R_BODY, R_LINE)
 
 
+def alt(text):
+    """What a screen reader says for the page's picture: who is in it and what they
+    are doing. The docstring below it is a note for whoever edits the page - it names
+    the story beat, which is not the same thing as describing the picture."""
+    def mark(fn):
+        fn.alt = text
+        return fn
+    return mark
+
+
 # ---------------------------------------------------------------- story 06
+@alt('Outside the clinic, Rabbit stomps and complains while bandaged Elephant stands calmly and Nurse Giraffe looks out of a window.')
 def p06_1():
     """Rabbit huffs outside the clinic; Nurse Giraffe overhears from a window."""
     return (S.sky('s6p1', 'tender', sun=None) + S.ground('s6p1')
@@ -34,6 +45,7 @@ def p06_1():
             + S.bubble(["We waited FOREVER", "in there today!"], 118, 128, tail=(150, 214)))
 
 
+@alt("Elephant gently rests his trunk on Rabbit's shoulder, and she smiles.")
 def p06_2():
     """The beat of the story: a trunk resting gently on a shoulder."""
     return (S.sky('s6p2', 'golden') + S.ground('s6p2')
@@ -41,9 +53,10 @@ def p06_2():
             + elephant(316, 348, expr='happy', look=(-.7, .1), trunk=(-74, 24))
             + S.shadow(196, 350, 32)
             + rabbit(196, 350, expr='calm', look=(.5, -.1), arm2=(20, 18), ears=(-14, 15))
-            + S.bubble(["Hey. I'm okay now.", "Let's get home."], 150, 96, tail=(300, 214)))
+            + S.bubble(["Hey. I'm okay now.", "Let's get home."], 286, 96, tail=(316, 200)))
 
 
+@alt('At a red light, a purple car driven by Bear bumps into the yellow car carrying Rabbit and Elephant. BONK!')
 def p06_3():
     """The bump. Bear is waving at a friend instead of watching the road."""
     return (S.sky('s6p3', 'tender', sun=None) + S.road(228)
@@ -59,6 +72,7 @@ def p06_3():
               'font-family="Fredoka One, sans-serif" font-weight="700">BONK!</text>')
 
 
+@alt('An ambulance carries Rabbit, Elephant and Bear back to the hospital.')
 def p06_4():
     """Everyone carefully helped into an ambulance and driven back."""
     return (S.sky('s6p4', 'tender', sun=None,
@@ -73,6 +87,7 @@ def p06_4():
 )
 
 
+@alt("Bear sleeps in a hospital bed with a bandaged arm while a frowning Dr. Squirrel treats Elephant's ankle.")
 def p06_5():
     """Bear resting; Dr. Squirrel treats Elephant's ankle just as carefully."""
     return (S.indoors('s6p5')
@@ -87,6 +102,7 @@ def p06_5():
             + S.bubble(["Let's see how", "THIS one goes."], 404, 88, tail=(424, 250), size=12))
 
 
+@alt("Dr. Squirrel bandages Rabbit's wrist across a table, looking grumpy, while Rabbit looks worried.")
 def p06_6():
     """Rabbit's wrist, bandaged gently despite how Dr. Squirrel is feeling."""
     return (S.indoors('s6p6')
@@ -101,6 +117,7 @@ def p06_6():
             + S.bubble(["Nearly done."], 344, 104, tail=(296, 252), size=12))
 
 
+@alt('Rabbit and Elephant lie in two hospital beds while Dr. Squirrel stands between them, saying sorry.')
 def p06_7():
     """The apology. Two beds, and the grumpy feelings melting away."""
     return (S.indoors('s6p7', wall="#F4E7DA")
@@ -113,6 +130,7 @@ def p06_7():
             + S.bubble(["I'm sorry for how", "I sounded earlier."], 250, 84, tail=(246, 250), size=12))
 
 
+@alt('A cross Nurse Giraffe brings Elephant a big tray of dinner, while Rabbit, sad in her bed, has only half a glass.')
 def p06_8():
     """A huge tray for Elephant, half a glass for Rabbit, and nothing said."""
     return (S.indoors('s6p8')
@@ -127,6 +145,7 @@ def p06_8():
               'font-family="Nunito, sans-serif" font-style="italic">…only half a glass.</text>')
 
 
+@alt("Nurse Giraffe comes back to Rabbit's bed with a full dinner tray and says sorry.")
 def p06_9():
     """Nurse Giraffe comes back, says sorry, and brings a full dinner."""
     return (S.indoors('s6p9', wall="#F4E7DA")
@@ -138,6 +157,7 @@ def p06_9():
             + S.bubble(["I'm sorry. That", "wasn't fair to you."], 344, 92, tail=(316, 230), size=12))
 
 
+@alt('Healed, Rabbit and Elephant sit in their yellow car outside the hospital as Dr. Squirrel and Nurse Giraffe wave goodbye.')
 def p06_10():
     """Healed, waved off, and this time climbing in carefully."""
     return (S.sky('s6p10', 'golden', sun=(432, 56), rays=True) + S.ground('s6p10')
@@ -159,6 +179,7 @@ def p06_10():
 TREE_X, TAP_X = 432, 96
 
 
+@alt('Rabbit and Elephant stand in a sunny field beside freshly dug seed holes, Rabbit calling out happily.')
 def p01_1():
     """Planting seeds, a sunny morning, the work actually quite fun."""
     return (S.sky('s1p1', 'morning', sun=(438, 54), rays=True) + S.ground('s1p1')
@@ -171,6 +192,7 @@ def p01_1():
             + S.bubble(["Dig, plop, cover!"], 150, 96, tail=(176, 214), size=13))
 
 
+@alt('In the field, Rabbit shouts about her growling tummy while she dreams of carrot halwa and Elephant dreams of fruit salad.')
 def p01_2():
     """Two growling tummies and two very specific orders."""
     return (S.sky('s1p2', 'morning') + S.ground('s1p2')
@@ -184,6 +206,7 @@ def p01_2():
             + S.thought(["Fruit salad!"], 412, 128, (330, 216)))
 
 
+@alt('Elephant holds up a phone to order lunch while Rabbit points toward the garden tap.')
 def p01_3():
     """The order goes in, and then: better wash our hands first."""
     return (S.sky('s1p3', 'morning') + S.ground('s1p3')
@@ -197,6 +220,7 @@ def p01_3():
             + S.bubble(["Wash hands first!"], 150, 150, tail=(190, 250), size=12))
 
 
+@alt('While Rabbit washes her paws at the tap, Elephant grins slyly beside the open delivery box.')
 def p01_4():
     """The crime. Rabbit is still at the tap; the halwa bowl is already empty."""
     return (S.sky('s1p4', 'tender', sun=None) + S.ground('s1p4')
@@ -209,6 +233,7 @@ def p01_4():
             + S.bubble(["Mmm... the whole", "bowl is gone."], 372, 116, tail=(316, 250), size=12))
 
 
+@alt('Rabbit holds up an empty bowl in shock while Elephant looks away guiltily.')
 def p01_5():
     """Empty. Completely, entirely, totally EMPTY."""
     return (S.sky('s1p5', 'tender', sun=None) + S.ground('s1p5')
@@ -222,6 +247,7 @@ def p01_5():
             + S.bubble(["What happened to my", "Carrot Halwa?"], 250, 96, tail=(196, 232), size=12))
 
 
+@alt('Rabbit stares sadly at Elephant, who owns up with a guilty face.')
 def p01_6():
     """The stare, the drooping ears, and finally the truth."""
     return (S.sky('s1p6', 'tender', sun=None) + S.ground('s1p6')
@@ -234,6 +260,7 @@ def p01_6():
                        tail=(330, 236), size=12))
 
 
+@alt('Elephant slides his fruit bowl across to Rabbit with his trunk, and Rabbit gives a small smile.')
 def p01_7():
     """The fruit bowl pushed across by trunk, and a tiny smile back."""
     return (S.sky('s1p7', 'golden') + S.ground('s1p7')
@@ -246,6 +273,7 @@ def p01_7():
             + S.bubble(["Please share mine."], 168, 100, tail=(288, 244), size=12))
 
 
+@alt('Next morning in the field, Rabbit asks for the same order again while Elephant holds the phone.')
 def p01_8():
     """Next morning: the same order again, one small one for Rabbit."""
     return (S.sky('s1p8', 'morning', sun=(438, 54), rays=True) + S.ground('s1p8')
@@ -258,6 +286,7 @@ def p01_8():
             + S.bubble(["Can we order the", "same again today?"], 176, 104, tail=(212, 240), size=12))
 
 
+@alt('Rabbit is back at the tap while Elephant, looking sneaky, slips pancakes into her delivery box.')
 def p01_9():
     """The same crime, same camera: this time a pancake goes into her box."""
     return (S.sky('s1p9', 'tender', sun=None) + S.ground('s1p9')
@@ -271,6 +300,7 @@ def p01_9():
             + S.thought(["...she'll never know."], 386, 116, (330, 248)))
 
 
+@alt('Rabbit holds up a bowl of pancakes, puzzled, while Elephant watches with a sly look.')
 def p01_10():
     """Pancakes. But I ordered a fruit bowl!"""
     return (S.sky('s1p10', 'tender', sun=None) + S.ground('s1p10')
@@ -284,6 +314,7 @@ def p01_10():
             + S.bubble(["How did pancakes", "get in here?"], 256, 96, tail=(198, 230), size=12))
 
 
+@alt('Rabbit throws her paws up in exasperation while Elephant shrugs.')
 def p01_11():
     """AGAIN, Elephant?! A lot of sighing, a lot of trunk-shrugging."""
     return (S.sky('s1p11', 'tender', sun=None) + S.ground('s1p11')
@@ -297,6 +328,7 @@ def p01_11():
                        tail=(336, 244), size=11))
 
 
+@alt('Rabbit and Elephant nap side by side under their favourite tree in the golden sunshine, their bowls beside them.')
 def p01_12():
     """Half each, under the favourite tree, then fast asleep in the sun."""
     return (S.sky('s1p12', 'golden', sun=(64, 60), rays=True)
@@ -320,6 +352,7 @@ def p01_12():
 BIG_POOL, SMALL_POOL = (300, 296), (118, 306)
 
 
+@alt('Rabbit arrives on a yellow bus and Elephant in a red car, beside a sign saying Pool Party Today.')
 def p05_1():
     """Two arrivals, one sign, and they have not met yet."""
     return (S.sky('s5p1', 'morning', sun=(444, 52), rays=True) + S.ground('s5p1', y=212)
@@ -334,6 +367,7 @@ def p05_1():
               'font-family="Fredoka One, sans-serif">toot!</text>')
 
 
+@alt('Rabbit stands alone in the middle of a sparkling pool, arms spread wide.')
 def p05_2():
     """The whole sparkling pool, all to herself."""
     return (S.sky('s5p2', 'morning', sun=(60, 56), rays=True) + S.ground('s5p2', y=200)
@@ -344,6 +378,7 @@ def p05_2():
             + S.bubble(["This pool is all", "mine today!"], 138, 106, tail=(268, 262), size=12))
 
 
+@alt('Elephant lands in the pool with a huge SPLOOSH, and the wave sends Rabbit flying into the air.')
 def p05_3():
     """SPLOOSH. A humongous wave, and one airborne rabbit."""
     return (S.sky('s5p3', 'morning') + S.ground('s5p3', y=200)
@@ -358,6 +393,7 @@ def p05_3():
               'font-family="Fredoka One, sans-serif">SPLOOSH!</text>')
 
 
+@alt('Rabbit stands dripping and cross in the big pool while Elephant points his trunk at a smaller pool nearby.')
 def p05_4():
     """Dripping and grumpy, and a kind suggestion she does not take."""
     return (S.sky('s5p4', 'tender', sun=None) + S.ground('s5p4', y=200)
@@ -372,6 +408,7 @@ def p05_4():
               'font-family="Nunito, sans-serif" font-weight="700">small pool</text>')
 
 
+@alt('Elephant splashes again and Rabbit flies up once more, this time laughing that she gets it.')
 def p05_5():
     """The same jump, the same wave, and this time she gets it."""
     return (S.sky('s5p5', 'tender', sun=None) + S.ground('s5p5', y=200)
@@ -385,6 +422,7 @@ def p05_5():
             + S.bubble(["Okay, okay -", "I get it now!"], 138, 232, tail=(146, 156), size=12))
 
 
+@alt('Rabbit and Dr. Squirrel play in the small pool while Elephant and Nurse Giraffe share the big one.')
 def p05_6():
     """Two pools, both the right size for everyone in them."""
     return (S.sky('s5p6', 'morning', sun=(452, 50)) + S.ground('s5p6', y=196)
@@ -401,6 +439,7 @@ def p05_6():
             + S.splash(146, 320, s=.55, big=False) + S.splash(330, 294, s=.7, big=False))
 
 
+@alt('Rabbit and Elephant say sorry to each other beside the lunch sign.')
 def p05_7():
     """Two apologies in the lunch queue."""
     return (S.sky('s5p7', 'golden') + S.ground('s5p7')
@@ -413,6 +452,7 @@ def p05_7():
             + S.bubble(["And I'm sorry about", "my splashes."], 366, 132, tail=(326, 240), size=11))
 
 
+@alt('Rabbit and Elephant share lunch at a table, with a basketball and a tennis ball ready for later.')
 def p05_8():
     """Lunch, then tennis, then basketball - the best day."""
     return (S.sky('s5p8', 'golden') + S.ground('s5p8')
@@ -427,6 +467,7 @@ def p05_8():
             + S.bubble(["Best day ever!"], 250, 78, tail=(180, 216), size=12))
 
 
+@alt('At sunset, Elephant drives Rabbit home to her burrow in a red car.')
 def p05_9():
     """A lift home at sunset, and a friendship that starts here."""
     return (S.sky('s5p9', 'sunset', sun=(72, 74), rays=True) + S.ground('s5p9')
@@ -446,6 +487,7 @@ def p05_9():
 # The truck is the spine of this one: it carries Elephant to hospital on p4 and home
 # again on p10, so those two pages are the same shot with the weather and his face
 # changed - anxious under a pale sky, then beaming in the golden light.
+@alt('On the road, Rabbit waves her arms as she tells a story while Elephant listens with a big smile.')
 def p02_1():
     """Rabbit mid-story, arms going; Elephant listening to every word."""
     return (S.sky('s2p1', 'morning', sun=(444, 52), rays=True) + S.ground('s2p1')
@@ -458,6 +500,7 @@ def p02_1():
             + S.bubble(["...and THEN, guess", "what happened!"], 154, 92, tail=(166, 214), size=12))
 
 
+@alt('Elephant steps on a huge brown thorn and cries out, while Rabbit gasps.')
 def p02_2():
     """Neither of them saw it. OUCH."""
     return (S.sky('s2p2', 'tender', sun=None) + S.ground('s2p2')
@@ -471,6 +514,7 @@ def p02_2():
               'font-family="Fredoka One, sans-serif">OOOH!</text>')
 
 
+@alt('Rabbit gets ready to run for help while Elephant winces beside the thorn.')
 def p02_3():
     """Don't move! I'll get help! - and she runs like never before."""
     return (S.sky('s2p3', 'tender', sun=None) + S.ground('s2p3')
@@ -485,6 +529,7 @@ def p02_3():
             + S.bubble(["Don't move -", "I'll get help!"], 176, 96, tail=(160, 214), size=12))
 
 
+@alt('Elephant rides in the open back of a small blue truck as Rabbit drives at full speed to the hospital.')
 def p02_4():
     """A tiny cab, an enormous cargo bay, and FULL SPEED to the hospital."""
     return (S.sky('s2p4', 'tender', sun=None) + S.ground('s2p4')
@@ -498,6 +543,7 @@ def p02_4():
               'font-family="Fredoka One, sans-serif">FULL SPEED!</text>')
 
 
+@alt('The truck pulls up at the hospital and Dr. Squirrel hurries out to meet it.')
 def p02_5():
     """Dr. Squirrel comes out at a run the moment she hears the truck."""
     return (S.sky('s2p5', 'morning') + S.ground('s2p5')
@@ -511,6 +557,7 @@ def p02_5():
             + S.bubble(["Emergency!", "Right this way!"], 380, 214, tail=(330, 268), size=12))
 
 
+@alt('Elephant lies in a hospital bed as Dr. Squirrel holds up the enormous thorn in her long tweezers.')
 def p02_6():
     """POP! Even Dr. Squirrel raises her eyebrows at the size of it."""
     return (S.indoors('s2p6')
@@ -526,6 +573,7 @@ def p02_6():
             + S.bubble(["It was enormous!"], 402, 108, tail=(352, 250), size=11))
 
 
+@alt('Elephant rests in bed with a bandaged foot while Dr. Squirrel, holding a clipboard, checks on him.')
 def p02_7():
     """A cosy ward, a garden view, and three days of no adventures."""
     return (S.indoors('s2p7', wall="#F4E7DA")
@@ -540,6 +588,7 @@ def p02_7():
                        tail=(352, 252), size=11))
 
 
+@alt("Rabbit tells silly stories at Elephant's bedside, with books and a bowl of fruit nearby, while he laughs.")
 def p02_8():
     """Day 3, and the silly stories nearly shake the bandage loose."""
     return (S.indoors('s2p8', wall="#F4E7DA")
@@ -554,10 +603,11 @@ def p02_8():
             + S.bubble(["...and then the", "carrot ran away!"], 300, 96, tail=(310, 226), size=11))
 
 
+@alt('Elephant stands healed and smiling between Rabbit and Dr. Squirrel.')
 def p02_9():
     """All healed up - and a great many thank-yous."""
     return (S.indoors('s2p9', wall="#F4E7DA")
-            + S.garden_window(438, 126, w=88, h=72)
+            + S.garden_window(62, 118, w=88, h=72)
             + S.shadow(140, 348, 34)
             + rabbit(140, 348, s=1.2, expr='happy', look=(.5, 0), arm=(-30, -36))
             + S.shadow(296, 348, 50)
@@ -565,9 +615,10 @@ def p02_9():
                        extra=bandage(30, -14, 15, 10))
             + S.shadow(412, 348, 26)
             + squirrel(412, 348, s=1.1, expr='happy', look=(-.6, 0), arm=(-34, -26))
-            + S.bubble(["You're all healed up!"], 300, 82, tail=(404, 250), size=12))
+            + S.bubble(["You're all healed up!"], 382, 106, tail=(412, 236), size=12))
 
 
+@alt('Elephant rides home happily in the back of the truck, with Rabbit driving, on a golden afternoon.')
 def p02_10():
     """The same truck, the same road - and a very different face."""
     return (S.sky('s2p10', 'golden', sun=(454, 56), rays=True) + S.ground('s2p10')
@@ -612,6 +663,7 @@ def _shout(text, x, y, size=30, rot=-6, color="#FF6B6B"):
             f'font-family="Fredoka One, sans-serif" transform="rotate({rot} {x} {y})">{text}</text>')
 
 
+@alt('In a sunny field, Rabbit plants seeds and chats with Elephant, who looks at her instead of at the thorn by his foot.')
 def p04_1():
     """Planting and chatting about lunch - and Elephant is not looking down."""
     return (_field04('s4p1', rays=True)
@@ -626,6 +678,7 @@ def p04_1():
             + S.bubble(["Or maybe...", "samosas?"], 314, 76, tail=(318, 170), size=13))
 
 
+@alt('Elephant steps on a giant thorn and cries out, as birds scatter from a tree and Rabbit throws up her paws.')
 def p04_2():
     """CRUNCH. A big foot, a giant thorn, and every bird in the tree takes off."""
     return (_field04('s4p2', mood='tender', sun=None)
@@ -641,6 +694,7 @@ def p04_2():
             + _shout("OWWW!", 350, 72, size=40))
 
 
+@alt('Elephant sits stuck with the thorn in his foot, its roots reaching deep underground, while Rabbit looks on, worried.')
 def p04_3():
     """Stuck. The roots go down and down, and he can only sit where he is."""
     return (_field04('s4p3', mood='tender', sun=None)
@@ -654,6 +708,7 @@ def p04_3():
             + S.bubble(["I can't move,", "not even a little."], 314, 62, tail=(340, 150), size=13))
 
 
+@alt('Rabbit shouts into an old crank telephone by the fence while Elephant sits stuck far across the field.')
 def p04_4():
     """The old telephone by the fence, cranked as fast as her paws can go."""
     return (S.sky('s4p4', 'tender', sun=None) + S.ground('s4p4')
@@ -668,6 +723,7 @@ def p04_4():
                        tail=(300, 196), size=13))
 
 
+@alt("Dr. Sheep kneels beside Elephant's stuck foot, frowning at the deep roots, while Rabbit looks puzzled.")
 def p04_5():
     """Dr. Sheep kneels by the foot and frowns: this needs a digger."""
     return (_field04('s4p5', sun=(60, 56))
@@ -685,6 +741,7 @@ def p04_5():
             + S.bubble(["A what-now?"], 78, 112, tail=(70, 170), size=11))
 
 
+@alt("Dr. Sheep drives a yellow digger that scoops around Elephant's foot and snips through the thorn's roots.")
 def p04_6():
     """Scoop! Scoop! Scoop! - and snip, right through the roots."""
     return (_field04('s4p6')
@@ -699,6 +756,7 @@ def p04_6():
             + _shout("SCOOP!", 196, 94, size=28) + _shout("SNIP!", 372, 350, size=20, rot=8, color="#FFD166"))
 
 
+@alt("Elephant and Rabbit ride in the digger's bucket as Dr. Sheep drives them down the road to the hospital.")
 def p04_7():
     """Off to the hospital - Elephant riding in the bucket, Rabbit riding with him."""
     riders = (elephant(318, 262, s=.82, pose='sit', expr='excited', look=(.5, -.2), trunk=(30, -30))
@@ -711,6 +769,7 @@ def p04_7():
             + S.speedlines(20, 246, back=True))
 
 
+@alt('Elephant smiles from his hospital bed as Dr. Sheep pulls the last tiny piece of thorn from his foot with tweezers.')
 def p04_8():
     """Tiny tweezers, the very last piece of thorn, and a whole week of rest."""
     return (S.indoors('s4p8', wall="#EEF4F7")
@@ -725,6 +784,7 @@ def p04_8():
             + S.bubble(["All done!", "Now rest for a week."], 344, 104, tail=(334, 200), size=13))
 
 
+@alt('Rabbit plants alone in the field, daydreaming about Elephant in his hospital bed, and does not see a thorn by her feet.')
 def p04_9():
     """Planting alone, thinking about her friend - and not about her feet."""
     dream = (f'<g transform="translate(294 62) scale(.42)">'
@@ -738,6 +798,7 @@ def p04_9():
             + S.thought([], 340, 88, (196, 206), picture=dream, rx=78, ry=48))
 
 
+@alt('Rabbit hops toward the telephone on one foot, crying out, after stepping on a small thorn.')
 def p04_10():
     """CRUNCH, again. Ow, ow, ow - all the way to the telephone."""
     return (_field04('s4p10', mood='tender', sun=None)
@@ -751,6 +812,7 @@ def p04_10():
             + S.bubble(["Ow, ow, ow!"], 268, 82, tail=(262, 170), size=14))
 
 
+@alt("Dr. Sheep kneels and plucks the tiny thorn from Rabbit's foot, with her car parked nearby.")
 def p04_11():
     """No digger needed: one small thorn, two hooves, done in seconds."""
     return (_field04('s4p11', mood='golden', sun=(66, 54))
@@ -768,6 +830,7 @@ def p04_11():
                        256, 88, tail=(252, 236), size=12))
 
 
+@alt('Back in the field, Rabbit and Elephant plant seeds side by side, both looking carefully down at their feet.')
 def p04_12():
     """Back in the field, planting and chatting - and every step looked at."""
     return (_field04('s4p12', mood='golden', sun=(440, 56), rays=True)
@@ -807,6 +870,7 @@ def _heat(x, y):
     return S.steam(x, y, .8, color="#FF6B6B")
 
 
+@alt('In a snowy forest, Pig slides downhill on a red sled, Fox throws a snowball past a snowman and Deer leaps happily, none of them in scarves.')
 def p03_1():
     """The first snow - and everyone out playing in it with no scarf or mitten."""
     return (_snow03('s3p1', n=34, seed=1)
@@ -825,6 +889,7 @@ def p03_1():
             + critter('deer', 380, 350, s=1.05, expr='excited', look=(-.6, 0), arm=(-32, -30)))
 
 
+@alt('By a crackling fire, Rabbit and Elephant sit on a rug with bowls of warm soup, their feet bandaged, while snow falls outside the window.')
 def p03_2():
     """Home from hospital, toes still healing: soup by the fire instead."""
     return (S.indoors('s3p2', wall="#FFF0E0", floor="#EFD9BE")
@@ -840,6 +905,7 @@ def p03_2():
             + '<text x="228" y="150" font-size="22" fill="#FF6B6B" text-anchor="middle">&#9829;</text>')
 
 
+@alt('Snow falls on the hospital, which has a Fully Booked banner and a Helpers Needed sign, while Wolf, Pig and Fox cough and shiver outside.')
 def p03_3():
     """Days of snow, a hospital full of coughs, and an urgent call for helpers."""
     return (_snow03('s3p3', seed=2)
@@ -856,6 +922,7 @@ def p03_3():
             + S.shiver(300, 240, h=44, gap=40))
 
 
+@alt('Inside the hospital, Dr. Squirrel warmly welcomes Rabbit and Elephant, with Nurse Giraffe beside her.')
 def p03_4():
     """Healed up and here to help - and Dr. Squirrel could not be happier."""
     return (S.indoors('s3p4', wall=WARD, floor="#DCE6EC")
@@ -874,6 +941,7 @@ def p03_4():
                        tail=(338, 228), size=12))
 
 
+@alt('Elephant presses an enormous breathing mask onto Pig in bed while turning to chat with Nurse Giraffe, as the machine hums to life.')
 def p03_5():
     """The biggest mask on the shelf, onto a very small snout."""
     return (S.indoors('s3p5', wall=WARD, floor="#DCE6EC")
@@ -887,6 +955,7 @@ def p03_5():
             + giraffe(452, 350, s=1.05, expr='calm', look=(-.6, 0)))
 
 
+@alt('A great gust from the machine sends Pig flying off the bed into the wall with a THUD, and Elephant spins round in surprise.')
 def p03_6():
     """THUD! One enormous gust, and Pig sails clean off the bed."""
     return (S.indoors('s3p6', wall=WARD, floor="#DCE6EC")
@@ -903,6 +972,7 @@ def p03_6():
             + _shout("THUD!", 116, 70, size=34, rot=-8))
 
 
+@alt('Rabbit hurries between two beds with ice cream for shivering Deer and hot chilli soup for feverish Fox.')
 def p03_7():
     """Ice cream for the shivering Deer, chilli for the feverish Fox. Oh dear."""
     return (S.indoors('s3p7', wall=WARD, floor="#DCE6EC")
@@ -919,6 +989,7 @@ def p03_7():
             + _shout("?!", 272, 118, size=30, rot=6, color="#FF6B6B"))
 
 
+@alt('Dr. Sheep rushes in and swaps the bowls, giving the chilli soup to Deer and the ice cream to Fox.')
 def p03_8():
     """Both worse. Dr. Sheep rushes in and swaps the bowls right away."""
     return (S.indoors('s3p8', wall=WARD, floor="#DCE6EC")
@@ -936,6 +1007,7 @@ def p03_8():
             + S.bubble(["Oh dear -", "wrong dishes!"], 250, 104, tail=(250, 200), size=13))
 
 
+@alt('Elephant jabs Wolf with a giant syringe and Wolf howls, while a worried giraffe patient sits in bed beside a pot of tablets.')
 def p03_9():
     """Wolf's tablets to the giraffe, the giraffe's giant injection to Wolf. OWOOO!"""
     return (S.indoors('s3p9', wall=WARD, floor="#DCE6EC")
@@ -951,6 +1023,7 @@ def p03_9():
             + _shout("OWOOO!", 400, 150, size=30, rot=-10))
 
 
+@alt('In her office, Dr. Sheep sits behind her desk while Rabbit and Elephant stand before her, looking sad.')
 def p03_10():
     """Dr. Sheep's office. A kind thank-you, a sad face, and: one more chance?"""
     return (S.indoors('s3p10', wall="#F4EEE6", floor="#E8DCC8")
@@ -967,6 +1040,7 @@ def p03_10():
                        tail=(208, 222), size=12))
 
 
+@alt("Elephant carefully wraps a fresh bandage around Lion's foot, and Lion smiles from his bed.")
 def p03_11():
     """Slowly, carefully, a fresh neat bandage - and Lion gives a satisfied nod."""
     return (S.indoors('s3p11', wall=WARD, floor="#DCE6EC")
@@ -981,6 +1055,7 @@ def p03_11():
               '<text x="160" y="232" font-size="14" fill="#FFD166" text-anchor="middle">&#10022;</text>')
 
 
+@alt('Rabbit drives the truck along a snowy road, with old Tortoise riding in the back, toward his little cottage.')
 def p03_12():
     """Old Tortoise, driven home slowly and carefully through the snow."""
     return (_snow03('s3p12', seed=4, horizon=214)
@@ -993,6 +1068,7 @@ def p03_12():
                       cab_riders=rabbit(302, S.cab_seat(328, .72), s=.72, pose='seated', expr='calm', look=(.5, 0))))
 
 
+@alt('At sunset in the snow outside the hospital, Dr. Sheep hands chocolates to Rabbit and Elephant, who grin happily.')
 def p03_13():
     """A chocolate each, 'same time tomorrow?' and grins all the way home."""
     return (S.snow_sky('s3p13', 'sunset') + S.snow_ground('s3p13') + S.flakes(14, 5, bottom=200)

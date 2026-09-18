@@ -58,28 +58,61 @@ def bubble(lines, cx, cy, tail=None, color="#FF6B6B", size=13):
 
     CLAUDE.md's rule - budget 8-9px of width per character at this size, plus ~28px
     of padding each side, and split rather than let a line run long - is arithmetic,
-    so do the arithmetic. `tail` is the scene point the speaker is at; the tail is
-    drawn towards it.
+    so do the arithmetic. `tail` is the scene point the speaker is at: the tail is a
+    short wedge AIMED at it, not a spike that reaches it. Running the tail all the
+    way to the speaker drew long needles across the page that ended in a
+    character's eye.
     """
     if isinstance(lines, str):
         lines = [lines]
     rx = max(52, max(len(t) for t in lines) * size * .34 + 28)
     ry = 20 + 9 * (len(lines) - 1)
-    out = [f'<ellipse cx="{cx}" cy="{cy}" rx="{rx:.0f}" ry="{ry}" fill="white" '
-           f'stroke="#D0C8B8" stroke-width="1.5" opacity=".96"/>']
+    body = (f'<ellipse cx="{cx}" cy="{cy}" rx="{rx:.0f}" ry="{ry}" fill="white" '
+            f'stroke="#D0C8B8" stroke-width="1.5"/>')
     if tail:
-        tx, ty = tail
-        dx, dy = tx - cx, ty - cy
-        L = (dx*dx + dy*dy) ** .5 or 1
-        bx, by = cx + dx/L*rx*.62, cy + dy/L*ry*.9
-        px, py = -dy/L*9, dx/L*9
-        out.append(f'<path d="M{bx-px:.0f},{by-py:.0f} L{tx:.0f},{ty:.0f} L{bx+px:.0f},{by+py:.0f} Z" '
-                   f'fill="white" stroke="#D0C8B8" stroke-width="1.5"/>')
+        wedge = _tail(cx, cy, rx, ry, tail)
+        # outlined wedge, then the bubble over its root, then the wedge's fill again
+        # to wipe the bubble's outline where they join - one seamless shape
+        out = [f'<path d="{wedge}" fill="white" stroke="#D0C8B8" stroke-width="1.5" stroke-linejoin="round"/>',
+               body, f'<path d="{wedge}" fill="white"/>']
+    else:
+        out = [body]
     y0 = cy - (len(lines) - 1) * 9 + 4
     for i, t in enumerate(lines):
         out.append(f'<text x="{cx}" y="{y0 + i*18:.0f}" text-anchor="middle" font-size="{size}" '
                    f'fill="{color}" font-family="Nunito, sans-serif" font-weight="700">{t}</text>')
     return "".join(out)
+
+
+TAIL_MAX, TAIL_GAP = 70, 18    # longest a tail gets; how far short of the speaker it stops
+
+
+def _edge(cx, cy, rx, ry, ux, uy):
+    """Distance from an ellipse's centre to its outline along the unit vector (ux, uy)."""
+    return 1 / ((ux / rx) ** 2 + (uy / ry) ** 2) ** .5
+
+
+def _tail(cx, cy, rx, ry, target):
+    """A speech-bubble tail as an SVG path: rooted just inside the outline, curving
+    towards `target` and covering about half the gap - far enough that a bubble up in
+    the sky still visibly belongs to its speaker, never so far that it ends in their
+    face (the old tails ran the whole way, and did)."""
+    tx, ty = target
+    dx, dy = tx - cx, ty - cy
+    L = (dx*dx + dy*dy) ** .5 or 1
+    ux, uy = dx / L, dy / L
+    e = _edge(cx, cy, rx, ry, ux, uy)
+    gap = L - e
+    reach = max(14, min(TAIL_MAX, gap * .55, gap - TAIL_GAP))
+    bx, by = cx + ux*(e - 4), cy + uy*(e - 4)
+    px, py = -uy, ux
+    half = 8 if reach < 40 else 7
+    tipx, tipy = cx + ux*(e + reach), cy + uy*(e + reach)
+    # both edges bow the same way, so the tail curls slightly instead of spiking
+    bow = reach * .14
+    mx, my = cx + ux*(e + reach*.5) + px*bow, cy + uy*(e + reach*.5) + py*bow
+    return (f'M{bx - px*half:.1f},{by - py*half:.1f} Q{mx - px*half*.45:.1f},{my - py*half*.45:.1f} {tipx:.1f},{tipy:.1f} '
+            f'Q{mx + px*half*.45:.1f},{my + py*half*.45:.1f} {bx + px*half:.1f},{by + py*half:.1f} Z')
 
 
 def shadow(x, y, rx, op=.13):
@@ -313,9 +346,14 @@ def thought(lines, cx, cy, tail_to, size=12, picture=None, rx=None, ry=None):
     tx, ty = tail_to
     dx, dy = tx - cx, ty - cy
     L = (dx*dx + dy*dy) ** .5 or 1
-    dots = "".join(f'<circle cx="{cx+dx*t:.0f}" cy="{cy+dy*t:.0f}" r="{3+ (1-t)*3:.1f}" '
+    ux, uy = dx / L, dy / L
+    e = _edge(cx, cy, rx, ry, ux, uy)
+    # the dots trail off towards the thinker but stop well short of them, as the
+    # speech tails do - three dots strung across half the page read as litter
+    room = max(26, min(46, L - e - TAIL_GAP))
+    dots = "".join(f'<circle cx="{cx+ux*(e+d*room):.0f}" cy="{cy+uy*(e+d*room):.0f}" r="{r}" '
                    f'fill="white" stroke="#D0C8B8" stroke-width="1.2"/>'
-                   for t in (.62, .80, .94))
+                   for d, r in ((.22, 5.5), (.6, 4), (.95, 2.8)))
     txt = "".join(f'<text x="{cx}" y="{cy-(len(lines)-1)*9+4+i*18:.0f}" text-anchor="middle" '
                   f'font-size="{size}" fill="#6B5B47" font-family="Nunito, sans-serif" '
                   f'font-weight="700">{t}</text>' for i, t in enumerate(lines))

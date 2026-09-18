@@ -147,7 +147,8 @@ The build leaves the cover alone (`build_covers.py` owns it) and refuses to run 
 - **Characters** (`characters.py`) are front-facing, with the origin on the ground between the feet: `rabbit(x, y, s=1.2, expr='cross', look=(.4, 0), arm=(-40, -46))`. There are functions for `rabbit`, `elephant`, `bear`, `squirrel`, `giraffe` and `sheep`, plus walk-on patients `critter(kind)` (pig, deer, fox, wolf, lion) and `tortoise`. Every character shares the `EXPR` table (calm, happy, cross, shout, surprised, sad, worried, sleepy, hurt, excited, sneaky, guilty). Poses are `stand`/`sit`/`seated`/`lie`; Squirrel, Giraffe and Sheep have no `lie`. Palettes match the portrait generators.
 - **Scale**: main cast at s≈1.2 (Rabbit) / 1.25 (Elephant) in a 500×360 frame, feet around y 350. Smaller reads as lost in the frame.
 - **Containers own their occupants**: `car(riders=)`, `truck(cargo_riders=, cab_riders=)`, `ambulance(riders=)`, `pool(swimmers=)` and `digger(bucket_riders=, cab_riders=)` draw their passengers themselves, to get the z-order and clipping right. Anchor riders with the paired helpers `seat()`, `cab_seat()`, `cargo_seat()`, `waterline()` and `digger_cab()`.
-- **Bubbles**: `bubble()` and `thought()` size themselves from their text (see the bubble rule below). `thought(picture=…)` holds a drawing instead of words.
+- **Bubbles**: `bubble()` and `thought()` size themselves from their text (see the bubble rule below). `thought(picture=…)` holds a drawing instead of words. `tail=` is the speaker's position: the tail curves toward it, covers about half the gap (max 70) and stops short of the face, so it never runs into an eye. A short tail only shows who's speaking if the bubble sits closer to that speaker than to anyone else. Put the bubble above or beside its speaker, not over another character's head.
+- **Screen-reader text**: every page function carries `@alt("…")`, one plain sentence saying who is in the picture and what they are doing. The build writes it out as `role="img" aria-label="…"` and refuses to run if a page lacks one. The docstring under it stays a note for editors; don't reuse it as alt text, since it names the story beat rather than describing the picture.
 - **Determinism**: nothing may use `random`. The build must be a byte-identical no-op when re-run (`flakes()` uses a fixed LCG for this reason).
 - **Workflow**: read the page prose first, render a contact sheet and look at it before injecting, then check that the cover and everything outside the illustrations are unchanged. Recurring faults: characters too small, props too small to read, text colliding with a character, the wrong expression for the line, and a limb stopping short of the thing it's touching.
 
@@ -170,7 +171,7 @@ The build leaves the cover alone (`build_covers.py` owns it) and refuses to run 
 
 1. Create `stories/NN-story-slug/index.html` — copy the structure from `01-the-hungry-friends/index.html`.
 1b. Add a `build_NN()` to `tools/scenes/covers.py` and register it in `COVERS` (keyed by the story slug), then run `python3 tools/scenes/build_covers.py NN` to generate the cover into the page.
-1c. Add one `pNN_M()` per spread page to `tools/flat/pages.py`, register the list in `PAGES` (keyed by the story slug, one function per `.page-spread`, in order), then run `python3 tools/flat/build_pages.py NN`.
+1c. Add one `pNN_M()` per spread page, each with an `@alt(...)` description, to `tools/flat/pages.py`, register the list in `PAGES` (keyed by the story slug, one function per `.page-spread`, in order), then run `python3 tools/flat/build_pages.py NN`.
 2. Asset paths from inside a story file use `../../assets/`.
 3. Add an entry to `assets/data/stories-data.js`:
    ```js

@@ -10,6 +10,7 @@ The story file's cover (page 0) is never touched - that belongs to build_covers.
 Edit tools/flat/pages.py, not the SVG in the story.
 """
 import os, re, sys
+from html import escape
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -30,10 +31,17 @@ def build(slug, fns):
         raise SystemExit(f'{slug}: {len(found)} spread illustrations in the page but '
                          f'{len(fns)} compose functions in pages.py - they must line up')
 
+    missing = [fn.__name__ for fn in fns if not getattr(fn, 'alt', '')]
+    if missing:
+        raise SystemExit(f'{slug}: no @alt description on {", ".join(missing)} - every '
+                         f'picture needs one for screen readers')
+
     out, prev, total = [], 0, 0
     for m, fn in zip(found, fns):
-        svg = (f'<svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">'
-               f'{fn()}</svg>')
+        # role="img" + aria-label: a screen reader announces the picture as one image
+        # with this description, instead of skipping it or reading out stray bubble text
+        svg = (f'<svg viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg" role="img" '
+               f'aria-label="{escape(fn.alt)}">{fn()}</svg>')
         total += len(svg)
         out.append(html[prev:m.start(2)])
         out.append(svg)

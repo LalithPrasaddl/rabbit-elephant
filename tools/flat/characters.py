@@ -30,6 +30,10 @@ B_BODY, B_LINE, B_MUZZ, B_NOSE = "#C89A72", "#A87A52", "#EAD1B0", "#5C3A21"
 # the characters.html portraits stay the same animal.
 Q_BODY, Q_LINE, Q_LIGHT, Q_COAT = "#A2683F", "#5A3A1E", "#D4956C", "#FAF8F4"
 N_BODY, N_LINE, N_PATCH, N_MUZ = "#E8C078", "#B98B3E", "#B0762F", "#FFEFC4"
+# Dr. Sheep: cream fleece, slate face/ears/legs (tools/portraits/sheep.py). Her face is
+# too dark for INK features, so her brows and mouth are drawn in pale wool instead.
+S_WOOL, S_WLINE, S_WSHADE, S_FACE, S_FLINE, S_DARK = "#F6F2EA", "#CFC6B2", "#E4DCCB", "#4A5364", "#333A47", "#2A313D"
+S_SCOPE = "#3C90AE"   # stethoscope: blue, so it never reads as one of her slate arms
 MEDRED = "#E4453F"
 BLUSH = "#FFB3C6"
 
@@ -82,7 +86,7 @@ def _eyes(cy, dx, r, expr, look):
     return "".join(out)
 
 
-def _brow(kind, cy, dx, r):
+def _brow(kind, cy, dx, r, ink=INK):
     if not kind:
         return ""
     w, lift = r * 1.15, r * .55
@@ -97,11 +101,15 @@ def _brow(kind, cy, dx, r):
         else:                                        # cross: inner end down
             a, b = cy - lift*.4, cy - lift*2.0
         d.append(f'M{inner:.1f},{a:.1f} Q{x:.1f},{min(a, b)-lift*.7:.1f} {outer:.1f},{b:.1f}')
-    return (f'<path d="{" ".join(d)}" stroke="{INK}" stroke-width="{max(1.8, r*.38):.1f}" '
+    return (f'<path d="{" ".join(d)}" stroke="{ink}" stroke-width="{max(1.8, r*.38):.1f}" '
             f'fill="none" stroke-linecap="round"/>')
 
 
-def _mouth(kind, cy, w):
+def _mouth(kind, cy, w, ink=INK):
+    return _mouth_ink(kind, cy, w).replace(INK, ink)
+
+
+def _mouth_ink(kind, cy, w):
     if kind == 'smile':
         return f'<path d="M{-w*.5:.1f},{cy:.1f} Q0,{cy+w*.42:.1f} {w*.5:.1f},{cy:.1f}" stroke="{INK}" stroke-width="2.3" fill="none" stroke-linecap="round"/>'
     if kind == 'grin':
@@ -172,6 +180,11 @@ N_POSE = {
     'stand':  dict(body=(0, -52, 33, 40), head=(9, -142), ear=-162, feet=True),
     'sit':    dict(body=(0, -46, 35, 36), head=(9, -130), ear=-150, feet=False),
     'seated': dict(body=(0, -32, 28, 31), head=(7, -110), ear=-130, feet=False),
+}
+S_POSE = {
+    'stand':  dict(body=(0, -58, 38, 32), head=(0, -104), ear=-108, feet=True),
+    'sit':    dict(body=(0, -36, 40, 30), head=(0, -84),  ear=-88,  feet=False),
+    'seated': dict(body=(0, -30, 32, 28), head=(0, -76),  ear=-80,  feet=False),
 }
 
 
@@ -336,3 +349,168 @@ def bandage(x, y, rx=18, ry=12):
     return (f'<ellipse cx="{x}" cy="{y}" rx="{rx}" ry="{ry}" fill="white" stroke="#D0D0D0" stroke-width="1.5"/>'
             f'<line x1="{x-rx*.8:.0f}" y1="{y-ry*.5:.0f}" x2="{x+rx*.8:.0f}" y2="{y+ry*.5:.0f}" stroke="#B8B8B8" stroke-width="1.5"/>'
             f'<line x1="{x-rx*.8:.0f}" y1="{y+ry*.5:.0f}" x2="{x+rx*.8:.0f}" y2="{y-ry*.5:.0f}" stroke="#B8B8B8" stroke-width="1.5"/>')
+
+
+def sheep(x, y, s=1.0, expr='calm', look=(0, 0), arm=None, arm2=None, pose='stand',
+          scope=True, extra=""):
+    """Dr. Sheep - a fleece cloud on slate legs, a slate face under a woolly fringe,
+    and a stethoscope, which is what says DOCTOR when the coat is already white.
+    Her arms are slate like her legs: hooves, poking out of the fleece."""
+    e, g = EXPR[expr], _pose_of(S_POSE, pose, 'sheep')
+    (bx, by, brx, bry), (hx, hy) = g['body'], g['head']
+    p = []
+    if g['feet']:   # legs first, so the fleece overlaps their tops
+        p += [f'<rect x="{sx*15-5}" y="{by+bry-16}" width="10" height="{-(by+bry)+10}" rx="5" fill="{S_FACE}"/>'
+              f'<ellipse cx="{sx*15}" cy="-5" rx="8.5" ry="5.5" fill="{S_DARK}"/>' for sx in (-1, 1)]
+    # the fleece: a core ellipse ringed with puffs, outline on the puffs only so the
+    # silhouette reads as scalloped wool rather than one smooth egg
+    ring = [(bx + math.cos(a)*(brx-5), by + math.sin(a)*(bry-5))
+            for a in (2*math.pi*i/13 + .2 for i in range(13))]
+    p += [f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{bry*.42:.1f}" fill="{S_WOOL}" stroke="{S_WLINE}" stroke-width="1.5"/>'
+          for cx, cy in ring]
+    p.append(f'<ellipse cx="{bx}" cy="{by}" rx="{brx-2}" ry="{bry-2}" fill="{S_WOOL}"/>')
+    p += [f'<circle cx="{bx+dx}" cy="{by+dy}" r="{r}" fill="none" stroke="{S_WSHADE}" stroke-width="2.2"/>'
+          for dx, dy, r in ((-16, 4, 7), (12, 12, 6), (18, -8, 5), (-4, 16, 5))]
+    if scope:   # hangs from the neck, drawn before the head so the head covers the top
+        p.append(f'<path d="M{hx-17},{hy+18} Q{hx-20},{by+6} {hx-3},{by+10} Q{hx+14},{by+12} {hx+14},{by-6}" '
+                 f'stroke="{S_SCOPE}" stroke-width="3" fill="none" stroke-linecap="round"/>'
+                 f'<path d="M{hx+17},{hy+18} Q{hx+19},{by-12} {hx+14},{by-6}" stroke="{S_SCOPE}" stroke-width="3" '
+                 f'fill="none" stroke-linecap="round"/>'
+                 f'<circle cx="{hx+14}" cy="{by-4}" r="6.5" fill="#C9D3DC" stroke="#7D8A96" stroke-width="2"/>'
+                 f'<circle cx="{bx-brx*.46:.0f}" cy="{by+bry*.1:.0f}" r="5.5" fill="{MEDRED}" opacity=".9"/>')
+    for i, a in enumerate((arm, arm2)):
+        if a:
+            ax = bx + (-28 if i == 0 else 28)
+            p.append(_limb(ax, by - 6, a[0], a[1], S_FACE, S_FLINE, 9)
+                     + f'<ellipse cx="{ax+a[0]:.0f}" cy="{by-6+a[1]:.0f}" rx="5.5" ry="5" fill="{S_DARK}"/>')
+    # ears stick out sideways below the fringe, as in the portrait
+    p += [f'<ellipse cx="{hx+sx*27}" cy="{g["ear"]}" rx="14" ry="6.5" fill="{S_FACE}" stroke="{S_FLINE}" '
+          f'stroke-width="1.4" transform="rotate({sx*16} {hx+sx*27} {g["ear"]})"/>'
+          f'<ellipse cx="{hx+sx*29}" cy="{g["ear"]+.5}" rx="8" ry="3" fill="#8C6F7A" opacity=".55" '
+          f'transform="rotate({sx*16} {hx+sx*29} {g["ear"]})"/>' for sx in (-1, 1)]
+    p.append(f'<ellipse cx="{hx}" cy="{hy}" rx="22" ry="27" fill="{S_FACE}" stroke="{S_FLINE}" stroke-width="1.5"/>')
+    if e.get('blush'):
+        p += [f'<ellipse cx="{hx+sx*14}" cy="{hy+8}" rx="6" ry="4" fill="{BLUSH}" opacity=".5"/>' for sx in (-1, 1)]
+    # woolly fringe across the top of the head
+    p += [f'<circle cx="{hx+dx}" cy="{hy+dy}" r="{r}" fill="{S_WOOL}" stroke="{S_WLINE}" stroke-width="1.3"/>'
+          for dx, dy, r in ((-14, -24, 10), (14, -24, 10), (0, -30, 11), (-6, -23, 8), (6, -23, 8))]
+    p += [f'<g transform="translate({hx},{hy})">',
+          _brow(e['brow'], -4, 8.5, 5.2, ink=S_WOOL), _eyes(3, 8.5, 5.2, expr, look),
+          # a paler muzzle, so an open mouth or a grin still shows on the slate face
+          f'<ellipse cx="0" cy="18" rx="12" ry="8.5" fill="#6B7589"/>',
+          f'<ellipse cx="0" cy="13" rx="4.5" ry="3" fill="{S_DARK}"/>',
+          _mouth(e['mouth'], 19, 13, ink=S_WOOL), '</g>']
+    return _wrap(x, y, s, "".join(p) + extra)
+
+
+# ---------------------------------------------------------------- the patients
+# Story 03's hospital is full of walk-on patients. They each appear once or twice,
+# mostly in bed, so they share one body plan - the bear's - and differ only in colour,
+# ears, muzzle and one signature feature (antlers, a mane, a brush of a tail). That
+# is enough for a two-year-old to say "fox!", and it keeps them visibly the same
+# family of drawings as the main cast.
+CRITTERS = {
+    #          body       line       muzzle     nose       ears
+    'pig':  ("#FFC2D1", "#E892AA", "#FF9FB8", "#D8708E", 'flop'),
+    'deer': ("#C8905E", "#9A6A3E", "#F0DCC0", "#3A2A20", 'leaf'),
+    'fox':  ("#F0873A", "#C0622A", "#FFF6EC", "#2D2A2A", 'point'),
+    'wolf': ("#A3ACB6", "#707A86", "#E6EAEE", "#2D3748", 'point'),
+    'lion': ("#E8B454", "#B8862E", "#FBE3AE", "#8A4A2A", 'round'),
+}
+
+
+def _critter_ears(kind, style, hx, ey, body, line):
+    out = []
+    for sx in (-1, 1):
+        x = hx + sx*17
+        if style == 'flop':        # pig: triangles folded forward over the brow
+            out.append(f'<path d="M{x-sx*9},{ey+10} L{x+sx*12},{ey-6} L{x+sx*8},{ey+16} Z" fill="{body}" '
+                       f'stroke="{line}" stroke-width="1.5" stroke-linejoin="round"/>')
+        elif style == 'leaf':      # deer: long ears straight out to the side
+            out.append(f'<ellipse cx="{x+sx*14}" cy="{ey+8}" rx="15" ry="7" fill="{body}" stroke="{line}" '
+                       f'stroke-width="1.5" transform="rotate({sx*-20} {x+sx*14} {ey+8})"/>'
+                       f'<ellipse cx="{x+sx*15}" cy="{ey+8}" rx="9" ry="3.5" fill="#F0C8B0" '
+                       f'transform="rotate({sx*-20} {x+sx*15} {ey+8})"/>')
+        elif style == 'point':     # fox and wolf: tall triangles, dark tips on the fox
+            tip = "#3A2A22" if kind == 'fox' else line
+            out.append(f'<path d="M{x-sx*8},{ey+14} L{x+sx*6},{ey-20} L{x+sx*14},{ey+10} Z" fill="{body}" '
+                       f'stroke="{line}" stroke-width="1.5" stroke-linejoin="round"/>'
+                       f'<path d="M{x+sx*3},{ey-11} L{x+sx*6},{ey-20} L{x+sx*9},{ey-10} Z" fill="{tip}"/>')
+        else:                      # lion: little round ears poking out of the mane
+            out.append(f'<circle cx="{x}" cy="{ey}" r="8" fill="{body}" stroke="{line}" stroke-width="1.5"/>')
+    return "".join(out)
+
+
+def critter(kind, x, y, s=1.0, expr='calm', look=(0, 0), arm=None, arm2=None,
+            pose='stand', extra=""):
+    """A walk-on patient: kind is pig | deer | fox | wolf | lion."""
+    body, line, muzz, nose, ears = CRITTERS[kind]
+    e, g = EXPR[expr], _pose_of(B_POSE, pose, kind)
+    (bx, by, brx, bry), (hx, hy) = g['body'], g['head']
+    p = []
+    if kind == 'fox':      # the brush, behind everything, white-tipped
+        p.append(f'<path d="M{bx+brx*.6:.0f},{by+bry*.5:.0f} q46,-6 40,-54 q-4,-10 -14,-4 q2,34 -30,40 Z" '
+                 f'fill="{body}" stroke="{line}" stroke-width="1.5"/>'
+                 f'<path d="M{bx+brx*.6+40:.0f},{by+bry*.5-54:.0f} q-4,-10 -14,-4 l2,10 Z" fill="#FFF6EC"/>')
+    if kind == 'lion':     # the mane is the lion
+        p += [f'<circle cx="{hx + 36*math.cos(a):.1f}" cy="{hy + 36*math.sin(a):.1f}" r="15" fill="#C8702C"/>'
+              for a in (2*math.pi*i/12 for i in range(12))]
+        p.append(f'<circle cx="{hx}" cy="{hy}" r="38" fill="#C8702C"/>')
+    p.append(_critter_ears(kind, ears, hx, g['ear'] + 6, body, line))
+    p.append(f'<ellipse cx="{bx}" cy="{by}" rx="{brx}" ry="{bry}" fill="{body}" stroke="{line}" stroke-width="1.5"/>')
+    if kind in ('fox', 'wolf'):
+        p.append(f'<ellipse cx="{bx}" cy="{by+6}" rx="{brx*.55:.0f}" ry="{bry*.6:.0f}" fill="{muzz}" opacity=".9"/>')
+    if kind == 'deer':
+        p += [f'<circle cx="{bx+dx}" cy="{by+dy}" r="3.4" fill="#FFF6EC" opacity=".85"/>'
+              for dx, dy in ((-14, -10), (-4, -16), (10, -8), (16, 2), (-12, 6))]
+    for i, a in enumerate((arm, arm2)):
+        if a:
+            p.append(_limb(bx + (-26 if i == 0 else 26), by - 12, a[0], a[1], body, line, 12))
+    if g['feet']:
+        p += [f'<ellipse cx="{sx*19}" cy="-8" rx="15" ry="10" fill="{body}" stroke="{line}" stroke-width="1.5"/>'
+              for sx in (-1, 1)]
+    if kind == 'deer':     # antlers first, so the head sits over their roots
+        p.append(f'<path d="' + " ".join(
+            f'M{hx+sx*9},{hy-22} q{sx*4},-16 {sx*14},-26 M{hx+sx*13},{hy-34} q{sx*8},-2 {sx*14},-10 '
+            f'M{hx+sx*18},{hy-42} q{-sx*4},-8 {-sx*2},-14' for sx in (-1, 1))
+                 + f'" stroke="#8A5A2E" stroke-width="4" fill="none" stroke-linecap="round"/>')
+    p.append(f'<circle cx="{hx}" cy="{hy}" r="28" fill="{body}" stroke="{line}" stroke-width="1.5"/>')
+    if kind in ('fox', 'wolf'):   # pale cheeks sweeping down to the muzzle
+        p.append(f'<path d="M{hx-26},{hy+4} Q{hx-12},{hy+2} {hx},{hy+12} Q{hx+12},{hy+2} {hx+26},{hy+4} '
+                 f'Q{hx+18},{hy+26} {hx},{hy+28} Q{hx-18},{hy+26} {hx-26},{hy+4} Z" fill="{muzz}"/>')
+    if e.get('blush'):
+        p += [f'<ellipse cx="{hx+sx*20}" cy="{hy+8}" rx="7" ry="4.5" fill="{BLUSH}" opacity=".5"/>' for sx in (-1, 1)]
+    p += [f'<g transform="translate({hx},{hy})">', _brow(e['brow'], -13, 11, 6), _eyes(-6, 11, 6, expr, look)]
+    if kind == 'pig':
+        p.append(f'<ellipse cx="0" cy="7" rx="11" ry="8" fill="{muzz}" stroke="{line}" stroke-width="1.3"/>'
+                 f'<ellipse cx="-4" cy="7" rx="2.2" ry="3" fill="{nose}"/><ellipse cx="4" cy="7" rx="2.2" ry="3" fill="{nose}"/>')
+    elif kind in ('deer', 'lion'):
+        p.append(f'<ellipse cx="0" cy="9" rx="12" ry="8.5" fill="{muzz}" stroke="{line}" stroke-width="1.2"/>')
+    if kind != 'pig':
+        p.append(f'<path d="M-4.5,4 h9 l-4.5,4.5 Z" fill="{nose}" stroke="{nose}" stroke-width="2" stroke-linejoin="round"/>')
+    p += [_mouth(e['mouth'], 17 if kind != 'pig' else 19, 15), '</g>']
+    return _wrap(x, y, s, "".join(p) + extra)
+
+
+def tortoise(x, y, s=1.0, expr='calm', look=(0, 0), specs=True, extra=""):
+    """Old Tortoise - a domed shell with his head out the front, and his reading
+    glasses, because he is OLD Tortoise. Front-facing like everyone else."""
+    e = EXPR[expr]
+    shell = "#7FAE5A"
+    p = [f'<ellipse cx="{sx*30}" cy="-7" rx="13" ry="9" fill="#B8C878" stroke="#8A9A50" stroke-width="1.5"/>'
+         for sx in (-1, 1)]
+    p.append(f'<path d="M-58,-14 Q-56,-78 0,-80 Q56,-78 58,-14 Z" fill="{shell}" stroke="#4E7A34" stroke-width="2"/>'
+             f'<path d="M-60,-14 h120" stroke="#4E7A34" stroke-width="5" stroke-linecap="round"/>'
+             f'<path d="M-16,-62 l16,-8 l16,8 v16 l-16,8 l-16,-8 Z M-44,-30 l-10,-18 M44,-30 l10,-18 '
+             f'M-16,-46 l-20,10 v14 M16,-46 l20,10 v14" stroke="#4E7A34" stroke-width="2" fill="none" stroke-linejoin="round"/>')
+    hx, hy = 0, -30
+    p.append(f'<ellipse cx="{hx}" cy="{hy}" rx="21" ry="19" fill="#B8C878" stroke="#8A9A50" stroke-width="1.5"/>')
+    if e.get('blush'):
+        p += [f'<ellipse cx="{hx+sx*14}" cy="{hy+7}" rx="5" ry="3.5" fill="{BLUSH}" opacity=".55"/>' for sx in (-1, 1)]
+    p += [f'<g transform="translate({hx},{hy})">', _brow(e['brow'], -9, 8, 4.6), _eyes(-3, 8, 4.6, expr, look)]
+    if specs:
+        p.append(f'<circle cx="-8" cy="-3" r="7" fill="none" stroke="#6B5B47" stroke-width="1.6"/>'
+                 f'<circle cx="8" cy="-3" r="7" fill="none" stroke="#6B5B47" stroke-width="1.6"/>'
+                 f'<path d="M-1,-3 h2" stroke="#6B5B47" stroke-width="1.6"/>')
+    p += [_mouth(e['mouth'], 9, 12), '</g>']
+    return _wrap(x, y, s, "".join(p) + extra)

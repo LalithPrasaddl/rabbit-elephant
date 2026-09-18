@@ -244,6 +244,15 @@ def bowl(x, y, kind='fruit', s=1.0):
         out.append(f'<path d="M{x-18*s:.0f},{y-h:.0f} q{18*s:.0f},{-15*s:.0f} {36*s:.0f},0 Z" fill="#E8892E"/>')
         out += [f'<circle cx="{x+dx*s:.0f}" cy="{y-(h+5)+dy*s:.0f}" r="{1.8*s:.1f}" fill="#FFD9A8"/>'
                 for dx, dy in ((-8, 2), (3, -1), (10, 3))]
+    elif kind in ('soup', 'chilli'):      # warm soup; chilli is redder and has a chilli in it
+        c = "#F2B24A" if kind == 'soup' else "#E4453F"
+        out.append(f'<ellipse cx="{x:.0f}" cy="{y-h:.0f}" rx="{w-3:.0f}" ry="{5*s:.0f}" fill="{c}"/>')
+        if kind == 'chilli':
+            out.append(f'<path d="M{x-4*s:.0f},{y-h-2*s:.0f} q{10*s:.0f},{-2*s:.0f} {14*s:.0f},{-10*s:.0f}" '
+                       f'stroke="#C0201A" stroke-width="{4*s:.1f}" fill="none" stroke-linecap="round"/>'
+                       f'<path d="M{x+10*s:.0f},{y-h-12*s:.0f} l{3*s:.0f},{-4*s:.0f}" stroke="#4A9B4A" '
+                       f'stroke-width="{2.4*s:.1f}" stroke-linecap="round"/>')
+        out.append(steam(x, y - h - 8*s, s))
     elif kind == 'pancakes':
         out += [f'<ellipse cx="{x:.0f}" cy="{y-h-i*6*s:.0f}" rx="{19*s:.0f}" ry="{5*s:.0f}" '
                 f'fill="#E8C078" stroke="#C08840" stroke-width="1.2"/>' for i in range(3)]
@@ -292,12 +301,15 @@ def zzz(x, y, color="#8FA8C0"):
                    f'font-family="Fredoka One, sans-serif" opacity=".75">z</text>' for i in range(3))
 
 
-def thought(lines, cx, cy, tail_to, size=12):
-    """A thought bubble: same sizing rule as bubble(), but a trail of dots."""
+def thought(lines, cx, cy, tail_to, size=12, picture=None, rx=None, ry=None):
+    """A thought bubble: same sizing rule as bubble(), but a trail of dots.
+
+    `picture` puts a drawing in the bubble instead of words (pass lines=[] and size
+    the bubble with rx/ry) - Rabbit picturing Elephant in his hospital bed."""
     if isinstance(lines, str):
         lines = [lines]
-    rx = max(46, max(len(t) for t in lines) * size * .34 + 24)
-    ry = 18 + 9 * (len(lines) - 1)
+    rx = rx or max(46, max(len(t) for t in lines) * size * .34 + 24)
+    ry = ry or 18 + 9 * (len(lines) - 1)
     tx, ty = tail_to
     dx, dy = tx - cx, ty - cy
     L = (dx*dx + dy*dy) ** .5 or 1
@@ -308,7 +320,7 @@ def thought(lines, cx, cy, tail_to, size=12):
                   f'font-size="{size}" fill="#6B5B47" font-family="Nunito, sans-serif" '
                   f'font-weight="700">{t}</text>' for i, t in enumerate(lines))
     return (f'<ellipse cx="{cx}" cy="{cy}" rx="{rx:.0f}" ry="{ry}" fill="white" '
-            f'stroke="#D0C8B8" stroke-width="1.5" opacity=".96"/>{dots}{txt}')
+            f'stroke="#D0C8B8" stroke-width="1.5" opacity=".96"/>{dots}{txt}{picture or ""}')
 
 
 # ---------------------------------------------------------------- water & play
@@ -501,3 +513,292 @@ def speedlines(x, y, n=4, length=34, back=True):
     return "".join(f'<path d="M{x + d*length:.0f},{y-14+i*10} h{-d*length:.0f}" stroke="#B9C8D0" '
                    f'stroke-width="3" stroke-linecap="round" opacity="{.55 - i*.08:.2f}"/>'
                    for i in range(n))
+
+
+# ---------------------------------------------------------------- story 04 props
+def dirt(x, y, rx=46, ry=11):
+    """A dug-over patch of field."""
+    return (f'<ellipse cx="{x}" cy="{y}" rx="{rx}" ry="{ry}" fill="#8A6A44" opacity=".55"/>'
+            f'<ellipse cx="{x-rx*.3:.0f}" cy="{y-ry*.2:.0f}" rx="{rx*.4:.0f}" ry="{ry*.4:.0f}" fill="#A8845A" opacity=".45"/>')
+
+
+def roots(x, y, depth=60, cut=False):
+    """A cutaway of the ground under a thorn, showing how far down its roots go.
+
+    `cut` snips them partway down - the moment the digger gets through."""
+    w = depth * .9
+    out = [f'<path d="M{x-w:.0f},{y} Q{x},{y-10} {x+w:.0f},{y} Q{x+w*.8:.0f},{y+depth*.9:.0f} {x},{y+depth:.0f} '
+           f'Q{x-w*.8:.0f},{y+depth*.9:.0f} {x-w:.0f},{y} Z" fill="#8A6A44"/>']
+    strands = ((0, 1, 0), (-.45, .8, -.3), (.4, .85, .35), (-.2, .55, -.6), (.25, .5, .6))
+    d = []
+    for i, (ex, ey, bend) in enumerate(strands):
+        tx, ty = x + ex*w, y + ey*depth
+        if cut and i < 3:            # the long ones end in a clean snip
+            tx, ty = x + ex*w*.45, y + ey*depth*.45
+        d.append(f'M{x},{y} Q{x + bend*w*.5:.0f},{y + (ty-y)*.5:.0f} {tx:.0f},{ty:.0f}')
+    out.append(f'<path d="{" ".join(d)}" stroke="#4A2E16" stroke-width="3" fill="none" stroke-linecap="round"/>')
+    if cut:
+        out += [f'<path d="M{x + ex*w*.45 - 5:.0f},{y + ey*depth*.45 + 7:.0f} l10,-4" stroke="#FFD166" '
+                f'stroke-width="3" stroke-linecap="round"/>' for ex, ey, _ in strands[:3]]
+    return "".join(out)
+
+
+def fence(x0, x1, y, h=46):
+    """A wooden field fence: posts every ~52 units and two rails."""
+    n = max(1, round((x1 - x0) / 52))
+    posts = [x0 + (x1 - x0) * i / n for i in range(n + 1)]
+    return (f'<g fill="#C9A06A" stroke="#A07A48" stroke-width="1.5">'
+            + "".join(f'<rect x="{px-4:.0f}" y="{y-h}" width="8" height="{h}" rx="2"/>' for px in posts)
+            + f'<rect x="{x0-4}" y="{y-h+8}" width="{x1-x0+8}" height="6" rx="2"/>'
+              f'<rect x="{x0-4}" y="{y-h+26}" width="{x1-x0+8}" height="6" rx="2"/></g>')
+
+
+def crank_phone(x, y, receiver=None):
+    """The old telephone on its post by the fence: a wooden box with two bells, a
+    crank on the side, and a receiver on a cord. `receiver` is where the receiver is
+    now - in someone's paw at their ear - or None for hanging on its hook."""
+    top = y - 150
+    rx, ry = receiver or (x - 26, top + 34)
+    return (f'<rect x="{x-5}" y="{top+40}" width="10" height="{y-top-40}" rx="2" fill="#A07A48"/>'
+            f'<rect x="{x-22}" y="{top}" width="44" height="58" rx="5" fill="#C08840" stroke="#8A5A26" stroke-width="2"/>'
+            f'<circle cx="{x-9}" cy="{top+13}" r="7" fill="#E8C078" stroke="#8A5A26" stroke-width="1.5"/>'
+            f'<circle cx="{x+9}" cy="{top+13}" r="7" fill="#E8C078" stroke="#8A5A26" stroke-width="1.5"/>'
+            f'<circle cx="{x}" cy="{top+36}" r="6" fill="#2D3748"/>'
+            f'<path d="M{x+22},{top+34} h9 v14" stroke="#5C3A21" stroke-width="3.2" fill="none" stroke-linecap="round"/>'
+            f'<circle cx="{x+31}" cy="{top+50}" r="3.5" fill="#FF6B6B"/>'
+            f'<path d="M{x-22},{top+44} Q{(x-22+rx)/2:.0f},{max(top+80, ry+30):.0f} {rx:.0f},{ry+8:.0f}" '
+            f'stroke="#2D3748" stroke-width="1.6" fill="none"/>'
+            f'<rect x="{rx-4:.0f}" y="{ry-14:.0f}" width="8" height="28" rx="4" fill="#2D3748"/>')
+
+
+def birds(pts, color="#5A6B7A"):
+    """Little flapping v's - startled birds leaving a tree."""
+    return (f'<path d="' + " ".join(f'M{x-8},{y-3} q4,-5 8,1 q4,-6 8,-1' for x, y in pts)
+            + f'" stroke="{color}" stroke-width="2" fill="none" stroke-linecap="round"/>')
+
+
+def digger(uid, x, y, w=200, bucket=None, bw=120, bucket_riders="", cab_riders="",
+           color="#FFD166", line="#D9A21F"):
+    """The JCB: a yellow body on two big wheels, a cab, and an arm out the front.
+
+    `y` is the ground under the wheels. `bucket` is where the bucket's bottom-centre
+    is - down in the dirt to dig, up at chest height to carry. Like truck() and car(),
+    it draws its own passengers: `bucket_riders` go in BEHIND the bucket's front wall,
+    so they read as sitting in it; `cab_riders` are clipped into the cab window.
+    """
+    bx, by = bucket or (x + w + 70, y - 8)
+    cx, cw, ch = x + 12, w * .44, 72
+    body_top = y - 92
+    # the arm: shoulder on the body, up to an elbow, down to the bucket
+    sx, sy = x + w - 16, body_top + 16
+    ex, ey = (sx + bx) / 2 + 10, min(sy, by) - 62
+    arm = f'M{sx:.0f},{sy:.0f} L{ex:.0f},{ey:.0f} L{bx - bw*.1:.0f},{by - 46:.0f}'
+    bh = 50
+    lip = (f'M{bx-bw/2:.0f},{by-bh} L{bx-bw/2+10:.0f},{by} L{bx+bw/2-6:.0f},{by} '
+           f'L{bx+bw/2+8:.0f},{by-bh-6} Z')
+    return (f'<path d="{arm}" stroke="{line}" stroke-width="22" fill="none" stroke-linejoin="round" stroke-linecap="round"/>'
+            f'<path d="{arm}" stroke="{color}" stroke-width="17" fill="none" stroke-linejoin="round" stroke-linecap="round"/>'
+            f'<circle cx="{ex:.0f}" cy="{ey:.0f}" r="5" fill="#5E6870"/>'
+            + bucket_riders
+            + f'<path d="{lip}" fill="#6E7880" stroke="#4A525A" stroke-width="2.5" stroke-linejoin="round"/>'
+            + "".join(f'<path d="M{bx-bw/2+18+i*(bw-30)/4:.0f},{by} l5,8 l5,-8" fill="#4A525A"/>' for i in range(5))
+            + f'<rect x="{cx:.0f}" y="{body_top-ch+8}" width="{cw:.0f}" height="{ch}" rx="8" fill="{color}" stroke="{line}" stroke-width="2.5"/>'
+            + f'<rect x="{cx+9:.0f}" y="{body_top-ch+17}" width="{cw-18:.0f}" height="46" rx="5" fill="#CFEAF6"/>'
+            + clip(uid, cx+9, body_top-ch+17, cw-18, 46, cab_riders)
+            + f'<rect x="{cx+9:.0f}" y="{body_top-ch+17}" width="{cw-18:.0f}" height="46" rx="5" fill="none" stroke="#8FBCD0" stroke-width="1.5"/>'
+            + f'<rect x="{x}" y="{body_top}" width="{w}" height="54" rx="10" fill="{color}" stroke="{line}" stroke-width="2.5"/>'
+            + f'<rect x="{x+w*.52:.0f}" y="{body_top-14}" width="10" height="16" rx="2" fill="#5E6870"/>'
+            + f'<rect x="{x+12}" y="{body_top+22}" width="{w-24}" height="6" rx="3" fill="{line}" opacity=".5"/>'
+            + "".join(f'<circle cx="{x+dx:.0f}" cy="{y-r}" r="{r}" fill="#2D3748" stroke="#1A1A1A" stroke-width="2"/>'
+                      f'<circle cx="{x+dx:.0f}" cy="{y-r}" r="{r*.45:.0f}" fill="#8A949C"/>'
+                      for dx, r in ((w*.24, 34), (w*.8, 26))))
+
+
+def digger_cab(y, s=.7, head=76):
+    """Ground anchor for a `seated` driver so their head lands in the digger's cab.
+    `head` is the character's seated head height (sheep 76, rabbit 86, elephant 84):
+    the window's centre is 124 above the wheels, and the face wants to sit just under it."""
+    return y - 118 + head*s
+
+
+# ---------------------------------------------------------------- story 03 props
+def steam(x, y, s=1.0, color="#C8BCA4"):
+    """Three wavy wisps rising off something hot."""
+    return (f'<path d="' + " ".join(f'M{x+dx*s:.0f},{y:.0f} q{-5*s:.0f},{-7*s:.0f} 0,{-14*s:.0f} '
+                                    f'q{5*s:.0f},{-7*s:.0f} 0,{-14*s:.0f}' for dx in (-10, 0, 10))
+            + f'" stroke="{color}" stroke-width="{2*s:.1f}" fill="none" stroke-linecap="round" opacity=".75"/>')
+
+
+def snow_sky(uid, mood='snow', clouds=((90, 48, 40, 16), (116, 40, 24, 14), (400, 60, 36, 15))):
+    """A soft winter sky: cool and pale, never grey. `mood` may also be any sky() mood
+    - snow still falls through a golden evening at the end of story 03."""
+    top, bottom = ("#CFE3F2", "#F2F8FC") if mood == 'snow' else MOODS[mood]
+    return (f'<defs><linearGradient id="sky-{uid}" x1="0" y1="0" x2="0" y2="1">'
+            f'<stop offset="0" stop-color="{top}"/><stop offset="1" stop-color="{bottom}"/></linearGradient>'
+            f'<linearGradient id="snow-{uid}" x1="0" y1="0" x2="0" y2="1">'
+            f'<stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#E2EDF5"/></linearGradient></defs>'
+            f'<rect width="500" height="360" fill="url(#sky-{uid})"/>'
+            + "".join(f'<ellipse cx="{c[0]}" cy="{c[1]}" rx="{c[2]}" ry="{c[3]}" fill="white" opacity=".85"/>'
+                      for c in clouds))
+
+
+def snow_ground(uid, y=205):
+    """The meadow recipe, in snow: a wavy white top, a second bluish band for depth,
+    and little drift bumps instead of grass tufts."""
+    return (f'<path d="M0,{y+3} Q125,{y-11} 250,{y+1} T500,{y-1} L500,360 L0,360 Z" fill="url(#snow-{uid})"/>'
+            f'<path d="M0,{y+19} Q125,{y+7} 250,{y+19} T500,{y+17} L500,{y+43} L0,{y+43} Z" fill="#B8D0E0" opacity=".3"/>'
+            f'<g stroke="#C8DCE8" stroke-width="2" fill="none" stroke-linecap="round">'
+            + "".join(f'<path d="M{x},{y+34} q8,-6 16,0"/>' for x in (40, 176, 300, 452)) + '</g>')
+
+
+def flakes(n=26, seed=3, top=0, bottom=300):
+    """Falling snow. Deterministic (a tiny LCG, not random) so rebuilds stay no-ops."""
+    out, v = [], seed * 7919 + 17
+    for _ in range(n):
+        v = (v * 1103515245 + 12345) % 2**31
+        x = v % 500
+        v = (v * 1103515245 + 12345) % 2**31
+        y = top + v % (bottom - top)
+        r = 1.6 + (v >> 8) % 3 * .7
+        out.append(f'<circle cx="{x}" cy="{y}" r="{r:.1f}"/>')
+    return f'<g fill="#FFFFFF" opacity=".9">{"".join(out)}</g>'
+
+
+def pine(x, y, s=1.0, snowy=True):
+    """A fir tree, three tiers, with snow on the tiers."""
+    out = [f'<rect x="{x-5*s:.0f}" y="{y-14*s:.0f}" width="{10*s:.0f}" height="{14*s:.0f}" fill="#8A6A44"/>']
+    for i, (w, top, bot) in enumerate(((34, 66, 12), (28, 92, 40), (20, 116, 66))):
+        out.append(f'<path d="M{x-w*s:.0f},{y-bot*s:.0f} L{x:.0f},{y-top*s-20*s:.0f} L{x+w*s:.0f},{y-bot*s:.0f} Z" '
+                   f'fill="{"#3E8E5A" if i != 1 else "#4CA06A"}"/>')
+        if snowy:
+            out.append(f'<path d="M{x-w*.62*s:.0f},{y-bot*s-(top-bot)*.38*s:.0f} L{x:.0f},{y-top*s-20*s:.0f} '
+                       f'L{x+w*.62*s:.0f},{y-bot*s-(top-bot)*.38*s:.0f} q{-w*.3*s:.0f},{5*s:.0f} {-w*.62*s:.0f},0 '
+                       f'q{-w*.3*s:.0f},{-5*s:.0f} {-w*.62*s:.0f},0 Z" fill="#FFFFFF"/>')
+    return "".join(out)
+
+
+def snowman(x, y, s=1.0):
+    return (f'<circle cx="{x}" cy="{y-24*s:.0f}" r="{26*s:.0f}" fill="#FFFFFF" stroke="#C8DCE8" stroke-width="2"/>'
+            f'<circle cx="{x}" cy="{y-66*s:.0f}" r="{19*s:.0f}" fill="#FFFFFF" stroke="#C8DCE8" stroke-width="2"/>'
+            f'<circle cx="{x-6*s:.0f}" cy="{y-70*s:.0f}" r="{2.4*s:.1f}" fill="{INK}"/>'
+            f'<circle cx="{x+6*s:.0f}" cy="{y-70*s:.0f}" r="{2.4*s:.1f}" fill="{INK}"/>'
+            f'<path d="M{x},{y-65*s:.0f} l{14*s:.0f},{3*s:.0f} l{-14*s:.0f},{3*s:.0f} Z" fill="#F08A3C"/>'
+            f'<path d="M{x-7*s:.0f},{y-58*s:.0f} q{7*s:.0f},{5*s:.0f} {14*s:.0f},0" stroke="{INK}" '
+            f'stroke-width="{2*s:.1f}" fill="none" stroke-linecap="round"/>'
+            + "".join(f'<circle cx="{x}" cy="{y-(16+i*12)*s:.0f}" r="{2.6*s:.1f}" fill="{INK}"/>' for i in range(3))
+            + f'<path d="M{x-18*s:.0f},{y-40*s:.0f} l{-18*s:.0f},{-16*s:.0f} M{x+18*s:.0f},{y-40*s:.0f} '
+              f'l{18*s:.0f},{-16*s:.0f}" stroke="#8A6A44" stroke-width="{3*s:.1f}" stroke-linecap="round"/>')
+
+
+def snowball(x, y, r=7, flying=False):
+    out = f'<circle cx="{x}" cy="{y}" r="{r}" fill="#FFFFFF" stroke="#C8DCE8" stroke-width="1.5"/>'
+    if flying:
+        out += "".join(f'<path d="M{x-r-4-i*9},{y-4+i*4} h-7" stroke="#C8DCE8" stroke-width="2.4" '
+                       f'stroke-linecap="round"/>' for i in range(3))
+    return out
+
+
+def fireplace(x, y, w=110, h=120):
+    """A brick hearth with a real fire in it - the cosiest thing in story 03."""
+    return (f'<rect x="{x}" y="{y-h}" width="{w}" height="{h}" rx="6" fill="#B8704A" stroke="#8A4E30" stroke-width="2"/>'
+            f'<rect x="{x-10}" y="{y-h-12}" width="{w+20}" height="14" rx="4" fill="#8A5A3A"/>'
+            f'<path d="M{x+18},{y} v{-h*.52:.0f} q{w/2-18:.0f},{-h*.26:.0f} {w-36},0 v{h*.52:.0f} Z" fill="#3A2420"/>'
+            f'<path d="M{x+w*.3:.0f},{y-6} q{-6:.0f},-26 {w*.2:.0f},-46 q{-2:.0f},20 {w*.12:.0f},26 '
+            f'q{8:.0f},-14 {2:.0f},-32 q{w*.22:.0f},24 {w*.1:.0f},52 Z" fill="#FF9A3C"/>'
+            f'<path d="M{x+w*.4:.0f},{y-6} q{-2:.0f},-16 {w*.1:.0f},-26 q{4:.0f},14 {w*.1:.0f},26 Z" fill="#FFD166"/>'
+            f'<rect x="{x+w*.26:.0f}" y="{y-8}" width="{w*.48:.0f}" height="8" rx="3" fill="#6B4A2E"/>'
+            + "".join(f'<path d="M{x+6},{y-h+18+i*22} h{w-12}" stroke="#A0603E" stroke-width="1.5" opacity=".6"/>'
+                      for i in range(2)))
+
+
+def ice_cream(x, y, s=1.0):
+    """A dish of ice cream - three cold scoops."""
+    return (f'<path d="M{x-18*s:.0f},{y-12*s:.0f} q{18*s:.0f},{20*s:.0f} {36*s:.0f},0 Z" fill="#CFEAF6" stroke="#8FBCD0" stroke-width="1.5"/>'
+            + "".join(f'<circle cx="{x+dx*s:.0f}" cy="{y+dy*s:.0f}" r="{9*s:.0f}" fill="{c}"/>'
+                      for dx, dy, c in ((-9, -16, "#FFE3EC"), (9, -16, "#FFF3C4"), (0, -26, "#C8E8FF")))
+            + f'<path d="M{x-4*s:.0f},{y-33*s:.0f} l{3*s:.0f},{-4*s:.0f}" stroke="#E4453F" stroke-width="{3*s:.1f}" stroke-linecap="round"/>')
+
+
+def breather(x, y, on=False):
+    """The breathing machine on its trolley: a box with a dial, a light, a hose. `on`
+    lights it green and draws the hum - story 03's gust starts here."""
+    out = (f'<rect x="{x-24}" y="{y-96}" width="48" height="58" rx="6" fill="#E8EEF2" stroke="#9AA6AE" stroke-width="2"/>'
+           f'<circle cx="{x-6}" cy="{y-72}" r="10" fill="#FFFFFF" stroke="#9AA6AE" stroke-width="2"/>'
+           f'<path d="M{x-6},{y-72} l6,-6" stroke="{INK}" stroke-width="2" stroke-linecap="round"/>'
+           f'<circle cx="{x+13}" cy="{y-82}" r="4" fill="{"#06C98A" if on else "#C8D0D6"}"/>'
+           f'<rect x="{x-3}" y="{y-38}" width="6" height="30" fill="#9AA6AE"/>'
+           f'<rect x="{x-20}" y="{y-10}" width="40" height="6" rx="3" fill="#9AA6AE"/>'
+           + "".join(f'<circle cx="{x+dx}" cy="{y-2}" r="4" fill="#5E6870"/>' for dx in (-16, 16)))
+    if on:
+        out += "".join(f'<path d="M{x+30+i*8},{y-86+i*2} q5,6 0,12 q-5,6 0,12" stroke="#9AA6AE" '
+                       f'stroke-width="1.8" fill="none" opacity="{.8-i*.2:.1f}"/>' for i in range(3))
+    return out
+
+
+def mask(x, y, s=1.0, hose_to=None):
+    """A breathing mask - a clear cup with a strap - and its hose back to the machine."""
+    out = ''
+    if hose_to:
+        hx, hy = hose_to
+        out += (f'<path d="M{x},{y+8*s:.0f} C{x},{y+60:.0f} {hx},{hy+50:.0f} {hx},{hy}" stroke="#8FBCD0" '
+                f'stroke-width="5" fill="none" stroke-linecap="round"/>')
+    return out + (f'<ellipse cx="{x}" cy="{y}" rx="{16*s:.0f}" ry="{12*s:.0f}" fill="#CFEAF6" fill-opacity=".75" '
+                  f'stroke="#4AA8C8" stroke-width="2"/>'
+                  f'<path d="M{x-16*s:.0f},{y-3*s:.0f} h{-8*s:.0f} M{x+16*s:.0f},{y-3*s:.0f} h{8*s:.0f}" '
+                  f'stroke="#4AA8C8" stroke-width="{2.4*s:.1f}" stroke-linecap="round"/>')
+
+
+def syringe(x, y, s=1.0, rot=0):
+    """An injection. At s≈2 it is the giraffe-sized one - the joke on page 9."""
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            f'<rect x="{x-22*s:.0f}" y="{y-6*s:.0f}" width="{36*s:.0f}" height="{12*s:.0f}" rx="{3*s:.0f}" '
+            f'fill="#E8F4FA" stroke="#8FBCD0" stroke-width="1.6"/>'
+            f'<rect x="{x-18*s:.0f}" y="{y-4*s:.0f}" width="{20*s:.0f}" height="{8*s:.0f}" fill="#FFB3C6" opacity=".8"/>'
+            f'<path d="M{x-22*s:.0f},{y:.0f} h{-12*s:.0f} M{x-34*s:.0f},{y-7*s:.0f} v{14*s:.0f}" '
+            f'stroke="#9AA6AE" stroke-width="{3*s:.1f}" stroke-linecap="round"/>'
+            f'<path d="M{x+14*s:.0f},{y:.0f} h{16*s:.0f}" stroke="#9AA6AE" stroke-width="{1.6*s:.1f}" '
+            f'stroke-linecap="round"/></g>')
+
+
+def pills(x, y):
+    """A little pot of tablets."""
+    return (f'<rect x="{x-9}" y="{y-20}" width="18" height="20" rx="3" fill="#FFFFFF" stroke="#C8BCA4" stroke-width="1.5"/>'
+            f'<rect x="{x-10}" y="{y-25}" width="20" height="6" rx="2" fill="#FF6B6B"/>'
+            + "".join(f'<ellipse cx="{x+dx}" cy="{y+4}" rx="4" ry="2.4" fill="{c}"/>'
+                      for dx, c in ((-16, "#74C8E4"), (15, "#FFD166"))))
+
+
+def chocolate(x, y, s=1.0, rot=-10):
+    """A wrapped bar of chocolate - the thank-you at the end of story 03."""
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            f'<rect x="{x-14*s:.0f}" y="{y-8*s:.0f}" width="{28*s:.0f}" height="{16*s:.0f}" rx="2" fill="#7A4A2A"/>'
+            f'<rect x="{x-2*s:.0f}" y="{y-8*s:.0f}" width="{16*s:.0f}" height="{16*s:.0f}" rx="2" fill="#E4453F"/>'
+            f'<rect x="{x+3*s:.0f}" y="{y-8*s:.0f}" width="{3*s:.0f}" height="{16*s:.0f}" fill="#FFD166"/></g>')
+
+
+def cottage(x, y, s=1.0, snowy=True):
+    """Tortoise's little house: a door, a round window, a snowy roof. `y` is the ground."""
+    w, h = 96*s, 66*s
+    return (f'<rect x="{x-w/2:.0f}" y="{y-h:.0f}" width="{w:.0f}" height="{h:.0f}" fill="#FFE9C8" stroke="#D8B888" stroke-width="2"/>'
+            f'<path d="M{x-w/2-10*s:.0f},{y-h+2:.0f} L{x:.0f},{y-h-46*s:.0f} L{x+w/2+10*s:.0f},{y-h+2:.0f} Z" '
+            f'fill="#E4453F" stroke="#B8302C" stroke-width="2" stroke-linejoin="round"/>'
+            + (f'<path d="M{x-w/2-10*s:.0f},{y-h+2:.0f} L{x:.0f},{y-h-46*s:.0f} L{x+w/2+10*s:.0f},{y-h+2:.0f} '
+               f'q{-8*s:.0f},{-8*s:.0f} {-16*s:.0f},{-6*s:.0f} q{-(w/2-6*s):.0f},{-26*s:.0f} {-(w/2+4*s):.0f},{-36*s:.0f} '
+               f'q{-(w/2-6*s):.0f},{12*s:.0f} {-(w/2+4*s):.0f},{36*s:.0f} Z" fill="#FFFFFF"/>' if snowy else '')
+            + f'<rect x="{x+6*s:.0f}" y="{y-40*s:.0f}" width="{22*s:.0f}" height="{40*s:.0f}" rx="{10*s:.0f}" fill="#8A5A3A"/>'
+            f'<circle cx="{x+23*s:.0f}" cy="{y-20*s:.0f}" r="{2*s:.1f}" fill="#FFD166"/>'
+            f'<circle cx="{x-24*s:.0f}" cy="{y-36*s:.0f}" r="{11*s:.0f}" fill="#FFE39A" stroke="#D8B888" stroke-width="2"/>')
+
+
+def cough(x, y, flip=False):
+    """Little puffs of a cough, for the sniffly patients."""
+    d = -1 if flip else 1
+    return "".join(f'<circle cx="{x+d*i*9}" cy="{y-i*3}" r="{3.5+i*1.5:.1f}" fill="#FFFFFF" '
+                   f'stroke="#C8DCE8" stroke-width="1.2" opacity="{.9-i*.2:.1f}"/>' for i in range(3))
+
+
+def shiver(x, y, h=40, gap=30, color="#74C8E4"):
+    """Wobble lines either side of a shivering (or sweltering) patient."""
+    return "".join(f'<path d="M{x+sx*gap},{y} q{sx*5},{h*.12:.0f} 0,{h*.25:.0f} q{-sx*5},{h*.12:.0f} 0,{h*.25:.0f} '
+                   f'q{sx*5},{h*.12:.0f} 0,{h*.25:.0f}" stroke="{color}" stroke-width="2.2" fill="none" '
+                   f'stroke-linecap="round"/>' for sx in (-1, 1))

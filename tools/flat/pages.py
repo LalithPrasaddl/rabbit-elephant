@@ -13,7 +13,8 @@ import os, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import scene as S
-from characters import rabbit, elephant, bear, squirrel, giraffe, bandage
+from characters import (rabbit, elephant, bear, squirrel, giraffe, sheep, critter, tortoise, bandage,
+                        E_BODY, E_LINE, R_BODY, R_LINE)
 
 
 # ---------------------------------------------------------------- story 06
@@ -578,12 +579,448 @@ def p02_10():
             + S.bubble(["No more thorns."], 148, 128, tail=(196, 246), size=12))
 
 
+
+# ---------------------------------------------------------------- story 04
+# The field is the same field on p1, p9 and p12 - same fence, same rows - so the last
+# page reads as "back where it started, but careful now".
+def _field04(uid, mood='morning', sun=(440, 56), rays=False):
+    return (S.sky(uid, mood, sun=sun, rays=rays) + S.ground(uid)
+            + S.fence(300, 496, 236, h=40)
+            + S.dirt(150, 318, 120, 16) + S.dirt(360, 334, 110, 14))
+
+
+def _foot(dx, dy=-10):
+    """Elephant's leg stuck out in front while he sits - the one the thorn is in. The
+    leg matters: a foot on its own, a body-width away, reads as a stray blob."""
+    leg = f'M{dx*.3:.0f},{dy-14} Q{dx*.7:.0f},{dy-10} {dx:.0f},{dy}'
+    return (f'<path d="{leg}" stroke="{E_LINE}" stroke-width="27" fill="none" stroke-linecap="round"/>'
+            f'<path d="{leg}" stroke="{E_BODY}" stroke-width="24" fill="none" stroke-linecap="round"/>'
+            f'<ellipse cx="{dx}" cy="{dy}" rx="22" ry="13" fill="{E_BODY}" stroke="{E_LINE}" stroke-width="1.5"/>'
+            + "".join(f'<ellipse cx="{dx+ox}" cy="{dy+5}" rx="3.2" ry="2.4" fill="#E8EEF2"/>' for ox in (-9, 0, 9)))
+
+
+def _pow(x, y, r=16, color="#FFD166"):
+    """A little impact star."""
+    import math
+    pts = " ".join(f'{x + math.cos(i*math.pi/6)*(r if i % 2 == 0 else r*.45):.0f},'
+                   f'{y + math.sin(i*math.pi/6)*(r if i % 2 == 0 else r*.45):.0f}' for i in range(12))
+    return f'<polygon points="{pts}" fill="{color}" opacity=".9"/>'
+
+
+def _shout(text, x, y, size=30, rot=-6, color="#FF6B6B"):
+    return (f'<text x="{x}" y="{y}" font-size="{size}" fill="{color}" text-anchor="middle" '
+            f'font-family="Fredoka One, sans-serif" transform="rotate({rot} {x} {y})">{text}</text>')
+
+
+def p04_1():
+    """Planting and chatting about lunch - and Elephant is not looking down."""
+    return (_field04('s4p1', rays=True)
+            + S.seedlings(y=320, xs=(60, 104, 150, 196))
+            + S.thorn(404, 342, s=.7)
+            + S.shadow(140, 350, 34)
+            + rabbit(140, 352, s=1.2, pose='sit', expr='excited', look=(.5, -.1),
+                     arm=(-16, 30), arm2=(30, -20))
+            + S.shadow(330, 348, 46)
+            + elephant(330, 352, s=1.25, expr='happy', look=(-.65, -.1), trunk=(-44, 30))
+            + S.bubble(["Noodles for", "lunch today?"], 116, 118, tail=(138, 222), size=13)
+            + S.bubble(["Or maybe...", "samosas?"], 314, 76, tail=(318, 170), size=13))
+
+
+def p04_2():
+    """CRUNCH. A big foot, a giant thorn, and every bird in the tree takes off."""
+    return (_field04('s4p2', mood='tender', sun=None)
+            + S.tree(62, 226, s=.8)
+            + S.birds(((104, 92), (130, 70), (160, 84), (150, 52)))
+            + S.shadow(160, 350, 32)
+            + rabbit(160, 352, s=1.2, expr='surprised', look=(.6, 0), arm=(-30, -40), arm2=(30, -40),
+                     ears=(-20, 22))
+            + S.shadow(344, 348, 46)
+            + _pow(380, 334, 34) + _pow(410, 312, 12, "#FF9BAE")
+            + elephant(344, 352, s=1.25, expr='hurt', trunk=(-20, -30))
+            + S.thorn(398, 330, s=1.1, rot=38)
+            + _shout("OWWW!", 350, 72, size=40))
+
+
+def p04_3():
+    """Stuck. The roots go down and down, and he can only sit where he is."""
+    return (_field04('s4p3', mood='tender', sun=None)
+            + S.roots(262, 290, depth=64)
+            + S.shadow(360, 294, 50)
+            + elephant(360, 300, s=1.2, pose='sit', expr='sad', look=(-.5, .5), trunk=(-18, 44),
+                       extra=_foot(-82, -8))
+            + S.thorn(262, 292, s=.55)
+            + S.shadow(120, 298, 30)
+            + rabbit(120, 300, s=1.1, expr='worried', look=(.6, .2), arm=(-20, -30), arm2=(38, -8))
+            + S.bubble(["I can't move,", "not even a little."], 314, 62, tail=(340, 150), size=13))
+
+
+def p04_4():
+    """The old telephone by the fence, cranked as fast as her paws can go."""
+    return (S.sky('s4p4', 'tender', sun=None) + S.ground('s4p4')
+            + S.fence(260, 496, 236, h=40)
+            + S.dirt(96, 256, 60, 8)
+            + elephant(96, 262, s=.5, pose='sit', expr='sad', trunk=(-16, 30))
+            + S.crank_phone(410, 350, receiver=(334, 216))
+            + S.shadow(320, 350, 32)
+            + rabbit(320, 352, s=1.2, expr='shout', look=(.4, 0), arm=(10, -62), arm2=(60, -24),
+                     ears=(-18, 18))
+            + S.bubble(["Dr. Sheep!", "Elephant's stuck!", "Please come quick!"], 172, 104,
+                       tail=(300, 196), size=13))
+
+
+def p04_5():
+    """Dr. Sheep kneels by the foot and frowns: this needs a digger."""
+    return (_field04('s4p5', sun=(60, 56))
+            + S.roots(276, 290, depth=64)
+            + S.shadow(390, 294, 50)
+            + elephant(390, 300, s=1.15, pose='sit', expr='hurt', look=(-.5, .4), trunk=(-24, 40),
+                       extra=_foot(-98, -8))
+            + S.thorn(276, 292, s=.55)
+            + S.shadow(196, 300, 34)
+            + sheep(196, 302, s=1.1, pose='sit', expr='worried', look=(.6, .5), arm2=(40, 8))
+            + S.shadow(66, 300, 26)
+            + rabbit(66, 302, s=1.0, expr='surprised', look=(.6, 0), arm2=(20, -24))
+            + S.bubble(["These roots go too", "deep to pull out.", "We need a JCB!"], 262, 62,
+                       tail=(206, 190), size=13)
+            + S.bubble(["A what-now?"], 78, 112, tail=(70, 170), size=11))
+
+
+def p04_6():
+    """Scoop! Scoop! Scoop! - and snip, right through the roots."""
+    return (_field04('s4p6')
+            + S.roots(318, 296, depth=62, cut=True)
+            + '<ellipse cx="236" cy="300" rx="30" ry="9" fill="#8A6A44"/>'
+            + S.shadow(420, 298, 48)
+            + elephant(420, 304, s=1.1, pose='sit', expr='surprised', look=(-.6, .5), trunk=(-20, 40),
+                       extra=_foot(-92, -8))
+            + S.digger('s4p6', 14, 318, w=170, bucket=(262, 300), bw=78,
+                       cab_riders=sheep(72, S.digger_cab(318, .7), s=.7, pose='seated',
+                                        expr='calm', look=(.5, .3)))
+            + _shout("SCOOP!", 196, 94, size=28) + _shout("SNIP!", 372, 350, size=20, rot=8, color="#FFD166"))
+
+
+def p04_7():
+    """Off to the hospital - Elephant riding in the bucket, Rabbit riding with him."""
+    riders = (elephant(318, 262, s=.82, pose='sit', expr='excited', look=(.5, -.2), trunk=(30, -30))
+              + rabbit(376, 256, s=.66, pose='sit', expr='happy', look=(-.5, 0), arm=(-22, -26)))
+    return (S.sky('s4p7', 'morning', sun=(66, 54)) + S.ground('s4p7') + S.road(246)
+            + S.sign(452, 190, ["H", "&#8594;"], w=40, color="#E4453F")
+            + S.digger('s4p7', 30, 330, w=190, bucket=(340, 278), bw=132, bucket_riders=riders,
+                       cab_riders=sheep(92, S.digger_cab(330, .7), s=.7, pose='seated',
+                                        expr='happy', look=(.5, 0)))
+            + S.speedlines(20, 246, back=True))
+
+
+def p04_8():
+    """Tiny tweezers, the very last piece of thorn, and a whole week of rest."""
+    return (S.indoors('s4p8', wall="#EEF4F7")
+            + S.garden_window(96, 116, w=96, h=76)
+            + S.bed(52, 244, w=200)
+            + elephant(90, 272, pose='lie', expr='calm', look=(.5, 0), trunk=(-26, 24),
+                       extra=_foot(128, -26))
+            + S.shadow(360, 348, 38)
+            + sheep(330, 350, s=1.2, expr='happy', look=(-.6, .3), arm=(-50, -26))
+            + S.tweezers(248, 244, s=.8, rot=90)
+            + S.thorn(224, 244, s=.3, rot=-90)
+            + S.bubble(["All done!", "Now rest for a week."], 344, 104, tail=(334, 200), size=13))
+
+
+def p04_9():
+    """Planting alone, thinking about her friend - and not about her feet."""
+    dream = (f'<g transform="translate(294 62) scale(.42)">'
+             + S.bed(-10, 40, w=190) + elephant(28, 68, pose='lie', expr='sleepy', trunk=(-20, 20))
+             + '</g>')
+    return (_field04('s4p9', mood='tender', sun=None)
+            + S.seedlings(y=320, xs=(60, 104, 150, 196), sprouted=True)
+            + S.thorn(234, 346, s=.5)
+            + S.shadow(160, 350, 32)
+            + rabbit(160, 352, s=1.2, expr='sad', look=(.4, -.6), arm2=(26, 24), ears=(-4, 8))
+            + S.thought([], 340, 88, (196, 206), picture=dream, rx=78, ry=48))
+
+
+def p04_10():
+    """CRUNCH, again. Ow, ow, ow - all the way to the telephone."""
+    return (_field04('s4p10', mood='tender', sun=None)
+            + S.thorn(92, 346, s=.5) + _pow(92, 340, 12)
+            + "".join(f'<path d="M{x0},342 Q{x0+32},{286} {x0+64},330" stroke="#B9C8D0" stroke-width="2.5" '
+                      f'fill="none" stroke-dasharray="4 6" stroke-linecap="round"/>' for x0 in (100, 164))
+            + S.crank_phone(430, 350)
+            + S.shadow(262, 350, 26)
+            + S.spin(-10, 262, 330, rabbit(262, 330, s=1.2, expr='hurt', look=(-.4, .5),
+                                           arm=(-30, -40), arm2=(30, -40), ears=(-24, 26)))
+            + S.bubble(["Ow, ow, ow!"], 268, 82, tail=(262, 170), size=14))
+
+
+def p04_11():
+    """No digger needed: one small thorn, two hooves, done in seconds."""
+    return (_field04('s4p11', mood='golden', sun=(66, 54))
+            + S.car(318, 262, w=164, color="#74C8E4", line="#3C90AE")
+            + '<rect x="386" y="276" width="7" height="22" rx="1" fill="#E4453F"/>'
+              '<rect x="379" y="283" width="21" height="7" rx="1" fill="#E4453F"/>'
+            + S.shadow(128, 350, 30)
+            + rabbit(128, 352, s=1.2, pose='sit', expr='worried', look=(.6, .3), arm2=(20, -34),
+                     extra=f'<ellipse cx="42" cy="-6" rx="17" ry="10" fill="{R_BODY}" stroke="{R_LINE}" '
+                           f'stroke-width="1.5" transform="rotate(-8 42 -6)"/>')
+            + S.shadow(256, 350, 34)
+            + sheep(256, 352, s=1.15, pose='sit', expr='happy', look=(-.6, .3), arm=(-36, 10))
+            + S.thorn(190, 310, s=.4, rot=-20)
+            + S.bubble(["Elephant is enormous -", "he needed a digger.", "You're little. I've got this!"],
+                       256, 88, tail=(252, 236), size=12))
+
+
+def p04_12():
+    """Back in the field, planting and chatting - and every step looked at."""
+    return (_field04('s4p12', mood='golden', sun=(440, 56), rays=True)
+            + S.seedlings(y=320, xs=(60, 104, 150, 196), sprouted=True)
+            + S.seedlings(y=336, xs=(300, 344, 388, 432))
+            + S.shadow(150, 350, 32)
+            + rabbit(150, 352, s=1.2, expr='happy', look=(0, .7), arm2=(24, 24))
+            + S.shadow(330, 348, 46)
+            + elephant(330, 352, s=1.25, expr='happy', look=(0, .7), trunk=(-36, 50))
+            + S.bubble(["Watch your step!"], 330, 90, tail=(330, 170), size=13)
+            + S.bubble(["Always."], 120, 132, tail=(146, 212), size=13))
+
+
+
+# ---------------------------------------------------------------- story 03
+# Snow outside on every exterior page, and a pale clinical blue-white inside the
+# hospital, so the reader always knows which of the two worlds a page is in.
+WARD = "#EEF4F7"
+
+
+def _snow03(uid, mood='snow', n=26, seed=3, horizon=205):
+    return S.snow_sky(uid, mood) + S.snow_ground(uid, horizon) + S.flakes(n, seed)
+
+
+def _snow_window(x, y, w=92, h=74):
+    """A window with the snow coming down outside it."""
+    return (f'<rect x="{x-w/2:.0f}" y="{y-h/2:.0f}" width="{w}" height="{h}" rx="5" fill="#CFE3F2" stroke="#B9AE98" stroke-width="3"/>'
+            f'<path d="M{x-w/2+3:.0f},{y+h/2-16:.0f} q{w*.3:.0f},-10 {w-6:.0f},-4 V{y+h/2-3:.0f} H{x-w/2+3:.0f} Z" fill="#FFFFFF"/>'
+            + "".join(f'<circle cx="{x+dx}" cy="{y+dy}" r="2" fill="#FFFFFF"/>'
+                      for dx, dy in ((-30, -24), (-12, -8), (8, -26), (24, -6), (32, -22), (-26, 4), (14, 8)))
+            + f'<path d="M{x},{y-h/2+3:.0f} v{h-6} M{x-w/2+3:.0f},{y} h{w-6}" stroke="#B9AE98" stroke-width="2.5"/>'
+            f'<rect x="{x-w/2-6:.0f}" y="{y+h/2-2:.0f}" width="{w+12}" height="8" rx="2" fill="#FFFFFF" stroke="#D8D0C0"/>')
+
+
+def _heat(x, y):
+    """Fever: little red heat squiggles rising."""
+    return S.steam(x, y, .8, color="#FF6B6B")
+
+
+def p03_1():
+    """The first snow - and everyone out playing in it with no scarf or mitten."""
+    return (_snow03('s3p1', n=34, seed=1)
+            + S.pine(40, 226, s=.9) + S.pine(466, 222, s=1.0) + S.pine(430, 214, s=.7)
+            + '<path d="M0,256 Q60,170 190,250 Z" fill="#FFFFFF" stroke="#B8D0E0" stroke-width="2.5"/>'
+            + S.spin(30, 88, 206, critter('pig', 88, 206, s=.7, pose='sit', expr='excited', look=(.5, .2),
+                                          arm=(-26, -28), arm2=(26, -28))
+                     + '<path d="M56,210 h62 q10,0 12,-10" stroke="#E4453F" stroke-width="5" fill="none" stroke-linecap="round"/>'
+                       '<path d="M64,210 v-6 M112,210 v-6" stroke="#E4453F" stroke-width="3"/>')
+            + S.speedlines(44, 170, n=3, length=24, back=True)
+            + S.snowman(250, 300, s=1.05)
+            + S.shadow(150, 350, 30)
+            + critter('fox', 150, 352, s=1.05, expr='happy', look=(.6, -.2), arm2=(28, -44))
+            + S.snowball(212, 238, flying=True)
+            + S.shadow(380, 348, 32)
+            + critter('deer', 380, 350, s=1.05, expr='excited', look=(-.6, 0), arm=(-32, -30)))
+
+
+def p03_2():
+    """Home from hospital, toes still healing: soup by the fire instead."""
+    return (S.indoors('s3p2', wall="#FFF0E0", floor="#EFD9BE")
+            + _snow_window(96, 120)
+            + S.fireplace(372, 250, w=112, h=124)
+            + '<ellipse cx="236" cy="316" rx="178" ry="28" fill="#FF9BAE" opacity=".45"/>'
+            + rabbit(160, 336, s=1.15, pose='sit', expr='happy', look=(.4, .2), arm2=(26, 6),
+                     extra=bandage(-16, -2, 12, 8))
+            + S.bowl(196, 312, 'soup', s=.9)
+            + elephant(300, 340, s=1.2, pose='sit', expr='calm', look=(-.3, .3), trunk=(-44, 10),
+                       extra=bandage(-30, -4, 15, 10))
+            + S.bowl(262, 318, 'soup', s=1.05)
+            + '<text x="228" y="150" font-size="22" fill="#FF6B6B" text-anchor="middle">&#9829;</text>')
+
+
+def p03_3():
+    """Days of snow, a hospital full of coughs, and an urgent call for helpers."""
+    return (_snow03('s3p3', seed=2)
+            + S.hospital(x=150, y=86, w=200, h=132)
+            + '<rect x="186" y="170" width="128" height="26" rx="6" fill="#E4453F" transform="rotate(-4 250 183)"/>'
+              '<text x="250" y="189" font-size="15" fill="#FFFFFF" text-anchor="middle" '
+              'font-family="Fredoka One, sans-serif" transform="rotate(-4 250 183)">FULLY BOOKED!</text>'
+            + S.sign(430, 212, ["HELPERS", "NEEDED!"], w=92, color="#E4453F")
+            + S.shadow(84, 350, 26) + critter('wolf', 84, 352, s=.9, expr='sad', look=(.4, 0))
+            + S.cough(116, 262)
+            + S.shadow(186, 350, 26) + critter('pig', 186, 352, s=.86, expr='worried', look=(.3, -.3))
+            + S.shadow(300, 350, 26) + critter('fox', 300, 352, s=.9, expr='hurt', look=(-.3, 0))
+            + S.cough(270, 262, flip=True)
+            + S.shiver(300, 240, h=44, gap=40))
+
+
+def p03_4():
+    """Healed up and here to help - and Dr. Squirrel could not be happier."""
+    return (S.indoors('s3p4', wall=WARD, floor="#DCE6EC")
+            + '<rect x="210" y="60" width="44" height="44" rx="6" fill="#FFFFFF" stroke="#FF6B6B" stroke-width="2"/>'
+              '<rect x="228" y="66" width="8" height="32" rx="2" fill="#FF6B6B"/>'
+              '<rect x="216" y="78" width="32" height="8" rx="2" fill="#FF6B6B"/>'
+            + S.shadow(84, 350, 30)
+            + rabbit(84, 352, s=1.15, expr='excited', look=(.6, -.1), arm2=(24, -30))
+            + S.shadow(200, 348, 44)
+            + elephant(200, 352, s=1.2, expr='happy', look=(.5, -.1), trunk=(-24, 40))
+            + S.shadow(454, 348, 30)
+            + giraffe(454, 350, s=1.05, expr='calm', look=(-.6, 0))
+            + S.shadow(340, 350, 26)
+            + squirrel(340, 352, s=1.15, expr='happy', look=(-.6, 0), arm=(-40, -18))
+            + S.bubble(["Thank you for coming!", "We really need your help."], 330, 150,
+                       tail=(338, 228), size=12))
+
+
+def p03_5():
+    """The biggest mask on the shelf, onto a very small snout."""
+    return (S.indoors('s3p5', wall=WARD, floor="#DCE6EC")
+            + S.breather(94, 262, on=True)
+            + S.bed(150, 236, w=150)
+            + critter('pig', 188, 264, pose='lie', expr='surprised', look=(0, -.4))
+            + S.mask(188, 232, s=2.1, hose_to=(94, 206))
+            + S.shadow(338, 348, 44)
+            + elephant(338, 352, s=1.15, expr='happy', look=(.7, -.2), trunk=(-70, -10))
+            + S.shadow(452, 348, 30)
+            + giraffe(452, 350, s=1.05, expr='calm', look=(-.6, 0)))
+
+
+def p03_6():
+    """THUD! One enormous gust, and Pig sails clean off the bed."""
+    return (S.indoors('s3p6', wall=WARD, floor="#DCE6EC")
+            + S.bed(210, 250, w=150)
+            + S.breather(174, 262, on=True)
+            + "".join(f'<path d="M{206-i*6},{190+i*14} q-40,-10 -96,{-14+i*8}" stroke="#B9D4E2" '
+                      f'stroke-width="3" fill="none" stroke-linecap="round" opacity=".8"/>' for i in range(4))
+            + _pow(46, 146, 30)
+            + S.spin(-28, 74, 190, critter('pig', 74, 190, s=.8, pose='sit', expr='surprised',
+                                           arm=(-28, -26), arm2=(28, -26)))
+            + S.mask(190, 118, s=2.1)
+            + S.shadow(398, 348, 44)
+            + elephant(398, 352, s=1.15, expr='surprised', look=(-.8, -.4), trunk=(-30, -40))
+            + _shout("THUD!", 116, 70, size=34, rot=-8))
+
+
+def p03_7():
+    """Ice cream for the shivering Deer, chilli for the feverish Fox. Oh dear."""
+    return (S.indoors('s3p7', wall=WARD, floor="#DCE6EC")
+            + S.bed(20, 236, w=146)
+            + critter('deer', 58, 264, pose='lie', expr='sad', look=(.6, 0))
+            + S.shiver(58, 204, h=40, gap=38)
+            + S.bed(344, 236, w=146)
+            + critter('fox', 382, 264, pose='lie', expr='hurt', look=(-.6, 0))
+            + _heat(382, 196)
+            + S.shadow(250, 350, 32)
+            + rabbit(250, 352, s=1.2, expr='excited', look=(-.4, 0), arm=(-52, -14), arm2=(52, -14))
+            + S.ice_cream(186, 276, s=1.0)
+            + S.bowl(314, 282, 'chilli', s=1.0)
+            + _shout("?!", 272, 118, size=30, rot=6, color="#FF6B6B"))
+
+
+def p03_8():
+    """Both worse. Dr. Sheep rushes in and swaps the bowls right away."""
+    return (S.indoors('s3p8', wall=WARD, floor="#DCE6EC")
+            + S.bed(20, 236, w=146)
+            + critter('deer', 58, 264, pose='lie', expr='sad', look=(.6, 0))
+            + S.shiver(58, 204, h=40, gap=38)
+            + S.bed(344, 236, w=146)
+            + critter('fox', 382, 264, pose='lie', expr='hurt', look=(-.6, 0),
+                      extra='<circle cx="0" cy="-38" r="26" fill="#FF6B6B" opacity=".28"/>')
+            + _heat(382, 196)
+            + S.shadow(250, 350, 36)
+            + sheep(250, 352, s=1.2, expr='surprised', look=(0, -.2), arm=(-50, -20), arm2=(50, -20))
+            + S.bowl(186, 290, 'chilli', s=.9)
+            + S.ice_cream(316, 292, s=.9)
+            + S.bubble(["Oh dear -", "wrong dishes!"], 250, 104, tail=(250, 200), size=13))
+
+
+def p03_9():
+    """Wolf's tablets to the giraffe, the giraffe's giant injection to Wolf. OWOOO!"""
+    return (S.indoors('s3p9', wall=WARD, floor="#DCE6EC")
+            + giraffe(84, 330, s=1.25, pose='seated', cap=False, expr='worried', look=(.6, 0),
+                      extra='<circle cx="9" cy="-110" r="22" fill="#FF6B6B" opacity=".2"/>')
+            + S.bed(30, 262, w=140)
+            + S.pills(146, 250)
+            + S.bed(330, 236, w=160)
+            + critter('wolf', 368, 264, pose='lie', expr='shout', look=(0, -.6))
+            + S.shadow(250, 348, 44)
+            + elephant(250, 352, s=1.15, expr='guilty', look=(.6, -.2), trunk=(40, -18))
+            + S.syringe(330, 218, s=1.8, rot=160)
+            + _shout("OWOOO!", 400, 150, size=30, rot=-10))
+
+
+def p03_10():
+    """Dr. Sheep's office. A kind thank-you, a sad face, and: one more chance?"""
+    return (S.indoors('s3p10', wall="#F4EEE6", floor="#E8DCC8")
+            + '<rect x="334" y="70" width="70" height="52" rx="3" fill="#FFFDF6" stroke="#C8A868" stroke-width="3"/>'
+              '<circle cx="369" cy="102" r="7" fill="#E4453F"/><path d="M350,86 h38" stroke="#C8BCA4" stroke-width="2"/>'
+            + sheep(376, 284, s=1.1, pose='seated', expr='calm', look=(-.6, .1))
+            + S.table(290, 270, w=170)
+            + S.books(320, 262, n=3) + S.clipboard(432, 248, s=.8)
+            + S.shadow(90, 350, 30)
+            + rabbit(90, 352, s=1.15, expr='sad', look=(.6, -.1), ears=(-4, 8))
+            + S.shadow(214, 348, 44)
+            + elephant(214, 352, s=1.2, expr='sad', look=(.6, -.2), trunk=(-20, 44))
+            + S.bubble(["Please, one more chance?", "We really want to help."], 190, 108,
+                       tail=(208, 222), size=12))
+
+
+def p03_11():
+    """Slowly, carefully, a fresh neat bandage - and Lion gives a satisfied nod."""
+    return (S.indoors('s3p11', wall=WARD, floor="#DCE6EC")
+            + S.bed(40, 236, w=170)
+            + critter('lion', 78, 264, pose='lie', expr='happy', look=(.7, .2))
+            + bandage(186, 244, 16, 11)
+            + '<path d="M60,352 q-8,-26 10,-30 q18,-4 16,16" stroke="#E8E8E8" stroke-width="5" fill="none" stroke-linecap="round"/>'
+              '<rect x="40" y="322" width="40" height="30" rx="4" fill="#C8D0D6"/>'
+            + S.shadow(310, 348, 44)
+            + elephant(310, 352, s=1.15, expr='calm', look=(-.7, .5), trunk=(-92, -14))
+            + '<text x="236" y="210" font-size="22" fill="#06C98A" text-anchor="middle">&#10022;</text>'
+              '<text x="160" y="232" font-size="14" fill="#FFD166" text-anchor="middle">&#10022;</text>')
+
+
+def p03_12():
+    """Old Tortoise, driven home slowly and carefully through the snow."""
+    return (_snow03('s3p12', seed=4, horizon=214)
+            + S.pine(34, 222, s=.8) + S.pine(76, 216, s=.6)
+            + S.cottage(430, 244, s=.9)
+            + S.road(250)
+            + '<path d="M0,250 q60,-8 120,0 t130,0 t130,0 t120,0" stroke="#FFFFFF" stroke-width="8" fill="none"/>'
+            + S.truck('s3p12', 60, 328, w=300,
+                      cargo_riders=tortoise(146, 290, s=.9, expr='happy', look=(.5, 0)),
+                      cab_riders=rabbit(302, S.cab_seat(328, .72), s=.72, pose='seated', expr='calm', look=(.5, 0))))
+
+
+def p03_13():
+    """A chocolate each, 'same time tomorrow?' and grins all the way home."""
+    return (S.snow_sky('s3p13', 'sunset') + S.snow_ground('s3p13') + S.flakes(14, 5, bottom=200)
+            + '<circle cx="444" cy="70" r="30" fill="#FFB36B" opacity=".9"/><circle cx="444" cy="70" r="21" fill="#FFE0A8"/>'
+            + S.hospital(x=18, y=96, w=130, h=110)
+            + S.shadow(160, 350, 34)
+            + sheep(160, 352, s=1.15, expr='happy', look=(.6, 0), arm2=(48, -10))
+            + S.chocolate(222, 300)
+            + S.shadow(292, 350, 30)
+            + rabbit(292, 352, s=1.15, expr='happy', look=(-.4, 0), arm=(-28, -12),
+                     extra=S.chocolate(-56, -76, s=.8, rot=20))
+            + S.shadow(410, 348, 44)
+            + elephant(410, 352, s=1.2, expr='happy', look=(-.5, 0), trunk=(-40, 10))
+            + S.chocolate(372, 262, s=.9, rot=-30)
+            + S.bubble(["Thank you both, truly.", "Same time tomorrow?"], 176, 118, tail=(166, 214), size=12)
+            + '<text x="350" y="150" font-size="22" fill="#FF6B6B" text-anchor="middle">&#9829;</text>')
+
+
 PAGES = {
     '02-ouch-the-big-thorn': [p02_1, p02_2, p02_3, p02_4, p02_5,
                               p02_6, p02_7, p02_8, p02_9, p02_10],
     '05-splash-the-pool-party': [p05_1, p05_2, p05_3, p05_4, p05_5, p05_6, p05_7, p05_8, p05_9],
     '01-the-hungry-friends': [p01_1, p01_2, p01_3, p01_4, p01_5, p01_6,
                               p01_7, p01_8, p01_9, p01_10, p01_11, p01_12],
+    '03-snow-much-help': [p03_1, p03_2, p03_3, p03_4, p03_5, p03_6, p03_7,
+                          p03_8, p03_9, p03_10, p03_11, p03_12, p03_13],
+    '04-watch-your-step': [p04_1, p04_2, p04_3, p04_4, p04_5, p04_6,
+                           p04_7, p04_8, p04_9, p04_10, p04_11, p04_12],
     '06-bonk-the-bumpy-ride-home': [p06_1, p06_2, p06_3, p06_4, p06_5,
                                     p06_6, p06_7, p06_8, p06_9, p06_10],
 }

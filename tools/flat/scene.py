@@ -840,3 +840,320 @@ def shiver(x, y, h=40, gap=30, color="#74C8E4"):
     return "".join(f'<path d="M{x+sx*gap},{y} q{sx*5},{h*.12:.0f} 0,{h*.25:.0f} q{-sx*5},{h*.12:.0f} 0,{h*.25:.0f} '
                    f'q{sx*5},{h*.12:.0f} 0,{h*.25:.0f}" stroke="{color}" stroke-width="2.2" fill="none" '
                    f'stroke-linecap="round"/>' for sx in (-1, 1))
+
+
+# ---------------------------------------------------------------- story 07 props
+# Story 07 is a night at Rabbit's burrow. Night is a soft indigo veil laid OVER the
+# room (night()), never a dark background: the room underneath is the same warm
+# burrow as in daylight, so a dim page still reads as cosy, and a lamp or the moon
+# can glow back through the veil. The audience is small; dark must never mean scary.
+NIGHT = "#2B3A67"
+EARTH, EARTH_DK = "#C48F5E", "#A8744A"
+WOOD, WOOD_DK = "#D9AE7A", "#B98A56"
+
+
+def burrow(uid, floor=262, wall=("#F6E2C4", "#ECCDA4")):
+    """Rabbit's burrow from the inside: a warm dug-out room under an arched earth
+    ceiling, a few roots poking through, and a plank floor."""
+    top, bot = wall
+    pebbles = ((14, 40, 5), (34, 18, 3.5), (474, 30, 4.5), (486, 70, 3), (20, 120, 3.5), (488, 150, 4),
+               (240, 6, 3), (120, 4, 2.5), (380, 5, 3))
+    return (f'<defs><linearGradient id="wall-{uid}" x1="0" y1="0" x2="0" y2="1">'
+            f'<stop offset="0" stop-color="{top}"/><stop offset="1" stop-color="{bot}"/></linearGradient></defs>'
+            f'<rect width="500" height="360" fill="{EARTH}"/>'
+            + "".join(f'<circle cx="{x}" cy="{y}" r="{r}" fill="{EARTH_DK}" opacity=".7"/>' for x, y, r in pebbles)
+            + f'<path d="M30,{floor} L30,96 Q30,16 120,14 L380,14 Q470,16 470,96 L470,{floor} Z" fill="url(#wall-{uid})"/>'
+            f'<path d="M150,14 q4,18 -2,30 q-4,8 2,16 M330,14 q-3,14 3,24 M352,14 q2,10 -3,18" stroke="{EARTH_DK}" '
+            f'stroke-width="3" fill="none" stroke-linecap="round"/>'
+            f'<rect y="{floor}" width="500" height="{360-floor}" fill="{WOOD}"/>'
+            f'<line x1="0" y1="{floor}" x2="500" y2="{floor}" stroke="{WOOD_DK}" stroke-width="3"/>'
+            + "".join(f'<line x1="0" y1="{floor+dy}" x2="500" y2="{floor+dy}" stroke="{WOOD_DK}" stroke-width="1.4" opacity=".55"/>'
+                      for dy in (30, 64))
+            + "".join(f'<line x1="{x}" y1="{floor+y0}" x2="{x}" y2="{floor+y1}" stroke="{WOOD_DK}" stroke-width="1.4" opacity=".55"/>'
+                      for x, y0, y1 in ((90, 0, 30), (300, 0, 30), (190, 30, 64), (420, 30, 64), (60, 64, 98), (330, 64, 98))))
+
+
+def night(op=.42):
+    """Lights out: an indigo veil over everything drawn so far."""
+    return f'<rect width="500" height="360" fill="{NIGHT}" opacity="{op}"/>'
+
+
+def glow(x, y, r=70, color="#FFE9A8"):
+    """Warm light pooling round a lamp, drawn over the night veil."""
+    return "".join(f'<circle cx="{x}" cy="{y}" r="{r*k:.0f}" fill="{color}" opacity="{o}"/>'
+                   for k, o in ((1, .14), (.66, .16), (.36, .22)))
+
+
+def porthole(x, y, r=34, sky='night'):
+    """A round burrow window. `sky` is night (moon and stars), sunset or morning."""
+    fill = {'night': "#3B4E86", 'sunset': "#FFB99A", 'morning': "#BEE7FB"}[sky]
+    inner = ''
+    if sky == 'night':
+        inner = (f'<circle cx="{x+r*.3:.0f}" cy="{y-r*.25:.0f}" r="{r*.32:.0f}" fill="#FFF3C4"/>'
+                 f'<circle cx="{x+r*.42:.0f}" cy="{y-r*.33:.0f}" r="{r*.28:.0f}" fill="{fill}"/>'
+                 + "".join(f'<circle cx="{x+dx*r:.0f}" cy="{y+dy*r:.0f}" r="1.6" fill="#FFF3C4"/>'
+                           for dx, dy in ((-.5, -.3), (-.2, .3), (-.55, .35), (.1, -.55), (.45, .4))))
+    else:
+        inner = (f'<circle cx="{x+r*.25:.0f}" cy="{y+r*.1:.0f}" r="{r*.3:.0f}" fill="#FFD166"/>'
+                 f'<path d="M{x-r},{y+r*.55:.0f} q{r*.6:.0f},{-r*.35:.0f} {r*2},{-r*.1:.0f} V{y+r} H{x-r} Z" fill="#8ECB7E"/>')
+    return (f'<circle cx="{x}" cy="{y}" r="{r+7}" fill="{WOOD}" stroke="{WOOD_DK}" stroke-width="2.5"/>'
+            f'<circle cx="{x}" cy="{y}" r="{r}" fill="{fill}"/>'
+            + clip(f'ph{x}{y}', x-r, y-r, 2*r, 2*r, inner)
+            + f'<path d="M{x},{y-r} v{2*r} M{x-r},{y} h{2*r}" stroke="{WOOD_DK}" stroke-width="3"/>')
+
+
+def picture(x, y, w=44, h=36, tilt=0, art='carrot', wobble=False):
+    """A framed picture on the burrow wall; `wobble` adds the wibble-wobble marks."""
+    arts = {
+        'carrot': (f'<path d="M{x-4},{y-8} L{x+4},{y-8} L{x},{y+12} Z" fill="#F08A3C"/>'
+                   f'<path d="M{x},{y-8} q-6,-8 -2,-10 M{x},{y-8} q6,-8 2,-10" stroke="#4A9B4A" stroke-width="2.2" fill="none"/>'),
+        'heart': f'<text x="{x}" y="{y+7}" font-size="20" text-anchor="middle" fill="#FF6B6B">&#9829;</text>',
+        'hills': (f'<path d="M{x-w/2+4},{y+h/2-4} L{x-6},{y-6} L{x+4},{y+4} L{x+10},{y-2} L{x+w/2-4},{y+h/2-4} Z" fill="#8ECB7E"/>'
+                  f'<circle cx="{x+10}" cy="{y-8}" r="4" fill="#FFD166"/>'),
+    }
+    out = (f'<g transform="rotate({tilt} {x} {y-h/2})">'
+           f'<rect x="{x-w/2}" y="{y-h/2}" width="{w}" height="{h}" rx="3" fill="#FFFDF6" stroke="{WOOD_DK}" stroke-width="3"/>'
+           f'{arts[art]}</g>')
+    if wobble:
+        out += "".join(f'<path d="M{x+sx*(w/2+8)},{y-10} q{sx*4},5 0,10 q{-sx*4},5 0,10" stroke="#8FA8C0" '
+                       f'stroke-width="2" fill="none" stroke-linecap="round"/>' for sx in (-1, 1))
+    return out
+
+
+def lamp(x, y, on=True, blanket=False):
+    """A side table with a little lamp on it. `y` is the floor. `blanket` is Rabbit's
+    blanket, blown clean off her bed and draped over the shade."""
+    out = (f'<rect x="{x-24}" y="{y-58}" width="48" height="8" rx="3" fill="{WOOD}" stroke="{WOOD_DK}" stroke-width="1.5"/>'
+           f'<rect x="{x-19}" y="{y-50}" width="6" height="50" fill="{WOOD_DK}"/><rect x="{x+13}" y="{y-50}" width="6" height="50" fill="{WOOD_DK}"/>'
+           f'<rect x="{x-3}" y="{y-86}" width="6" height="28" fill="#9AA6AE"/>'
+           f'<ellipse cx="{x}" cy="{y-58}" rx="12" ry="4" fill="#9AA6AE"/>'
+           f'<path d="M{x-22},{y-84} L{x-13},{y-112} L{x+13},{y-112} L{x+22},{y-84} Z" '
+           f'fill="{"#FFE39A" if on else "#E8D6A8"}" stroke="#D8B05A" stroke-width="1.5"/>')
+    if blanket:
+        out += (f'<path d="M{x-30},{y-70} Q{x-26},{y-120} {x},{y-118} Q{x+28},{y-120} {x+32},{y-66} '
+                f'q-8,6 -14,-2 q-8,8 -16,0 q-8,8 -16,0 q-8,8 -16,2 Z" fill="#74C8E4" stroke="#4AA8C8" stroke-width="1.5"/>'
+                + "".join(f'<circle cx="{x+dx}" cy="{y+dy}" r="3" fill="#FFFDF6" opacity=".85"/>'
+                          for dx, dy in ((-14, -100), (8, -106), (16, -86), (-6, -84))))
+    return out
+
+
+def sofa(x, y, w=180, squashed=False, color="#FF9BAE", line="#E0708A"):
+    """Rabbit's sofa. `y` is the floor. Squashed, the seat is pancaked to the floor,
+    the arms splay out and a spring pings loose."""
+    if squashed:
+        return (f'<rect x="{x-w/2:.0f}" y="{y-22}" width="{w}" height="22" rx="8" fill="{color}" stroke="{line}" stroke-width="2"/>'
+                f'<rect x="{x-w/2+6:.0f}" y="{y-44}" width="{w-12}" height="24" rx="8" fill="{color}" stroke="{line}" stroke-width="2" '
+                f'transform="rotate(-3 {x} {y-32})"/>'
+                + "".join(f'<rect x="{x+sx*w/2-12:.0f}" y="{y-40}" width="24" height="40" rx="9" fill="{color}" stroke="{line}" '
+                          f'stroke-width="2" transform="rotate({sx*28} {x+sx*w/2:.0f} {y})"/>' for sx in (-1, 1))
+                + f'<path d="M{x+w*.3:.0f},{y-44} l6,-8 l-10,-6 l10,-6 l-10,-6 l8,-8" stroke="#9AA6AE" stroke-width="2.4" '
+                  f'fill="none" stroke-linejoin="round" stroke-linecap="round"/>')
+    return (f'<rect x="{x-w/2+10:.0f}" y="{y-96}" width="{w-20}" height="56" rx="14" fill="{color}" stroke="{line}" stroke-width="2"/>'
+            f'<rect x="{x-w/2+10:.0f}" y="{y-52}" width="{w-20}" height="34" rx="8" fill="{color}" stroke="{line}" stroke-width="2"/>'
+            + "".join(f'<rect x="{x+sx*(w/2-14)-14:.0f}" y="{y-70}" width="28" height="60" rx="12" fill="{color}" '
+                      f'stroke="{line}" stroke-width="2"/>' for sx in (-1, 1))
+            + "".join(f'<rect x="{x+dx:.0f}" y="{y-12}" width="8" height="12" fill="{WOOD_DK}"/>' for dx in (-w/2+10, w/2-18)))
+
+
+CUSHIONS = ("#FF9BAE", "#FFD166", "#74C8E4", "#C77DFF", "#8ECB7E", "#FFB347")
+
+
+def nest(x, y, w=260):
+    """Every cushion in the burrow, heaped into one giant bed on the floor."""
+    out = [f'<ellipse cx="{x}" cy="{y-10}" rx="{w/2:.0f}" ry="24" fill="#F0D9A8" stroke="#D8B888" stroke-width="2"/>']
+    for i in range(9):
+        cx = x - w/2 + 26 + i*(w-52)/8
+        cy = y - 22 - (8 if i % 2 else 0)
+        out.append(f'<rect x="{cx-22:.0f}" y="{cy-14:.0f}" width="44" height="28" rx="11" fill="{CUSHIONS[i % 6]}" '
+                   f'stroke="#00000022" stroke-width="1.5" transform="rotate({(i % 3 - 1)*9} {cx:.0f} {cy:.0f})"/>')
+    return "".join(out)
+
+
+def nest_front(x, y, w=260):
+    """The near rim of the nest, drawn OVER whoever is lying in it so they sink in."""
+    return "".join(f'<rect x="{x-w/2+10+i*(w-20)/5:.0f}" y="{y-20}" width="{(w-20)/5+8:.0f}" height="24" rx="11" '
+                   f'fill="{CUSHIONS[(i+2) % 6]}" stroke="#00000022" stroke-width="1.5"/>' for i in range(5))
+
+
+def little_bed(x, y, w=120, sleeper="", quilt="#74C8E4"):
+    """Rabbit's own small bed, `y` the floor. Like the car, it draws its sleeper
+    itself: the quilt goes OVER them, so only a head and ears show. `quilt=None`
+    leaves the bed bare - the night Rabbit's quilt blows off onto the lamp."""
+    top = y - 44
+    return (f'<rect x="{x-w/2-8:.0f}" y="{top-46}" width="14" height="{y-top+46}" rx="5" fill="{WOOD_DK}"/>'
+            f'<rect x="{x+w/2-6:.0f}" y="{top-18}" width="14" height="{y-top+18}" rx="5" fill="{WOOD_DK}"/>'
+            f'<rect x="{x-w/2:.0f}" y="{top}" width="{w}" height="22" rx="6" fill="#FFFDF6" stroke="#D8C8A8" stroke-width="1.5"/>'
+            f'<rect x="{x-w/2+6:.0f}" y="{top-12}" width="34" height="16" rx="7" fill="#FFFFFF" stroke="#D8C8A8" stroke-width="1.5"/>'
+            + sleeper
+            + ((f'<path d="M{x-w/2+26:.0f},{top+4} Q{x+10:.0f},{top-14} {x+w/2+2:.0f},{top+2} L{x+w/2+2:.0f},{top+26} '
+                f'L{x-w/2+26:.0f},{top+26} Z" fill="{quilt}" stroke="#4AA8C8" stroke-width="1.5"/>'
+                + "".join(f'<circle cx="{x+dx:.0f}" cy="{top+dy}" r="3" fill="#FFFDF6" opacity=".85"/>'
+                          for dx, dy in ((-10, 10), (14, 4), (36, 12), (2, 20)))) if quilt else '')
+            + f'<rect x="{x-w/2+4:.0f}" y="{top+22}" width="{w-8}" height="10" rx="3" fill="{WOOD}"/>')
+
+
+def snore(x, y, s=1.0, n=3, soft=False):
+    """Snore waves rolling out from a trunk. `soft` is the gentle side-sleeping hum."""
+    col = "#8FA8C0" if soft else "#5B7BA8"
+    return "".join(f'<path d="M{x+i*14*s:.0f},{y-(22+i*10)*s:.0f} q{8*s:.0f},{(22+i*10)*s:.0f} 0,{(44+i*20)*s:.0f}" '
+                   f'stroke="{col}" stroke-width="{(2 if soft else 3.2)*s:.1f}" fill="none" stroke-linecap="round" '
+                   f'opacity="{.85-i*.18:.2f}"/>' for i in range(n))
+
+
+def peg(x, y, s=1.0, rot=0):
+    """A wooden clothes peg."""
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            f'<rect x="{x-14*s:.0f}" y="{y-4*s:.0f}" width="{28*s:.0f}" height="{4*s:.0f}" rx="1.5" fill="{WOOD}" stroke="{WOOD_DK}" stroke-width="1"/>'
+            f'<rect x="{x-14*s:.0f}" y="{y+1*s:.0f}" width="{28*s:.0f}" height="{4*s:.0f}" rx="1.5" fill="{WOOD}" stroke="{WOOD_DK}" stroke-width="1"/>'
+            f'<circle cx="{x}" cy="{y+.5*s:.1f}" r="{3.4*s:.1f}" fill="none" stroke="#9AA6AE" stroke-width="{1.6*s:.1f}"/></g>')
+
+
+def flight(pts, color="#8FA8C0"):
+    """A dotted trajectory through the given points - the peg's bouncy route."""
+    d = f'M{pts[0][0]},{pts[0][1]} ' + " ".join(f'L{x},{y}' for x, y in pts[1:])
+    return (f'<path d="{d}" stroke="{color}" stroke-width="2.6" fill="none" stroke-dasharray="2 7" '
+            f'stroke-linecap="round" stroke-linejoin="round"/>')
+
+
+def apple(x, y, r=9, color="#FF6B6B"):
+    return (f'<circle cx="{x}" cy="{y}" r="{r}" fill="{color}" stroke="#00000022" stroke-width="1"/>'
+            f'<path d="M{x},{y-r} q1,-5 4,-6" stroke="#6B4A24" stroke-width="2" fill="none" stroke-linecap="round"/>'
+            f'<circle cx="{x-r*.35:.1f}" cy="{y-r*.35:.1f}" r="{r*.22:.1f}" fill="#FFFFFF" opacity=".6"/>')
+
+
+def fruit_bowl(x, y, w=150, rider=""):
+    """The big kitchen fruit bowl, big enough to sleep in. `y` is the floor it stands
+    on. It owns its rider: melon and apples go in behind them, the bowl's front over."""
+    rim = y - 62
+    return (f'<ellipse cx="{x}" cy="{rim}" rx="{w/2:.0f}" ry="14" fill="#E8D6B4" stroke="#C8B48C" stroke-width="2"/>'
+            f'<ellipse cx="{x+w*.26:.0f}" cy="{rim-14}" rx="26" ry="22" fill="#8ECB7E" stroke="#5E9B50" stroke-width="2"/>'
+            f'<path d="M{x+w*.26-14:.0f},{rim-28} q14,10 28,0 M{x+w*.26-20:.0f},{rim-16} q20,10 40,0" stroke="#5E9B50" stroke-width="1.6" fill="none"/>'
+            + apple(x - w*.3, rim - 10, 11) + apple(x - w*.18, rim - 4, 10, "#FFD166")
+            + rider
+            + f'<path d="M{x-w/2:.0f},{rim} Q{x-w/2+6:.0f},{y-6} {x:.0f},{y-4} Q{x+w/2-6:.0f},{y-6} {x+w/2:.0f},{rim} '
+              f'Q{x:.0f},{rim+16} {x-w/2:.0f},{rim} Z" fill="#FFFFFF" stroke="#C8B48C" stroke-width="2"/>'
+            + f'<path d="M{x-w*.36:.0f},{rim+20} Q{x:.0f},{rim+34} {x+w*.36:.0f},{rim+20}" stroke="#74C8E4" stroke-width="4" '
+              f'fill="none" stroke-linecap="round" opacity=".8"/>'
+            + f'<rect x="{x-24}" y="{y-6}" width="48" height="6" rx="3" fill="#C8B48C"/>')
+
+
+def kitchen(uid, floor=262):
+    """The burrow kitchen: the same dug-out room, with a counter, a shelf of pots and
+    a round window."""
+    return (burrow(uid, floor)
+            + f'<rect x="300" y="{floor-86}" width="170" height="86" fill="#F2E2C4" stroke="{WOOD_DK}" stroke-width="2"/>'
+            f'<rect x="294" y="{floor-92}" width="182" height="10" rx="3" fill="{WOOD}" stroke="{WOOD_DK}" stroke-width="1.5"/>'
+            + "".join(f'<rect x="{x}" y="{floor-74}" width="70" height="62" rx="4" fill="none" stroke="{WOOD_DK}" stroke-width="1.5"/>'
+                      f'<circle cx="{x+35}" cy="{floor-44}" r="3" fill="{WOOD_DK}"/>' for x in (310, 390)))
+
+
+def shelf(x, y, w=150, pots=True, tipped=False):
+    """A wall shelf with pots and a jar. `tipped` knocks it crooked, mid-CLANG."""
+    rot = -10 if tipped else 0
+    items = ''
+    if pots:
+        items = (f'<rect x="{x-w/2+10:.0f}" y="{y-24}" width="30" height="24" rx="4" fill="#9AA6AE" stroke="#6E7880" stroke-width="1.5"/>'
+                 f'<rect x="{x-6:.0f}" y="{y-30}" width="22" height="30" rx="4" fill="#FFD166" stroke="#D8A21F" stroke-width="1.5"/>'
+                 f'<rect x="{x-8:.0f}" y="{y-34}" width="26" height="6" rx="2" fill="#E4453F"/>'
+                 f'<rect x="{x+w/2-40:.0f}" y="{y-20}" width="30" height="20" rx="4" fill="#C8BCA4" stroke="#9A8E78" stroke-width="1.5"/>')
+    return (f'<g transform="rotate({rot} {x} {y})">{items}'
+            f'<rect x="{x-w/2:.0f}" y="{y}" width="{w}" height="8" rx="2" fill="{WOOD}" stroke="{WOOD_DK}" stroke-width="1.5"/>'
+            f'<path d="M{x-w/2+14:.0f},{y+8} l10,14 M{x+w/2-14:.0f},{y+8} l-10,14" stroke="{WOOD_DK}" stroke-width="3"/></g>')
+
+
+def saucepan(x, y, s=1.0, rot=0):
+    """A saucepan, opening DOWN - jammed on a head like a helmet. `x, y` is the
+    middle of its rim."""
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            f'<path d="M{x-34*s:.0f},{y:.0f} L{x-30*s:.0f},{y-40*s:.0f} Q{x:.0f},{y-48*s:.0f} {x+30*s:.0f},{y-40*s:.0f} '
+            f'L{x+34*s:.0f},{y:.0f} Z" fill="#B8C2CA" stroke="#7E8A92" stroke-width="2"/>'
+            f'<rect x="{x-37*s:.0f}" y="{y-5*s:.0f}" width="{74*s:.0f}" height="{8*s:.0f}" rx="3" fill="#9AA6AE" stroke="#7E8A92" stroke-width="1.5"/>'
+            f'<path d="M{x-20*s:.0f},{y-30*s:.0f} q8,-6 16,-4" stroke="#FFFFFF" stroke-width="3" fill="none" opacity=".7" stroke-linecap="round"/>'
+            f'<rect x="{x+30*s:.0f}" y="{y-34*s:.0f}" width="{46*s:.0f}" height="{9*s:.0f}" rx="4" fill="#5E6870" '
+            f'transform="rotate(-14 {x+30*s:.0f} {y-30*s:.0f})"/></g>')
+
+
+def skate(x, y, rot=0):
+    """Rabbit's roller skate, `y` the floor under its wheels."""
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            f'<path d="M{x-22},{y-12} L{x-22},{y-34} Q{x-22},{y-40} {x-14},{y-40} L{x-4},{y-40} L{x-4},{y-24} '
+            f'L{x+18},{y-22} Q{x+26},{y-20} {x+24},{y-12} Z" fill="#FF6B6B" stroke="#C0484A" stroke-width="1.5"/>'
+            f'<rect x="{x-24}" y="{y-14}" width="50" height="5" rx="2" fill="#5E6870"/>'
+            + "".join(f'<circle cx="{x+dx}" cy="{y-5}" r="5" fill="#FFD166" stroke="#D8A21F" stroke-width="1.5"/>' for dx in (-15, 15))
+            + '</g>')
+
+
+def banana(x, y, s=1.0, rot=0):
+    return (f'<path d="M{x-14*s:.0f},{y-4*s:.0f} Q{x:.0f},{y+10*s:.0f} {x+16*s:.0f},{y-8*s:.0f} '
+            f'Q{x:.0f},{y+2*s:.0f} {x-14*s:.0f},{y-4*s:.0f} Z" fill="#FFD166" stroke="#D8A21F" stroke-width="1.5" '
+            f'transform="rotate({rot} {x} {y})"/>')
+
+
+def suitcase(x, y, s=1.0, rot=0):
+    """`x, y` is the handle - where a trunk grips it."""
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            f'<path d="M{x-8*s:.0f},{y+6*s:.0f} v{-8*s:.0f} h{16*s:.0f} v{8*s:.0f}" stroke="#6B4A2E" stroke-width="{3*s:.1f}" fill="none"/>'
+            f'<rect x="{x-26*s:.0f}" y="{y+6*s:.0f}" width="{52*s:.0f}" height="{36*s:.0f}" rx="5" fill="#C77DFF" stroke="#9B4DDB" stroke-width="2"/>'
+            f'<rect x="{x-26*s:.0f}" y="{y+18*s:.0f}" width="{52*s:.0f}" height="{5*s:.0f}" fill="#9B4DDB" opacity=".6"/>'
+            f'<circle cx="{x+12*s:.0f}" cy="{y+30*s:.0f}" r="{4*s:.1f}" fill="#FFD166"/></g>')
+
+
+def teddy(x, y, s=1.0):
+    """A little teddy bear, `x, y` its middle."""
+    c, l = "#E8B47A", "#B98448"
+    return (f'<circle cx="{x-8*s:.0f}" cy="{y-18*s:.0f}" r="{5*s:.1f}" fill="{c}" stroke="{l}" stroke-width="1.2"/>'
+            f'<circle cx="{x+8*s:.0f}" cy="{y-18*s:.0f}" r="{5*s:.1f}" fill="{c}" stroke="{l}" stroke-width="1.2"/>'
+            f'<ellipse cx="{x}" cy="{y+6*s:.0f}" rx="{11*s:.1f}" ry="{12*s:.1f}" fill="{c}" stroke="{l}" stroke-width="1.2"/>'
+            f'<circle cx="{x}" cy="{y-10*s:.0f}" r="{10*s:.1f}" fill="{c}" stroke="{l}" stroke-width="1.2"/>'
+            f'<circle cx="{x-3.5*s:.1f}" cy="{y-11*s:.0f}" r="{1.4*s:.1f}" fill="{INK}"/>'
+            f'<circle cx="{x+3.5*s:.1f}" cy="{y-11*s:.0f}" r="{1.4*s:.1f}" fill="{INK}"/>'
+            f'<ellipse cx="{x}" cy="{y-6*s:.0f}" rx="{2.4*s:.1f}" ry="{1.8*s:.1f}" fill="{l}"/>')
+
+
+def pillow(x, y, w=56, h=32, rot=0, color="#FFFFFF", line="#D0C8B8"):
+    return (f'<path d="M{x-w/2:.0f},{y-h/2:.0f} Q{x:.0f},{y-h/2+6:.0f} {x+w/2:.0f},{y-h/2:.0f} '
+            f'Q{x+w/2-6:.0f},{y:.0f} {x+w/2:.0f},{y+h/2:.0f} Q{x:.0f},{y+h/2-6:.0f} {x-w/2:.0f},{y+h/2:.0f} '
+            f'Q{x-w/2+6:.0f},{y:.0f} {x-w/2:.0f},{y-h/2:.0f} Z" fill="{color}" stroke="{line}" stroke-width="1.8" '
+            f'stroke-linejoin="round" transform="rotate({rot} {x} {y})"/>')
+
+
+def feather(x, y, s=1.0, rot=0):
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            f'<path d="M{x},{y-12*s:.0f} Q{x+7*s:.0f},{y-2*s:.0f} {x},{y+10*s:.0f} Q{x-7*s:.0f},{y-2*s:.0f} {x},{y-12*s:.0f} Z" '
+            f'fill="#FFFFFF" stroke="#C8C0B0" stroke-width="1.1"/>'
+            f'<path d="M{x},{y-10*s:.0f} V{y+14*s:.0f}" stroke="#C8C0B0" stroke-width="1.1"/></g>')
+
+
+def feathers(n=18, seed=7, box=(20, 20, 480, 300)):
+    """A flurry of feathers. Deterministic, like flakes()."""
+    x0, y0, x1, y1 = box
+    out, v = [], seed * 7919 + 17
+    for _ in range(n):
+        v = (v * 1103515245 + 12345) % 2**31
+        x = x0 + v % (x1 - x0)
+        v = (v * 1103515245 + 12345) % 2**31
+        y = y0 + v % (y1 - y0)
+        out.append(feather(x, y, .8 + (v >> 9) % 3 * .2, (v >> 5) % 160 - 80))
+    return "".join(out)
+
+
+def burrow_hill(x, y, door=(0, 0), door_r=30, open_door=False):
+    """Rabbit's front door, from outside: a grassy hump with a small round door in it.
+    `x` is the hill's middle, `y` the ground; `door` offsets the doorway from the
+    hill's foot. Returns the hill and door - the door is small ON PURPOSE."""
+    dx, dy = x + door[0], y + door[1]
+    r = door_r
+    hole = (f'M{dx-r},{dy} L{dx-r},{dy-r*.9:.0f} A{r},{r} 0 0 1 {dx+r},{dy-r*.9:.0f} L{dx+r},{dy} Z')
+    out = (f'<path d="M{x-190},{y+6} Q{x-150},{y-150} {x+10},{y-160} Q{x+170},{y-150} {x+210},{y+6} Z" fill="#7DBE6E"/>'
+           f'<path d="M{x-150},{y-40} q20,-12 40,-6 M{x+90},{y-110} q18,-8 34,0 M{x-60},{y-130} q14,-6 28,0" '
+           f'stroke="#5E9B50" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".7"/>'
+           f'<path d="{hole}" fill="#5A3A1E" stroke="{EARTH_DK}" stroke-width="6"/>')
+    if open_door:
+        out += f'<path d="{hole}" fill="#3A2412"/>'
+    else:
+        out += (f'<path d="{hole}" fill="#C08840" stroke="#8A5A26" stroke-width="2"/>'
+                + "".join(f'<line x1="{dx+k*r/2.5:.0f}" y1="{dy}" x2="{dx+k*r/2.5:.0f}" y2="{dy-r*1.6:.0f}" '
+                          f'stroke="#8A5A26" stroke-width="1.5" opacity=".6"/>' for k in (-1, 0, 1))
+                + f'<circle cx="{dx}" cy="{dy-r*1.05:.0f}" r="{r*.26:.0f}" fill="#FFE39A" stroke="#8A5A26" stroke-width="1.5"/>'
+                  f'<circle cx="{dx+r*.62:.0f}" cy="{dy-r*.5:.0f}" r="2.6" fill="#FFD166"/>')
+    return out

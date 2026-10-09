@@ -63,6 +63,9 @@ SKY_MOODS = {
     'winter':   ("#A8C6E8", "#CFE0F2", "#F6FAFF"),
     'noon':     ("#7FC3EA", "#B6E0F5", "#EEF9FF"),
     'dusk':     ("#E2A6C0", "#FFC9B6", "#FFEBD8"),
+    # first stars over a sunset glow: lilac-blue up top, never navy - it is still a
+    # bedtime story for very small people
+    'twilight': ("#7C88C4", "#C9A6CC", "#FFD9BC"),
 }
 
 

@@ -14,7 +14,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import scene as S
 from characters import (rabbit, elephant, bear, squirrel, giraffe, sheep, critter, tortoise, bandage,
-                        E_BODY, E_LINE, R_BODY, R_LINE)
+                        E_BODY, E_LINE, R_BODY, R_LINE, _limb)
 
 
 def alt(text):
@@ -1087,6 +1087,278 @@ def p03_13():
             + '<text x="350" y="150" font-size="22" fill="#FF6B6B" text-anchor="middle">&#9829;</text>')
 
 
+# ---------------------------------------------------------------- story 07
+E_SOLE, E_NAIL = "#D9CEBF", "#F6F1E8"
+
+
+def _sole(x, y, rx=20, ry=16, rot=0):
+    """The bottom of an elephant's foot, toenails and all - what you see of a foot
+    pointing at you."""
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            f'<ellipse cx="{x}" cy="{y}" rx="{rx}" ry="{ry}" fill="{E_SOLE}" stroke="{E_LINE}" stroke-width="2"/>'
+            + "".join(f'<ellipse cx="{x+dx*rx:.0f}" cy="{y-ry*.62:.0f}" rx="{rx*.2:.1f}" ry="{ry*.22:.1f}" fill="{E_NAIL}" '
+                      f'stroke="{E_LINE}" stroke-width="1"/>' for dx in (-.5, 0, .5))
+            + '</g>')
+
+
+def _rump(x, y, kick=False):
+    """Elephant from behind, wedged in a doorway: a big round bottom, a tail hanging
+    down it, and two back legs. `y` is the ground under the planted foot."""
+    lx, rx_ = x - 36, x + 36
+    out = (f'<rect x="{lx-19}" y="{y-80}" width="38" height="70" rx="15" fill="{E_BODY}" stroke="{E_LINE}" stroke-width="1.8"/>'
+           + _sole(lx, y - 10, 22, 14))
+    if kick:
+        out += (_limb(rx_, y - 70, 50, -36, E_BODY, E_LINE, 36, bow=.2)
+                + _sole(rx_ + 56, y - 110, 21, 16, rot=-36))
+    else:
+        out += (f'<rect x="{rx_-19}" y="{y-80}" width="38" height="70" rx="15" fill="{E_BODY}" stroke="{E_LINE}" stroke-width="1.8"/>'
+                + _sole(rx_, y - 10, 22, 14))
+    return (out
+            + f'<ellipse cx="{x}" cy="{y-118}" rx="82" ry="64" fill="{E_BODY}" stroke="{E_LINE}" stroke-width="1.8"/>'
+            f'<path d="M{x},{y-56} q-2,-18 0,-34" stroke="{E_LINE}" stroke-width="2" fill="none" stroke-linecap="round"/>'
+            f'<path d="M{x-46},{y-150} q10,-12 24,-8 M{x+46},{y-150} q-10,-12 -24,-8" stroke="{E_LINE}" stroke-width="1.6" '
+            f'fill="none" stroke-linecap="round" opacity=".7"/>'
+            f'<path d="M{x},{y-176} q8,22 2,48" stroke="{E_LINE}" stroke-width="5" stroke-linecap="round" fill="none"/>'
+            f'<path d="M{x+2},{y-130} q-8,8 -3,18 q5,-4 5,4 q4,-8 6,-4 q2,-12 -8,-18 Z" fill="{S.INK}"/>')
+
+
+def _cheeks(hx, hy):
+    """Elephant's cheeks puffed up like balloons, round his head-local origin."""
+    return "".join(f'<circle cx="{hx+sx*30}" cy="{hy+14}" r="17" fill="{E_BODY}" stroke="{E_LINE}" stroke-width="1.5"/>'
+                   f'<circle cx="{hx+sx*34}" cy="{hy+8}" r="4" fill="#FFFFFF" opacity=".6"/>' for sx in (-1, 1))
+
+
+def _doorway(x0, x1, top, floor):
+    """An open archway out of the room, dark beyond."""
+    w = x1 - x0
+    return (f'<path d="M{x0},{floor} V{top+w/2:.0f} A{w/2:.0f},{w/2:.0f} 0 0 1 {x1},{top+w/2:.0f} V{floor} Z" '
+            f'fill="#5A3A1E" stroke="{S.EARTH_DK}" stroke-width="6"/>')
+
+
+@alt('At sunset, Elephant arrives at Rabbit\'s tiny burrow door with a pillow on his head, a teddy under his arm and a suitcase in his trunk, while Rabbit looks up at him, worried.')
+def p07_1():
+    """A sleepover! Elephant, his snack suitcase, and a very small front door."""
+    return (S.sky('s7p1', 'sunset', sun=(300, 64), clouds=((80, 54, 40, 15), (108, 46, 24, 12), (210, 84, 30, 12)))
+            + S.ground('s7p1', tufts=(40, 176, 250), flowers=((60, 246), (226, 252)))
+            + S.burrow_hill(420, 312, door=(-6, 0), door_r=40)
+            + S.shadow(170, 348, 50)
+            + elephant(170, 350, s=1.25, expr='happy', look=(.5, -.1), trunk=(-70, 30), arm=(10, -8),
+                       extra=S.suitcase(-80, -50, s=.8) + S.teddy(40, -64, s=1.1)
+                       + S.pillow(0, -148, w=74, h=30, rot=-6, color="#FFE3EC", line="#E8A8BC"))
+            + S.shadow(310, 350, 30)
+            + rabbit(310, 352, s=1.1, expr='worried', look=(-.6, -.5), arm2=(40, 8), ears=(-12, 16))
+            + S.bubble(["Snacks!", "Just in case."], 92, 104, tail=(150, 196)))
+
+
+@alt('Elephant is stuck in Rabbit\'s round front door with only his bottom, tail and kicking back legs outside, while Rabbit tickles his foot with a feather.')
+def p07_2():
+    """Stuck! Front half in the burrow, back half in the garden - and a feather."""
+    return (S.sky('s7p2', 'sunset', sun=(90, 60), clouds=((400, 50, 40, 15), (428, 42, 24, 12)))
+            + S.ground('s7p2', tufts=(40, 300, 460), flowers=((60, 250), (440, 246)))
+            + S.burrow_hill(220, 330, door_r=50, open_door=True)
+            + "".join(f'<path d="M{220+sx*86},{230+i*24} q{sx*12},6 {sx*22},0" stroke="#5B7BA8" stroke-width="2.6" '
+                      f'fill="none" stroke-linecap="round"/>' for sx in (-1, 1) for i in range(3))
+            + _rump(220, 344, kick=True)
+            + S.speedlines(318, 236, n=3, length=22, back=False)
+            + S.shadow(410, 350, 30)
+            + rabbit(410, 352, s=1.1, expr='sneaky', look=(-.7, -.3), arm=(-50, -50), ears=(-14, 14),
+                     extra=S.feather(-80, -112, s=1.3, rot=-50))
+            + _shout("HEE HEE!", 120, 110, size=26, rot=-8)
+            + _shout("HOO HOO!", 370, 92, size=22, rot=8, color="#C77DFF"))
+
+
+@alt('Inside the burrow, Elephant sits grinning on a squashed-flat sofa, and Rabbit lands upside down on top of his head with her ears in a knot.')
+def p07_3():
+    """POP! Straight onto the sofa - and Rabbit straight onto Elephant."""
+    rb = rabbit(250, 304, s=.95, expr='happy', look=(0, .3), arm=(-30, 10), arm2=(30, 10), ears=(38, -38))
+    return (S.burrow('s7p3')
+            + S.porthole(80, 120, sky='sunset')
+            + S.picture(420, 96, art='carrot')
+            + S.lamp(452, 330, on=True)
+            + S.sofa(250, 336, w=230, squashed=True)
+            + elephant(250, 330, s=1.2, pose='sit', expr='happy', look=(0, -.6), trunk=(40, -60), arm=(34, -40))
+            + S.spin(180, 250, 173, rb)
+            + S.pillow(96, 232, w=50, h=28, rot=-30, color="#FFD166", line="#D8A21F")
+            + S.speedlines(130, 236, n=3, length=20, back=False)
+            + _pow(146, 318, 20)
+            + _shout("CRUNCH!", 130, 300, size=24, rot=-8)
+            + S.bubble("Ta-da!", 388, 160, tail=(300, 200))
+            + S.bubble(["Welcome to", "my house."], 112, 46, tail=(200, 60), size=12))
+
+
+@alt('The little spare bed has folded up around Elephant like a sandwich, with his head and feet sticking out, while Rabbit gasps.')
+def p07_4():
+    """CRASH! The bed folds up with Elephant as the filling."""
+    half = (f'<rect x="-104" y="-12" width="104" height="24" rx="6" fill="#FFFDF6" stroke="#D8C8A8" stroke-width="2"/>'
+            f'<rect x="-104" y="12" width="104" height="10" rx="3" fill="{S.WOOD}" stroke="{S.WOOD_DK}" stroke-width="1.5"/>'
+            f'<rect x="-96" y="22" width="8" height="18" fill="{S.WOOD_DK}"/>')
+    vx, vy = 220, 316
+    return (S.burrow('s7p4')
+            + S.porthole(420, 100, sky='night')
+            + S.picture(110, 90, art='hills')
+            + S.lamp(60, 330, on=True)
+            + S.glow(60, 228, 70)
+            # Elephant tipped head-up into the fold, the bed's two halves closing over him
+            + S.spin(28, vx, vy, elephant(vx - 72, vy, s=1.05, pose='lie', expr='surprised', look=(.3, -.5),
+                                         trunk=(-40, 20)))
+            + _sole(vx + 84, vy - 70, 18, 14, rot=-30) + _sole(vx + 108, vy - 56, 18, 14, rot=-50)
+            + f'<g transform="translate({vx},{vy}) rotate(28)">{half}</g>'
+            + f'<g transform="translate({vx},{vy}) scale(-1,1) rotate(28)">{half}</g>'
+            + S.pillow(150, 150, w=48, h=26, rot=24)
+            + _pow(vx, vy + 6, 26)
+            + _shout("CRASH!", 230, 96, size=34, rot=-6)
+            + S.shadow(420, 350, 30)
+            + rabbit(420, 352, s=1.1, expr='surprised', look=(-.7, -.2), arm=(8, -44), arm2=(-8, -44)))
+
+
+@alt('In the dark, Elephant sleeps in a nest of cushions snoring HONK so loudly that Rabbit\'s ears blow flat, the pictures wobble and her blanket flies onto the lamp.')
+def p07_5():
+    """HONNNK - shoooo. A trumpet in a tunnel."""
+    return (S.burrow('s7p5')
+            + S.porthole(250, 86, sky='night')
+            + S.picture(120, 96, tilt=-12, art='carrot', wobble=True)
+            + S.picture(380, 90, tilt=10, art='heart', wobble=True)
+            + S.lamp(330, 290, on=False, blanket=True)
+            + S.night(.4)
+            + S.nest(150, 348, w=270)
+            + elephant(70, 316, s=1.05, pose='lie', expr='sleepy', trunk=(30, 34))
+            + S.nest_front(150, 352, w=270)
+            + S.snore(150, 218, s=1.3)
+            + _shout("HONNNK!", 150, 150, size=36, rot=-6, color="#FFD166")
+            + "".join(f'<path d="M{290+i*12},{200+i*14} h46" stroke="#C8D4E8" stroke-width="2.4" stroke-linecap="round" '
+                      f'opacity=".7"/>' for i in range(3))
+            + S.little_bed(430, 352, w=120, quilt=None,
+                           sleeper=rabbit(438, 330, s=.95, pose='seated', expr='surprised', look=(-.6, 0), ears=(72, 84))))
+
+
+@alt('Rabbit tiptoed over and clipped a peg on Elephant\'s trunk, but his puffed-up cheeks blew it PING across the room and BOINK onto Rabbit\'s nose.')
+def p07_6():
+    """Sneaky plan one: a clothes peg. It comes straight back at her."""
+    hx, hy = 70, 316 - 44*1.05
+    return (S.burrow('s7p6')
+            + S.porthole(250, 86, sky='night')
+            + S.picture(120, 96, tilt=-4, art='carrot')
+            + S.night(.4)
+            + S.nest(150, 348, w=270)
+            + elephant(70, 316, s=1.05, pose='lie', expr='sleepy', trunk=(30, 34), extra=_cheeks(0, -44))
+            + S.nest_front(150, 352, w=270)
+            + S.flight([(112, 300), (190, 30), (470, 120), (400, 232)], color="#FFE39A")
+            + _pow(190, 30, 14) + _pow(470, 120, 14)
+            + _shout("PING!", 150, 230, size=26, rot=-10, color="#FFD166")
+            + S.shadow(400, 350, 30)
+            + rabbit(400, 352, s=1.15, expr='surprised', look=(0, .6), arm=(-6, -34), arm2=(10, 30), ears=(-24, 24),
+                     extra=S.peg(0, -104, s=1.1, rot=90))
+            + _shout("BOINK!", 410, 300, size=26, rot=6, color="#FFD166"))
+
+
+@alt('In the dark kitchen, Rabbit is curled up in a giant fruit bowl beside a melon and apples, ears pricked, as a huge shadow creeps in through the doorway.')
+def p07_7():
+    """Sneaky plan two: sleep in the fruit bowl. Creak. Creak. CREAK."""
+    shadow = (f'<g fill="{S.NIGHT}" opacity=".55">'
+              f'<ellipse cx="150" cy="236" rx="70" ry="44"/><circle cx="96" cy="190" r="40"/>'
+              f'<ellipse cx="62" cy="190" rx="26" ry="34"/><ellipse cx="130" cy="186" rx="26" ry="34"/>'
+              f'<path d="M84,214 q-10,40 18,56" stroke="{S.NIGHT}" stroke-width="18" fill="none" stroke-linecap="round"/>'
+              f'<rect x="110" y="250" width="26" height="40" rx="10"/><rect x="170" y="250" width="26" height="40" rx="10"/></g>')
+    return (S.kitchen('s7p7')
+            + _doorway(30, 120, 110, 262)
+            + S.porthole(240, 90, sky='night')
+            + S.shelf(390, 120)
+            + S.night(.45)
+            + shadow
+            + '<path d="M222,112 L258,112 L360,352 L180,352 Z" fill="#FFF3C4" opacity=".14"/>'
+            + S.fruit_bowl(290, 350, w=170,
+                           rider=rabbit(290, 318, s=.9, pose='sit', expr='worried', look=(-.8, 0), ears=(-6, 8)))
+            + _shout("creak…", 120, 330, size=18, rot=-6, color="#C8D4E8")
+            + _shout("CREAK!", 196, 60, size=30, rot=-8, color="#FFE39A"))
+
+
+@alt('A saucepan has landed over Elephant\'s eyes as he skids on a roller skate holding a banana, and Rabbit, standing in the fruit bowl, throws an apple at him, BONK!')
+def p07_8():
+    """CLANG! A monster with a metal head. BONK! It's only Elephant."""
+    ex, ey, s = 190, 350, 1.2
+    head = (ex, ey - 100*s)
+    return (S.kitchen('s7p8')
+            + S.porthole(80, 90, sky='night')
+            + S.shelf(300, 110, tipped=True)
+            + S.night(.36)
+            + S.skate(160, 358, rot=-12)
+            + elephant(ex, ey - 6, s=s, expr='surprised', look=(0, 0), trunk=(-36, 34), arm=(20, -42),
+                       extra=S.banana(-44, -48, s=1.1, rot=-30))
+            + S.saucepan(head[0], head[1] - 2, s=1.35, rot=-8)
+            + _pow(250, 72, 18)
+            + _shout("CLANG!", 250, 52, size=28, rot=8, color="#FFD166")
+            + S.fruit_bowl(400, 350, w=150,
+                           rider=rabbit(398, 296, s=.88, expr='shout', look=(-.8, -.3), arm=(-50, -26), arm2=(30, -40)))
+            + S.apple(272, 182, 11)
+            + S.speedlines(296, 186, n=3, length=26, back=False)
+            + _pow(232, 168, 16, "#FF9BAE")
+            + _shout("BONK!", 238, 230, size=24, rot=-8, color="#FFD166")
+            + S.bubble("MONSTER!", 412, 108, tail=(404, 160))
+            + S.bubble(["Ow!", "It's ME!"], 84, 196, tail=(140, 220)))
+
+
+@alt('With the kitchen light on, Elephant laughs with a saucepan pushed up on his head like a hat, while Rabbit giggles on the floor among rolling apples and tells him his snores are very big.')
+def p07_9():
+    """Lights on. Giggles. And then Rabbit says it - kindly."""
+    return (S.kitchen('s7p9')
+            + S.porthole(80, 90, sky='night')
+            + S.shelf(300, 110)
+            + '<path d="M250,0 V40" stroke="#6B5B47" stroke-width="2"/>'
+            + S.glow(250, 52, 90)
+            + '<circle cx="250" cy="52" r="12" fill="#FFE39A" stroke="#D8B05A" stroke-width="1.5"/>'
+              '<rect x="244" y="36" width="12" height="8" fill="#9AA6AE"/>'
+            + S.shadow(160, 348, 46)
+            + elephant(160, 350, s=1.2, expr='happy', look=(.6, .1), trunk=(-30, 30), arm=(22, 14))
+            + S.saucepan(150, 186, s=1.1, rot=-20)
+            + S.shadow(360, 350, 40)
+            + S.spin(-14, 360, 350, rabbit(360, 350, s=1.05, pose='sit', expr='happy', look=(-.5, -.2),
+                                           arm=(16, 16), arm2=(-16, 16), ears=(-30, 30)))
+            + S.apple(270, 340, 10) + S.apple(450, 344, 10, "#FFD166") + S.apple(470, 312, 9)
+            + S.speedlines(292, 336, n=2, length=18) + S.speedlines(428, 340, n=2, length=18, back=False)
+            + S.bubble(["Your snores are", "very… BIG!"], 382, 120, tail=(366, 220))
+            + S.bubble(["Why didn't", "you tell me?"], 106, 74, tail=(140, 170)))
+
+
+@alt('By lamplight, Rabbit leaps through the air swinging a pillow at Elephant, who holds up his own pillow in his trunk, with feathers flying everywhere.')
+def p07_10():
+    """The side-sleeping trick, one fake snore - and a pillow fight."""
+    return (S.burrow('s7p10')
+            + S.porthole(250, 86, sky='night')
+            + S.lamp(460, 330, on=True)
+            + S.night(.28)
+            + S.glow(460, 228, 80)
+            + S.nest(250, 352, w=420)
+            + S.shadow(150, 350, 46)
+            + elephant(150, 350, s=1.2, expr='excited', look=(.7, -.2), trunk=(46, -62),
+                       extra=S.pillow(54, -140, w=60, h=34, rot=20, color="#FFE3EC", line="#E8A8BC"))
+            + S.shadow(350, 350, 28)
+            + rabbit(350, 296, s=1.05, expr='excited', look=(-.7, -.1), arm=(-30, -50), arm2=(30, 8), ears=(-30, 10),
+                     extra=S.pillow(-60, -112, w=56, h=32, rot=-30, color="#FFD166", line="#D8A21F"))
+            + S.feathers(20, seed=7, box=(20, 30, 480, 260))
+            + S.bubble("Got you!", 90, 70, tail=(130, 170)))
+
+
+@alt('In the morning light, Elephant lies on his side behind a wall of pillows, grinning at Rabbit, who sleeps in her little bed making tiny squeaky snores.')
+def p07_11():
+    """A quiet night at last - and in the morning, a tiny squeak."""
+    squeak = "".join(f'<text x="{x}" y="{y}" font-size="{f}" fill="#C77DFF" text-anchor="middle" '
+                      f'font-family="Fredoka One, sans-serif" opacity=".85">squeak</text>'
+                      for x, y, f in ((406, 214, 12), (424, 190, 14), (408, 164, 16)))
+    return (S.burrow('s7p11')
+            + S.porthole(250, 86, sky='morning')
+            + '<path d="M222,112 L278,112 L330,262 L170,262 Z" fill="#FFF3C4" opacity=".35"/>'
+            + S.picture(120, 96, art='heart')
+            + S.nest(160, 348, w=290)
+            + elephant(80, 318, s=1.1, pose='lie', expr='happy', look=(.8, .1), trunk=(24, 30))
+            + "".join(S.pillow(x, 314, w=58, h=40, rot=r, color=c)
+                      for x, r, c in ((140, 4, "#FFFFFF"), (196, -4, "#FFE3EC"), (252, 5, "#FFFFFF")))
+            + S.nest_front(160, 352, w=290)
+            + S.little_bed(410, 352, w=126,
+                           sleeper=rabbit(394, 336, s=.9, pose='seated', expr='sleepy', ears=(-50, -30)))
+            + squeak
+            + S.bubble(["Rabbit… YOU", "snore too!"], 190, 160, tail=(110, 240)))
+
+
 PAGES = {
     '02-ouch-the-big-thorn': [p02_1, p02_2, p02_3, p02_4, p02_5,
                               p02_6, p02_7, p02_8, p02_9, p02_10],
@@ -1099,4 +1371,6 @@ PAGES = {
                            p04_7, p04_8, p04_9, p04_10, p04_11, p04_12],
     '06-bonk-the-bumpy-ride-home': [p06_1, p06_2, p06_3, p06_4, p06_5,
                                     p06_6, p06_7, p06_8, p06_9, p06_10],
+    '07-shh-the-noisy-night': [p07_1, p07_2, p07_3, p07_4, p07_5, p07_6,
+                               p07_7, p07_8, p07_9, p07_10, p07_11],
 }

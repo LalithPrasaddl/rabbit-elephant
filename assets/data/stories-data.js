@@ -78,7 +78,20 @@ const STORIES = [
     comingSoon: false
   },
   {
-    id: 'coming-soon-7',
+    id: '07-shh-the-noisy-night',
+    title: 'Shh! The Noisy Night',
+    subtitle: 'A story about sleepovers, snoring, and saying what you need',
+    emoji: '🌙',
+    description: 'Elephant comes for his very first sleepover — and gets stuck in the door, squashes the sofa, and snores like a trumpet. Rabbit tries every sneaky trick before she learns the easiest one: just say so, kindly.',
+    tags: ['Speaking Up', 'Kindness', 'Friendship'],
+    characters: ['Rabbit', 'Elephant'],
+    readTime: '8 min read',
+    path: 'stories/07-shh-the-noisy-night/',
+    cardColor: '#9B8FD8',
+    comingSoon: false
+  },
+  {
+    id: 'coming-soon-8',
     title: 'Coming Soon…',
     subtitle: 'More fun is brewing!',
     emoji: '🌟',

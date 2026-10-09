@@ -326,6 +326,98 @@ def build_06():
     return S.wrap(P, "".join(d), "".join(b))
 
 
+def _burrow(P, x, ybase, r=22):
+    """Rabbit's front door: a grassy mound with a small round door, lamplight in its
+    window. Small on purpose - the whole joke of story 07 is that Elephant will
+    never fit through it. `x, ybase` is the foot of the door."""
+    d = (S.rad(f"{P}-mound", [(0, "#A8CF78", None), (0.5, "#76A653", None), (1, "#3F6A3A", None)],
+               cx="62%", cy="20%", r="80%") +
+         S.rad(f"{P}-door", [(0, "#E3A867", None), (0.55, "#B9773E", None), (1, "#6E4322", None)],
+               cx="66%", cy="22%", r="90%") +
+         S.rad(f"{P}-lamp", [(0, "#FFF6D2", "1"), (0.5, "#FFD98A", "0.7"), (1, "#FFC060", "0")]))
+    top = ybase - r*1.9
+    hole = f'M{x-r},{ybase} L{x-r},{ybase-r*.9:.0f} A{r},{r} 0 0 1 {x+r},{ybase-r*.9:.0f} L{x+r},{ybase} Z'
+    g = (f'<path d="M{x-96},{ybase+10} C{x-80},{ybase-70} {x-30},{ybase-108} {x+40},{ybase-110} '
+         f'C{x+110},{ybase-108} {x+170},{ybase-60} {x+190},{ybase+10} Z" fill="url(#{P}-mound)"/>'
+         f'<ellipse cx="{x-40}" cy="{ybase-30}" rx="50" ry="40" fill="#24461F" opacity=".22" filter="url(#{P}-b4)"/>'
+         f'<path d="{hole}" fill="#3A2412" stroke="#5A3A1E" stroke-width="5"/>'
+         f'<path d="{hole}" fill="url(#{P}-door)"/>'
+         + "".join(f'<line x1="{x+k*r/2.5:.0f}" y1="{ybase}" x2="{x+k*r/2.5:.0f}" y2="{top+4:.0f}" stroke="#6E4322" '
+                   f'stroke-width="1.2" opacity=".55"/>' for k in (-1, 0, 1))
+         + f'<circle cx="{x}" cy="{ybase-r*1.05:.0f}" r="{r*1.1:.0f}" fill="url(#{P}-lamp)" opacity=".75"/>'
+         f'<circle cx="{x}" cy="{ybase-r*1.05:.0f}" r="{r*.3:.1f}" fill="#FFE7A6" stroke="#6E4322" stroke-width="1.2"/>'
+         f'<circle cx="{x+r*.6:.0f}" cy="{ybase-r*.45:.0f}" r="1.8" fill="#FFD166"/>')
+    return d, g
+
+
+def _stars(rng, n=26, top=-80, bottom=120, avoid=(436, 60, 52)):
+    ax, ay, ar = avoid
+    out = []
+    while len(out) < n:
+        x, y = rng.uniform(8, 492), rng.uniform(top, bottom)
+        if (x-ax)**2 + (y-ay)**2 < ar*ar:
+            continue
+        r = rng.uniform(.8, 2.1)
+        out.append(f'<circle cx="{x:.0f}" cy="{y:.0f}" r="{r:.1f}" fill="#FFF6DA" opacity="{rng.uniform(.5, .95):.2f}"/>')
+        if r > 1.8:   # the brightest few get a little twinkle cross
+            out.append(f'<path d="M{x-5:.0f},{y:.0f} h10 M{x:.0f},{y-5:.0f} v10" stroke="#FFF6DA" stroke-width=".8" opacity=".7"/>')
+    return "".join(out)
+
+
+def build_07():
+    """Bedtime at the burrow: Elephant, pillow on his head and snacks in hand, next to
+    a front door about the size of his foot. Rabbit is not sure about this."""
+    P = "cv7"
+    rng = random.Random(707)
+    d, b = [], []
+    add = lambda p: (d.append(p[0]), b.append(p[1]))
+
+    add(S.sky(P, 'twilight', HORIZON))
+    b.append(_stars(rng))
+    # the moon takes the sun's place upper-right, so the figures' lighting still holds
+    add(S.sun(P, 436, 64, 24, warm="#FFFBEA", glow="#FFF0C6"))
+    b.append(S.clouds(P, [(96, 92, 44, 13, .55), (138, 86, 24, 9, .5)]))
+    add(S.hills(P, rng, HORIZON, far="#9C93B8", near="#7E9E78"))
+
+    gd, gback, gfront = S.meadow(P, rng, HORIZON, top="#8DB86A", bot="#3D6638", flowers=16,
+                                 avoid=[(160, 260, 90, 60), (318, 262, 56, 52), (404, 262, 50, 30)])
+    d.append(gd); b.append(gback)
+    add(_burrow(P, 404, 262, 22))
+
+    ele, rab = F.load('elephant', DENSITY), F.load('rabbit', DENSITY)
+    d += [ele[0], rab[0]]
+
+    b.append(S.cast_shadow(P, 162, 280, 80))
+    b.append(F.place(ele[1], 160, 280, 268))
+    # a pillow balanced on his head, and the snack suitcase at his feet. The crown of
+    # the head sits ~44 units below the figure box's top (the box allows for the ears)
+    px, py = 186, round(F.head_top(280, 268) + 44)
+    b.append(f'<g transform="rotate(-8 {px} {py})">'
+             f'<path d="M{px-44},{py-14} Q{px},{py-6} {px+44},{py-14} Q{px+38},{py} {px+44},{py+14} '
+             f'Q{px},{py+6} {px-44},{py+14} Q{px-38},{py} {px-44},{py-14} Z" fill="#FFE3EC"/>'
+             f'<path d="M{px-38},{py+6} Q{px},{py} {px+38},{py+6}" stroke="#E8A8BC" stroke-width="3" fill="none" opacity=".6"/>'
+             f'<ellipse cx="{px+16}" cy="{py-9}" rx="18" ry="4" fill="#FFFFFF" opacity=".7" filter="url(#{P}-b1)"/></g>')
+    b.append(S.contact_shadow(P, 236, 284, 26, 6, .4))
+    b.append('<g transform="translate(-14,0)"><rect x="226" y="246" width="50" height="36" rx="6" fill="#B66FE8"/>'
+             '<rect x="226" y="258" width="50" height="5" fill="#8A45C4" opacity=".6"/>'
+             '<path d="M242,246 v-8 h18 v8" stroke="#6B4A2E" stroke-width="3.4" fill="none"/>'
+             '<rect x="252" y="248" width="22" height="30" rx="5" fill="#E2B2FF" opacity=".35"/>'
+             '<circle cx="264" cy="272" r="3.4" fill="#FFD166"/></g>')
+
+    b.append(S.cast_shadow(P, 330, 276, 54))
+    b.append(F.place(rab[1], 328, 276, 214))
+
+    # fireflies - the night is friendly
+    b.append("".join(f'<circle cx="{x}" cy="{y}" r="2.2" fill="#FFF3A0" opacity=".9" filter="url(#{P}-b1)"/>'
+                     f'<circle cx="{x}" cy="{y}" r="1" fill="#FFFFFF"/>'
+                     for x, y in ((96, 214), (286, 196), (452, 214), (232, 168), (380, 160))))
+
+    b.append(gfront)
+    add(S.sunwash(P, 436, 64))
+    add(S.vignette(P))
+    return S.wrap(P, "".join(d), "".join(b))
+
+
 COVERS = {
     '01-the-hungry-friends': build_01,
     '02-ouch-the-big-thorn': build_02,
@@ -333,4 +425,5 @@ COVERS = {
     '04-watch-your-step': build_04,
     '05-splash-the-pool-party': build_05,
     '06-bonk-the-bumpy-ride-home': build_06,
+    '07-shh-the-noisy-night': build_07,
 }

@@ -418,6 +418,133 @@ def build_07():
     return S.wrap(P, "".join(d), "".join(b))
 
 
+def _skinny_tree(P, rng, x, ybase, top):
+    """A tree far too thin to hide behind: a stick of a trunk and a small tuft."""
+    d, f = S.foliage(P, rng, x + 4, top, 30)
+    return d, S.trunk(x, top + 14, ybase, 13) + f
+
+
+def _flowerpot(P, x, ybase, w=118, h=86):
+    """A big terracotta pot, lit upper-right; drawn over whoever is inside it."""
+    d = S.lin(f"{P}-pot", [(0, "#F2A274", None), (1, "#C4673C", None)], x1=1, y1=0, x2=0, y2=0)
+    top = ybase - h
+    return d, (S.contact_shadow(P, x, ybase, w*.5, 7, .4)
+               + f'<path d="M{x-w*.44:.0f},{top+12} L{x-w*.34:.0f},{ybase} L{x+w*.34:.0f},{ybase} L{x+w*.44:.0f},{top+12} Z" fill="url(#{P}-pot)"/>'
+               f'<path d="M{x-w*.38:.0f},{top+26} L{x-w*.31:.0f},{ybase-4}" stroke="#9A4A26" stroke-width="10" opacity=".25" filter="url(#{P}-b1)"/>'
+               f'<rect x="{x-w/2:.0f}" y="{top}" width="{w}" height="18" rx="5" fill="#E89466"/>'
+               f'<rect x="{x-w/2+4:.0f}" y="{top+2}" width="{w-8}" height="5" rx="2.5" fill="#FFC8A0" opacity=".6"/>')
+
+
+def build_08():
+    """Hide and seek: Elephant 'hiding' behind a tree as thin as a broom handle,
+    and Rabbit grinning out of a flowerpot - she is much better at this."""
+    P = "cv8"
+    rng = random.Random(808)
+    d, b = [], []
+    add = lambda p: (d.append(p[0]), b.append(p[1]))
+
+    add(S.sky(P, 'morning', HORIZON))
+    add(S.sun(P, 424, 70, 32))
+    b.append(S.clouds(P, [(86, 70, 42, 14, .9), (124, 62, 24, 10, .85), (250, 50, 30, 10, .6)]))
+    add(S.hills(P, rng, HORIZON))
+
+    gd, gback, gfront = S.meadow(P, rng, HORIZON, avoid=[(186, 250, 100, 60), (340, 262, 70, 40)])
+    d.append(gd); b.append(gback)
+
+    ele, rab = F.load('elephant', DENSITY), F.load('rabbit', DENSITY)
+    d += [ele[0], rab[0]]
+
+    b.append(S.cast_shadow(P, 186, 280, 82))
+    b.append(F.place(ele[1], 180, 280, 262))
+    # the tree goes over him: it covers a stripe down his middle and nothing else
+    add(_skinny_tree(P, rng, 200, 286, 70))
+
+    b.append(F.place(rab[1], 352, 266, 196))
+    add(_flowerpot(P, 340, 284, w=150))
+
+    b.append(gfront)
+    add(S.sunwash(P, 424, 70))
+    add(S.vignette(P))
+    return S.wrap(P, "".join(d), "".join(b))
+
+
+def _bike(P, x, ybase, s=1.0):
+    """Rabbit's red bike side-on, facing right; `x` is the pedals."""
+    r = 25*s
+    rh, fh = (x - 47*s, ybase - r), (x + 49*s, ybase - r)
+    bb, st, ht = (x, ybase - 23*s), (x - 18*s, ybase - 62*s), (x + 35*s, ybase - 64*s)
+    gy = ybase - 84*s
+    out = [S.contact_shadow(P, x, ybase + 2, 86*s, 6, .4)]
+    for hx, hy in (rh, fh):
+        out.append(f'<circle cx="{hx:.0f}" cy="{hy:.0f}" r="{r:.1f}" fill="none" stroke="#2E3440" stroke-width="{5*s:.1f}"/>'
+                   f'<circle cx="{hx:.0f}" cy="{hy:.0f}" r="{r-3*s:.1f}" fill="none" stroke="#5A6270" stroke-width="1.2" opacity=".6"/>'
+                   + "".join(f'<path d="M{hx-r*.85*c:.1f},{hy-r*.85*sn:.1f} L{hx+r*.85*c:.1f},{hy+r*.85*sn:.1f}" stroke="#B8C2CA" stroke-width=".9"/>'
+                             for c, sn in ((1, 0), (0, 1), (.7, .7), (.7, -.7)))
+                   + f'<circle cx="{hx:.0f}" cy="{hy:.0f}" r="{3*s:.1f}" fill="#C9D2D8"/>')
+    frame = (f'M{rh[0]:.0f},{rh[1]:.0f} L{bb[0]:.0f},{bb[1]:.0f} L{st[0]:.0f},{st[1]:.0f} Z M{st[0]:.0f},{st[1]:.0f} '
+             f'L{ht[0]:.0f},{ht[1]:.0f} L{bb[0]:.0f},{bb[1]:.0f} M{ht[0]:.0f},{ht[1]:.0f} L{fh[0]:.0f},{fh[1]:.0f}')
+    out += [f'<path d="{frame}" stroke="#A8302E" stroke-width="{6.4*s:.1f}" fill="none" stroke-linejoin="round" stroke-linecap="round"/>',
+            f'<path d="{frame}" stroke="#E8504A" stroke-width="{4.2*s:.1f}" fill="none" stroke-linejoin="round" stroke-linecap="round"/>',
+            f'<path d="{frame}" stroke="#FF9A8E" stroke-width="{1.2*s:.1f}" fill="none" stroke-linejoin="round" transform="translate(.8,-1.4)" opacity=".8"/>',
+            f'<path d="M{st[0]:.0f},{st[1]:.0f} l{-3*s:.1f},{-7*s:.1f}" stroke="#9AA6AE" stroke-width="{3*s:.1f}"/>',
+            f'<ellipse cx="{st[0]-4*s:.0f}" cy="{st[1]-8*s:.0f}" rx="{13*s:.1f}" ry="{4*s:.1f}" fill="#2E3440"/>',
+            f'<path d="M{ht[0]:.0f},{ht[1]:.0f} L{ht[0]-2*s:.0f},{gy+4*s:.0f} Q{ht[0]-2*s:.0f},{gy:.0f} {ht[0]-8*s:.0f},{gy:.0f}" '
+            f'stroke="#4A525E" stroke-width="{4*s:.1f}" fill="none" stroke-linecap="round"/>',
+            f'<circle cx="{ht[0]+4*s:.0f}" cy="{gy+8*s:.0f}" r="{4.6*s:.1f}" fill="#FFD166"/>'
+            f'<circle cx="{ht[0]+5*s:.0f}" cy="{gy+6.6*s:.0f}" r="{1.6*s:.1f}" fill="#FFF3C4"/>',
+            f'<circle cx="{bb[0]:.0f}" cy="{bb[1]:.0f}" r="{7*s:.1f}" fill="#9AA6AE"/>',
+            f'<path d="M{x+6*s:.0f},{ybase-13*s:.0f} L{x-12*s:.0f},{ybase-33*s:.0f}" stroke="#5A6270" stroke-width="{3*s:.1f}" stroke-linecap="round"/>']
+    return "".join(out)
+
+
+def build_09():
+    """Bike day: Rabbit in her helmet with the shiny red bike, Elephant cheering her
+    on, and a butterfly about to cause trouble."""
+    P = "cv9"
+    rng = random.Random(909)
+    d, b = [], []
+    add = lambda p: (d.append(p[0]), b.append(p[1]))
+
+    add(S.sky(P, 'golden', HORIZON))
+    add(S.sun(P, 420, 78, 34))
+    b.append(S.clouds(P, [(90, 66, 42, 14, .85), (128, 58, 24, 10, .8), (262, 52, 30, 10, .55)]))
+    add(S.hills(P, rng, HORIZON))
+    add(S.foliage(P, rng, 470, 112, 36))
+    b.insert(len(b) - 1, S.trunk(472, 122, 188, 10))
+
+    gd, gback, gfront = S.meadow(P, rng, HORIZON, avoid=[(160, 250, 90, 60), (318, 262, 90, 40)])
+    d.append(gd); b.append(gback)
+
+    ele, rab = F.load('elephant', DENSITY), F.load('rabbit', DENSITY)
+    d += [ele[0], rab[0]]
+
+    b.append(S.cast_shadow(P, 154, 280, 78))
+    b.append(F.place(ele[1], 150, 280, 262))
+
+    b.append(S.cast_shadow(P, 316, 276, 54))
+    b.append(F.place(rab[1], 312, 276, 210))
+    # her helmet, hung on the actual crown of the portrait's head
+    hx, hy = F.to_scene(125, 118, 312, 276, 210)
+    d.append(S.lin(f"{P}-helm", [(0, "#A8E2F4", None), (1, "#3C90AE", None)], x1=1, y1=0, x2=0, y2=1))
+    b.append(f'<g transform="rotate(-6 {hx:.0f} {hy:.0f})">'
+             f'<path d="M{hx-40:.0f},{hy:.0f} Q{hx-40:.0f},{hy-40:.0f} {hx:.0f},{hy-42:.0f} Q{hx+40:.0f},{hy-40:.0f} {hx+40:.0f},{hy:.0f} Z" fill="url(#{P}-helm)"/>'
+             f'<path d="M{hx-14:.0f},{hy-36:.0f} q3,16 0,32 M{hx+14:.0f},{hy-36:.0f} q-3,16 0,32" stroke="#FFFFFF" stroke-width="5" fill="none" opacity=".6"/>'
+             f'<rect x="{hx-42:.0f}" y="{hy-5:.0f}" width="84" height="8" rx="4" fill="#2C6E88"/></g>')
+    b.append(_bike(P, 322, 282, 1.08))
+
+    # the butterfly that will cause all the trouble, just off Elephant's trunk
+    b.append('<g transform="translate(236,150) rotate(12)">'
+             '<ellipse cx="-7" cy="-4" rx="9" ry="6.5" fill="#C77DFF" transform="rotate(-24 -7 -4)"/>'
+             '<ellipse cx="7" cy="-4" rx="9" ry="6.5" fill="#D9A2FF" transform="rotate(24 7 -4)"/>'
+             '<ellipse cx="-5" cy="6" rx="5.5" ry="4.5" fill="#FF9BAE"/><ellipse cx="5" cy="6" rx="5.5" ry="4.5" fill="#FFB3C6"/>'
+             '<rect x="-1.6" y="-9" width="3.2" height="17" rx="1.6" fill="#3A2A30"/></g>')
+
+    b.append(gfront)
+    add(S.sunwash(P, 420, 78))
+    add(S.vignette(P))
+    return S.wrap(P, "".join(d), "".join(b))
+
+
 COVERS = {
     '01-the-hungry-friends': build_01,
     '02-ouch-the-big-thorn': build_02,
@@ -426,4 +553,6 @@ COVERS = {
     '05-splash-the-pool-party': build_05,
     '06-bonk-the-bumpy-ride-home': build_06,
     '07-shh-the-noisy-night': build_07,
+    '08-hide-and-squeak': build_08,
+    '09-wobble-the-big-bike-day': build_09,
 }

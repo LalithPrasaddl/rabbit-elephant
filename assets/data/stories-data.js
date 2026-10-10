@@ -82,7 +82,7 @@ const STORIES = [
     title: 'Shh! The Noisy Night',
     subtitle: 'A story about sleepovers, snoring, and saying what you need',
     emoji: '🌙',
-    description: 'Elephant comes for his very first sleepover — and gets stuck in the door, squashes the sofa, and snores like a trumpet. Rabbit tries every sneaky trick before she learns the easiest one: just say so, kindly.',
+    description: 'Elephant comes for his very first sleepover — and gets stuck in the door, squashes the sofa, and snores louder than a fire truck. Rabbit tries every sneaky trick before she learns the easiest one: just say so, kindly.',
     tags: ['Speaking Up', 'Kindness', 'Friendship'],
     characters: ['Rabbit', 'Elephant'],
     readTime: '8 min read',
@@ -91,7 +91,33 @@ const STORIES = [
     comingSoon: false
   },
   {
-    id: 'coming-soon-8',
+    id: '08-hide-and-squeak',
+    title: 'Hide and Squeak',
+    subtitle: 'A story about losing a game and finding your thing',
+    emoji: '🙈',
+    description: 'Elephant is sure he is the best hider in the world — but skinny trees, bushes and sneezes keep giving him away. When Rabbit gets stuck in a log, it takes his big ears to find her.',
+    tags: ['Losing Well', 'Everyone Is Different', 'Friendship'],
+    characters: ['Rabbit', 'Elephant', 'Nurse Giraffe'],
+    readTime: '7 min read',
+    path: 'stories/08-hide-and-squeak/',
+    cardColor: '#8ECB7E',
+    comingSoon: false
+  },
+  {
+    id: '09-wobble-the-big-bike-day',
+    title: 'Wobble! The Big Bike Day',
+    subtitle: 'A story about falling down and getting back up',
+    emoji: '🚲',
+    description: 'Rabbit gets a shiny new bike and falls into a hedge, a muddy puddle and the long grass. Elephant squashes it flat. With a little help, she learns that every fall means you are learning.',
+    tags: ['Keep Trying', 'Learning', 'Friendship'],
+    characters: ['Rabbit', 'Elephant', 'Dr. Squirrel'],
+    readTime: '7 min read',
+    path: 'stories/09-wobble-the-big-bike-day/',
+    cardColor: '#74C8E4',
+    comingSoon: false
+  },
+  {
+    id: 'coming-soon-10',
     title: 'Coming Soon…',
     subtitle: 'More fun is brewing!',
     emoji: '🌟',

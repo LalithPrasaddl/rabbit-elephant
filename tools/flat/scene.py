@@ -1157,3 +1157,361 @@ def burrow_hill(x, y, door=(0, 0), door_r=30, open_door=False):
                 + f'<circle cx="{dx}" cy="{dy-r*1.05:.0f}" r="{r*.26:.0f}" fill="#FFE39A" stroke="#8A5A26" stroke-width="1.5"/>'
                   f'<circle cx="{dx+r*.62:.0f}" cy="{dy-r*.5:.0f}" r="2.6" fill="#FFD166"/>')
     return out
+
+
+# ---------------------------------------------------------------- story 08 props
+# Story 08 is hide and seek in the meadow, so every prop is a hiding place - and
+# every one that hides Elephant is comically too small for him.
+LEAF, LEAF_DK, LEAF_LT = "#6BAF5E", "#4A8F44", "#8ECB7E"
+BARK, BARK_DK = "#A87A52", "#7E5A38"
+CHECK = "#FF6B6B"
+
+
+def skinny_tree(x, y, h=210, r=38):
+    """A very skinny tree: a stick of a trunk and a small tuft on top. Drawn OVER
+    whoever hides behind it, which is the joke."""
+    return (f'<path d="M{x-8},{y} L{x-6},{y-h} L{x+6},{y-h} L{x+8},{y} Z" fill="{BARK}" stroke="{BARK_DK}" stroke-width="1.5"/>'
+            f'<path d="M{x+4},{y-h*.8:.0f} q12,-6 18,-20" stroke="{BARK}" stroke-width="5" fill="none" stroke-linecap="round"/>'
+            + "".join(f'<circle cx="{x+dx}" cy="{y-h+dy}" r="{rr}" fill="{c}"/>'
+                      for dx, dy, rr, c in ((-16, -10, r*.7, LEAF), (16, -6, r*.66, LEAF), (0, -26, r*.8, LEAF_LT)))
+            + f'<circle cx="{x+22}" cy="{y-h*.8-22:.0f}" r="9" fill="{LEAF_LT}"/>')
+
+
+def leaves(pts, color=LEAF):
+    """Loose leaves fluttering about: (x, y, rot) each."""
+    return "".join(f'<ellipse cx="{x:.0f}" cy="{y:.0f}" rx="8" ry="4" fill="{color}" transform="rotate({r} {x:.0f} {y:.0f})"/>'
+                   for x, y, r in pts)
+
+
+def bush(x, y, w=130, h=90, tail=False, flying=False):
+    """A round leafy bush, `y` the ground. `tail` is an elephant's tail poking out of
+    its side; `flying` scatters a few leaves off it."""
+    blobs = ((-w*.32, -h*.36, h*.42), (w*.3, -h*.38, h*.42), (0, -h*.58, h*.48), (-w*.1, -h*.3, h*.44), (w*.16, -h*.3, h*.4))
+    out = (f'<ellipse cx="{x}" cy="{y-2}" rx="{w*.52:.0f}" ry="8" fill="#4A6B3A" opacity=".16"/>'
+           + "".join(f'<circle cx="{x+dx:.0f}" cy="{y+dy:.0f}" r="{rr:.0f}" fill="{LEAF}" stroke="{LEAF_DK}" stroke-width="1.5"/>'
+                     for dx, dy, rr in blobs)
+           + "".join(f'<circle cx="{x+dx:.0f}" cy="{y+dy:.0f}" r="{rr:.0f}" fill="{LEAF_LT}" opacity=".7"/>'
+                     for dx, dy, rr in ((-w*.2, -h*.6, h*.16), (w*.18, -h*.7, h*.14), (w*.32, -h*.44, h*.1))))
+    if tail:
+        tx, ty = x + w*.5, y - h*.36
+        out += (f'<path d="M{tx-10:.0f},{ty:.0f} q24,-4 30,-22" stroke="#88A0AC" stroke-width="6" fill="none" stroke-linecap="round"/>'
+                f'<path d="M{tx-10:.0f},{ty:.0f} q24,-4 30,-22" stroke="#A8C0CC" stroke-width="3.6" fill="none" stroke-linecap="round"/>'
+                f'<path d="M{tx+20:.0f},{ty-22:.0f} q-2,-10 4,-14 q2,6 4,0 q6,4 2,14 Z" fill="{INK}"/>')
+    if flying:
+        out += "".join(f'<ellipse cx="{x+dx:.0f}" cy="{y+dy:.0f}" rx="7" ry="3.5" fill="{LEAF}" '
+                       f'transform="rotate({rot} {x+dx:.0f} {y+dy:.0f})"/>'
+                       for dx, dy, rot in ((-w*.6, -h*1.1, -30), (w*.1, -h*1.4, 20), (w*.62, -h*1.0, 50), (-w*.3, -h*1.5, 70)))
+    return out
+
+
+def pond(uid, x, y, rx=130, ry=40, swimmers=""):
+    """The meadow pond: the pool, with a grassy rim, reeds and a lily pad. Like
+    pool() it draws its own swimmers - anchor them at waterline(y)."""
+    reeds = "".join(f'<path d="M{x+dx:.0f},{y-ry*.2:.0f} q{lean},-26 {lean*1.6:.0f},-44" stroke="#4A8F44" stroke-width="3" '
+                    f'fill="none" stroke-linecap="round"/>'
+                    f'<rect x="{x+dx+lean*1.2-3:.0f}" y="{y-ry*.2-40:.0f}" width="6" height="14" rx="3" fill="#8A5A2E"/>'
+                    for dx, lean in ((-rx*.94, -4), (-rx*.86, 3), (rx*.9, 4)))
+    return (reeds + pool(uid, x, y, rx, ry, swimmers=swimmers, rim="#7DBE6E")
+            + f'<ellipse cx="{x+rx*.5:.0f}" cy="{y+ry*.32:.0f}" rx="14" ry="5" fill="#6BAF5E"/>'
+            f'<circle cx="{x+rx*.5+4:.0f}" cy="{y+ry*.32-3:.0f}" r="3" fill="#FF9BAE"/>')
+
+
+def bee(x, y, s=1.0, path=None):
+    """A small bee. `path` is a list of points for her loopy dotted flight."""
+    out = flight(path, "#C8A030") if path else ''
+    return out + (f'<ellipse cx="{x-3*s:.1f}" cy="{y-8*s:.1f}" rx="{6*s:.1f}" ry="{4*s:.1f}" fill="#EAF8FF" stroke="#B8D0DC" stroke-width="1" opacity=".9"/>'
+                  f'<ellipse cx="{x+4*s:.1f}" cy="{y-9*s:.1f}" rx="{6*s:.1f}" ry="{4*s:.1f}" fill="#EAF8FF" stroke="#B8D0DC" stroke-width="1" opacity=".9"/>'
+                  f'<ellipse cx="{x}" cy="{y}" rx="{10*s:.1f}" ry="{7*s:.1f}" fill="#FFD166" stroke="#3A2A20" stroke-width="1.2"/>'
+                  f'<path d="M{x-3*s:.1f},{y-6.5*s:.1f} v{13*s:.1f} M{x+3*s:.1f},{y-6.5*s:.1f} v{13*s:.1f}" stroke="#3A2A20" stroke-width="{2.4*s:.1f}"/>'
+                  f'<circle cx="{x+7*s:.1f}" cy="{y-2*s:.1f}" r="{1.4*s:.1f}" fill="#3A2A20"/>')
+
+
+def _checked(uid, d, box):
+    """Red-and-white picnic check filling the path `d`; `box` bounds it."""
+    x0, y0, x1, y1 = box
+    stripes = ("".join(f'<rect x="{x0+i:.0f}" y="{y0}" width="9" height="{y1-y0}" fill="{CHECK}" opacity=".55"/>'
+                       for i in range(0, int(x1-x0), 20))
+               + "".join(f'<rect x="{x0}" y="{y0+i:.0f}" width="{x1-x0}" height="9" fill="{CHECK}" opacity=".55"/>'
+                         for i in range(0, int(y1-y0), 20)))
+    return (f'<defs><clipPath id="ck-{uid}"><path d="{d}"/></clipPath></defs>'
+            f'<path d="{d}" fill="#FFFDF6"/>'
+            f'<g clip-path="url(#ck-{uid})">{stripes}</g>'
+            f'<path d="{d}" fill="none" stroke="#E0484A" stroke-width="1.6" stroke-linejoin="round"/>')
+
+
+def picnic(uid, x, y, w=200, h=46):
+    """A checked picnic blanket laid on the grass, `x, y` its middle."""
+    d = (f'M{x-w/2+20:.0f},{y-h/2:.0f} L{x+w/2-14:.0f},{y-h/2-2:.0f} L{x+w/2+8:.0f},{y+h/2:.0f} '
+         f'L{x-w/2-6:.0f},{y+h/2+2:.0f} Z')
+    return _checked(uid, d, (x-w/2-10, y-h/2-4, x+w/2+10, y+h/2+4))
+
+
+def draped(uid, x, y, w=70, h=74):
+    """The picnic blanket thrown over someone's head, `x, y` the crown, hanging down
+    with a ragged hem."""
+    d = (f'M{x-w*.36:.0f},{y+6} Q{x:.0f},{y-26} {x+w*.36:.0f},{y+6} '
+         f'Q{x+w*.56:.0f},{y+h*.6:.0f} {x+w*.5:.0f},{y+h:.0f} l-12,-8 l-12,8 l-12,-8 l-12,8 l-12,-8 '
+         f'L{x-w*.5:.0f},{y+h:.0f} Q{x-w*.56:.0f},{y+h*.6:.0f} {x-w*.36:.0f},{y+6} Z')
+    return _checked(uid, d, (x-w*.6, y-30, x+w*.6, y+h+10))
+
+
+def teapot(x, y, s=1.0, lid=0, peek=None, rider=""):
+    """The picnic teapot, `y` the ground under it. `rider` sits INSIDE it: drawn
+    first, so the pot covers everything below the rim. `lid` lifts the lid by that
+    much; `peek` is a pair of eyes looking out under a lifted lid."""
+    rim = y - 62*s
+    out = [rider,
+           f'<path d="M{x-34*s:.0f},{y-34*s:.0f} q{-30*s:.0f},{-4*s:.0f} {-40*s:.0f},{-32*s:.0f}" stroke="#4AA8C8" stroke-width="{9*s:.1f}" '
+           f'fill="none" stroke-linecap="round"/>',
+           f'<path d="M{x+36*s:.0f},{y-46*s:.0f} q{26*s:.0f},{2*s:.0f} {6*s:.0f},{30*s:.0f}" stroke="#4AA8C8" stroke-width="{7*s:.1f}" fill="none"/>',
+           f'<path d="M{x-40*s:.0f},{rim:.0f} Q{x-50*s:.0f},{y-6*s:.0f} {x:.0f},{y:.0f} Q{x+50*s:.0f},{y-6*s:.0f} {x+40*s:.0f},{rim:.0f} Z" '
+           f'fill="#74C8E4" stroke="#4AA8C8" stroke-width="2"/>',
+           f'<ellipse cx="{x}" cy="{rim:.0f}" rx="{40*s:.0f}" ry="{5*s:.0f}" fill="#5AB6D6" stroke="#4AA8C8" stroke-width="1.5"/>']
+    out += [f'<circle cx="{x+dx*s:.0f}" cy="{y+dy*s:.0f}" r="{4*s:.1f}" fill="#FFFDF6" opacity=".85"/>'
+            for dx, dy in ((-18, -36), (0, -22), (18, -36), (-26, -18), (26, -18))]
+    ly = rim - lid
+    out.append(f'<path d="M{x-30*s:.0f},{ly:.0f} Q{x:.0f},{ly-22*s:.0f} {x+30*s:.0f},{ly:.0f} Z" fill="#74C8E4" stroke="#4AA8C8" stroke-width="2"/>'
+               f'<circle cx="{x}" cy="{ly-17*s:.0f}" r="{5*s:.1f}" fill="#FFD166" stroke="#D8A21F" stroke-width="1.2"/>')
+    if peek:
+        out.append("".join(f'<circle cx="{x+dx*s:.0f}" cy="{rim-lid*.5:.0f}" r="{4*s:.1f}" fill="#fff" stroke="{INK}" stroke-width="1"/>'
+                           f'<circle cx="{x+(dx+peek)*s:.0f}" cy="{rim-lid*.5:.0f}" r="{2.6*s:.1f}" fill="{INK}"/>' for dx in (-7, 7)))
+    return "".join(out)
+
+
+def flowerpot(x, y, s=1.0, rider="", flower=True):
+    """A big terracotta flowerpot, `y` the ground. Its rider is drawn first, so the
+    pot hides everything below the rim."""
+    top = y - 70*s
+    f = ''
+    if flower:
+        f = (f'<path d="M{x+24*s:.0f},{top:.0f} q{6*s:.0f},{-26*s:.0f} {14*s:.0f},{-40*s:.0f}" stroke="#4A8F44" stroke-width="3" fill="none"/>'
+             + "".join(f'<circle cx="{x+38*s+dx:.0f}" cy="{top-42*s+dy:.0f}" r="{6*s:.1f}" fill="#FF9BAE"/>'
+                       for dx, dy in ((-6, 0), (6, 0), (0, -6), (0, 6)))
+             + f'<circle cx="{x+38*s:.0f}" cy="{top-42*s:.0f}" r="{4*s:.1f}" fill="#FFD166"/>')
+    return (f + rider
+            + f'<path d="M{x-40*s:.0f},{top+10*s:.0f} L{x-30*s:.0f},{y:.0f} L{x+30*s:.0f},{y:.0f} L{x+40*s:.0f},{top+10*s:.0f} Z" '
+              f'fill="#E08A5A" stroke="#B8643A" stroke-width="2"/>'
+            + f'<rect x="{x-46*s:.0f}" y="{top:.0f}" width="{92*s:.0f}" height="{16*s:.0f}" rx="4" fill="#E8996A" stroke="#B8643A" stroke-width="2"/>'
+            + f'<path d="M{x-20*s:.0f},{top+30*s:.0f} q{6*s:.0f},{4*s:.0f} {12*s:.0f},0" stroke="#FFFFFF" stroke-width="3" fill="none" opacity=".4" stroke-linecap="round"/>')
+
+
+def log(x, y, w=210, r=36, inside=""):
+    """A hollow log lying on the grass, its open end facing left. `x` is the open
+    end, `y` the ground. `inside` is drawn into the dark hole, so whatever pokes
+    out of the log sits in the mouth of it."""
+    cy = y - r
+    return (f'<ellipse cx="{x+w/2:.0f}" cy="{y-2}" rx="{w*.56:.0f}" ry="9" fill="#4A6B3A" opacity=".16"/>'
+            f'<path d="M{x},{cy-r} L{x+w},{cy-r+4} A{r*.42:.0f},{r-4} 0 0 1 {x+w},{cy+r-4} L{x},{cy+r} Z" fill="{BARK}" stroke="{BARK_DK}" stroke-width="2"/>'
+            + "".join(f'<path d="M{x+dx:.0f},{cy+dy:.0f} h{ln}" stroke="{BARK_DK}" stroke-width="2" stroke-linecap="round" opacity=".6"/>'
+                      for dx, dy, ln in ((40, -18, 50), (110, -4, 70), (60, 14, 40), (150, 20, 30)))
+            + f'<ellipse cx="{x}" cy="{cy}" rx="{r*.46:.0f}" ry="{r}" fill="#E8C48A" stroke="{BARK_DK}" stroke-width="2"/>'
+            f'<ellipse cx="{x}" cy="{cy}" rx="{r*.34:.0f}" ry="{r*.78:.0f}" fill="#3A2412"/>'
+            + inside
+            + f'<path d="M{x+18},{cy-r+14} q8,-14 4,-26" stroke="#4A8F44" stroke-width="3" fill="none" stroke-linecap="round"/>'
+            f'<ellipse cx="{x+28}" cy="{cy-r+2}" rx="8" ry="4" fill="{LEAF}" transform="rotate(-30 {x+28} {cy-r+2})"/>')
+
+
+def sunhat(x, y, s=1.0, rot=0):
+    """Giraffe's straw sunhat for her day off, `x, y` the middle of the brim."""
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            f'<ellipse cx="{x}" cy="{y}" rx="{30*s:.0f}" ry="{7*s:.0f}" fill="#F4D58A" stroke="#C8A050" stroke-width="1.5"/>'
+            f'<path d="M{x-16*s:.0f},{y-2} Q{x-14*s:.0f},{y-22*s:.0f} {x:.0f},{y-22*s:.0f} Q{x+14*s:.0f},{y-22*s:.0f} {x+16*s:.0f},{y-2} Z" '
+            f'fill="#F4D58A" stroke="#C8A050" stroke-width="1.5"/>'
+            f'<path d="M{x-15*s:.0f},{y-7*s:.0f} Q{x:.0f},{y-4*s:.0f} {x+15*s:.0f},{y-7*s:.0f}" stroke="#FF6B6B" stroke-width="{4*s:.1f}" fill="none"/>'
+            f'<circle cx="{x+12*s:.0f}" cy="{y-10*s:.0f}" r="{4*s:.1f}" fill="#FFD166"/></g>')
+
+
+def squeaks(pts, color="#C77DFF"):
+    """Little 'squeak' words drifting up from somewhere hidden."""
+    return "".join(f'<text x="{x}" y="{y}" font-size="{f}" fill="{color}" text-anchor="middle" '
+                   f'font-family="Fredoka One, sans-serif" opacity=".9">squeak</text>' for x, y, f in pts)
+
+
+def earwaves(x, y, s=1.0, side=1):
+    """Sound arcs curving into a listening ear."""
+    return "".join(f'<path d="M{x+side*(14+i*12)*s:.0f},{y-(10+i*7)*s:.0f} q{side*8*s:.0f},{(10+i*7)*s:.0f} 0,{(20+i*14)*s:.0f}" '
+                   f'stroke="#C77DFF" stroke-width="2.4" fill="none" stroke-linecap="round" opacity="{.9-i*.2:.1f}"/>'
+                   for i in range(3))
+
+
+# ---------------------------------------------------------------- story 09 props
+# Story 09 is Rabbit learning to ride. The bike is drawn side-on, facing right, and
+# owns its rider like the car does - the rider goes between the frame and the
+# legs, so their feet land on the pedals instead of floating beside them.
+BIKE, BIKE_DK = "#FF6B6B", "#C0484A"
+
+
+def bike_seat(x, y, s=1.0):
+    """Where a rider's bottom goes on bike(x, y, s)."""
+    return x - 20*s, y - 70*s
+
+
+def bike_bar(x, y, s=1.0):
+    """The handlebar grip of bike(x, y, s) - where the paws go."""
+    return x + 30*s, y - 88*s
+
+
+def bike_pedals(x, y, s=1.0):
+    """The near and far pedals of bike(x, y, s)."""
+    return (x + 6*s, y - 14*s), (x - 12*s, y - 34*s)
+
+
+def wheel(x, y, r, spin=False):
+    out = (f'<circle cx="{x:.0f}" cy="{y:.0f}" r="{r:.1f}" fill="none" stroke="#3A4250" stroke-width="{max(3, r*.2):.1f}"/>'
+           f'<circle cx="{x:.0f}" cy="{y:.0f}" r="{r*.86:.1f}" fill="#EAF2F6" opacity=".35"/>'
+           f'<path d="M{x-r*.8:.1f},{y:.0f} h{r*1.6:.1f} M{x:.0f},{y-r*.8:.1f} v{r*1.6:.1f} '
+           f'M{x-r*.56:.1f},{y-r*.56:.1f} l{r*1.12:.1f},{r*1.12:.1f} M{x+r*.56:.1f},{y-r*.56:.1f} l{-r*1.12:.1f},{r*1.12:.1f}" '
+           f'stroke="#9AA6AE" stroke-width="1.2"/>'
+           f'<circle cx="{x:.0f}" cy="{y:.0f}" r="{max(2.5, r*.14):.1f}" fill="#9AA6AE"/>')
+    if spin:
+        out += (f'<path d="M{x-r-6:.0f},{y-r*.4:.0f} a{r+6:.0f},{r+6:.0f} 0 0 1 {r*.8:.0f},{-r*.8:.0f}" stroke="#8FA8C0" '
+                f'stroke-width="2.4" fill="none" stroke-linecap="round"/>')
+    return out
+
+
+def bike(x, y, s=1.0, color=BIKE, line=BIKE_DK, rider="", legs="", training=False, flat=False, spin=False):
+    """Rabbit's bike, side-on facing right; `x` is the pedals, `y` the ground.
+
+    `rider` is drawn over the frame and `legs` over the rider, so a rider's feet sit
+    on the pedals. `training` adds the two little back wheels; `flat` is the bike
+    after Elephant sat on it - wheels squashed to ovals, frame folded flat."""
+    if flat:
+        return (f'<ellipse cx="{x-52*s:.0f}" cy="{y-9*s:.0f}" rx="{32*s:.0f}" ry="{9*s:.0f}" fill="none" stroke="#3A4250" stroke-width="5"/>'
+                f'<ellipse cx="{x+54*s:.0f}" cy="{y-9*s:.0f}" rx="{32*s:.0f}" ry="{9*s:.0f}" fill="none" stroke="#3A4250" stroke-width="5"/>'
+                f'<path d="M{x-80*s:.0f},{y-16*s:.0f} l{30*s:.0f},{-8*s:.0f} l{26*s:.0f},{8*s:.0f} l{30*s:.0f},{-8*s:.0f} l{28*s:.0f},{8*s:.0f} '
+                f'l{30*s:.0f},{-6*s:.0f}" stroke="{color}" stroke-width="{6*s:.1f}" fill="none" stroke-linejoin="round" stroke-linecap="round"/>'
+                f'<path d="M{x+68*s:.0f},{y-22*s:.0f} l{20*s:.0f},{-12*s:.0f}" stroke="#5E6870" stroke-width="{5*s:.1f}" stroke-linecap="round"/>'
+                f'<ellipse cx="{x-40*s:.0f}" cy="{y-24*s:.0f}" rx="{14*s:.0f}" ry="{4*s:.0f}" fill="#3A4250"/>')
+    r = 26*s
+    rh, fh = (x - 48*s, y - r), (x + 50*s, y - r)
+    bb, st, ht = (x, y - 24*s), (x - 18*s, y - 64*s), (x + 36*s, y - 66*s)
+    gx, gy = bike_bar(x, y, s)
+    frame = (f'M{rh[0]:.0f},{rh[1]:.0f} L{bb[0]:.0f},{bb[1]:.0f} L{st[0]:.0f},{st[1]:.0f} Z '
+             f'M{st[0]:.0f},{st[1]:.0f} L{ht[0]:.0f},{ht[1]:.0f} L{bb[0]:.0f},{bb[1]:.0f} '
+             f'M{ht[0]:.0f},{ht[1]:.0f} L{fh[0]:.0f},{fh[1]:.0f}')
+    out = [wheel(*rh, r, spin), wheel(*fh, r, spin)]
+    if training:
+        out += [f'<path d="M{rh[0]:.0f},{rh[1]:.0f} L{rh[0]-14*s:.0f},{y-10*s:.0f}" stroke="#9AA6AE" stroke-width="{3*s:.1f}"/>',
+                wheel(rh[0] - 14*s, y - 10*s, 10*s)]
+    out += [f'<path d="{frame}" stroke="{line}" stroke-width="{7*s:.1f}" fill="none" stroke-linejoin="round" stroke-linecap="round"/>',
+            f'<path d="{frame}" stroke="{color}" stroke-width="{4.6*s:.1f}" fill="none" stroke-linejoin="round" stroke-linecap="round"/>',
+            f'<path d="M{st[0]:.0f},{st[1]:.0f} L{x-21*s:.0f},{y-70*s:.0f}" stroke="#9AA6AE" stroke-width="{3.4*s:.1f}"/>',
+            f'<path d="M{ht[0]:.0f},{ht[1]:.0f} L{ht[0]-2*s:.0f},{gy+4*s:.0f} Q{ht[0]-2*s:.0f},{gy:.0f} {gx:.0f},{gy:.0f}" '
+            f'stroke="#5E6870" stroke-width="{4*s:.1f}" fill="none" stroke-linecap="round"/>',
+            f'<circle cx="{ht[0]+4*s:.0f}" cy="{gy+8*s:.0f}" r="{4.5*s:.1f}" fill="#FFD166" stroke="#D8A21F" stroke-width="1.2"/>',
+            f'<circle cx="{bb[0]:.0f}" cy="{bb[1]:.0f}" r="{7*s:.1f}" fill="#9AA6AE" stroke="#6E7880" stroke-width="1.2"/>',
+            f'<path d="M{x+6*s:.0f},{y-14*s:.0f} L{x-12*s:.0f},{y-34*s:.0f}" stroke="#6E7880" stroke-width="{3*s:.1f}" stroke-linecap="round"/>',
+            rider,
+            f'<ellipse cx="{x-20*s:.0f}" cy="{y-71*s:.0f}" rx="{14*s:.0f}" ry="{4.5*s:.0f}" fill="#3A4250"/>' if not rider else '',
+            legs]
+    return "".join(out)
+
+
+def toy_wheel(x, y, r=10, rot=0):
+    """A training wheel, off the bike: a little wheel on its bent arm."""
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            f'<path d="M{x},{y} l{-r*.4:.0f},{-r*1.8:.0f} l{r*1.4:.0f},{-r*.4:.0f}" stroke="#9AA6AE" stroke-width="3" fill="none" '
+            f'stroke-linecap="round" stroke-linejoin="round"/>' + wheel(x, y, r) + '</g>')
+
+
+def helmet(x, y, s=1.0, rot=0, color="#74C8E4", line="#3C90AE"):
+    """A bike helmet, `x, y` the middle of its rim."""
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            f'<path d="M{x-31*s:.0f},{y} Q{x-30*s:.0f},{y-30*s:.0f} {x:.0f},{y-31*s:.0f} Q{x+30*s:.0f},{y-30*s:.0f} {x+31*s:.0f},{y} Z" '
+            f'fill="{color}" stroke="{line}" stroke-width="2"/>'
+            f'<path d="M{x-12*s:.0f},{y-27*s:.0f} q{2*s:.0f},{12*s:.0f} 0,{24*s:.0f} M{x+12*s:.0f},{y-27*s:.0f} q{-2*s:.0f},{12*s:.0f} 0,{24*s:.0f}" '
+            f'stroke="#FFFFFF" stroke-width="{4*s:.1f}" fill="none" opacity=".7"/>'
+            f'<rect x="{x-33*s:.0f}" y="{y-4*s:.0f}" width="{66*s:.0f}" height="{6*s:.0f}" rx="3" fill="{line}"/></g>')
+
+
+def hedge(x0, x1, y, h=96, fallen=False):
+    """A long garden hedge, `y` the ground. `fallen` is the hedge after Elephant
+    rode into it: flattened over on its back, leaves everywhere."""
+    w = x1 - x0
+    if fallen:
+        top = y - 52
+        out = (f'<path d="M{x0},{y} L{x0+10},{top} ' + " ".join(f'Q{x0+10+(i+.5)*(w-20)/7:.0f},{top-22} {x0+10+(i+1)*(w-20)/7:.0f},{top}' for i in range(7))
+               + f' L{x1},{y} Z" fill="{LEAF}" stroke="{LEAF_DK}" stroke-width="2"/>')
+        out += "".join(f'<path d="M{x0+fx*w:.0f},{y-fy*36:.0f} q6,-6 12,0" stroke="{LEAF_DK}" stroke-width="2" fill="none" stroke-linecap="round" opacity=".6"/>'
+                       for fx, fy in ((.15, .5), (.4, .8), (.64, .4), (.86, .7)))
+        return out + leaves(tuple((x0+fx*w, y-fy, r) for fx, fy, r in ((.1, 80, -30), (.3, 120, 30), (.62, 104, -50), (.9, 74, 20), (.46, 150, 60))))
+    bumps = " ".join(f'Q{x0+(i+.5)*w/8:.0f},{y-h-18} {x0+(i+1)*w/8:.0f},{y-h}' for i in range(8))
+    return (f'<path d="M{x0},{y} L{x0},{y-h} {bumps} L{x1},{y} Z" fill="{LEAF}" stroke="{LEAF_DK}" stroke-width="2"/>'
+            + "".join(f'<path d="M{x0+fx*w:.0f},{y-fy*h:.0f} q6,-6 12,0" stroke="{LEAF_DK}" stroke-width="2" fill="none" stroke-linecap="round" opacity=".6"/>'
+                      for fx, fy in ((.12, .7), (.3, .4), (.5, .76), (.7, .5), (.88, .78), (.4, .18), (.8, .2)))
+            + "".join(f'<circle cx="{x0+fx*w:.0f}" cy="{y-fy*h:.0f}" r="9" fill="{LEAF_LT}" opacity=".6"/>'
+                      for fx, fy in ((.2, .9), (.6, .94), (.94, .9))))
+
+
+MUD, MUD_DK = "#9A6A3E", "#7A4E2A"
+
+
+def puddle(x, y, rx=90, ry=20):
+    return (f'<ellipse cx="{x}" cy="{y}" rx="{rx}" ry="{ry}" fill="{MUD}"/>'
+            f'<ellipse cx="{x-rx*.2:.0f}" cy="{y-ry*.25:.0f}" rx="{rx*.5:.0f}" ry="{ry*.35:.0f}" fill="#B88A5A" opacity=".6"/>')
+
+
+def mud_splash(x, y, s=1.0):
+    """Brown drops thrown up out of a puddle."""
+    import math as _m
+    return "".join(f'<ellipse cx="{x + _m.cos(a)*60*s:.0f}" cy="{y - abs(_m.sin(a))*54*s:.0f}" rx="{6*s:.1f}" ry="{9*s:.1f}" fill="{MUD}" '
+                   f'transform="rotate({_m.degrees(a)-90:.0f} {x + _m.cos(a)*60*s:.0f} {y - abs(_m.sin(a))*54*s:.0f})"/>'
+                   for a in (_m.pi*i/8 for i in range(9)))
+
+
+def splat(x, y, r=6):
+    """A dollop of mud stuck on someone."""
+    return (f'<path d="M{x-r},{y} q{r*.2:.1f},{-r:.1f} {r:.1f},{-r*.9:.1f} q{r:.1f},{-r*.1:.1f} {r:.1f},{r*.8:.1f} '
+            f'q{-r*.1:.1f},{r:.1f} {-r:.1f},{r*.9:.1f} q{-r:.1f},0 {-r:.1f},{-r*.8:.1f} Z" fill="{MUD}" opacity=".9"/>')
+
+
+def butterfly(x, y, s=1.0, color="#C77DFF"):
+    return (f'<ellipse cx="{x-7*s:.1f}" cy="{y-4*s:.1f}" rx="{8*s:.1f}" ry="{6*s:.1f}" fill="{color}" transform="rotate(-24 {x-7*s:.1f} {y-4*s:.1f})"/>'
+            f'<ellipse cx="{x+7*s:.1f}" cy="{y-4*s:.1f}" rx="{8*s:.1f}" ry="{6*s:.1f}" fill="{color}" transform="rotate(24 {x+7*s:.1f} {y-4*s:.1f})"/>'
+            f'<ellipse cx="{x-5*s:.1f}" cy="{y+5*s:.1f}" rx="{5*s:.1f}" ry="{4*s:.1f}" fill="#FF9BAE"/>'
+            f'<ellipse cx="{x+5*s:.1f}" cy="{y+5*s:.1f}" rx="{5*s:.1f}" ry="{4*s:.1f}" fill="#FF9BAE"/>'
+            f'<rect x="{x-1.5*s:.1f}" y="{y-8*s:.1f}" width="{3*s:.1f}" height="{16*s:.1f}" rx="1.5" fill="{INK}"/>'
+            f'<path d="M{x},{y-8*s:.1f} l{-4*s:.1f},{-6*s:.1f} M{x},{y-8*s:.1f} l{4*s:.1f},{-6*s:.1f}" stroke="{INK}" stroke-width="1.2"/>')
+
+
+def plaster(x, y, rot=-20, s=1.0):
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            f'<rect x="{x-12*s:.0f}" y="{y-4.5*s:.1f}" width="{24*s:.0f}" height="{9*s:.0f}" rx="4" fill="#F4C9A0" stroke="#D8A878" stroke-width="1"/>'
+            f'<rect x="{x-4*s:.0f}" y="{y-4.5*s:.1f}" width="{8*s:.0f}" height="{9*s:.0f}" fill="#E8B488"/></g>')
+
+
+def toolbox(x, y, s=1.0):
+    """`y` is the ground under it."""
+    return (f'<path d="M{x-12*s:.0f},{y-30*s:.0f} v{-8*s:.0f} h{24*s:.0f} v{8*s:.0f}" stroke="#5E6870" stroke-width="{3*s:.1f}" fill="none"/>'
+            f'<rect x="{x-30*s:.0f}" y="{y-30*s:.0f}" width="{60*s:.0f}" height="{30*s:.0f}" rx="4" fill="#FF6B6B" stroke="#C0484A" stroke-width="2"/>'
+            f'<rect x="{x-30*s:.0f}" y="{y-20*s:.0f}" width="{60*s:.0f}" height="{4*s:.0f}" fill="#C0484A" opacity=".6"/>')
+
+
+def spanner(x, y, s=1.0, rot=0):
+    """`x, y` is the handle end."""
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            f'<rect x="{x-3*s:.1f}" y="{y-30*s:.0f}" width="{6*s:.1f}" height="{30*s:.0f}" rx="3" fill="#9AA6AE" stroke="#6E7880" stroke-width="1"/>'
+            f'<path d="M{x-8*s:.0f},{y-30*s:.0f} a{8*s:.0f},{8*s:.0f} 0 1 1 {16*s:.0f},0 l{-4*s:.0f},{-8*s:.0f} h{-8*s:.0f} Z" fill="#9AA6AE" stroke="#6E7880" stroke-width="1"/></g>')
+
+
+def doctor_bag(x, y, s=1.0):
+    """Dr. Squirrel's bag, `y` the ground under it."""
+    return (f'<path d="M{x-9*s:.0f},{y-28*s:.0f} q{9*s:.0f},{-10*s:.0f} {18*s:.0f},0" stroke="#4E3320" stroke-width="{3*s:.1f}" fill="none"/>'
+            f'<rect x="{x-20*s:.0f}" y="{y-28*s:.0f}" width="{40*s:.0f}" height="{28*s:.0f}" rx="6" fill="#6E4A2E"/>'
+            f'<rect x="{x-3*s:.0f}" y="{y-21*s:.0f}" width="{6*s:.0f}" height="{14*s:.0f}" fill="#E8533F"/>'
+            f'<rect x="{x-7*s:.0f}" y="{y-17*s:.0f}" width="{14*s:.0f}" height="{6*s:.0f}" fill="#E8533F"/>')
+
+
+def duck(x, y, s=1.0):
+    """A small yellow duck, side-on facing right, `x, y` under its middle."""
+    return (f'<ellipse cx="{x}" cy="{y-9*s:.1f}" rx="{14*s:.1f}" ry="{9*s:.1f}" fill="#FFD166" stroke="#D8A21F" stroke-width="1.2"/>'
+            f'<circle cx="{x+10*s:.1f}" cy="{y-20*s:.1f}" r="{7*s:.1f}" fill="#FFD166" stroke="#D8A21F" stroke-width="1.2"/>'
+            f'<path d="M{x+16*s:.1f},{y-21*s:.1f} l{7*s:.1f},{2*s:.1f} l{-7*s:.1f},{3*s:.1f} Z" fill="#FF9B4A"/>'
+            f'<circle cx="{x+12*s:.1f}" cy="{y-22*s:.1f}" r="{1.4*s:.1f}" fill="{INK}"/>'
+            f'<path d="M{x-6*s:.1f},{y-10*s:.1f} q{6*s:.1f},{-6*s:.1f} {12*s:.1f},0" stroke="#D8A21F" stroke-width="1.2" fill="none"/>')
+
+
+def sweat(x, y, s=1.0):
+    """Puffing-and-panting drops flying off a forehead."""
+    return "".join(f'<path d="M{x+dx*s:.0f},{y+dy*s:.0f} q{-4*s:.1f},{6*s:.1f} 0,{9*s:.1f} q{4*s:.1f},{-3*s:.1f} 0,{-9*s:.1f} Z" '
+                   f'fill="#9BDCF0" stroke="#5AB6D6" stroke-width="1"/>' for dx, dy in ((0, 0), (12, -10), (-10, -6)))

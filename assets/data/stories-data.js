@@ -117,7 +117,46 @@ const STORIES = [
     comingSoon: false
   },
   {
-    id: 'coming-soon-10',
+    id: '10-achoo-the-sneezy-day',
+    title: 'Achoo! The Sneezy Day',
+    subtitle: 'A story about sneezing into your elbow',
+    emoji: '🤧',
+    description: 'Elephant has a cold, and every giant sneeze blows something away: Rabbit\'s hat, the washing, even Dr. Sheep\'s wool. Then he learns to sneeze into his elbow and wash his hands.',
+    tags: ['Healthy Habits', 'Caring for Others', 'Friendship'],
+    characters: ['Rabbit', 'Elephant', 'Dr. Sheep'],
+    readTime: '7 min read',
+    path: 'stories/10-achoo-the-sneezy-day/',
+    cardColor: '#9BDCF0',
+    comingSoon: false
+  },
+  {
+    id: '11-the-great-big-cake',
+    title: 'The Great Big Cake',
+    subtitle: 'A story about taking one step at a time',
+    emoji: '🎂',
+    description: 'Rabbit and Elephant rush to bake Bear a birthday cake and end up covered in flour, eggs and cake mix. Then Bear shows them how to go one step at a time.',
+    tags: ['Patience', 'Following Steps', 'Friendship'],
+    characters: ['Rabbit', 'Elephant', 'Bear'],
+    readTime: '7 min read',
+    path: 'stories/11-the-great-big-cake/',
+    cardColor: '#FFB3C6',
+    comingSoon: false
+  },
+  {
+    id: '12-whoosh-the-kite-day',
+    title: 'Whoosh! The Kite Day',
+    subtitle: 'A story about taking turns',
+    emoji: '🪁',
+    description: 'Rabbit and Elephant both want the new kite first. They tug, a gust carries Rabbit up into the sky, and the kite ends up stuck in a tree, until they learn to take turns.',
+    tags: ['Taking Turns', 'Sharing', 'Friendship'],
+    characters: ['Rabbit', 'Elephant', 'Nurse Giraffe'],
+    readTime: '7 min read',
+    path: 'stories/12-whoosh-the-kite-day/',
+    cardColor: '#FF9B8A',
+    comingSoon: false
+  },
+  {
+    id: 'coming-soon-13',
     title: 'Coming Soon…',
     subtitle: 'More fun is brewing!',
     emoji: '🌟',

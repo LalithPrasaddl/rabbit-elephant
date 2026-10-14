@@ -1459,10 +1459,10 @@ def mud_splash(x, y, s=1.0):
                    for a in (_m.pi*i/8 for i in range(9)))
 
 
-def splat(x, y, r=6):
-    """A dollop of mud stuck on someone."""
+def splat(x, y, r=6, color=MUD):
+    """A dollop of mud (or cake mix) stuck on someone."""
     return (f'<path d="M{x-r},{y} q{r*.2:.1f},{-r:.1f} {r:.1f},{-r*.9:.1f} q{r:.1f},{-r*.1:.1f} {r:.1f},{r*.8:.1f} '
-            f'q{-r*.1:.1f},{r:.1f} {-r:.1f},{r*.9:.1f} q{-r:.1f},0 {-r:.1f},{-r*.8:.1f} Z" fill="{MUD}" opacity=".9"/>')
+            f'q{-r*.1:.1f},{r:.1f} {-r:.1f},{r*.9:.1f} q{-r:.1f},0 {-r:.1f},{-r*.8:.1f} Z" fill="{color}" opacity=".9"/>')
 
 
 def butterfly(x, y, s=1.0, color="#C77DFF"):
@@ -1515,3 +1515,432 @@ def sweat(x, y, s=1.0):
     """Puffing-and-panting drops flying off a forehead."""
     return "".join(f'<path d="M{x+dx*s:.0f},{y+dy*s:.0f} q{-4*s:.1f},{6*s:.1f} 0,{9*s:.1f} q{4*s:.1f},{-3*s:.1f} 0,{-9*s:.1f} Z" '
                    f'fill="#9BDCF0" stroke="#5AB6D6" stroke-width="1"/>' for dx, dy in ((0, 0), (12, -10), (-10, -6)))
+
+
+# ---------------------------------------------------------------- story 10 props
+# Story 10 is Elephant's cold. Every sneeze is a gust that blows something away, so
+# the props are the things that blow: washing, a hat, a sheep's fleece.
+SOCKS = ("#FF6B6B", "#74C8E4", "#FFD166", "#C77DFF")
+
+
+def sock(x, y, s=1.0, rot=0, color="#FF6B6B"):
+    """A sock, `x, y` the top of its cuff, toe pointing down and right."""
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            f'<path d="M{x-7*s:.1f},{y:.1f} L{x-7*s:.1f},{y+22*s:.1f} Q{x-7*s:.1f},{y+32*s:.1f} {x+4*s:.1f},{y+32*s:.1f} '
+            f'L{x+14*s:.1f},{y+32*s:.1f} Q{x+20*s:.1f},{y+26*s:.1f} {x+14*s:.1f},{y+21*s:.1f} L{x+7*s:.1f},{y+20*s:.1f} '
+            f'L{x+7*s:.1f},{y:.1f} Z" fill="{color}" stroke="#00000033" stroke-width="1.3"/>'
+            f'<rect x="{x-7*s:.1f}" y="{y:.1f}" width="{14*s:.1f}" height="{5*s:.1f}" fill="#FFFFFF" opacity=".7"/></g>')
+
+
+def shirt(x, y, s=1.0, rot=0, color="#74C8E4"):
+    """A little T-shirt, `x, y` the middle of its neckline."""
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            f'<path d="M{x-8*s:.1f},{y:.1f} L{x-22*s:.1f},{y+4*s:.1f} L{x-30*s:.1f},{y+16*s:.1f} L{x-20*s:.1f},{y+21*s:.1f} '
+            f'L{x-16*s:.1f},{y+16*s:.1f} L{x-16*s:.1f},{y+42*s:.1f} L{x+16*s:.1f},{y+42*s:.1f} L{x+16*s:.1f},{y+16*s:.1f} '
+            f'L{x+20*s:.1f},{y+21*s:.1f} L{x+30*s:.1f},{y+16*s:.1f} L{x+22*s:.1f},{y+4*s:.1f} L{x+8*s:.1f},{y:.1f} '
+            f'Q{x:.1f},{y+7*s:.1f} {x-8*s:.1f},{y:.1f} Z" fill="{color}" stroke="#00000033" stroke-width="1.3" stroke-linejoin="round"/>'
+            f'<circle cx="{x:.1f}" cy="{y+24*s:.1f}" r="{5*s:.1f}" fill="#FFFFFF" opacity=".7"/></g>')
+
+
+def bedsheet(x, y, w=110, h=70, rot=0, color="#FFFFFF"):
+    """A flapping bedsheet, `x, y` the middle of its top edge."""
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            f'<path d="M{x-w/2:.0f},{y} Q{x:.0f},{y-8} {x+w/2:.0f},{y} Q{x+w/2+8:.0f},{y+h/2:.0f} {x+w/2:.0f},{y+h} '
+            f'Q{x+w/4:.0f},{y+h-10} {x:.0f},{y+h} Q{x-w/4:.0f},{y+h+10} {x-w/2:.0f},{y+h} Q{x-w/2-8:.0f},{y+h/2:.0f} {x-w/2:.0f},{y} Z" '
+            f'fill="{color}" stroke="#C8D4DC" stroke-width="1.6"/>'
+            f'<path d="M{x-w/2+8:.0f},{y+14} Q{x:.0f},{y+6} {x+w/2-8:.0f},{y+14}" stroke="#74C8E4" stroke-width="4" fill="none" opacity=".6"/></g>')
+
+
+def washing_line(x0, x1, y, h=120, sag=18, items=()):
+    """A washing line between two posts, `y` the ground. `items` hang from the line
+    at fractions along it: (t, kind, color) with kind 'sock', 'shirt' or 'sheet'."""
+    top = y - h
+    rope = f'M{x0},{top} Q{(x0+x1)/2:.0f},{top+sag*2} {x1},{top}'
+    out = ([f'<rect x="{px-4}" y="{top-8}" width="8" height="{h+8}" rx="2" fill="{WOOD_DK}"/>'
+            f'<rect x="{px-14}" y="{top-10}" width="28" height="6" rx="2" fill="{WOOD_DK}"/>' for px in (x0, x1)]
+           + [f'<path d="{rope}" stroke="#9AA6AE" stroke-width="2" fill="none"/>'])
+    for t, kind, color in items:
+        px = x0 + (x1 - x0)*t
+        py = top + sag*2*2*t*(1 - t)       # point on the quadratic
+        if kind == 'sock':
+            out.append(sock(px, py, color=color))
+        elif kind == 'shirt':
+            out.append(shirt(px, py, color=color))
+        else:
+            out.append(bedsheet(px, py, w=90, h=64, color=color))
+        out.append(f'<rect x="{px-2.5:.0f}" y="{py-6:.0f}" width="5" height="10" rx="1.5" fill="{WOOD}" stroke="{WOOD_DK}" stroke-width="1"/>')
+    return "".join(out)
+
+
+def sneeze(x, y, ang=0, s=1.0, n=5):
+    """The blast out of a trunk tip at (x, y): streaming gust lines fanning out along
+    `ang` degrees (0 = to the right), with a spray of droplets."""
+    import math as _m
+    out = []
+    for i in range(n):
+        a = _m.radians(ang + (i - (n-1)/2) * 11)
+        l0, l1 = 14*s, (70 + (i % 2)*24)*s
+        bx, by = -_m.sin(a)*8*s*(1 if i % 2 else -1), _m.cos(a)*8*s*(1 if i % 2 else -1)
+        out.append(f'<path d="M{x+_m.cos(a)*l0:.0f},{y+_m.sin(a)*l0:.0f} Q{x+_m.cos(a)*(l0+l1)/2+bx:.0f},{y+_m.sin(a)*(l0+l1)/2+by:.0f} '
+                   f'{x+_m.cos(a)*l1:.0f},{y+_m.sin(a)*l1:.0f}" stroke="#B9D4E2" stroke-width="{3.4*s:.1f}" fill="none" '
+                   f'stroke-linecap="round" opacity=".85"/>')
+    for i, (d, off) in enumerate(((30, -.3), (46, .25), (58, -.1), (40, .05), (66, .32), (24, .18))):
+        a = _m.radians(ang) + off
+        out.append(f'<circle cx="{x+_m.cos(a)*d*s:.0f}" cy="{y+_m.sin(a)*d*s:.0f}" r="{(2.4 + i % 3)*s:.1f}" fill="#CFEEFA" '
+                   f'stroke="#9BCFE4" stroke-width="1"/>')
+    return "".join(out)
+
+
+def germ(x, y, s=1.0, color="#7DCB6A"):
+    """One tiny germ: a wobbly green blob with little feelers and a cheeky face."""
+    import math as _m
+    feel = "".join(f'<path d="M{x+_m.cos(a)*9*s:.1f},{y+_m.sin(a)*9*s:.1f} l{_m.cos(a)*5*s:.1f},{_m.sin(a)*5*s:.1f}" '
+                   f'stroke="{color}" stroke-width="{2*s:.1f}" stroke-linecap="round"/>'
+                   f'<circle cx="{x+_m.cos(a)*15*s:.1f}" cy="{y+_m.sin(a)*15*s:.1f}" r="{1.8*s:.1f}" fill="{color}"/>'
+                   for a in (_m.pi*i/4 for i in range(8)))
+    return (feel + f'<circle cx="{x}" cy="{y}" r="{10*s:.1f}" fill="{color}" stroke="#4E9B44" stroke-width="1.2"/>'
+            f'<circle cx="{x-3.5*s:.1f}" cy="{y-2*s:.1f}" r="{1.6*s:.1f}" fill="{INK}"/>'
+            f'<circle cx="{x+3.5*s:.1f}" cy="{y-2*s:.1f}" r="{1.6*s:.1f}" fill="{INK}"/>'
+            f'<path d="M{x-3.5*s:.1f},{y+3*s:.1f} q{3.5*s:.1f},{3*s:.1f} {7*s:.1f},0" stroke="{INK}" stroke-width="1.2" fill="none" stroke-linecap="round"/>')
+
+
+def germs(pts, color="#7DCB6A"):
+    return "".join(germ(x, y, s, color) for x, y, s in pts)
+
+
+def specs(x, y, s=1.0, rot=0):
+    """Round glasses, `x, y` the bridge."""
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            + "".join(f'<circle cx="{x+sx*9*s:.1f}" cy="{y:.1f}" r="{7.5*s:.1f}" fill="#FFFFFF" fill-opacity=".25" '
+                      f'stroke="#C08840" stroke-width="{2*s:.1f}"/>' for sx in (-1, 1))
+            + f'<path d="M{x-2*s:.1f},{y-1*s:.1f} q{2*s:.1f},{-2*s:.1f} {4*s:.1f},0" stroke="#C08840" stroke-width="{2*s:.1f}" fill="none"/></g>')
+
+
+def fleece_cloud(x, y, r=80, fill="#F6F2EA", line="#CFC6B2", swirl="#E4DCCB"):
+    """Dr. Sheep's wool after a sneeze: blown up into one enormous cloud. `x, y` is
+    the middle; draw it BEHIND her so her face still shows."""
+    import math as _m
+    ring = [(x + _m.cos(a)*r*.82, y + _m.sin(a)*r*.7) for a in (2*_m.pi*i/14 for i in range(14))]
+    return (f'<ellipse cx="{x}" cy="{y}" rx="{r*.9:.0f}" ry="{r*.78:.0f}" fill="{fill}"/>'
+            + "".join(f'<circle cx="{cx:.0f}" cy="{cy:.0f}" r="{r*.3:.0f}" fill="{fill}" stroke="{line}" stroke-width="1.5"/>'
+                      for cx, cy in ring)
+            + f'<ellipse cx="{x}" cy="{y}" rx="{r*.86:.0f}" ry="{r*.72:.0f}" fill="{fill}"/>'
+            + "".join(f'<circle cx="{x+dx*r:.0f}" cy="{y+dy*r:.0f}" r="{r*.1:.0f}" fill="none" stroke="{swirl}" stroke-width="2.2"/>'
+                      for dx, dy in ((-.5, -.3), (.46, -.36), (-.6, .3), (.56, .26), (0, -.56))))
+
+
+def sink(x, y, running=False):
+    """A washbasin on a pedestal, `y` the floor. `running` turns the tap on."""
+    out = (f'<rect x="{x-12}" y="{y-80}" width="24" height="80" rx="4" fill="#FFFFFF" stroke="#C8D4DC" stroke-width="1.6"/>'
+           f'<path d="M{x-48},{y-100} L{x+48},{y-100} Q{x+46},{y-74} {x},{y-72} Q{x-46},{y-74} {x-48},{y-100} Z" '
+           f'fill="#FFFFFF" stroke="#C8D4DC" stroke-width="1.8"/>'
+           f'<ellipse cx="{x}" cy="{y-100}" rx="48" ry="7" fill="#E8F1F5" stroke="#C8D4DC" stroke-width="1.6"/>'
+           f'<path d="M{x+30},{y-104} v-22 q0,-6 -6,-6 h-14 v8" stroke="#9AA6AE" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'
+           f'<circle cx="{x+30}" cy="{y-126}" r="5" fill="#FF6B6B"/>')
+    if running:
+        out += f'<path d="M{x+10},{y-120} q2,10 0,18" stroke="#9BDCF0" stroke-width="5" fill="none" stroke-linecap="round"/>'
+    return out
+
+
+def soap_bubbles(pts):
+    """Soap bubbles: (x, y, r) each - a ring with a shine, nearly see-through."""
+    return "".join(f'<circle cx="{x}" cy="{y}" r="{r}" fill="#EAF8FF" fill-opacity=".55" stroke="#9BCFE4" stroke-width="1.4"/>'
+                   f'<path d="M{x-r*.5:.1f},{y-r*.2:.1f} q{r*.15:.1f},{-r*.4:.1f} {r*.5:.1f},{-r*.5:.1f}" stroke="#FFFFFF" '
+                   f'stroke-width="{max(1.2, r*.18):.1f}" fill="none" stroke-linecap="round"/>' for x, y, r in pts)
+
+
+def soup(x, y, s=1.0):
+    """A bowl of warm soup with a spoon, `x, y` the middle of the rim."""
+    return (f'<path d="M{x-22*s:.0f},{y} Q{x:.0f},{y+26*s:.0f} {x+22*s:.0f},{y} Z" fill="#FF9B4A" stroke="#D8743A" stroke-width="1.5"/>'
+            f'<ellipse cx="{x}" cy="{y}" rx="{22*s:.0f}" ry="{5*s:.0f}" fill="#FFC27A" stroke="#D8743A" stroke-width="1.5"/>'
+            f'<path d="M{x+8*s:.0f},{y-1} l{12*s:.0f},{-18*s:.0f}" stroke="#9AA6AE" stroke-width="{3*s:.1f}" stroke-linecap="round"/>'
+            + steam(x - 4*s, y - 8*s, s*.8, color="#E8D8C4"))
+
+
+def basket(x, y, w=70, full=True):
+    """A wicker laundry basket, `y` the ground (or the paw carrying it)."""
+    out = ''
+    if full:
+        out = (shirt(x - w*.18, y - 52, s=.7, rot=-20, color="#FFD166")
+               + sock(x + w*.2, y - 50, s=.8, rot=24, color="#C77DFF")
+               + f'<ellipse cx="{x}" cy="{y-40}" rx="{w*.42:.0f}" ry="10" fill="#FFFFFF" stroke="#C8D4DC" stroke-width="1.4"/>')
+    return (out
+            + f'<path d="M{x-w/2:.0f},{y-42} L{x-w*.4:.0f},{y} L{x+w*.4:.0f},{y} L{x+w/2:.0f},{y-42} Z" fill="#E8C48A" stroke="#B98A56" stroke-width="2"/>'
+            + "".join(f'<path d="M{x-w*.46:.0f},{y-dy} L{x+w*.46:.0f},{y-dy}" stroke="#B98A56" stroke-width="1.4" opacity=".7"/>'
+                      for dy in (12, 24, 34))
+            + f'<rect x="{x-w/2-3:.0f}" y="{y-46}" width="{w+6}" height="7" rx="3" fill="#D9AE7A" stroke="#B98A56" stroke-width="1.5"/>')
+
+
+def magnifier(uid, x, y, r=38, inside="", rot=40):
+    """A magnifying glass, `x, y` the middle of the lens. `inside` is drawn in the
+    lens, clipped to it - so the germs only show where you look through it."""
+    import math as _m
+    a = _m.radians(rot)
+    hx, hy = x + _m.cos(a)*(r+4), y + _m.sin(a)*(r+4)
+    return (f'<path d="M{hx:.0f},{hy:.0f} l{_m.cos(a)*44:.0f},{_m.sin(a)*44:.0f}" stroke="#6E4A2E" stroke-width="11" stroke-linecap="round"/>'
+            f'<circle cx="{x}" cy="{y}" r="{r}" fill="#EAF8FF"/>'
+            + f'<defs><clipPath id="lens-{uid}"><circle cx="{x}" cy="{y}" r="{r}"/></clipPath></defs>'
+            f'<g clip-path="url(#lens-{uid})">{inside}</g>'
+            + f'<circle cx="{x}" cy="{y}" r="{r}" fill="#FFFFFF" fill-opacity=".12" stroke="#9AA6AE" stroke-width="6"/>'
+            f'<path d="M{x-r*.6:.0f},{y-r*.3:.0f} q{r*.2:.0f},{-r*.4:.0f} {r*.6:.0f},{-r*.5:.0f}" stroke="#FFFFFF" stroke-width="4" fill="none" stroke-linecap="round" opacity=".8"/>')
+
+
+def notes(pts, color="#C77DFF"):
+    """Musical notes drifting up from a song: (x, y, size) each."""
+    return "".join(f'<text x="{x}" y="{y}" font-size="{f}" fill="{color}" text-anchor="middle" '
+                   f'font-family="Nunito, sans-serif" font-weight="700">{"&#9835;" if i % 2 else "&#9834;"}</text>'
+                   for i, (x, y, f) in enumerate(pts))
+
+
+# ---------------------------------------------------------------- story 11 props
+# Story 11 is a birthday cake baked too fast, then baked properly. Batter is
+# yellow, the cake is golden, the icing pink - and the kitchen is the burrow one.
+BATTER, BATTER_DK = "#FFE08A", "#E8B84A"
+SPONGE, SPONGE_DK = "#F0B860", "#C88A3A"
+ICING, ICING_DK = "#FFB3C6", "#E88AA4"
+
+
+def recipe(x, y, s=1.0, rot=0):
+    """A recipe card, `x, y` its middle: a cake picture and a list of steps."""
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            f'<rect x="{x-24*s:.0f}" y="{y-30*s:.0f}" width="{48*s:.0f}" height="{60*s:.0f}" rx="3" fill="#FFFDF6" stroke="#C8B48C" stroke-width="1.5"/>'
+            f'<rect x="{x-12*s:.0f}" y="{y-24*s:.0f}" width="{24*s:.0f}" height="{12*s:.0f}" rx="2" fill="{ICING}"/>'
+            f'<rect x="{x-12*s:.0f}" y="{y-14*s:.0f}" width="{24*s:.0f}" height="{6*s:.0f}" fill="{SPONGE}"/>'
+            + "".join(f'<circle cx="{x-16*s:.0f}" cy="{y+(2+i*8)*s:.0f}" r="{1.6*s:.1f}" fill="#9A8E78"/>'
+                      f'<path d="M{x-11*s:.0f},{y+(2+i*8)*s:.0f} h{(24-i*4)*s:.0f}" stroke="#B9AE98" stroke-width="{2*s:.1f}" stroke-linecap="round"/>'
+                      for i in range(4))
+            + '</g>')
+
+
+def flour_bag(x, y, s=1.0, rot=0, empty=False):
+    """A paper bag of flour, `x, y` the middle of its base. `empty` scrunches it."""
+    h = 34 if empty else 50
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            f'<path d="M{x-20*s:.0f},{y} L{x-18*s:.0f},{y-h*s:.0f} L{x+18*s:.0f},{y-h*s:.0f} L{x+20*s:.0f},{y} Z" fill="#F4EAD8" stroke="#C8B48C" stroke-width="1.6"/>'
+            f'<path d="M{x-18*s:.0f},{y-h*s:.0f} l{6*s:.0f},{-6*s:.0f} l{6*s:.0f},{6*s:.0f} l{6*s:.0f},{-6*s:.0f} l{6*s:.0f},{6*s:.0f} l{6*s:.0f},{-6*s:.0f} l{6*s:.0f},{6*s:.0f}" '
+            f'stroke="#C8B48C" stroke-width="1.6" fill="#F4EAD8"/>'
+            f'<rect x="{x-14*s:.0f}" y="{y-(h-12)*s:.0f}" width="{28*s:.0f}" height="{14*s:.0f}" rx="2" fill="#74C8E4"/>'
+            f'<text x="{x}" y="{y-(h-22.5)*s:.0f}" font-size="{7.5*s:.1f}" text-anchor="middle" fill="#FFFFFF" '
+            f'font-family="Nunito, sans-serif" font-weight="700">FLOUR</text></g>')
+
+
+def egg(x, y, s=1.0, rot=0, cracked=False):
+    out = f'<ellipse cx="{x}" cy="{y}" rx="{8*s:.1f}" ry="{10.5*s:.1f}" fill="#FFF8EE" stroke="#D8C8A8" stroke-width="1.3" transform="rotate({rot} {x} {y})"/>'
+    if cracked:
+        out += (f'<path d="M{x-8*s:.1f},{y-1*s:.1f} l{3*s:.1f},{-3*s:.1f} l{3*s:.1f},{3*s:.1f} l{3*s:.1f},{-3*s:.1f} l{3*s:.1f},{3*s:.1f} l{3*s:.1f},{-3*s:.1f}" '
+                f'stroke="#B9A888" stroke-width="1.3" fill="none" transform="rotate({rot} {x} {y})"/>')
+    return out
+
+
+def eggshell(x, y, s=1.0, rot=0):
+    """Half a broken shell, zig-zag edge up."""
+    return (f'<path d="M{x-8*s:.1f},{y:.1f} l{3*s:.1f},{-4*s:.1f} l{3*s:.1f},{3*s:.1f} l{2*s:.1f},{-4*s:.1f} l{3*s:.1f},{3*s:.1f} l{5*s:.1f},{-2*s:.1f} '
+            f'Q{x+8*s:.1f},{y+10*s:.1f} {x:.1f},{y+10*s:.1f} Q{x-8*s:.1f},{y+10*s:.1f} {x-8*s:.1f},{y:.1f} Z" fill="#FFF8EE" '
+            f'stroke="#D8C8A8" stroke-width="1.2" transform="rotate({rot} {x} {y})"/>')
+
+
+def egg_splat(x, y, s=1.0):
+    """A cracked egg landed on someone's head: white running down, yolk on top,
+    and a drip or two. `x, y` is where it landed."""
+    return (f'<path d="M{x-24*s:.0f},{y+2*s:.0f} Q{x-20*s:.0f},{y-10*s:.0f} {x:.0f},{y-10*s:.0f} Q{x+22*s:.0f},{y-10*s:.0f} {x+24*s:.0f},{y+4*s:.0f} '
+            f'q{-2*s:.0f},{8*s:.0f} {-6*s:.0f},{2*s:.0f} q{-2*s:.0f},{14*s:.0f} {-7*s:.0f},{2*s:.0f} q{-6*s:.0f},{4*s:.0f} {-12*s:.0f},0 '
+            f'q{-4*s:.0f},{18*s:.0f} {-8*s:.0f},{0*s:.0f} q{-4*s:.0f},{4*s:.0f} {-15*s:.0f},{0:.0f} Z" fill="#FFFFFF" fill-opacity=".85" stroke="#E4DCCB" stroke-width="1.2"/>'
+            f'<circle cx="{x+2*s:.0f}" cy="{y-3*s:.0f}" r="{8*s:.1f}" fill="#FFC23A" stroke="#E8A21F" stroke-width="1.2"/>'
+            f'<circle cx="{x-1*s:.0f}" cy="{y-6*s:.0f}" r="{2.4*s:.1f}" fill="#FFFFFF" opacity=".7"/>')
+
+
+def mixing_bowl(x, y, w=90, batter=True, spoon=False):
+    """A big mixing bowl, `y` the table top it stands on."""
+    rim = y - w*.5
+    out = ''
+    if batter:
+        out += f'<ellipse cx="{x}" cy="{rim+3:.0f}" rx="{w*.44:.0f}" ry="{w*.08:.0f}" fill="{BATTER}" stroke="{BATTER_DK}" stroke-width="1.2"/>'
+    if spoon:
+        out += f'<path d="M{x+w*.1:.0f},{rim:.0f} l{w*.22:.0f},{-w*.4:.0f}" stroke="#D9AE7A" stroke-width="5" stroke-linecap="round"/>'
+    return (f'<ellipse cx="{x}" cy="{rim:.0f}" rx="{w/2:.0f}" ry="{w*.11:.0f}" fill="#E8D6B4" stroke="#7FB8CF" stroke-width="2"/>'
+            + out
+            + f'<path d="M{x-w/2:.0f},{rim:.0f} Q{x-w/2+4:.0f},{y-4} {x:.0f},{y-2} Q{x+w/2-4:.0f},{y-4} {x+w/2:.0f},{rim:.0f} '
+              f'Q{x:.0f},{rim+w*.16:.0f} {x-w/2:.0f},{rim:.0f} Z" fill="#9BDCF0" stroke="#5AB6D6" stroke-width="2"/>'
+            + f'<path d="M{x-w*.3:.0f},{rim+w*.2:.0f} q{w*.06:.0f},{w*.12:.0f} {w*.2:.0f},{w*.16:.0f}" stroke="#FFFFFF" stroke-width="3" fill="none" opacity=".6" stroke-linecap="round"/>'
+            + f'<rect x="{x-w*.18:.0f}" y="{y-5}" width="{w*.36:.0f}" height="5" rx="2" fill="#5AB6D6"/>')
+
+
+def mixer(x, y, s=1.0, rot=0, whirl=False):
+    """A hand mixer, `x, y` the tips of its beaters. `whirl` is SUPER FAST."""
+    out = (f'<g transform="rotate({rot} {x} {y})">'
+           + "".join(f'<path d="M{x+dx*s:.0f},{y-30*s:.0f} v{22*s:.0f} q{-4*s:.0f},{8*s:.0f} 0,{8*s:.0f} q{4*s:.0f},0 0,{-8*s:.0f}" '
+                     f'stroke="#9AA6AE" stroke-width="{2.4*s:.1f}" fill="none"/>' for dx in (-6, 6))
+           + f'<path d="M{x-20*s:.0f},{y-30*s:.0f} Q{x-22*s:.0f},{y-54*s:.0f} {x:.0f},{y-54*s:.0f} L{x+26*s:.0f},{y-54*s:.0f} '
+             f'Q{x+34*s:.0f},{y-54*s:.0f} {x+34*s:.0f},{y-44*s:.0f} L{x+30*s:.0f},{y-30*s:.0f} Z" fill="#FF6B6B" stroke="#C0484A" stroke-width="1.6"/>'
+           + f'<path d="M{x+4*s:.0f},{y-54*s:.0f} q{6*s:.0f},{-18*s:.0f} {24*s:.0f},{-6*s:.0f} l{-2*s:.0f},{6*s:.0f}" stroke="#C0484A" stroke-width="{6*s:.1f}" fill="none" stroke-linecap="round"/>'
+           + f'<circle cx="{x+20*s:.0f}" cy="{y-42*s:.0f}" r="{3.4*s:.1f}" fill="#FFD166"/></g>')
+    if whirl:
+        out += "".join(f'<path d="M{x-(22+i*12)*s:.0f},{y-(6+i*6)*s:.0f} a{(22+i*12)*s:.0f},{(10+i*5)*s:.0f} 0 1 0 {2*(22+i*12)*s:.0f},0" '
+                       f'stroke="#C8D4DC" stroke-width="2.4" fill="none" stroke-linecap="round" opacity="{.85-i*.2:.2f}"/>' for i in range(3))
+    return out
+
+
+def oven(x, y, w=124, h=112, door='shut', inside="", light=False):
+    """A little oven standing on the floor at `y`. `inside` is drawn in the oven's
+    window (or its open mouth, when `door='open'`); `light` glows it warm."""
+    top = y - h
+    wx, wy, ww, wh = x - w*.36, top + 34, w*.72, h*.44
+    glow = "#FFE9A8" if light else "#3A3030"
+    out = (f'<rect x="{x-w/2:.0f}" y="{top:.0f}" width="{w}" height="{h}" rx="8" fill="#BFE6D6" stroke="#7FB89E" stroke-width="2"/>'
+           + "".join(f'<circle cx="{x+dx*w:.0f}" cy="{top+14:.0f}" r="6" fill="#9AA6AE" stroke="#6E7880" stroke-width="1.2"/>'
+                     for dx in (-.3, -.1, .1))
+           + f'<circle cx="{x+w*.32:.0f}" cy="{top+14:.0f}" r="4" fill="{"#FF6B6B" if light else "#C8D0D6"}"/>')
+    if door == 'open':
+        out += (f'<rect x="{wx:.0f}" y="{wy:.0f}" width="{ww:.0f}" height="{wh:.0f}" rx="5" fill="#3A3030"/>'
+                + clip(f'ov{x}{y}', wx, wy, ww, wh, inside)
+                + f'<path d="M{x-w/2:.0f},{y-8} L{x-w/2-6:.0f},{y+12} L{x+w/2+6:.0f},{y+12} L{x+w/2:.0f},{y-8} Z" fill="#A8DCC6" stroke="#7FB89E" stroke-width="2"/>'
+                + f'<rect x="{x-w*.3:.0f}" y="{y+2}" width="{w*.6:.0f}" height="5" rx="2" fill="#6E7880"/>')
+    else:
+        out += (f'<rect x="{wx:.0f}" y="{wy:.0f}" width="{ww:.0f}" height="{wh:.0f}" rx="5" fill="{glow}"/>'
+                + clip(f'ov{x}{y}', wx, wy, ww, wh, inside)
+                + f'<rect x="{wx:.0f}" y="{wy:.0f}" width="{ww:.0f}" height="{wh:.0f}" rx="5" fill="#FFFFFF" fill-opacity=".1" stroke="#6E7880" stroke-width="3"/>'
+                + f'<rect x="{x-w*.3:.0f}" y="{top+24:.0f}" width="{w*.6:.0f}" height="6" rx="3" fill="#6E7880"/>')
+    return out
+
+
+def cake(x, y, w=110, kind='tall', candles=0):
+    """A cake on a plate, `y` the table top. `tall` is three iced layers; `flat` is
+    the sad pancake one; `tin` is a cake baking in its tin, risen to `w*.3`."""
+    out = f'<ellipse cx="{x}" cy="{y-3}" rx="{w*.62:.0f}" ry="7" fill="#FFFFFF" stroke="#C8D4DC" stroke-width="1.5"/>'
+    if kind == 'flat':
+        return (out + f'<ellipse cx="{x}" cy="{y-8}" rx="{w*.52:.0f}" ry="9" fill="{SPONGE}" stroke="{SPONGE_DK}" stroke-width="1.6"/>'
+                f'<ellipse cx="{x}" cy="{y-11}" rx="{w*.44:.0f}" ry="5" fill="#F6CC80" opacity=".8"/>'
+                + (candle(x, y - 14) if candles else ''))
+    if kind == 'tin':
+        return (f'<path d="M{x-w/2:.0f},{y-w*.3:.0f} Q{x:.0f},{y-w*.62:.0f} {x+w/2:.0f},{y-w*.3:.0f} Z" fill="{SPONGE}" stroke="{SPONGE_DK}" stroke-width="1.6"/>'
+                f'<rect x="{x-w/2:.0f}" y="{y-w*.3:.0f}" width="{w}" height="{w*.3:.0f}" rx="3" fill="#B8C2CA" stroke="#7E8A92" stroke-width="1.6"/>')
+    lh = w * .26
+    for i in range(3):
+        lw = w * (1 - i*.14)
+        ly = y - 6 - (i+1)*lh
+        out += (f'<rect x="{x-lw/2:.0f}" y="{ly:.0f}" width="{lw:.0f}" height="{lh:.0f}" rx="5" fill="{SPONGE}" stroke="{SPONGE_DK}" stroke-width="1.5"/>'
+                f'<path d="M{x-lw/2:.0f},{ly+6:.0f} V{ly+2:.0f} Q{x-lw/2:.0f},{ly-3:.0f} {x-lw/2+6:.0f},{ly-3:.0f} H{x+lw/2-6:.0f} '
+                f'Q{x+lw/2:.0f},{ly-3:.0f} {x+lw/2:.0f},{ly+2:.0f} V{ly+6:.0f} '
+                + " ".join(f'q{-lw/12:.1f},{8 if k % 2 else 3} {-lw/6:.1f},0' for k in range(6))
+                + f' Z" fill="{ICING}" stroke="{ICING_DK}" stroke-width="1.2"/>')
+    top = y - 6 - 3*lh
+    out += "".join(f'<circle cx="{x+dx*w:.0f}" cy="{top-1:.0f}" r="3" fill="{c}"/>'
+                   for dx, c in ((-.24, "#FF6B6B"), (-.08, "#74C8E4"), (.1, "#FFD166"), (.25, "#C77DFF")))
+    for i in range(candles):
+        out += candle(x + (i - (candles-1)/2)*16, top - 2)
+    return out
+
+
+def candle(x, y, lit=True):
+    """A striped birthday candle, `y` its foot."""
+    return (f'<rect x="{x-3}" y="{y-22}" width="6" height="22" rx="2" fill="#FFFFFF" stroke="#74C8E4" stroke-width="1.2"/>'
+            f'<path d="M{x-3},{y-16} l6,-4 M{x-3},{y-8} l6,-4" stroke="#74C8E4" stroke-width="1.6"/>'
+            + (f'<path d="M{x},{y-36} q6,8 0,12 q-6,-4 0,-12 Z" fill="#FFB347" stroke="#FF8A3D" stroke-width="1"/>' if lit else ''))
+
+
+def measuring_cup(x, y, s=1.0, full=True, rot=0):
+    """A measuring cup, `x, y` the middle of its rim; `full` heaps flour in it."""
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            + (f'<path d="M{x-12*s:.0f},{y:.0f} Q{x:.0f},{y-10*s:.0f} {x+12*s:.0f},{y:.0f} Z" fill="#FFFFFF" stroke="#E4DCCB" stroke-width="1.2"/>' if full else '')
+            + f'<path d="M{x-12*s:.0f},{y:.0f} L{x-9*s:.0f},{y+20*s:.0f} L{x+9*s:.0f},{y+20*s:.0f} L{x+12*s:.0f},{y:.0f} Z" fill="#FF9BAE" stroke="#E0708A" stroke-width="1.5"/>'
+            f'<path d="M{x+11*s:.0f},{y+4*s:.0f} h{12*s:.0f} v{6*s:.0f} h{-11*s:.0f}" stroke="#E0708A" stroke-width="{3*s:.1f}" fill="none"/>'
+            f'<path d="M{x-6*s:.0f},{y+8*s:.0f} h{5*s:.0f} M{x-6*s:.0f},{y+13*s:.0f} h{5*s:.0f}" stroke="#FFFFFF" stroke-width="1.4"/></g>')
+
+
+def bunting(x0, x1, y, sag=24, n=9):
+    """A string of party flags across the top of the room."""
+    out = [f'<path d="M{x0},{y} Q{(x0+x1)/2:.0f},{y+sag*2} {x1},{y}" stroke="#9A8E78" stroke-width="1.6" fill="none"/>']
+    for i in range(n):
+        t = (i + .5) / n
+        px = x0 + (x1-x0)*t
+        py = y + sag*2*2*t*(1-t)
+        out.append(f'<path d="M{px-10:.0f},{py:.0f} L{px+10:.0f},{py:.0f} L{px:.0f},{py+20:.0f} Z" fill="{CUSHIONS[i % 6]}"/>')
+    return "".join(out)
+
+
+def stairs(x, y, n=4, step=18):
+    """A little staircase going up to the right, `x, y` its bottom-left corner."""
+    d = f'M{x},{y} ' + " ".join(f'v{-step} h{step*1.4:.0f}' for _ in range(n)) + f' V{y} Z'
+    return f'<path d="{d}" fill="#E8C48A" stroke="#B98A56" stroke-width="2" stroke-linejoin="round"/>'
+
+
+def party_hat(x, y, s=1.0, rot=0, color="#C77DFF"):
+    """A little cone party hat, `x, y` the middle of its brim."""
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            f'<path d="M{x-13*s:.0f},{y} L{x:.0f},{y-34*s:.0f} L{x+13*s:.0f},{y} Z" fill="{color}" stroke="#00000033" stroke-width="1.2"/>'
+            f'<path d="M{x-7*s:.0f},{y-16*s:.0f} l{14*s:.0f},0" stroke="#FFFFFF" stroke-width="{3*s:.1f}" opacity=".7"/>'
+            f'<circle cx="{x}" cy="{y-35*s:.0f}" r="{4.5*s:.1f}" fill="#FFD166"/></g>')
+
+
+# ---------------------------------------------------------------- story 12 props
+# Story 12 is a windy day and one kite between two friends. Wind is drawn, not
+# implied: curly gust lines, leaves on the move, the kite's tail streaming out.
+KITE, KITE_DK = "#FF6B6B", "#C0484A"
+
+
+def kite(x, y, s=1.0, rot=0, tail=True):
+    """A diamond kite, `x, y` where the string ties on (the middle of the cross)."""
+    import math as _m
+    bows = ''
+    if tail:
+        pts = [(x + _m.sin(i*1.3)*10*s, y + (40 + i*16)*s) for i in range(6)]
+        d = f'M{x:.0f},{y+40*s:.0f} ' + " ".join(f'L{px:.0f},{py:.0f}' for px, py in pts)
+        bows = (f'<path d="{d}" stroke="#5E6870" stroke-width="1.6" fill="none" stroke-linejoin="round"/>'
+                + "".join(f'<path d="M{px-7*s:.1f},{py-4*s:.1f} L{px:.1f},{py:.1f} L{px-7*s:.1f},{py+4*s:.1f} Z '
+                          f'M{px+7*s:.1f},{py-4*s:.1f} L{px:.1f},{py:.1f} L{px+7*s:.1f},{py+4*s:.1f} Z" fill="{c}"/>'
+                          for (px, py), c in zip(pts[1:], ("#FFD166", "#74C8E4", "#C77DFF", "#FFD166", "#74C8E4"))))
+    return (f'<g transform="rotate({rot} {x} {y})">{bows}'
+            f'<path d="M{x:.0f},{y-34*s:.0f} L{x+26*s:.0f},{y-6*s:.0f} L{x:.0f},{y+40*s:.0f} L{x-26*s:.0f},{y-6*s:.0f} Z" '
+            f'fill="{KITE}" stroke="{KITE_DK}" stroke-width="2" stroke-linejoin="round"/>'
+            f'<path d="M{x:.0f},{y-34*s:.0f} L{x+26*s:.0f},{y-6*s:.0f} L{x:.0f},{y-6*s:.0f} Z" fill="#FF9BAE"/>'
+            f'<path d="M{x:.0f},{y-6*s:.0f} L{x-26*s:.0f},{y-6*s:.0f} L{x:.0f},{y+40*s:.0f} Z" fill="#E4453F" opacity=".5"/>'
+            f'<path d="M{x:.0f},{y-34*s:.0f} V{y+40*s:.0f} M{x-26*s:.0f},{y-6*s:.0f} H{x+26*s:.0f}" stroke="{KITE_DK}" stroke-width="1.6"/></g>')
+
+
+def kite_string(x0, y0, x1, y1, sag=.12):
+    """The kite string from a paw or trunk (x0, y0) up to the kite (x1, y1), with a
+    little belly in it."""
+    mx, my = (x0+x1)/2 + (y1-y0)*sag, (y0+y1)/2 - (x1-x0)*sag
+    return f'<path d="M{x0:.0f},{y0:.0f} Q{mx:.0f},{my:.0f} {x1:.0f},{y1:.0f}" stroke="#6B5B47" stroke-width="1.4" fill="none"/>'
+
+
+def gust(x, y, s=1.0, flip=False):
+    """One curly gust of wind blowing to the right (`flip` blows left)."""
+    d = -1 if flip else 1
+    return (f'<path d="M{x-d*50*s:.0f},{y:.0f} H{x+d*20*s:.0f} q{d*16*s:.0f},0 {d*16*s:.0f},{-12*s:.0f} '
+            f'q0,{-10*s:.0f} {-d*10*s:.0f},{-10*s:.0f} q{-d*8*s:.0f},0 {-d*8*s:.0f},{8*s:.0f}" '
+            f'stroke="#FFFFFF" stroke-width="{3.4*s:.1f}" fill="none" stroke-linecap="round" opacity=".9"/>'
+            f'<path d="M{x-d*40*s:.0f},{y+12*s:.0f} H{x+d*4*s:.0f}" stroke="#FFFFFF" stroke-width="{3*s:.1f}" '
+            f'stroke-linecap="round" opacity=".75"/>')
+
+
+def tall_tree(x, y, h=260):
+    """A tall tree, `y` the ground, `h` up to the top of its crown - tall enough
+    for a kite to get stuck in."""
+    top = y - h
+    return (f'<path d="M{x-12},{y} L{x-7},{top+60} L{x+7},{top+60} L{x+12},{y} Z" fill="{BARK}" stroke="{BARK_DK}" stroke-width="1.5"/>'
+            f'<path d="M{x+4},{y-h*.45:.0f} q22,-10 32,-34 M{x-4},{y-h*.6:.0f} q-20,-8 -28,-30" stroke="{BARK}" stroke-width="6" fill="none" stroke-linecap="round"/>'
+            + "".join(f'<circle cx="{x+dx}" cy="{top+dy}" r="{r}" fill="{c}"/>'
+                      for dx, dy, r, c in ((-34, 80, 36, LEAF), (34, 76, 36, LEAF), (-20, 44, 38, LEAF), (22, 40, 36, LEAF),
+                                           (0, 26, 30, LEAF_LT), (-4, 76, 30, LEAF_LT)))
+            + f'<circle cx="{x+40}" cy="{y-h*.45-38:.0f}" r="13" fill="{LEAF_LT}"/><circle cx="{x-36}" cy="{y-h*.6-32:.0f}" r="12" fill="{LEAF}"/>')
+
+
+def bird_nest(x, y, s=1.0, bird=True):
+    """A twiggy nest, `x, y` the middle of its base, with a little blue bird in it."""
+    out = ''
+    if bird:
+        out = (f'<ellipse cx="{x+2*s:.0f}" cy="{y-16*s:.0f}" rx="{11*s:.1f}" ry="{9*s:.1f}" fill="#74C8E4" stroke="#3C90AE" stroke-width="1.2"/>'
+               f'<circle cx="{x+8*s:.0f}" cy="{y-26*s:.0f}" r="{7*s:.1f}" fill="#74C8E4" stroke="#3C90AE" stroke-width="1.2"/>'
+               f'<path d="M{x+14*s:.0f},{y-27*s:.0f} l{6*s:.1f},{2*s:.1f} l{-6*s:.1f},{2*s:.1f} Z" fill="#FFB347"/>'
+               f'<circle cx="{x+10*s:.0f}" cy="{y-28*s:.0f}" r="{1.4*s:.1f}" fill="{INK}"/>')
+    return (out + f'<path d="M{x-22*s:.0f},{y-12*s:.0f} Q{x-20*s:.0f},{y+2*s:.0f} {x:.0f},{y+2*s:.0f} Q{x+20*s:.0f},{y+2*s:.0f} {x+22*s:.0f},{y-12*s:.0f} Z" '
+                  f'fill="#B98A56" stroke="#7E5A38" stroke-width="1.5"/>'
+            + "".join(f'<path d="M{x+dx*s:.0f},{y-10*s:.0f} l{14*s:.0f},{6*s:.0f}" stroke="#7E5A38" stroke-width="1.4" stroke-linecap="round"/>'
+                      for dx in (-20, -8, 4)))
+
+
+def belt(w=56, y=-32, color="#C77DFF"):
+    """Rabbit's belt, in rabbit-local coordinates - pass it as `extra`."""
+    return (f'<path d="M{-w/2},{y-2} Q0,{y+8} {w/2},{y-2}" stroke="{color}" stroke-width="7" fill="none" stroke-linecap="round"/>'
+            f'<rect x="-7" y="{y-3}" width="14" height="11" rx="2" fill="#FFD166" stroke="#D8A21F" stroke-width="1.5"/>')

@@ -56,6 +56,9 @@ EXPR = {
     'excited':   dict(brow='raised',   mouth='open',   lid=-.12, blush=True),
     'sneaky':    dict(brow='cross',    mouth='grin',   lid=.26),
     'guilty':    dict(brow='worried',  mouth='flat',   lid=.16, blush=True),
+    # story 10: eyes screwed shut, mouth wide - mid-ACHOO
+    'sneeze':    dict(brow='worried',  mouth='open',   lid=.9),
+    'yawn':      dict(brow=None,       mouth='open',   lid=.9),
 }
 
 
@@ -180,6 +183,8 @@ N_POSE = {
     'stand':  dict(body=(0, -52, 33, 40), head=(9, -142), ear=-162, feet=True),
     'sit':    dict(body=(0, -46, 35, 36), head=(9, -130), ear=-150, feet=False),
     'seated': dict(body=(0, -32, 28, 31), head=(7, -110), ear=-130, feet=False),
+    # neck at full stretch - reaching a hat or a kite out of the top of a tree
+    'stretch': dict(body=(0, -52, 33, 40), head=(16, -250), ear=-270, feet=True),
 }
 S_POSE = {
     'stand':  dict(body=(0, -58, 38, 32), head=(0, -104), ear=-108, feet=True),

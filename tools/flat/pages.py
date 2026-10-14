@@ -14,7 +14,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import scene as S
 from characters import (rabbit, elephant, bear, squirrel, giraffe, sheep, critter, tortoise, bandage,
-                        E_BODY, E_LINE, R_BODY, R_LINE, R_EAR, N_BODY, N_LINE, _limb)
+                        E_BODY, E_LINE, R_BODY, R_LINE, R_EAR, N_BODY, N_LINE, S_SCOPE, S_FACE, S_FLINE, S_DARK, _limb)
 
 
 def alt(text):
@@ -1777,6 +1777,710 @@ def p09_11():
             + S.bubble(["Every fall means", "you're learning!"], 360, 90, tail=(350, 190)))
 
 
+# ---------------------------------------------------------------- story 10
+HAT = S.sunhat(0, -134, s=1.0, rot=-6)    # Rabbit's straw hat, on her head
+CLINIC = "#EEF4F7"
+
+
+def _ghost():
+    """Elephant under the bedsheet: a white drape over his head and ears, eye holes,
+    and his trunk poking out through the front. In elephant-local coordinates."""
+    hem = " ".join("l-12,-8 l-12,8" for _ in range(5))
+    return (f'<path d="M-62,-40 Q-72,-118 -42,-148 Q0,-172 42,-148 Q72,-118 62,-40 {hem} Z" '
+            f'fill="#FFFFFF" stroke="#C8D4DC" stroke-width="2"/>'
+            f'<path d="M-50,-120 Q0,-136 50,-120" stroke="#74C8E4" stroke-width="5" fill="none" opacity=".6"/>'
+            + "".join(f'<ellipse cx="{sx*14}" cy="-106" rx="8" ry="10" fill="{S.INK}"/>'
+                      f'<circle cx="{sx*14+3}" cy="-109" r="2.6" fill="#FFFFFF"/>' for sx in (-1, 1))
+            + _limb(0, -80, -26, 46, E_BODY, E_LINE, 15, bow=.2))
+
+
+def _sock_ears():
+    """Two socks dangling off the tips of Rabbit's ears (ears=(-24, 24))."""
+    return S.sock(-26, -180, s=.85, rot=-30, color="#FF6B6B") + S.sock(26, -180, s=.85, rot=20, color="#74C8E4")
+
+
+def _wiggle(x, y):
+    """Wiggle marks either side of a twitching trunk tip."""
+    return "".join(f'<path d="M{x+sx*14},{y-8} q{sx*5},4 0,8 q{-sx*5},4 0,8" stroke="#8FA8C0" stroke-width="2.2" '
+                   f'fill="none" stroke-linecap="round"/>' for sx in (-1, 1))
+
+
+def _ecover(dx=-60, dy=-30):
+    """Elephant's arm crossed in front of his face, elbow over the trunk - drawn as
+    `extra`, because the arm `elephant()` draws goes UNDER the head."""
+    return _limb(26, -58, dx, dy, E_BODY, E_LINE, 14)
+
+
+def _scover(dx=-46, dy=-34):
+    """Dr. Sheep's elbow across her muzzle, likewise drawn over the head."""
+    return (_limb(28, -64, dx, dy, S_FACE, S_FLINE, 9)
+            + f'<ellipse cx="{28+dx}" cy="{-64+dy}" rx="5.5" ry="5" fill="{S_DARK}"/>')
+
+
+def _home(uid):
+    """Elephant's bedroom: warm wall, a sunny window, a rug."""
+    return (S.indoors(uid, wall="#FFF3E4", floor="#EFE0C8", y=262)
+            + S.garden_window(250, 120, w=100, h=80)
+            + '<ellipse cx="250" cy="330" rx="200" ry="22" fill="#FFD9A8" opacity=".6"/>')
+
+
+@alt('Elephant sniffles with a tickly trunk but says he is fine, while Rabbit, wearing her straw hat, carries a basket of washing towards the washing line.')
+def p10_1():
+    """A tickly trunk. 'I'm fine!'"""
+    return (S.sky('s10p1', 'morning', rays=True, sun=(440, 52))
+            + S.ground('s10p1', flowers=((55, 242), (250, 236), (460, 250)))
+            + S.washing_line(290, 470, 262, h=120)
+            + S.shadow(150, 348, 56)
+            + elephant(150, 350, s=1.25, expr='calm', look=(.6, -.2), trunk=(30, -30))
+            + _shout("sniff, sniff", 236, 172, size=15, rot=-8, color="#8FA8C0")
+            + '<path d="M196,218 q-4,7 0,10 q4,-3 0,-10 Z" fill="#9BDCF0" stroke="#5AB6D6" stroke-width="1"/>'
+            + S.shadow(350, 350, 34)
+            + rabbit(350, 352, s=1.1, expr='happy', look=(-.7, -.2), arm=(-12, 14), arm2=(12, 14),
+                     extra=HAT + S.basket(0, -8, w=76))
+            + S.bubble("I'm fine!", 110, 86, tail=(150, 200)))
+
+
+@alt('Elephant sneezes a giant ACHOO and the blast blows Rabbit\'s straw hat off her head, spinning all the way to the top of a tree.')
+def p10_2():
+    """ACHOO! The hat flies to the top of the tree."""
+    return (S.sky('s10p2', 'tender', sun=(60, 52), clouds=((300, 46, 40, 15), (326, 40, 24, 12)))
+            + S.ground('s10p2', tufts=(40, 300), flowers=((40, 246), (290, 250)))
+            + S.tree(446, 236, s=1.3)
+            + S.shadow(130, 348, 56)
+            + elephant(130, 350, s=1.25, expr='sneeze', trunk=(80, -40))
+            + S.sneeze(248, 198, ang=-6, s=1.0)
+            + S.shadow(330, 350, 32)
+            + rabbit(330, 352, s=1.1, expr='surprised', look=(.5, -.6), ears=(40, 60), arm=(-30, -40), arm2=(30, -44))
+            + S.flight([(340, 190), (370, 130), (410, 96), (440, 84)])
+            + S.sunhat(446, 82, s=.9, rot=12)
+            + _shout("ACHOO!", 160, 116, size=36, rot=-8)
+            + S.bubble("My hat!", 290, 76, tail=(320, 190)))
+
+
+@alt('After another sneeze the washing has blown off the line: a bedsheet has landed on Elephant like a ghost costume, and two socks hang off Rabbit\'s ears.')
+def p10_3():
+    """Everything flies off the line - 'Whooo! I'm a ghost!'"""
+    return (S.sky('s10p3', 'morning', sun=(440, 52))
+            + S.ground('s10p3', tufts=(40, 460), flowers=((40, 246), (460, 250)))
+            + S.washing_line(220, 460, 262, h=130, sag=14)
+            + S.shirt(300, 86, s=1.0, rot=30, color="#FFD166")
+            + S.shirt(420, 160, s=.9, rot=-40, color="#C77DFF")
+            + S.sock(250, 40, s=1.0, rot=-50, color="#FFD166")
+            + S.sock(360, 40, s=1.0, rot=60, color="#C77DFF")
+            + S.shadow(140, 348, 56)
+            + elephant(140, 350, s=1.2, expr='happy', arm=(36, -40), extra=_ghost())
+            + S.shadow(370, 350, 32)
+            + rabbit(370, 352, s=1.1, expr='happy', look=(-.6, -.2), ears=(-24, 24), arm=(-24, 12), arm2=(24, 12),
+                     extra=_sock_ears())
+            + S.bubble(["Whooo!", "I'm a ghost!"], 130, 74, tail=(140, 170)))
+
+
+@alt('On the way to Dr. Sheep\'s clinic, Elephant sneezes again and Rabbit tumbles head over heels into a bush, with only her feet sticking out.')
+def p10_4():
+    """ACHOO! - Boing! - only her feet stick out."""
+    return (S.sky('s10p4', 'morning', sun=(60, 52), clouds=((200, 46, 40, 15), (226, 40, 24, 12)))
+            + S.ground('s10p4', tufts=(40, 200), flowers=((40, 246), (200, 250)))
+            + S.hospital(350, 120, w=120, h=88)
+            + S.shadow(110, 348, 54)
+            + elephant(110, 350, s=1.2, expr='sneeze', trunk=(70, -10))
+            + S.sneeze(206, 236, ang=-10, s=.9)
+            + S.flight([(250, 300), (290, 220), (330, 196), (356, 230)])
+            + S.bush(370, 352, w=170, h=116)
+            + _rfeet(370, 206, s=1.5)
+            + S.leaves(((300, 214, -30), (440, 200, 30), (420, 250, 60)))
+            + _shout("Boing!", 290, 166, size=26, rot=-8, color="#C77DFF")
+            + _shout("ACHOO!", 150, 120, size=32, rot=-8))
+
+
+@alt('In the clinic, Dr. Sheep listens to Elephant\'s chest with her stethoscope when he sneezes right at her, blowing her wool up into a huge fluffy cloud and knocking her glasses onto her ear.')
+def p10_5():
+    """'Say ahhh' - ACHOO! - Dr. Sheep's wool goes POOF."""
+    sx, sy, ss = 280, 350, 1.15
+    hx, hy = sx - 72*ss, sy - 56*ss          # where her hoof lands on his chest
+    scope = (f'<path d="M{sx-14*ss:.0f},{sy-82*ss:.0f} Q{sx-60:.0f},{sy-30:.0f} {hx+4:.0f},{hy:.0f}" stroke="{S_SCOPE}" '
+             f'stroke-width="3" fill="none"/>'
+             f'<circle cx="{hx:.0f}" cy="{hy:.0f}" r="8" fill="#C9D3DC" stroke="#7D8A96" stroke-width="2"/>')
+    return (S.indoors('s10p5', wall=CLINIC, floor="#DCE6EC")
+            + S.garden_window(80, 110, w=90, h=72)
+            + S.fleece_cloud(sx, sy - 96, r=104)
+            + S.shadow(150, 348, 54)
+            + elephant(150, 350, s=1.2, expr='sneeze', trunk=(64, -14))
+            + S.sneeze(240, 236, ang=-6, s=.9)
+            + sheep(sx, sy, s=ss, expr='surprised', look=(-.4, -.2), arm=(-44, 8))
+            + scope
+            + S.specs(sx + 34*ss, sy - 115*ss, s=1.0, rot=80)
+            + _shout("ACHOO!", 200, 110, size=34, rot=-8)
+            + _shout("POOF!", 440, 120, size=24, rot=10, color="#C77DFF"))
+
+
+@alt('Dr. Sheep holds a magnifying glass over the tip of Elephant\'s trunk, showing tiny green germs, and Elephant looks at Rabbit and gasps, "Oh no!"')
+def p10_6():
+    """Tiny germs, too small to see - except through the glass."""
+    tip = (290, 262)
+    inside = (_limb(tip[0] + 30, tip[1] - 60, -30, 60, E_BODY, E_LINE, 34, bow=.1)
+              + S.germs(((tip[0]-20, tip[1]-8, .9), (tip[0]+8, tip[1]-22, .8), (tip[0]-6, tip[1]+18, .7),
+                         (tip[0]+22, tip[1]+10, .8), (tip[0]-26, tip[1]+22, .6))))
+    return (S.indoors('s10p6', wall=CLINIC, floor="#DCE6EC")
+            + S.garden_window(250, 104, w=90, h=72)
+            + S.shadow(340, 348, 54)
+            + elephant(340, 350, s=1.2, expr='worried', look=(.8, -.1), trunk=(-44, 12))
+            + S.shadow(110, 350, 40)
+            + sheep(110, 350, s=1.15, expr='calm', look=(.8, 0), arm2=(48, 20),
+                    extra=S.specs(0, -101))
+            + S.magnifier('s10p6', tip[0], tip[1], r=40, inside=inside, rot=150)
+            + S.shadow(458, 350, 24)
+            + rabbit(458, 352, s=.9, expr='worried', look=(-.8, 0), arm=(-8, 30), arm2=(8, 30))
+            + S.bubble("Oh no!", 386, 92, tail=(350, 196), color="#4AA8C8")
+            + S.bubble("Germs!", 100, 120, tail=(110, 210), color="#3C90AE", size=12))
+
+
+@alt('Dr. Sheep shows how to sneeze into your elbow; Elephant copies her, but his long trunk pokes out past his arm, and Rabbit giggles, "Fold it up!"')
+def p10_7():
+    """Into your elbow - but the trunk pokes out the other side."""
+    return (S.indoors('s10p7', wall=CLINIC, floor="#DCE6EC")
+            + S.garden_window(250, 104, w=90, h=72)
+            + S.shadow(90, 350, 40)
+            + sheep(90, 350, s=1.1, expr='calm', look=(.6, 0), extra=S.specs(0, -101) + _scover())
+            + S.shadow(280, 348, 54)
+            + elephant(280, 350, s=1.2, expr='surprised', look=(-.6, 0), trunk=(-84, 6), extra=_ecover())
+            + S.shadow(430, 350, 30)
+            + rabbit(430, 352, s=1.0, expr='happy', look=(-.7, -.2), arm=(-34, -30), arm2=(20, 14))
+            + S.bubble(["Into your", "elbow!"], 100, 92, tail=(96, 200), color="#3C90AE")
+            + S.bubble("Fold it up!", 400, 110, tail=(430, 200)))
+
+
+@alt('At the washbasin Elephant scrubs and sings and sprays water with his trunk, and soap bubbles land on his head and on Rabbit\'s and Dr. Sheep\'s heads too.')
+def p10_8():
+    """Scrub, sing, spray - bubbles everywhere."""
+    spray = ('<path d="M150,168 Q200,90 250,150" stroke="#9BDCF0" stroke-width="5" fill="none" stroke-linecap="round" '
+             'stroke-dasharray="10 8"/>'
+             + "".join(f'<path d="M{x},{y} q-4,6 0,9 q4,-3 0,-9 Z" fill="#9BDCF0" stroke="#5AB6D6" stroke-width="1"/>'
+                       for x, y in ((180, 110), (226, 104), (262, 140), (206, 84))))
+    return (S.indoors('s10p8', wall=CLINIC, floor="#DCE6EC")
+            + S.sink(232, 336, running=True)
+            + S.soap_bubbles(((206, 228, 10), (226, 222, 13), (250, 226, 9)))
+            + S.shadow(100, 348, 54)
+            + elephant(100, 350, s=1.2, expr='happy', look=(.6, -.4), trunk=(30, -66), arm=(62, -6))
+            + spray
+            + S.shadow(340, 350, 30)
+            + rabbit(340, 352, s=1.0, expr='happy', look=(-.6, -.4), arm=(-30, -40), arm2=(30, -40))
+            + S.shadow(445, 350, 36)
+            + sheep(445, 350, s=1.05, expr='happy', look=(-.6, -.3), arm=(-30, -20), extra=S.specs(0, -101))
+            + S.soap_bubbles(((92, 166, 10), (112, 160, 8), (334, 210, 10), (350, 202, 8), (438, 206, 10), (456, 200, 7),
+                              (60, 120, 12), (300, 80, 14), (400, 120, 11), (160, 50, 9), (470, 70, 12), (30, 210, 8)))
+            + S.notes(((40, 170, 20), (70, 140, 16), (290, 160, 18))))
+
+
+@alt('Back home, Elephant sits up in bed with a bowl of soup as his trunk starts to wiggle, "Ah… ah…", and Rabbit dives head-first behind the sofa.')
+def p10_9():
+    """'Ah… ah…' - and Rabbit dives for cover."""
+    ele = elephant(150, 314, s=1.05, pose='seated', expr='worried', look=(0, -.6), trunk=(20, -44))
+    return (_home('s10p9')
+            + S.little_bed(160, 340, w=230, sleeper=ele, quilt="#FF9BAE")
+            + S.soup(198, 300, s=1.0)
+            + _wiggle(176, 186)
+            + S.speedlines(450, 170, n=3, length=30, back=False)
+            + S.clip('s10p9r', 300, 0, 200, 256, S.spin(164, 410, 186, rabbit(410, 186, s=.9, expr='surprised', arm=(-20, 30), arm2=(20, 30))))
+            + S.sofa(400, 350, w=170)
+            + _shout("Eek!", 340, 160, size=24, rot=-10, color="#C77DFF")
+            + S.bubble("Ah… ah…", 120, 96, tail=(150, 190), color="#4AA8C8"))
+
+
+@alt('Elephant sneezes the tiniest sneeze into his elbow, with his trunk tucked away, and nothing moves at all, while Rabbit peeks over the sofa and asks, "Was that it?"')
+def p10_10():
+    """'…achoo.' The tiniest sneeze ever."""
+    ele = elephant(150, 314, s=1.05, pose='seated', expr='sneeze', trunk=(14, 4), extra=_limb(26, -48, -60, -26, E_BODY, E_LINE, 14))
+    paws = "".join(f'<ellipse cx="{x}" cy="250" rx="9" ry="7" fill="{R_BODY}" stroke="{R_LINE}" stroke-width="1.5"/>'
+                   for x in (378, 422))
+    return (_home('s10p10')
+            + S.little_bed(160, 340, w=230, sleeper=ele, quilt="#FF9BAE")
+            + S.soup(198, 300, s=1.0)
+            + _shout("…achoo.", 230, 196, size=14, rot=-4, color="#8FA8C0")
+            + rabbit(400, 336, s=1.0, expr='surprised', look=(-.8, -.1), ears=(-14, 14))
+            + S.sofa(400, 350, w=170)
+            + paws
+            + S.bubble("Was that it?", 390, 90, tail=(400, 180)))
+
+
+@alt('A few days later the washing flaps on the line, Elephant is all better, and Nurse Giraffe stretches her long neck to bring Rabbit\'s straw hat down from the top of the tree.')
+def p10_11():
+    """All better - and the hat comes down from the tree."""
+    hat = S.sunhat(30, -222, s=.9, rot=24)
+    return (S.sky('s10p11', 'golden', sun=(60, 52), rays=True)
+            + S.ground('s10p11', tufts=(40, 300), flowers=((40, 246), (300, 250)))
+            + S.washing_line(30, 230, 262, h=120,
+                             items=((.18, 'sock', "#FF6B6B"), (.38, 'shirt', "#74C8E4"), (.56, 'sock', "#FFD166"),
+                                    (.8, 'sheet', "#FFFFFF")))
+            + S.tree(440, 236, s=1.3)
+            + S.shadow(400, 350, 40)
+            + giraffe(400, 350, s=1.0, pose='stretch', expr='happy', look=(-.6, .2), cap=False, extra=hat)
+            + S.shadow(130, 350, 54)
+            + elephant(130, 350, s=1.2, expr='happy', look=(.7, -.3), trunk=(-30, 40), arm=(34, -40))
+            + S.shadow(280, 350, 30)
+            + rabbit(280, 352, s=1.05, expr='excited', look=(.7, -.6), arm=(-28, -44), arm2=(30, -44))
+            + S.bubble("My hat!", 280, 90, tail=(280, 190)))
+
+
+# ---------------------------------------------------------------- story 11
+FLOUR = {E_BODY: "#F2F0EA", "#C5D8E0": "#FFFFFF", E_LINE: "#C8C4BA",
+         R_BODY: "#FFFFFF", R_LINE: "#D8D4CC", R_EAR: "#FBE4EA"}
+
+
+def _floury(svg):
+    """A character after the POOF: every grey and cream turned flour-white."""
+    for a, b in FLOUR.items():
+        svg = svg.replace(a, b)
+    return svg
+
+
+def _dust(pts):
+    """Flour specks hanging in the air."""
+    return "".join(f'<circle cx="{x}" cy="{y}" r="{r}" fill="#FFFFFF" opacity=".9"/>' for x, y, r in pts)
+
+
+DUST = ((60, 60, 3), (140, 40, 2.4), (210, 90, 3.4), (300, 50, 2.6), (420, 70, 3), (470, 140, 2.4),
+        (30, 170, 2.6), (190, 180, 2.2), (330, 150, 3), (260, 30, 2), (380, 200, 2.4), (90, 120, 2.2))
+
+
+def _back(arms=False):
+    """Elephant seen from BEHIND, arms in the air: the burrow-door rump with a head,
+    ears and raised arms on top. Local coordinates, origin on the ground."""
+    out = _rump(0, 0)
+    out += (f'<circle cx="0" cy="-196" r="44" fill="{E_BODY}" stroke="{E_LINE}" stroke-width="1.8"/>'
+            + "".join(f'<ellipse cx="{sx*46}" cy="-200" rx="26" ry="36" fill="{E_BODY}" stroke="{E_LINE}" stroke-width="1.8"/>'
+                      for sx in (-1, 1)))
+    if arms:
+        out += "".join(_limb(sx*62, -150, sx*34, -66, E_BODY, E_LINE, 22) for sx in (-1, 1))
+    return out
+
+
+def _kitchen11(uid, oven=True):
+    return (S.kitchen(uid)
+            + S.porthole(80, 90, sky='morning')
+            + S.shelf(230, 110)
+            + (S.oven(385, 262) if oven else ''))
+
+
+@alt('In the kitchen, Rabbit holds up a cake recipe and says first they must measure the flour, while Elephant gives a big yawn and says, "Let\'s be quick!"')
+def p11_1():
+    """'First we measure the flour.' 'Recipes are so slow.'"""
+    return (_kitchen11('s11p1')
+            + S.table(240, 292, w=150)
+            + S.mixing_bowl(226, 292, w=70, batter=False)
+            + S.flour_bag(282, 292)
+            + S.egg(180, 282) + S.egg(196, 284, rot=24)
+            + S.shadow(100, 348, 54)
+            + elephant(100, 350, s=1.2, expr='yawn', trunk=(-20, 40))
+            + S.shadow(400, 350, 32)
+            + rabbit(400, 352, s=1.1, expr='excited', look=(-.4, -.6), arm=(-20, 10), arm2=(30, -50),
+                     extra=S.recipe(58, -124, s=1.1, rot=10))
+            + S.bubble(["First we measure", "the flour."], 360, 70, tail=(390, 190))
+            + S.bubble(["Recipes are slow.", "Let's be quick!"], 130, 80, tail=(110, 196), color="#4AA8C8", size=12))
+
+
+@alt('POOF! A huge white cloud of flour fills the kitchen, and Rabbit and Elephant are white from head to toe, with Elephant pretending to be a snowman.')
+def p11_2():
+    """POOF! 'We're snowmen!'"""
+    return (_kitchen11('s11p2')
+            + S.fleece_cloud(250, 190, r=120, fill="#FFFFFF", line="#ECE6DA", swirl="#F1ECE2")
+            + S.table(250, 292, w=150)
+            + S.mixing_bowl(240, 292, w=70, batter=False)
+            + S.flour_bag(292, 286, rot=100, empty=True)
+            + S.shadow(110, 348, 54)
+            + _floury(elephant(110, 350, s=1.2, expr='excited', look=(.5, -.3), trunk=(36, -50), arm=(40, -44)))
+            + S.shadow(400, 350, 32)
+            + _floury(rabbit(400, 352, s=1.1, expr='surprised', look=(-.5, -.3), arm=(-30, -40), arm2=(30, -40)))
+            + _dust(DUST)
+            + _shout("POOF!", 250, 66, size=40, rot=-6, color="#74C8E4")
+            + S.bubble(["Boo! We're", "snowmen!"], 110, 76, tail=(110, 180), color="#4AA8C8"))
+
+
+@alt('Elephant cracks the eggs on the bowl with a big BONK, and the eggs fly through the air and land splat on Rabbit\'s head, dripping down her ears.')
+def p11_3():
+    """BONK - the shells in the bowl, the eggs on Rabbit."""
+    return (_kitchen11('s11p3')
+            + S.table(240, 292, w=150)
+            + S.mixing_bowl(240, 292, w=80, batter=False)
+            + S.eggshell(226, 246, s=1.1, rot=-10) + S.eggshell(256, 244, s=1.1, rot=14)
+            + S.shadow(100, 348, 54)
+            + _floury(elephant(100, 350, s=1.2, expr='excited', look=(.7, .3), trunk=(98, -14)))
+            + _pow(232, 236, 16)
+            + _shout("BONK!", 210, 200, size=26, rot=-8)
+            + S.flight([(250, 232), (290, 150), (340, 140), (380, 186)])
+            + S.shadow(400, 350, 32)
+            + _floury(rabbit(400, 352, s=1.1, expr='surprised', look=(0, -.8), ears=(-20, 20)))
+            + S.egg_splat(400, 204, s=1.15)
+            + "".join(f'<path d="M{x},{y} q-4,6 0,9 q4,-3 0,-9 Z" fill="#FFC23A" stroke="#E8A21F" stroke-width="1"/>'
+                      for x, y in ((372, 230), (432, 238), (380, 262)))
+            + _shout("Drip, drip.", 320, 336, size=16, rot=-4, color="#E8A21F"))
+
+
+@alt('Elephant whizzes the mixer on SUPER FAST and cake mix splatters all over the walls and ceiling, with a blob on his trunk, while Rabbit ducks with her paws over her head.')
+def p11_4():
+    """WHIRRRR! Cake mix on the walls, the ceiling, and Elephant's nose."""
+    blobs = "".join(S.splat(x, y, r, color=S.BATTER) for x, y, r in
+                    ((60, 40, 9), (170, 26, 8), (300, 34, 10), (430, 50, 9), (40, 200, 8), (350, 190, 9), (460, 130, 8),
+                     (240, 70, 7), (130, 150, 7)))
+    return (_kitchen11('s11p4')
+            + blobs
+            + S.table(240, 292, w=150)
+            + S.mixing_bowl(240, 292, w=80)
+            + S.mixer(240, 254, s=1.1, whirl=True)
+            + S.shadow(100, 348, 54)
+            + _floury(elephant(100, 350, s=1.2, expr='surprised', look=(.6, -.2), trunk=(118, -40)))
+            + S.splat(132, 244, 9, color=S.BATTER)
+            + S.shadow(410, 350, 32)
+            + _floury(rabbit(410, 352, s=1.05, expr='worried', look=(-.4, -.6), ears=(-64, 64), arm=(20, -60), arm2=(-20, -60)))
+            + _shout("WHIRRRR!", 250, 140, size=30, rot=-6, color="#FF6B6B")
+            + _shout("Splot.", 176, 214, size=18, rot=-8, color=S.BATTER_DK))
+
+
+@alt('Elephant opens the oven door to peek, and the cake inside, which was growing big and tall, sinks flat as a pancake, while Rabbit points at the recipe and says to wait.')
+def p11_5():
+    """Peek… peek… PEEK! - pfffff."""
+    flat = S.cake(370, 300, w=84, kind='flat')
+    return (_kitchen11('s11p5', oven=False)
+            + S.oven(370, 334, w=150, h=132, door='open', inside=flat)
+            + S.shadow(200, 348, 54)
+            + _floury(elephant(200, 350, s=1.2, expr='surprised', look=(.9, .4), trunk=(80, 20)))
+            + _shout("PEEK!", 280, 150, size=28, rot=-8)
+            + _shout("pfffff…", 420, 186, size=20, rot=6, color="#6E7880")
+            + S.shadow(70, 350, 30)
+            + _floury(rabbit(70, 352, s=1.0, expr='worried', look=(.6, -.2), arm2=(28, -46),
+                             extra=S.recipe(52, -114, s=1.0, rot=8)))
+            + S.bubble(["Wait thirty", "minutes!"], 100, 80, tail=(80, 186)))
+
+
+@alt('Bear arrives at the kitchen door a day early and blinks at Elephant, who is sitting on the flat cake, and Rabbit, who stands in front of the messy kitchen with her arms spread wide, both still white with flour.')
+def p11_6():
+    """Ding-dong! 'Why are you two covered in snow?'"""
+    blobs = "".join(S.splat(x, y, r, color=S.BATTER) for x, y, r in ((340, 196, 9), (420, 160, 8), (460, 220, 9), (300, 60, 8)))
+    return (S.kitchen('s11p6')
+            + _doorway(24, 124, 110, 262)
+            + S.porthole(230, 90, sky='morning')
+            + blobs
+            + S.oven(385, 262)
+            + S.shadow(74, 294, 30)
+            + bear(74, 296, s=.95, expr='surprised', look=(.8, .1), arm2=(26, 6))
+            + f'<ellipse cx="240" cy="338" rx="72" ry="12" fill="{S.SPONGE}" stroke="{S.SPONGE_DK}" stroke-width="1.6"/>'
+            + _floury(elephant(240, 344, s=1.1, pose='sit', expr='guilty', look=(-.8, -.1), trunk=(-24, 30)))
+            + S.eggshell(310, 340, s=1.2, rot=20) + S.flour_bag(470, 350, rot=70, empty=True)
+            + S.shadow(400, 350, 32)
+            + _floury(rabbit(400, 352, s=1.05, expr='guilty', look=(-.8, 0), arm=(-46, -6), arm2=(46, -6)))
+            + _shout("Ding-dong!", 300, 150, size=22, rot=-6, color="#C77DFF")
+            + S.bubble(["Why are you two", "covered in snow?"], 190, 70, tail=(90, 170), color="#A87A52", size=12))
+
+
+@alt('Bear puts a kind paw on sad Rabbit\'s shoulder and pictures a staircase with a cake at the top, saying they will go one step at a time, while Elephant looks sorry.')
+def p11_7():
+    """'Baking is like climbing stairs. One step at a time.'"""
+    pic = S.stairs(374, 130, n=4, step=14) + S.cake(460, 74, w=34, kind='tall')
+    return (_kitchen11('s11p7')
+            + S.shadow(190, 350, 32)
+            + _floury(rabbit(190, 352, s=1.1, expr='sad', look=(.6, -.2), ears=(-70, 70)))
+            + S.shadow(320, 348, 36)
+            + bear(320, 350, s=1.15, expr='happy', look=(-.7, .2), arm=(-60, -12))
+            + S.shadow(450, 350, 40)
+            + _floury(elephant(450, 350, s=.95, expr='guilty', look=(-.8, .3), trunk=(-20, 40)))
+            + S.thought([], 420, 100, (330, 196), picture=pic, rx=74, ry=52)
+            + S.bubble(["One step", "at a time!"], 250, 74, tail=(316, 200), color="#A87A52"))
+
+
+@alt('Doing it properly: Rabbit reads the recipe out loud, Elephant carefully scoops one cup of flour with his trunk, and Bear gently taps an egg on the bowl.')
+def p11_8():
+    """One cup, very carefully. Tap, tap."""
+    return (_kitchen11('s11p8')
+            + S.shadow(250, 300, 40)
+            + elephant(250, 302, s=1.0, expr='calm', look=(-.4, .6), trunk=(-16, 14))
+            + S.measuring_cup(224, 232, s=1.0)
+            + S.table(250, 296, w=190)
+            + S.mixing_bowl(220, 296, w=74, batter=False)
+            + S.flour_bag(160, 296)
+            + S.shadow(80, 350, 30)
+            + rabbit(80, 352, s=1.05, expr='happy', look=(.4, -.5), arm2=(30, -46), extra=S.recipe(54, -118, s=1.0, rot=8))
+            + S.shadow(420, 350, 34)
+            + bear(380, 352, s=1.1, expr='calm', look=(-.8, .4), arm=(-77, -27))
+            + S.egg(264, 256, s=1.1, rot=-20, cracked=True)
+            + _shout("tap, tap", 300, 230, size=16, rot=-6, color="#A87A52")
+            + S.bubble(["One cup", "of flour…"], 100, 90, tail=(90, 190)))
+
+
+@alt('Everyone waits by the oven as the cake grows inside: Elephant sits on his paws while his trunk creeps towards the oven door, Rabbit holds on to his trunk, and Bear sings and counts to a hundred.')
+def p11_9():
+    """The hardest step: waiting."""
+    tin = S.cake(380, 288, w=80, kind='tin')
+    return (_kitchen11('s11p9', oven=False)
+            + S.oven(380, 340, w=150, h=132, light=True, inside=tin)
+            + S.shadow(80, 350, 34)
+            + bear(80, 350, s=1.0, pose='sit', expr='happy', look=(.6, -.3), arm=(-24, -30), arm2=(24, -30))
+            + S.notes(((40, 180, 20), (70, 150, 16), (120, 170, 18)))
+            + S.shadow(210, 350, 50)
+            + elephant(210, 350, s=1.1, pose='sit', expr='worried', look=(.9, 0), trunk=(118, -2))
+            + S.shadow(300, 350, 26)
+            + rabbit(300, 352, s=.9, expr='calm', look=(-.6, -.6), arm=(-10, -66), arm2=(10, -66))
+            + _shout("…98, 99, 100!", 250, 70, size=22, rot=-4, color="#C77DFF"))
+
+
+@alt('DING! A big, tall, fluffy cake sits on the table, and as Elephant jumps up to cheer, Bear laughs and points at the flat cake still stuck to his bottom.')
+def p11_10():
+    """DING! The tall cake - and the flat one on Elephant's bottom."""
+    stuck = (f'<ellipse cx="0" cy="-96" rx="48" ry="30" fill="{S.SPONGE}" stroke="{S.SPONGE_DK}" stroke-width="2" transform="rotate(-6 0 -96)"/>'
+             f'<ellipse cx="0" cy="-100" rx="38" ry="20" fill="#F6CC80" opacity=".8" transform="rotate(-6 0 -100)"/>')
+    crumbs = "".join(f'<circle cx="{x}" cy="{y}" r="2.6" fill="{S.SPONGE}"/>' for x, y in ((70, 336), (150, 340), (100, 352)))
+    return (_kitchen11('s11p10')
+            + _pow(385, 140, 20, "#FFE39A")
+            + _shout("DING!", 410, 110, size=30, rot=8)
+            + S.table(250, 296, w=150)
+            + S.cake(250, 296, w=100, kind='tall')
+            + S.shadow(110, 350, 50, op=.08)
+            + f'<g transform="translate(110 324) scale(.8)">{_back(arms=True)}{stuck}</g>'
+            + S.speedlines(110, 344, n=2, length=20)
+            + crumbs
+            + S.shadow(360, 350, 28)
+            + rabbit(360, 352, s=.95, expr='happy', look=(-.8, .3), arm=(-30, -40), arm2=(30, -40))
+            + S.shadow(445, 350, 34)
+            + bear(445, 352, s=1.05, expr='happy', look=(-.9, .4), arm=(-60, 6))
+            + _shout("Ha ha!", 466, 200, size=22, rot=8, color="#A87A52")
+            + S.bubble("Hooray!", 110, 70, tail=(110, 140), color="#4AA8C8"))
+
+
+@alt('A birthday party in the kitchen: under bunting and party hats, Rabbit, Elephant and Bear share the tall cake and the flat "pancake cake," each with a lit candle, and Bear says both are delicious.')
+def p11_11():
+    """Two cakes, both delicious."""
+    return (_kitchen11('s11p11')
+            + S.bunting(0, 500, 18, sag=26, n=12)
+            + S.table(300, 300, w=200)
+            + S.cake(260, 300, w=96, kind='tall', candles=3)
+            + S.cake(352, 300, w=70, kind='flat', candles=1)
+            + S.shadow(80, 348, 52)
+            + elephant(80, 350, s=1.15, expr='happy', look=(.6, -.2), trunk=(40, -40),
+                       extra=S.party_hat(0, -138, s=1.1, rot=-6, color="#74C8E4"))
+            + S.shadow(170, 350, 28)
+            + rabbit(170, 352, s=.95, expr='happy', look=(.6, -.2), arm=(-26, -40), arm2=(30, -36),
+                     extra=S.party_hat(0, -136, s=.9, rot=8, color="#FF6B6B"))
+            + S.shadow(450, 350, 34)
+            + bear(450, 352, s=1.1, expr='happy', look=(-.6, -.2), arm=(-46, -10),
+                   extra=S.party_hat(0, -134, s=1.0, rot=-4, color="#C77DFF"))
+            + S.bubble(["Both are", "delicious!"], 420, 86, tail=(446, 190), color="#A87A52"))
+
+
+# ---------------------------------------------------------------- story 12
+BELT = S.belt()
+
+
+def _rpaw(x, y, s, a, right=True):
+    """Where Rabbit's paw ends up, in scene coordinates, for arm offset `a`."""
+    return x + s*((24 if right else -24) + a[0]), y + s*(-60 + a[1])
+
+
+def _etip(x, y, s, t, pose='stand'):
+    """Where Elephant's trunk tip ends up, in scene coordinates."""
+    hy = {'stand': -100, 'sit': -92}[pose]
+    return x + s*1.14*t[0], y + s*(hy + 20 + t[1])
+
+
+def _windy(uid, mood='morning', **kw):
+    return S.sky(uid, mood, **kw) + S.ground(uid, tufts=(40, 300, 460), flowers=((40, 246), (300, 252), (460, 250)))
+
+
+@alt('On a windy day Nurse Giraffe holds up a bright red kite with a long wiggly tail as a present, and Rabbit and Elephant jump with excitement.')
+def p12_1():
+    """A bright red kite - 'for both of you.'"""
+    return (_windy('s12p1', rays=True, sun=(440, 52))
+            + S.gust(120, 70) + S.gust(330, 120, s=.8)
+            + S.leaves(((60, 130, -30), (240, 100, 40), (400, 170, 10)))
+            + S.shadow(110, 348, 54)
+            + elephant(110, 350, s=1.2, expr='excited', look=(.7, -.4), trunk=(40, -50), arm=(36, -40))
+            + S.shadow(250, 350, 30)
+            + rabbit(250, 352, s=1.05, expr='excited', look=(.7, -.6), arm=(-28, -44), arm2=(30, -44), extra=BELT)
+            + S.shadow(400, 350, 40)
+            + giraffe(400, 350, s=1.05, expr='happy', look=(-.7, .2), cap=False, arm=(40, -84))
+            + S.kite(454, 132, s=1.1, rot=-14)
+            + S.bubble(["It's for", "both of you!"], 300, 70, tail=(390, 180), color="#C77DFF"))
+
+
+@alt('Rabbit and Elephant both grab the kite string and tug it back and forth, shouting "Me first!", while the kite zigzags up and down in the sky.')
+def p12_2():
+    """Tug! Tug! Tug!"""
+    ra = (36, -40)
+    rx, ry = _rpaw(120, 352, 1.1, ra)
+    et = (-84, -6)
+    ex, ey = _etip(370, 350, 1.2, et)
+    kx, ky = 250, 80
+    return (_windy('s12p2', mood='tender', sun=(60, 52))
+            + S.flight([(150, 120), (190, 60), (220, 140), (250, 80)])
+            + S.kite(kx, ky, s=1.0, rot=10)
+            + S.kite_string(kx, ky, (rx+ex)/2, (ry+ey)/2, sag=0)
+            + f'<path d="M{rx:.0f},{ry:.0f} L{ex:.0f},{ey:.0f}" stroke="#6B5B47" stroke-width="1.6"/>'
+            + S.shadow(120, 350, 32)
+            + S.spin(-8, 120, 352, rabbit(120, 352, s=1.1, expr='shout', look=(.6, 0), arm2=ra, arm=(30, -10), extra=BELT))
+            + S.shadow(370, 348, 54)
+            + S.spin(8, 370, 350, elephant(370, 350, s=1.2, expr='shout', look=(-.6, 0), trunk=et))
+            + _shout("Tug!", 250, 330, size=24, rot=-8, color="#C77DFF")
+            + S.bubble("Me first!", 90, 150, tail=(110, 220))
+            + S.bubble("No, me first!", 410, 130, tail=(380, 200), color="#4AA8C8"))
+
+
+@alt('Elephant has fallen backwards onto his bottom with a BUMP, and the kite dives down and bonks Nurse Giraffe on the nose, while Rabbit gasps.')
+def p12_3():
+    """BUMP! - and the kite bonks Giraffe on the nose."""
+    legs = _foot(-44, -4) + _foot(44, -4)
+    return (_windy('s12p3', mood='tender', sun=(60, 52))
+            + S.shadow(120, 350, 60)
+            + elephant(120, 346, s=1.15, pose='sit', expr='surprised', look=(.4, -.6), trunk=(40, -40), extra=legs)
+            + _shout("BUMP!", 120, 170, size=26, rot=-10, color="#A87A52")
+            + S.shadow(260, 350, 28)
+            + rabbit(260, 352, s=1.0, expr='surprised', look=(.6, -.6), arm=(-26, -40), arm2=(26, -40), extra=BELT)
+            + S.shadow(410, 350, 40)
+            + giraffe(410, 350, s=1.05, expr='hurt', look=(-.2, -.6), cap=False)
+            + S.kite_string(140, 240, 360, 190, sag=-.14)
+            + S.kite(372, 196, s=.95, rot=-110)
+            + _pow(406, 206, 14)
+            + S.bubble("Ow!", 340, 80, tail=(400, 170), color="#C77DFF"))
+
+
+@alt('A huge gust of wind lifts the kite, and Rabbit holding the string floats up into the air like a balloon, crying "Heeelp!", while Elephant reaches up in alarm.')
+def p12_4():
+    """WHOOOSH! Rabbit floats up like a balloon."""
+    ra = (14, -56)
+    rx, ry = _rpaw(300, 230, 1.0, ra)
+    return (_windy('s12p4', mood='morning', sun=(60, 52))
+            + S.gust(110, 110) + S.gust(180, 220, s=.8) + S.gust(300, 300, s=.7)
+            + S.kite(430, 60, s=1.2, rot=20)
+            + S.kite_string(rx, ry, 426, 66)
+            + rabbit(300, 230, s=1.0, expr='worried', look=(.4, -.6), ears=(30, 50), arm2=ra, arm=(-6, -56), extra=BELT)
+            + S.shadow(300, 350, 20, op=.08)
+            + S.shadow(110, 348, 54)
+            + elephant(110, 350, s=1.2, expr='surprised', look=(.8, -.6), trunk=(60, -60), arm=(40, -50))
+            + _shout("WHOOOSH!", 210, 70, size=30, rot=-6, color="#74C8E4")
+            + S.bubble("Heeelp!", 410, 170, tail=(330, 140)))
+
+
+@alt('Elephant has caught floating Rabbit by the feet with his trunk but is being dragged through the mud, and Nurse Giraffe holds on to his tail, all of them in one long wobbly line under the kite.')
+def p12_5():
+    """A long, wobbly line."""
+    ra = (12, -54)
+    rx, ry = _rpaw(380, 196, .95, ra)
+    et = (79, -70)
+    tail = (f'<path d="M-36,-40 q-30,-8 -46,-26" stroke="{E_LINE}" stroke-width="6" fill="none" stroke-linecap="round"/>'
+            f'<path d="M-36,-40 q-30,-8 -46,-26" stroke="{E_BODY}" stroke-width="3.6" fill="none" stroke-linecap="round"/>')
+    return (_windy('s12p5', mood='tender', sun=None)
+            + S.gust(100, 80) + S.gust(240, 60, s=.8)
+            + S.kite(450, 50, s=1.1, rot=24)
+            + S.kite_string(rx, ry, 446, 56)
+            + rabbit(380, 196, s=.95, expr='worried', look=(-.4, .6), ears=(30, 50), arm2=ra, arm=(-6, -56), extra=BELT)
+            + S.puddle(250, 344, rx=110, ry=16)
+            + S.mud_splash(300, 340, s=.9)
+            + S.speedlines(150, 330, n=3, length=26, back=False)
+            + elephant(250, 346, s=1.15, expr='worried', look=(.6, -.6), trunk=et, extra=tail)
+            + S.shadow(90, 350, 40)
+            + giraffe(90, 350, s=1.0, expr='worried', look=(.8, 0), cap=False, arm=(50, -6))
+            + _shout("Hold on!", 120, 120, size=22, rot=-6, color="#C77DFF"))
+
+
+@alt('The wind has stopped and Rabbit has dropped safely into Elephant\'s arms, but the kite has flown off and is stuck at the very top of a tall tree.')
+def p12_6():
+    """Plop. And the kite, all by itself, up the tree."""
+    rab = rabbit(250, 262, s=.8, pose='sit', expr='surprised', look=(.8, -.6), ears=(-10, 30), arm=(-20, -20), extra=BELT)
+    return (_windy('s12p6', mood='tender', sun=None)
+            + S.tall_tree(410, 350, h=300)
+            + S.kite(406, 86, s=.9, rot=-30)
+            + '<path d="M406,120 q-14,60 4,110 q10,30 -6,60" stroke="#6B5B47" stroke-width="1.4" fill="none"/>'
+            + S.shadow(170, 348, 54)
+            + elephant(170, 350, s=1.2, expr='surprised', look=(.8, -.6), trunk=(60, -10), arm=(44, -20))
+            + rab
+            + _shout("Plop.", 320, 226, size=22, rot=8, color="#C77DFF"))
+
+
+@alt('Rabbit and Elephant shout at each other that it was the other one\'s fault, while Nurse Giraffe stands between them shaking her head, and the kite hangs stuck in the tree behind.')
+def p12_7():
+    """'YOUR fault!' 'No, YOUR fault!'"""
+    shake = "".join(f'<path d="M{259+sx*34},{196} q{sx*6},8 0,16" stroke="#8FA8C0" stroke-width="2.4" fill="none" stroke-linecap="round"/>'
+                    for sx in (-1, 1))
+    return (_windy('s12p7', mood='tender', sun=None)
+            + S.tall_tree(250, 230, h=200)
+            + S.kite(250, 60, s=.6, rot=-30, tail=False)
+            + S.shadow(100, 350, 32)
+            + rabbit(100, 352, s=1.1, expr='shout', look=(.7, 0), arm=(-30, -10), arm2=(40, -20), extra=BELT)
+            + S.shadow(400, 348, 54)
+            + elephant(400, 350, s=1.2, expr='shout', look=(-.7, 0), trunk=(-60, 10))
+            + S.shadow(250, 350, 36)
+            + giraffe(250, 350, s=.95, expr='worried', look=(0, .2), cap=False)
+            + shake
+            + S.bubble("YOUR fault!", 100, 120, tail=(110, 200))
+            + S.bubble(["No, YOUR", "fault!"], 410, 110, tail=(400, 200), color="#4AA8C8"))
+
+
+@alt('Nurse Giraffe stretches her long, long neck up to the top of the tree and brings the kite back in her mouth, with a bird\'s nest and a little bird sitting on her head, while Rabbit and Elephant stare up amazed.')
+def p12_8():
+    """The long, long neck - and a nest for a hat."""
+    gx, gy, gs = 330, 350, 1.05
+    hx, hy = gx + 16*gs, gy - 250*gs
+    return (_windy('s12p8', mood='golden', sun=(60, 52))
+            + S.tall_tree(400, 350, h=300)
+            + S.shadow(gx, gy, 40)
+            + giraffe(gx, gy, s=gs, pose='stretch', expr='happy', look=(-.6, .4), cap=False)
+            + S.bird_nest(hx, hy - 20, s=1.0)
+            + S.kite(hx + 22, hy + 52, s=.8, rot=-14)
+            + _shout("Tweet!", hx + 70, hy - 30, size=20, rot=8, color="#3C90AE")
+            + S.shadow(110, 348, 54)
+            + elephant(110, 350, s=1.2, expr='excited', look=(.8, -.8), trunk=(30, -50))
+            + S.shadow(220, 350, 28)
+            + rabbit(220, 352, s=1.0, expr='excited', look=(.8, -.8), arm=(-26, -40), arm2=(26, -44), extra=BELT))
+
+
+@alt('Taking turns: Elephant flies the kite high in the sky with the string in his trunk, while Rabbit happily counts slowly to fifty.')
+def p12_9():
+    """Elephant goes first; Rabbit counts to fifty."""
+    et = (36, -66)
+    ex, ey = _etip(150, 350, 1.2, et)
+    return (_windy('s12p9', mood='morning', sun=(60, 52))
+            + S.gust(300, 150, s=.8)
+            + S.kite(410, 60, s=1.1, rot=16)
+            + S.kite_string(ex, ey, 406, 66)
+            + S.shadow(150, 348, 54)
+            + elephant(150, 350, s=1.2, expr='happy', look=(.8, -.8), trunk=et)
+            + S.shadow(360, 350, 30)
+            + rabbit(360, 352, s=1.05, expr='happy', look=(-.6, -.4), arm=(-26, -30), arm2=(26, -30), extra=BELT)
+            + S.bubble(["…48, 49,", "FIFTY!"], 380, 160, tail=(366, 210), color="#C77DFF"))
+
+
+@alt('Now it is Rabbit\'s turn: she flies the kite higher and higher while Elephant holds on to her belt with his trunk so she won\'t float away.')
+def p12_10():
+    """Swapped - and Elephant holds her belt."""
+    ra = (12, -60)
+    rx, ry = _rpaw(300, 352, 1.1, ra)
+    et = (86, 52)
+    return (_windy('s12p10', mood='golden', sun=(60, 52), rays=True)
+            + S.gust(200, 120, s=.8)
+            + S.kite(430, 46, s=1.0, rot=20)
+            + S.kite_string(rx, ry, 426, 52)
+            + S.shadow(300, 350, 32)
+            + rabbit(300, 352, s=1.1, expr='excited', look=(.6, -.8), arm2=ra, arm=(-30, -20), extra=BELT)
+            + S.shadow(140, 348, 54)
+            + elephant(140, 350, s=1.2, expr='happy', look=(.8, .2), trunk=et)
+            + S.bubble(["Higher,", "Rabbit!"], 120, 100, tail=(140, 200), color="#4AA8C8"))
+
+
+@alt('Last of all Nurse Giraffe flies the kite with her long neck stretched up, and the kite soars higher than the clouds while Rabbit and Elephant cheer "Wheee!"')
+def p12_11():
+    """Higher than the clouds."""
+    gx, gy, gs = 380, 350, 1.0
+    hx, hy = gx + 16*gs, gy - 250*gs
+    return (S.sky('s12p11', 'golden', sun=(60, 52), rays=True,
+                  clouds=((300, 90, 50, 16), (334, 80, 30, 14), (440, 110, 40, 14)))
+            + S.ground('s12p11', tufts=(40, 300, 460), flowers=((40, 246), (300, 252), (460, 250)))
+            + S.kite(390, 34, s=.9, rot=10)
+            + S.kite_string(hx + 10, hy + 14, 386, 40, sag=.2)
+            + S.shadow(gx, gy, 40)
+            + giraffe(gx, gy, s=gs, pose='stretch', expr='happy', look=(0, -.8), cap=False)
+            + S.shadow(110, 348, 54)
+            + elephant(110, 350, s=1.2, expr='excited', look=(.8, -.8), trunk=(40, -60), arm=(36, -50))
+            + S.shadow(240, 350, 30)
+            + rabbit(240, 352, s=1.05, expr='excited', look=(.8, -.8), arm=(-28, -44), arm2=(30, -44), extra=BELT)
+            + _shout("Wheee!", 190, 110, size=34, rot=-8, color="#C77DFF"))
+
+
 PAGES = {
     '02-ouch-the-big-thorn': [p02_1, p02_2, p02_3, p02_4, p02_5,
                               p02_6, p02_7, p02_8, p02_9, p02_10],
@@ -1795,4 +2499,10 @@ PAGES = {
                            p08_7, p08_8, p08_9, p08_10, p08_11],
     '09-wobble-the-big-bike-day': [p09_1, p09_2, p09_3, p09_4, p09_5, p09_6,
                                    p09_7, p09_8, p09_9, p09_10, p09_11],
+    '10-achoo-the-sneezy-day': [p10_1, p10_2, p10_3, p10_4, p10_5, p10_6,
+                                p10_7, p10_8, p10_9, p10_10, p10_11],
+    '11-the-great-big-cake': [p11_1, p11_2, p11_3, p11_4, p11_5, p11_6,
+                              p11_7, p11_8, p11_9, p11_10, p11_11],
+    '12-whoosh-the-kite-day': [p12_1, p12_2, p12_3, p12_4, p12_5, p12_6,
+                               p12_7, p12_8, p12_9, p12_10, p12_11],
 }

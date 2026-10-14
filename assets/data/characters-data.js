@@ -10,7 +10,7 @@ const CHARACTERS = [
     favoriteFood: 'Carrot Halwa 🥕',
     quirk: 'Never gives up asking questions — even when the answer is written all over Elephant\'s face!',
     quote: '"My tummy is GROWLING!"',
-    appearances: ['The Hungry Friends', 'Ouch! The Big Thorn', 'Watch Your Step!', 'Splash! The Pool Party', 'Bonk! The Bumpy Ride Home', 'Shh! The Noisy Night', 'Hide and Squeak', 'Wobble! The Big Bike Day']
+    appearances: ['The Hungry Friends', 'Ouch! The Big Thorn', 'Watch Your Step!', 'Splash! The Pool Party', 'Bonk! The Bumpy Ride Home', 'Shh! The Noisy Night', 'Hide and Squeak', 'Wobble! The Big Bike Day', 'Achoo! The Sneezy Day', 'The Great Big Cake', 'Whoosh! The Kite Day']
   },
   {
     id: 'elephant',
@@ -23,7 +23,7 @@ const CHARACTERS = [
     favoriteFood: 'Fruit Salad 🍇',
     quirk: 'Means well — but his tummy sometimes overrules his brain. He always makes it right in the end!',
     quote: '"No idea... okay, fine, I ate it."',
-    appearances: ['The Hungry Friends', 'Ouch! The Big Thorn', 'Watch Your Step!', 'Splash! The Pool Party', 'Bonk! The Bumpy Ride Home', 'Shh! The Noisy Night', 'Hide and Squeak', 'Wobble! The Big Bike Day']
+    appearances: ['The Hungry Friends', 'Ouch! The Big Thorn', 'Watch Your Step!', 'Splash! The Pool Party', 'Bonk! The Bumpy Ride Home', 'Shh! The Noisy Night', 'Hide and Squeak', 'Wobble! The Big Bike Day', 'Achoo! The Sneezy Day', 'The Great Big Cake', 'Whoosh! The Kite Day']
   },
   {
     id: 'squirrel',
@@ -49,7 +49,7 @@ const CHARACTERS = [
     favoriteFood: 'Clover Tea 🍵',
     quirk: 'Gives everyone exactly one more chance — and somehow, it always turns out to be the right call.',
     quote: '"One more chance. Let\'s see how you do."',
-    appearances: ['Snow Much Help!', 'Watch Your Step!']
+    appearances: ['Snow Much Help!', 'Watch Your Step!', 'Achoo! The Sneezy Day']
   },
   {
     id: 'giraffe',
@@ -62,7 +62,7 @@ const CHARACTERS = [
     favoriteFood: 'Acacia Leaf Salad 🌿',
     quirk: 'Can spot a mixed-up mask or bandage from all the way across the ward — thanks to that very long neck.',
     quote: '"Let\'s double-check that together, shall we?"',
-    appearances: ['Snow Much Help!', 'Bonk! The Bumpy Ride Home', 'Hide and Squeak']
+    appearances: ['Snow Much Help!', 'Bonk! The Bumpy Ride Home', 'Hide and Squeak', 'Achoo! The Sneezy Day', 'Whoosh! The Kite Day']
   },
   {
     id: 'bear',
@@ -75,6 +75,6 @@ const CHARACTERS = [
     favoriteFood: 'Honey Crumble 🍯',
     quirk: 'Waves at every friend they spot — even when they really should be watching the road!',
     quote: '"Oh no — I am SO sorry, are you two alright?"',
-    appearances: ['Bonk! The Bumpy Ride Home']
+    appearances: ['Bonk! The Bumpy Ride Home', 'The Great Big Cake']
   }
 ];

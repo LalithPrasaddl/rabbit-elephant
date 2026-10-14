@@ -545,6 +545,241 @@ def build_09():
     return S.wrap(P, "".join(d), "".join(b))
 
 
+def _pt(rx, ry, x, ybase, h):
+    """A point read off the RENDERED portrait (facing right, as it appears in the
+    scene) mapped into the scene - to_scene() takes generator coordinates, which
+    are mirrored."""
+    return F.to_scene(F.BOX_W - rx, ry, x, ybase, h)
+
+
+def _gusts(P, pts):
+    """White curly wind lines: (x, y, length) each, blowing to the right."""
+    return "".join(f'<path d="M{x-l:.0f},{y:.0f} H{x:.0f} q14,0 14,-11 q0,-9 -9,-9 q-7,0 -7,7" stroke="#FFFFFF" '
+                   f'stroke-width="3.4" fill="none" stroke-linecap="round" opacity=".85" filter="url(#{P}-b1)"/>'
+                   f'<path d="M{x-l*.8:.0f},{y+11:.0f} H{x-l*.2:.0f}" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round" opacity=".7"/>'
+                   for x, y, l in pts)
+
+
+def _washing(P, x0, x1, top, ybase):
+    """A washing line between two posts, everything on it streaming out sideways
+    in the gust - socks, a shirt, a sheet."""
+    rope = f'M{x0},{top} Q{(x0+x1)/2:.0f},{top+16} {x1},{top}'
+    out = [f'<rect x="{px-3}" y="{top-6}" width="6" height="{ybase-top+6}" rx="2" fill="#8E6842"/>' for px in (x0, x1)]
+    out.append(f'<path d="{rope}" stroke="#8A949C" stroke-width="1.6" fill="none"/>')
+    for t, kind, col in ((.12, 'sock', "#FF6B6B"), (.3, 'shirt', "#74C8E4"), (.52, 'sheet', "#FFFDF8"), (.8, 'sock', "#FFD166")):
+        px = x0 + (x1 - x0)*t
+        py = top + 16*2*t*(1-t)
+        if kind == 'sock':
+            out.append(f'<path d="M{px:.0f},{py-3:.0f} h20 q10,0 10,8 q0,6 -8,6 h-8 v6 q0,4 -5,4 h-9 Z" fill="{col}" '
+                       f'transform="rotate(8 {px:.0f} {py:.0f})"/>')
+        elif kind == 'shirt':
+            out.append(f'<path d="M{px:.0f},{py-2:.0f} l34,-4 l6,8 l-8,4 l-2,-3 l0,22 l-30,4 Z" fill="{col}" opacity=".95"/>')
+        else:
+            out.append(f'<path d="M{px:.0f},{py-2:.0f} Q{px+30:.0f},{py-12:.0f} {px+62:.0f},{py-6:.0f} Q{px+70:.0f},{py+14:.0f} {px+64:.0f},{py+34:.0f} '
+                       f'Q{px+30:.0f},{py+40:.0f} {px+4:.0f},{py+38:.0f} Q{px+8:.0f},{py+18:.0f} {px:.0f},{py-2:.0f} Z" fill="{col}" '
+                       f'filter="url(#{P}-b1)"/>'
+                       f'<path d="M{px+6:.0f},{py+8:.0f} Q{px+32:.0f},{py+2:.0f} {px+62:.0f},{py+6:.0f}" stroke="#74C8E4" stroke-width="3" fill="none" opacity=".55"/>')
+        out.append(f'<rect x="{px-2:.0f}" y="{py-5:.0f}" width="4" height="8" rx="1" fill="#C89A62"/>')
+    return "".join(out)
+
+
+def _straw_hat(P, x, y, rot=0, s=1.0):
+    """Rabbit's straw hat, `x, y` the middle of the brim, lit from the upper right."""
+    d = S.lin(f"{P}-straw", [(0, "#FBE3A6", None), (1, "#D9AE5C", None)], x1=1, y1=0, x2=0, y2=1)
+    return d, (f'<g transform="rotate({rot} {x} {y})">'
+               f'<ellipse cx="{x}" cy="{y}" rx="{40*s:.0f}" ry="{9*s:.0f}" fill="url(#{P}-straw)"/>'
+               f'<path d="M{x-21*s:.0f},{y-2} Q{x-19*s:.0f},{y-30*s:.0f} {x:.0f},{y-30*s:.0f} Q{x+19*s:.0f},{y-30*s:.0f} {x+21*s:.0f},{y-2} Z" fill="url(#{P}-straw)"/>'
+               f'<path d="M{x-20*s:.0f},{y-9*s:.0f} Q{x:.0f},{y-5*s:.0f} {x+20*s:.0f},{y-9*s:.0f}" stroke="#E8533F" stroke-width="{5*s:.1f}" fill="none"/>'
+               f'<circle cx="{x+15*s:.0f}" cy="{y-13*s:.0f}" r="{5*s:.1f}" fill="#FFD166"/></g>')
+
+
+def build_10():
+    """The sneezy day: Elephant's ACHOO blowing the washing sideways and Rabbit's
+    straw hat clean off her head, with Dr. Sheep looking on."""
+    P = "cv10"
+    rng = random.Random(1010)
+    d, b = [], []
+    add = lambda p: (d.append(p[0]), b.append(p[1]))
+
+    add(S.sky(P, 'morning', HORIZON))
+    add(S.sun(P, 426, 72, 32))
+    b.append(S.clouds(P, [(84, 70, 42, 14, .9), (122, 62, 24, 10, .85), (262, 48, 30, 10, .55)]))
+    add(S.hills(P, rng, HORIZON))
+
+    gd, gback, gfront = S.meadow(P, rng, HORIZON, avoid=[(150, 250, 100, 60), (300, 262, 60, 40), (410, 260, 50, 40)])
+    d.append(gd); b.append(gback)
+    b.append(_washing(P, 214, 470, 120, 196))
+
+    ele, rab, shp = F.load('elephant', DENSITY), F.load('rabbit', DENSITY), F.load('sheep', DENSITY)
+    d += [ele[0], rab[0], shp[0]]
+
+    b.append(S.cast_shadow(P, 150, 280, 80))
+    b.append(F.place(ele[1], 146, 280, 258))
+    b.append(S.cast_shadow(P, 400, 272, 44))
+    b.append(F.place(shp[1], 398, 272, 168))
+    b.append(S.cast_shadow(P, 290, 278, 52))
+    b.append(F.place(rab[1], 288, 278, 204))
+
+    # the sneeze, out of the real trunk tip and off across the meadow
+    tx, ty = _pt(211, 310, 146, 280, 258)
+    b.append("".join(f'<circle cx="{tx+dx:.0f}" cy="{ty+dy:.0f}" r="{r}" fill="#FFFFFF" opacity=".75" filter="url(#{P}-b1)"/>'
+                     for dx, dy, r in ((10, -2, 9), (24, -10, 11), (20, 8, 8), (38, -2, 9))))
+    b.append("".join(f'<circle cx="{tx+dx:.0f}" cy="{ty+dy:.0f}" r="{r}" fill="#E8F7FF" stroke="#A8D4E8" stroke-width=".8"/>'
+                     for dx, dy, r in ((50, -14, 3), (58, 2, 2.4), (46, -28, 2.6), (64, -20, 2), (40, 12, 2.2))))
+    # the hat, blown off the crown of her head and tumbling away on the gust
+    hx, hy = F.to_scene(125, 118, 288, 278, 204)
+    b.append(_gusts(P, ((hx - 24, hy - 48, 70), (hx + 6, hy - 92, 56), (hx - 70, hy - 4, 50))))
+    add(_straw_hat(P, hx + 46, hy - 34, rot=28))
+    b.append(f'<path d="M{hx+4:.0f},{hy-6:.0f} q14,-30 34,-30" stroke="#FFFFFF" stroke-width="2.4" fill="none" '
+             f'stroke-dasharray="2 6" stroke-linecap="round" opacity=".9"/>')
+
+    b.append(gfront)
+    add(S.sunwash(P, 426, 72))
+    add(S.vignette(P))
+    return S.wrap(P, "".join(d), "".join(b))
+
+
+def _party_table(P, x, top, w=124):
+    """A garden table under a white cloth with a tall pink birthday cake on it."""
+    d = (S.lin(f"{P}-cloth", [(0, "#FFFFFF", None), (1, "#E6DDD0", None)], x1=1, y1=0, x2=0, y2=1)
+         + S.lin(f"{P}-sponge", [(0, "#F9CB7E", None), (1, "#D08E3C", None)], x1=1, y1=0, x2=0, y2=0)
+         + S.lin(f"{P}-icing", [(0, "#FFD0DE", None), (1, "#F08AAA", None)], x1=1, y1=0, x2=0, y2=1))
+    out = [S.contact_shadow(P, x, top + 52, w*.6, 7, .35),
+           f'<rect x="{x-w/2+10:.0f}" y="{top}" width="7" height="52" fill="#8E6842"/>'
+           f'<rect x="{x+w/2-17:.0f}" y="{top}" width="7" height="52" fill="#8E6842"/>',
+           f'<path d="M{x-w/2:.0f},{top} H{x+w/2:.0f} L{x+w/2+4:.0f},{top+26} Q{x+w/4:.0f},{top+32} {x:.0f},{top+26} '
+           f'Q{x-w/4:.0f},{top+32} {x-w/2-4:.0f},{top+26} Z" fill="url(#{P}-cloth)"/>',
+           f'<ellipse cx="{x}" cy="{top-2}" rx="{w*.34:.0f}" ry="5" fill="#FFFFFF"/>']
+    x -= w*.16                                # the cake sits left of centre
+    for i, (lw, lh) in enumerate(((70, 22), (56, 20), (42, 18))):
+        ly = top - 4 - sum(h for _, h in ((70, 22), (56, 20), (42, 18))[:i+1])
+        out.append(f'<rect x="{x-lw/2:.0f}" y="{ly:.0f}" width="{lw}" height="{lh}" rx="5" fill="url(#{P}-sponge)"/>'
+                   f'<path d="M{x-lw/2:.0f},{ly+7:.0f} V{ly+3:.0f} Q{x-lw/2:.0f},{ly-3:.0f} {x-lw/2+6:.0f},{ly-3:.0f} H{x+lw/2-6:.0f} '
+                   f'Q{x+lw/2:.0f},{ly-3:.0f} {x+lw/2:.0f},{ly+3:.0f} V{ly+7:.0f} '
+                   + " ".join(f'q{-lw/12:.1f},{8 if k % 2 else 3} {-lw/6:.1f},0' for k in range(6))
+                   + f' Z" fill="url(#{P}-icing)"/>')
+    ctop = top - 4 - 60
+    for i, cx in enumerate((x - 12, x, x + 12)):
+        out.append(f'<rect x="{cx-2.5}" y="{ctop-18}" width="5" height="18" rx="1.5" fill="#FFFFFF"/>'
+                   f'<path d="M{cx-2.5},{ctop-12} l5,-3 M{cx-2.5},{ctop-5} l5,-3" stroke="#74C8E4" stroke-width="1.4"/>'
+                   f'<ellipse cx="{cx}" cy="{ctop-24}" rx="5" ry="8" fill="#FFE39A" opacity=".55" filter="url(#{P}-b1)"/>'
+                   f'<path d="M{cx},{ctop-30} q4,6 0,9 q-4,-3 0,-9 Z" fill="#FFB347"/>')
+    out.append("".join(f'<circle cx="{x+dx}" cy="{ctop-1}" r="2.6" fill="{c}"/>'
+                       for dx, c in ((-16, "#FF6B6B"), (-6, "#74C8E4"), (6, "#FFD166"), (16, "#C77DFF"))))
+    return d, "".join(out)
+
+
+def _bunting(x0, x1, y, sag=30, n=11):
+    cols = ("#FF6B6B", "#FFD166", "#74C8E4", "#C77DFF", "#8ECB7E", "#FF9BAE")
+    out = [f'<path d="M{x0},{y} Q{(x0+x1)/2:.0f},{y+sag*2} {x1},{y}" stroke="#8A7A62" stroke-width="1.4" fill="none"/>']
+    for i in range(n):
+        t = (i + .5) / n
+        px, py = x0 + (x1-x0)*t, y + sag*2*2*t*(1-t)
+        out.append(f'<path d="M{px-9:.0f},{py:.0f} L{px+9:.0f},{py:.0f} L{px:.0f},{py+18:.0f} Z" fill="{cols[i % 6]}" opacity=".95"/>')
+    return "".join(out)
+
+
+def build_11():
+    """Bear's birthday: a tall pink cake on a garden table, Bear behind it, Elephant
+    and Rabbit either side - and a dusting of flour on Elephant's head that
+    gives the first, faster attempt away."""
+    P = "cv11"
+    rng = random.Random(1111)
+    d, b = [], []
+    add = lambda p: (d.append(p[0]), b.append(p[1]))
+
+    add(S.sky(P, 'golden', HORIZON))
+    add(S.sun(P, 428, 76, 34))
+    b.append(S.clouds(P, [(90, 64, 42, 14, .85), (128, 56, 24, 10, .8), (300, 50, 30, 10, .5)]))
+    add(S.hills(P, rng, HORIZON))
+    add(S.foliage(P, rng, 40, 108, 38))
+    b.insert(len(b) - 1, S.trunk(42, 118, 190, 10))
+    add(S.foliage(P, rng, 472, 104, 34))
+    b.insert(len(b) - 1, S.trunk(474, 114, 190, 10))
+    b.append(_bunting(42, 474, 86, sag=28))
+
+    gd, gback, gfront = S.meadow(P, rng, HORIZON, avoid=[(120, 250, 90, 60), (250, 260, 70, 40), (365, 262, 60, 40)])
+    d.append(gd); b.append(gback)
+
+    ele, rab, bea = F.load('elephant', DENSITY), F.load('rabbit', DENSITY), F.load('bear', DENSITY)
+    d += [ele[0], rab[0], bea[0]]
+
+    # Bear behind the table, beside his cake, the cloth hiding his legs
+    b.append(F.place(bea[1], 290, 260, 164))
+    add(_party_table(P, 244, 234, w=136))
+
+    b.append(S.cast_shadow(P, 122, 282, 78))
+    b.append(F.place(ele[1], 118, 282, 236))
+    # flour on his head from the first, rushed go
+    fx, fy = _pt(150, 100, 118, 282, 236)
+    b.append(f'<ellipse cx="{fx:.0f}" cy="{fy:.0f}" rx="30" ry="9" fill="#FFFFFF" opacity=".85" filter="url(#{P}-b1)"/>'
+             + "".join(f'<circle cx="{fx+dx:.0f}" cy="{fy+dy:.0f}" r="{r}" fill="#FFFFFF" opacity=".85"/>'
+                       for dx, dy, r in ((-22, 8, 3), (18, 10, 2.6), (4, 14, 2.2), (-8, -12, 2), (26, -6, 1.8))))
+
+    b.append(S.cast_shadow(P, 362, 282, 52))
+    b.append(F.place(rab[1], 360, 282, 190))
+
+    b.append(gfront)
+    add(S.sunwash(P, 428, 76))
+    add(S.vignette(P))
+    return S.wrap(P, "".join(d), "".join(b))
+
+
+def _kite(P, x, y, s=1.0, rot=0):
+    """The red diamond kite with its bow-tied tail streaming off to the left."""
+    d = S.lin(f"{P}-kite", [(0, "#FF9A8E", None), (1, "#D8403A", None)], x1=1, y1=0, x2=0, y2=1)
+    pts = [(x + 6*s + i*15*s, y + 44*s + i*4*s + math.sin(i*1.2)*9*s) for i in range(7)]
+    tail = (f'<path d="M{x:.0f},{y+40*s:.0f} ' + " ".join(f'L{px:.0f},{py:.0f}' for px, py in pts)
+            + '" stroke="#5E6870" stroke-width="1.4" fill="none"/>'
+            + "".join(f'<path d="M{px-4*s:.1f},{py-7*s:.1f} L{px:.1f},{py:.1f} L{px+4*s:.1f},{py-7*s:.1f} Z '
+                      f'M{px-4*s:.1f},{py+7*s:.1f} L{px:.1f},{py:.1f} L{px+4*s:.1f},{py+7*s:.1f} Z" fill="{c}"/>'
+                      for (px, py), c in zip(pts[1:], ("#FFD166", "#74C8E4", "#C77DFF", "#FFD166", "#74C8E4", "#C77DFF"))))
+    return d, (tail + f'<g transform="rotate({rot} {x} {y})">'
+               f'<path d="M{x:.0f},{y-34*s:.0f} L{x+26*s:.0f},{y-6*s:.0f} L{x:.0f},{y+40*s:.0f} L{x-26*s:.0f},{y-6*s:.0f} Z" fill="url(#{P}-kite)"/>'
+               f'<path d="M{x:.0f},{y-34*s:.0f} L{x+26*s:.0f},{y-6*s:.0f} L{x:.0f},{y-6*s:.0f} Z" fill="#FFFFFF" opacity=".25"/>'
+               f'<path d="M{x:.0f},{y-34*s:.0f} V{y+40*s:.0f} M{x-26*s:.0f},{y-6*s:.0f} H{x+26*s:.0f}" stroke="#A8302E" stroke-width="1.6" opacity=".8"/></g>')
+
+
+def build_12():
+    """Kite day: the red kite high in a windy sky, its string running down to
+    Rabbit's paw, Elephant and Nurse Giraffe watching it go."""
+    P = "cv12"
+    rng = random.Random(1212)
+    d, b = [], []
+    add = lambda p: (d.append(p[0]), b.append(p[1]))
+
+    add(S.sky(P, 'noon', HORIZON))
+    add(S.sun(P, 440, 64, 30))
+    b.append(S.clouds(P, [(80, 76, 46, 15, .9), (122, 68, 26, 11, .85), (230, 112, 34, 11, .6)]))
+    add(S.hills(P, rng, HORIZON))
+    b.append(_gusts(P, ((150, 120, 60), (300, 150, 50), (420, 120, 40))))
+
+    gd, gback, gfront = S.meadow(P, rng, HORIZON, avoid=[(130, 250, 90, 60), (250, 250, 50, 40), (350, 262, 60, 40)])
+    d.append(gd); b.append(gback)
+
+    ele, rab, gir = F.load('elephant', DENSITY), F.load('rabbit', DENSITY), F.load('giraffe', DENSITY)
+    d += [ele[0], rab[0], gir[0]]
+
+    b.append(S.cast_shadow(P, 254, 262, 46))
+    b.append(F.place(gir[1], 252, 262, 236))
+    b.append(S.cast_shadow(P, 128, 282, 78))
+    b.append(F.place(ele[1], 124, 282, 240))
+    b.append(S.cast_shadow(P, 352, 282, 52))
+    b.append(F.place(rab[1], 350, 282, 194))
+
+    # the string from her front paw up to the kite
+    px, py = _pt(167, 318, 350, 282, 194)
+    kx, ky = 396, 98
+    b.append(f'<path d="M{px:.0f},{py:.0f} Q{px+74:.0f},{(py+ky)/2:.0f} {kx:.0f},{ky:.0f}" stroke="#5A4A3A" stroke-width="1.3" fill="none"/>')
+    add(_kite(P, kx, ky, s=1.1, rot=14))
+    b.append(S.clouds(P, [(470, 150, 30, 10, .5)]))
+
+    b.append(gfront)
+    add(S.sunwash(P, 440, 64))
+    add(S.vignette(P))
+    return S.wrap(P, "".join(d), "".join(b))
+
+
 COVERS = {
     '01-the-hungry-friends': build_01,
     '02-ouch-the-big-thorn': build_02,
@@ -555,4 +790,7 @@ COVERS = {
     '07-shh-the-noisy-night': build_07,
     '08-hide-and-squeak': build_08,
     '09-wobble-the-big-bike-day': build_09,
+    '10-achoo-the-sneezy-day': build_10,
+    '11-the-great-big-cake': build_11,
+    '12-whoosh-the-kite-day': build_12,
 }

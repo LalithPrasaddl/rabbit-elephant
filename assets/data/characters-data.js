@@ -10,7 +10,7 @@ const CHARACTERS = [
     favoriteFood: 'Carrot Halwa 🥕',
     quirk: 'Never gives up asking questions — even when the answer is written all over Elephant\'s face!',
     quote: '"My tummy is GROWLING!"',
-    appearances: ['The Hungry Friends', 'Ouch! The Big Thorn', 'Watch Your Step!', 'Splash! The Pool Party', 'Bonk! The Bumpy Ride Home', 'Shh! The Noisy Night', 'Hide and Squeak', 'Wobble! The Big Bike Day', 'Achoo! The Sneezy Day', 'The Great Big Cake', 'Whoosh! The Kite Day']
+    appearances: ['The Hungry Friends', 'Ouch! The Big Thorn', 'Watch Your Step!', 'Splash! The Pool Party', 'Bonk! The Bumpy Ride Home', 'Shh! The Noisy Night', 'Hide and Squeak', 'Wobble! The Big Bike Day', 'Achoo! The Sneezy Day', 'The Great Big Cake', 'Whoosh! The Kite Day', 'Grow, Seed, Grow!', 'Too Big, Too Small']
   },
   {
     id: 'elephant',
@@ -23,7 +23,7 @@ const CHARACTERS = [
     favoriteFood: 'Fruit Salad 🍇',
     quirk: 'Means well — but his tummy sometimes overrules his brain. He always makes it right in the end!',
     quote: '"No idea... okay, fine, I ate it."',
-    appearances: ['The Hungry Friends', 'Ouch! The Big Thorn', 'Watch Your Step!', 'Splash! The Pool Party', 'Bonk! The Bumpy Ride Home', 'Shh! The Noisy Night', 'Hide and Squeak', 'Wobble! The Big Bike Day', 'Achoo! The Sneezy Day', 'The Great Big Cake', 'Whoosh! The Kite Day']
+    appearances: ['The Hungry Friends', 'Ouch! The Big Thorn', 'Watch Your Step!', 'Splash! The Pool Party', 'Bonk! The Bumpy Ride Home', 'Shh! The Noisy Night', 'Hide and Squeak', 'Wobble! The Big Bike Day', 'Achoo! The Sneezy Day', 'The Great Big Cake', 'Whoosh! The Kite Day', 'Grow, Seed, Grow!', 'Too Big, Too Small']
   },
   {
     id: 'squirrel',
@@ -36,7 +36,7 @@ const CHARACTERS = [
     favoriteFood: 'Acorn Pudding 🌰',
     quirk: 'Can remove even the biggest thorn without breaking a sweat — but will absolutely laugh at a good joke between procedures.',
     quote: '"Three days of rest. No running, no planting, no adventures!"',
-    appearances: ['Ouch! The Big Thorn', 'Bonk! The Bumpy Ride Home', 'Wobble! The Big Bike Day']
+    appearances: ['Ouch! The Big Thorn', 'Bonk! The Bumpy Ride Home', 'Wobble! The Big Bike Day', 'Grow, Seed, Grow!']
   },
   {
     id: 'sheep',
@@ -75,6 +75,6 @@ const CHARACTERS = [
     favoriteFood: 'Honey Crumble 🍯',
     quirk: 'Waves at every friend they spot — even when they really should be watching the road!',
     quote: '"Oh no — I am SO sorry, are you two alright?"',
-    appearances: ['Bonk! The Bumpy Ride Home', 'The Great Big Cake']
+    appearances: ['Bonk! The Bumpy Ride Home', 'The Great Big Cake', 'Too Big, Too Small']
   }
 ];

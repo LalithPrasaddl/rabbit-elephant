@@ -156,7 +156,33 @@ const STORIES = [
     comingSoon: false
   },
   {
-    id: 'coming-soon-13',
+    id: '13-grow-seed-grow',
+    title: 'Grow, Seed, Grow!',
+    subtitle: 'A story about waiting for good things',
+    emoji: '🌻',
+    description: 'Rabbit and Elephant plant a stripy seed and want it to grow RIGHT NOW. They flood it, dig it up, and then Dr. Squirrel shows them what a seed really needs: soil, water, sunshine and time.',
+    tags: ['Patience', 'Nature', 'How Plants Grow'],
+    characters: ['Rabbit', 'Elephant', 'Dr. Squirrel'],
+    readTime: '7 min read',
+    path: 'stories/13-grow-seed-grow/',
+    cardColor: '#FFC93C',
+    comingSoon: false
+  },
+  {
+    id: '14-too-big-too-small',
+    title: 'Too Big, Too Small',
+    subtitle: 'A story about how everybody fits somewhere',
+    emoji: '🍎',
+    description: 'Elephant is too big for the slide, and Rabbit is too small to reach Bear\'s apples. Together, they turn out to be exactly the right size.',
+    tags: ['Teamwork', 'Big and Small', 'Counting'],
+    characters: ['Rabbit', 'Elephant', 'Bear'],
+    readTime: '7 min read',
+    path: 'stories/14-too-big-too-small/',
+    cardColor: '#8ECB7E',
+    comingSoon: false
+  },
+  {
+    id: 'coming-soon-15',
     title: 'Coming Soon…',
     subtitle: 'More fun is brewing!',
     emoji: '🌟',

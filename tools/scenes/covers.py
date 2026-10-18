@@ -780,6 +780,116 @@ def build_12():
     return S.wrap(P, "".join(d), "".join(b))
 
 
+
+def _sunflower(P, x, ybase, top, r=40, rng=None):
+    """A tall painted sunflower: stem lit from the right, broad leaves, two rings of
+    petals and a seed-packed disc. `top` is the y of the middle of its head."""
+    d = (S.lin(f"{P}-stem", [(0, "#3E7A38", None), (.6, "#5AA350", None), (1, "#9BD27A", None)], x1=0, y1=0, x2=1, y2=0)
+         + S.rad(f"{P}-pet", [(0, "#FFF0A8", None), (.55, "#FFC93C", None), (1, "#D98A00", None)], cx="62%", cy="20%", r="90%")
+         + S.rad(f"{P}-disc", [(0, "#A8703C", None), (.55, "#6E4220", None), (1, "#2E1A0A", None)], cx="64%", cy="30%", r="80%")
+         + S.rad(f"{P}-lf", [(0, "#A9DB82", None), (.5, "#5AA350", None), (1, "#2F6A2C", None)], cx="70%", cy="20%", r="95%"))
+    g = [f'<path d="M{x-4},{ybase} Q{x+14},{(ybase+top)/2:.0f} {x-3},{top}" stroke="url(#{P}-stem)" stroke-width="11" fill="none" stroke-linecap="round"/>']
+    for f, side in ((.22, -1), (.42, 1), (.62, -1)):
+        ly = ybase - (ybase - top)*f
+        lx = x + 4
+        tip = lx + side*58
+        g.append(f'<path d="M{lx},{ly:.0f} Q{lx+side*24},{ly-30:.0f} {tip},{ly-14:.0f} Q{lx+side*30},{ly+12:.0f} {lx},{ly:.0f} Z" fill="url(#{P}-lf)"/>'
+                 f'<path d="M{lx},{ly:.0f} Q{lx+side*26},{ly-14:.0f} {tip-side*6},{ly-14:.0f}" stroke="#2F6A2C" stroke-width="1.4" fill="none" opacity=".55"/>')
+    for ring, (n, off, ln, op) in enumerate(((18, 0, 1.0, .85), (18, math.pi/18, .86, 1))):
+        for i in range(n):
+            a = 2*math.pi*i/n + off
+            px, py = x + math.cos(a)*(r*.62 + r*.42*ln), top + math.sin(a)*(r*.62 + r*.42*ln)
+            g.append(f'<ellipse cx="{px:.1f}" cy="{py:.1f}" rx="{r*.17:.1f}" ry="{r*.42*ln:.1f}" fill="url(#{P}-pet)" opacity="{op}" '
+                     f'transform="rotate({math.degrees(a)+90:.0f} {px:.1f} {py:.1f})"/>')
+    g.append(f'<circle cx="{x}" cy="{top}" r="{r*.6:.1f}" fill="url(#{P}-disc)"/>')
+    g.append('<g fill="#2E1A0A" opacity=".6">' + "".join(
+        f'<circle cx="{x + math.cos(i*2.39996)*r*.55*(i/90)**.5:.1f}" cy="{top + math.sin(i*2.39996)*r*.55*(i/90)**.5:.1f}" r="1.3"/>'
+        for i in range(1, 90)) + '</g>')
+    g.append(f'<ellipse cx="{x+r*.2:.0f}" cy="{top-r*.25:.0f}" rx="{r*.22:.0f}" ry="{r*.14:.0f}" fill="#FFE9B0" opacity=".35" filter="url(#{P}-b1)"/>')
+    return d, "".join(g)
+
+
+def build_13():
+    """A sunflower taller than Elephant, grown from one stripy seed: Elephant and
+    Rabbit either side of it and Dr. Squirrel admiring it."""
+    P = "cv13"
+    rng = random.Random(1313)
+    d, b = [], []
+    add = lambda p: (d.append(p[0]), b.append(p[1]))
+
+    add(S.sky(P, 'golden', HORIZON))
+    add(S.sun(P, 432, 74, 32))
+    b.append(S.clouds(P, [(80, 70, 44, 14, .85), (118, 62, 26, 10, .8), (330, 40, 30, 10, .5)]))
+    add(S.hills(P, rng, HORIZON))
+    add(S.foliage(P, rng, 40, 112, 34))
+    b.insert(len(b) - 1, S.trunk(42, 120, 188, 10))
+
+    gd, gback, gfront = S.meadow(P, rng, HORIZON, avoid=[(140, 250, 90, 60), (256, 262, 30, 30), (330, 262, 50, 40), (414, 262, 40, 30)])
+    d.append(gd); b.append(gback)
+
+    ele, rab, sqr = F.load('elephant', DENSITY), F.load('rabbit', DENSITY), F.load('squirrel', DENSITY)
+    d += [ele[0], rab[0], sqr[0]]
+
+    b.append(S.cast_shadow(P, 258, 272, 20))
+    add(_sunflower(P, 256, 272, 100, r=42))
+    b.append(S.cast_shadow(P, 142, 282, 78))
+    b.append(F.place(ele[1], 138, 282, 252))
+    b.append(S.cast_shadow(P, 322, 282, 50))
+    b.append(F.place(rab[1], 318, 282, 196))
+    b.append(S.cast_shadow(P, 424, 268, 34))
+    b.append(F.place(sqr[1], 422, 268, 150))
+
+    b.append(gfront)
+    add(S.sunwash(P, 432, 74))
+    add(S.vignette(P))
+    return S.wrap(P, "".join(d), "".join(b))
+
+
+def _apple(P, x, y, r=7):
+    return (f'<circle cx="{x:.0f}" cy="{y:.0f}" r="{r}" fill="url(#{P}-apl)"/>'
+            f'<path d="M{x:.0f},{y-r:.0f} q1,-5 4,-6" stroke="#5A3A1E" stroke-width="1.6" fill="none" stroke-linecap="round"/>')
+
+
+def build_14():
+    """Big and small together: Rabbit up on Elephant's head among the apples,
+    Bear under his tree."""
+    P = "cv14"
+    rng = random.Random(1414)
+    d, b = [], []
+    add = lambda p: (d.append(p[0]), b.append(p[1]))
+
+    add(S.sky(P, 'morning', HORIZON))
+    add(S.sun(P, 440, 70, 30))
+    b.append(S.clouds(P, [(70, 72, 44, 14, .9), (108, 64, 26, 10, .85), (210, 50, 30, 10, .6)]))
+    add(S.hills(P, rng, HORIZON))
+
+    # the apple tree, its crown hanging over the top of the frame
+    b.append(S.trunk(312, 90, 262, 26))
+    add(S.foliage(P, rng, 318, 76, 84))
+    d.append(S.rad(f"{P}-apl", [(0, "#FFB0A0", None), (.5, "#E8453F", None), (1, "#8A1E1A", None)], cx="64%", cy="28%", r="80%"))
+    for ax, ay in ((244, 96), (282, 112), (330, 44), (372, 92), (386, 52), (316, 128), (262, 52), (350, 132)):
+        b.append(_apple(P, ax, ay))
+
+    gd, gback, gfront = S.meadow(P, rng, HORIZON, avoid=[(160, 250, 90, 60), (390, 262, 60, 40)])
+    d.append(gd); b.append(gback)
+
+    ele, rab, bea = F.load('elephant', DENSITY), F.load('rabbit', DENSITY), F.load('bear', DENSITY)
+    d += [ele[0], rab[0], bea[0]]
+
+    b.append(S.cast_shadow(P, 384, 270, 46))
+    b.append(F.place(bea[1], 382, 270, 176))
+
+    b.append(S.cast_shadow(P, 166, 298, 74))
+    b.append(F.place(ele[1], 162, 298, 212))
+    # Rabbit sitting on the crown of Elephant's head, up among the low apples
+    hx, hy = _pt(198, 96, 162, 298, 212)
+    b.append(F.place(rab[1], hx, hy, 104, rot=4))
+
+    b.append(gfront)
+    add(S.sunwash(P, 440, 70))
+    add(S.vignette(P))
+    return S.wrap(P, "".join(d), "".join(b))
+
 COVERS = {
     '01-the-hungry-friends': build_01,
     '02-ouch-the-big-thorn': build_02,
@@ -793,4 +903,6 @@ COVERS = {
     '10-achoo-the-sneezy-day': build_10,
     '11-the-great-big-cake': build_11,
     '12-whoosh-the-kite-day': build_12,
+    '13-grow-seed-grow': build_13,
+    '14-too-big-too-small': build_14,
 }

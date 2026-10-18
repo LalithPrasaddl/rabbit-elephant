@@ -1944,3 +1944,266 @@ def belt(w=56, y=-32, color="#C77DFF"):
     """Rabbit's belt, in rabbit-local coordinates - pass it as `extra`."""
     return (f'<path d="M{-w/2},{y-2} Q0,{y+8} {w/2},{y-2}" stroke="{color}" stroke-width="7" fill="none" stroke-linecap="round"/>'
             f'<rect x="-7" y="{y-3}" width="14" height="11" rx="2" fill="#FFD166" stroke="#D8A21F" stroke-width="1.5"/>')
+
+
+# ---------------------------------------------------------------- story 13 props
+# Story 13 is one sunflower seed, from a stripy seed in a paw to a flower taller than
+# Elephant. The seed is drawn much bigger than life on purpose: it is the main
+# character of the story and a two-year-old has to be able to find it on every page.
+SEED, SEED_STRIPE = "#3E3A40", "#EDE6D6"
+STEM, STEM_DK = "#5AA350", "#3E7A38"
+PETAL, PETAL_DK = "#FFC93C", "#E8A400"
+DISC, DISC_DK = "#7A4E2A", "#4E2E14"
+
+
+def seed(x, y, s=1.0, rot=0, muddy=False):
+    """A big stripy sunflower seed, `x, y` its middle, pointy end up."""
+    out = (f'<g transform="rotate({rot} {x} {y})">'
+           f'<path d="M{x:.1f},{y-14*s:.1f} C{x+9*s:.1f},{y-6*s:.1f} {x+9*s:.1f},{y+11*s:.1f} {x:.1f},{y+12*s:.1f} '
+           f'C{x-9*s:.1f},{y+11*s:.1f} {x-9*s:.1f},{y-6*s:.1f} {x:.1f},{y-14*s:.1f} Z" fill="{SEED}" stroke="#211E24" stroke-width="1.2"/>'
+           f'<path d="M{x:.1f},{y-11*s:.1f} V{y+10*s:.1f} M{x-4.5*s:.1f},{y-6*s:.1f} Q{x-6*s:.1f},{y+3*s:.1f} {x-4*s:.1f},{y+9*s:.1f} '
+           f'M{x+4.5*s:.1f},{y-6*s:.1f} Q{x+6*s:.1f},{y+3*s:.1f} {x+4*s:.1f},{y+9*s:.1f}" stroke="{SEED_STRIPE}" '
+           f'stroke-width="{1.5*s:.1f}" fill="none" stroke-linecap="round"/>')
+    if muddy:
+        out += "".join(f'<circle cx="{x+dx*s:.1f}" cy="{y+dy*s:.1f}" r="{r*s:.1f}" fill="{MUD}"/>'
+                       for dx, dy, r in ((-3, 6, 3.4), (4, 1, 2.6), (-1, -6, 2)))
+    return out + '</g>'
+
+
+def leaf(x, y, s=1.0, rot=0, color=STEM):
+    """One pointed leaf whose stalk end is at `x, y`, pointing right before `rot`."""
+    return (f'<path d="M{x:.1f},{y:.1f} Q{x+10*s:.1f},{y-10*s:.1f} {x+26*s:.1f},{y:.1f} Q{x+10*s:.1f},{y+8*s:.1f} {x:.1f},{y:.1f} Z" '
+            f'fill="{color}" stroke="{STEM_DK}" stroke-width="1.2" transform="rotate({rot} {x:.1f} {y:.1f})"/>')
+
+
+def shoot(x, y, s=1.0):
+    """The first green shoot: a curl of stem and two little leaves, `y` the soil."""
+    return (f'<path d="M{x},{y} Q{x-2*s:.1f},{y-12*s:.1f} {x},{y-22*s:.1f}" stroke="{STEM}" stroke-width="{3.4*s:.1f}" '
+            f'fill="none" stroke-linecap="round"/>'
+            + leaf(x, y - 22*s, .7*s, -150) + leaf(x, y - 22*s, .7*s, -30))
+
+
+def sunflower(x, y, h=200, s=1.0, bloom='open'):
+    """A sunflower growing out of the ground at `x, y`, `h` tall to the middle of its
+    head. `bloom` is 'bud' (a closed green knob) or 'open'."""
+    import math as _m
+    top = y - h
+    out = [f'<path d="M{x},{y} Q{x+10*s:.0f},{y-h*.5:.0f} {x},{top}" stroke="{STEM_DK}" stroke-width="{9*s:.1f}" fill="none" stroke-linecap="round"/>'
+           f'<path d="M{x},{y} Q{x+10*s:.0f},{y-h*.5:.0f} {x},{top}" stroke="{STEM}" stroke-width="{6.4*s:.1f}" fill="none" stroke-linecap="round"/>']
+    for i, f in enumerate((.22, .45, .68)):
+        side = -1 if i % 2 == 0 else 1
+        out.append(leaf(x + 4*s, y - h*f, 1.3*s, -160 + 30*f if side < 0 else -20 - 30*f))
+    if bloom == 'bud':
+        out.append(f'<ellipse cx="{x}" cy="{top}" rx="{15*s:.1f}" ry="{18*s:.1f}" fill="{STEM}" stroke="{STEM_DK}" stroke-width="1.5"/>'
+                   + "".join(f'<path d="M{x+dx*s:.1f},{top+6*s:.1f} l{dx*.6*s:.1f},{-22*s:.1f}" stroke="{STEM_DK}" stroke-width="1.4" '
+                             f'fill="none" stroke-linecap="round"/>' for dx in (-8, 0, 8))
+                   + f'<path d="M{x-6*s:.1f},{top-14*s:.1f} q{6*s:.1f},{-8*s:.1f} {12*s:.1f},0" fill="{PETAL}" stroke="{PETAL_DK}" stroke-width="1"/>')
+        return "".join(out)
+    rc = 22*s
+    for ring, (n, off, col) in enumerate(((16, 0, PETAL_DK), (16, _m.pi/16, PETAL))):
+        for i in range(n):
+            a = 2*_m.pi*i/n + off
+            px, py = x + _m.cos(a)*(rc + 13*s), top + _m.sin(a)*(rc + 13*s)
+            out.append(f'<ellipse cx="{px:.1f}" cy="{py:.1f}" rx="{7*s:.1f}" ry="{16*s:.1f}" fill="{col}" '
+                       f'transform="rotate({_m.degrees(a)+90:.0f} {px:.1f} {py:.1f})"/>')
+    out.append(f'<circle cx="{x}" cy="{top}" r="{rc:.1f}" fill="{DISC}" stroke="{DISC_DK}" stroke-width="1.5"/>')
+    # seeds packed on the golden angle, the way a real sunflower packs them
+    out.append('<g fill="#5E3A1C">' + "".join(
+        f'<circle cx="{x + _m.cos(i*2.39996)*rc*.9*(i/48)**.5:.1f}" cy="{top + _m.sin(i*2.39996)*rc*.9*(i/48)**.5:.1f}" r="{1.5*s:.1f}"/>'
+        for i in range(1, 48)) + '</g>')
+    return "".join(out)
+
+
+def jet(x0, y0, x1, y1, lift=60, w=11):
+    """A trunkful of water fired from (x0, y0) in an arc that lands on (x1, y1)."""
+    mx, my = (x0 + x1)/2, min(y0, y1) - lift
+    d = f'M{x0:.0f},{y0:.0f} Q{mx:.0f},{my:.0f} {x1:.0f},{y1:.0f}'
+    return (f'<path d="{d}" stroke="#8FD6F0" stroke-width="{w}" fill="none" stroke-linecap="round" opacity=".92"/>'
+            f'<path d="{d}" stroke="#FFFFFF" stroke-width="{w*.3:.1f}" fill="none" stroke-linecap="round" opacity=".7"/>')
+
+
+def drips(pts, s=1.0):
+    """Water drops running off whoever just got soaked: (x, y) each."""
+    return "".join(f'<path d="M{x:.0f},{y:.0f} q{-4*s:.1f},{6*s:.1f} 0,{9*s:.1f} q{4*s:.1f},{-3*s:.1f} 0,{-9*s:.1f} Z" '
+                   f'fill="#8FD6F0" stroke="#4AA8C8" stroke-width="1"/>' for x, y in pts)
+
+
+def sprinkle(x, y):
+    """A gentle few drops falling from a trunk tip - the opposite of a SPLOOSH."""
+    return drips([(x - 6, y + 8), (x + 5, y + 16), (x - 2, y + 26), (x + 6, y + 36)], s=.8)
+
+
+def hole(x, y, rx=26):
+    """A freshly dug hole with its heap of soil beside it."""
+    return (f'<ellipse cx="{x+rx*1.5:.0f}" cy="{y-2}" rx="{rx*.9:.0f}" ry="{rx*.42:.0f}" fill="#9A7650"/>'
+            f'<ellipse cx="{x+rx*1.4:.0f}" cy="{y-5}" rx="{rx*.5:.0f}" ry="{rx*.2:.0f}" fill="#B8936A" opacity=".7"/>'
+            f'<ellipse cx="{x}" cy="{y}" rx="{rx}" ry="{rx*.36:.0f}" fill="#5A3E22"/>'
+            f'<path d="M{x-rx},{y} q{rx},{rx*.5:.0f} {rx*2},0" stroke="#8A6A44" stroke-width="3" fill="none"/>')
+
+
+def badge(x, y, kind, r=30, label=None, hot=False):
+    """One of the four things a seed needs, in a round badge with its name under it:
+    soil, water, sun - and time."""
+    ring = "#FF6B6B" if hot else "#D0C8B8"
+    out = [f'<circle cx="{x}" cy="{y}" r="{r}" fill="#FFFFFF" stroke="{ring}" stroke-width="{3 if hot else 2}"/>']
+    if kind == 'soil':
+        out.append(f'<path d="M{x-20},{y+10} Q{x},{y-14} {x+20},{y+10} Z" fill="#8A6A44"/>'
+                   f'<circle cx="{x-6}" cy="{y+4}" r="2" fill="#5A3E22"/><circle cx="{x+6}" cy="{y+1}" r="2" fill="#5A3E22"/>'
+                   f'<path d="M{x},{y-4} q-1,-8 0,-12" stroke="{STEM}" stroke-width="2.6" fill="none" stroke-linecap="round"/>')
+    elif kind == 'water':
+        out.append(f'<path d="M{x},{y-18} C{x+14},{y-2} {x+12},{y+14} {x},{y+14} C{x-12},{y+14} {x-14},{y-2} {x},{y-18} Z" '
+                   f'fill="#74C8E4" stroke="#3C90AE" stroke-width="1.5"/>'
+                   f'<path d="M{x-5},{y+2} q0,6 5,8" stroke="#FFFFFF" stroke-width="2.4" fill="none" stroke-linecap="round"/>')
+    elif kind == 'sun':
+        out.append(f'<g stroke="#FFC93C" stroke-width="3" stroke-linecap="round">' + "".join(
+            f'<line x1="{x+dx*13:.0f}" y1="{y+dy*13:.0f}" x2="{x+dx*20:.0f}" y2="{y+dy*20:.0f}"/>'
+            for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1), (.7, .7), (-.7, .7), (.7, -.7), (-.7, -.7))) + '</g>'
+                   f'<circle cx="{x}" cy="{y}" r="10" fill="#FFD166" stroke="#E8A400" stroke-width="1.5"/>')
+    else:   # time: a clock
+        out.append(f'<circle cx="{x}" cy="{y}" r="17" fill="#FFF9F0" stroke="#6B5B47" stroke-width="2.4"/>'
+                   + "".join(f'<circle cx="{x+dx*13:.0f}" cy="{y+dy*13:.0f}" r="1.6" fill="#6B5B47"/>' for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)))
+                   + f'<path d="M{x},{y} V{y-11} M{x},{y} L{x+8},{y+4}" stroke="#6B5B47" stroke-width="2.4" stroke-linecap="round"/>')
+    if label:
+        out.append(f'<text x="{x}" y="{y+r+17}" text-anchor="middle" font-size="14" fill="{ring if hot else "#6B5B47"}" '
+                   f'font-family="Fredoka One, sans-serif">{label}</text>')
+    return "".join(out)
+
+
+def underground(x, y, w=200, depth=110):
+    """What's going on under the soil, `x, y` the middle of the surface: a seed
+    sending a root down and a shoot up. Drawn to fill a magnifier lens."""
+    sx, sy = x, y + depth*.36
+    return (f'<rect x="{x-w/2:.0f}" y="{y-depth}" width="{w}" height="{depth}" fill="#D8F1FB"/>'
+            f'<rect x="{x-w/2:.0f}" y="{y}" width="{w}" height="{depth}" fill="#8A6A44"/>'
+            f'<rect x="{x-w/2:.0f}" y="{y+depth*.55:.0f}" width="{w}" height="{depth*.5:.0f}" fill="#6E5034"/>'
+            f'<path d="M{x-w/2:.0f},{y} Q{x-w/4:.0f},{y-6} {x},{y} T{x+w/2:.0f},{y} V{y+8} H{x-w/2:.0f} Z" fill="#6BAF5E"/>'
+            + "".join(f'<ellipse cx="{x+dx}" cy="{y+dy}" rx="{rx}" ry="{rx*.7:.1f}" fill="#B8936A"/>'
+                      for dx, dy, rx in ((-60, 30, 5), (52, 46, 6), (-30, 70, 4), (40, 82, 5), (-70, 58, 3)))
+            # a worm, because there is always a worm
+            + f'<path d="M{x+30},{y+24} q8,-6 14,0 q6,6 14,0" stroke="#FF9BAE" stroke-width="5" fill="none" stroke-linecap="round"/>'
+            f'<circle cx="{x+57}" cy="{y+23}" r="1.2" fill="{INK}"/>'
+            + f'<path d="M{sx},{sy+8} Q{sx-4},{sy+30} {sx+2},{sy+58} M{sx},{sy+22} q-14,6 -22,22 M{sx+1},{sy+34} q14,4 20,20 '
+              f'M{sx-1},{sy+46} q-10,4 -14,14" stroke="#F4E6C8" stroke-width="2.6" fill="none" stroke-linecap="round"/>'
+            + f'<path d="M{sx},{sy-10} Q{sx+6},{sy-30} {sx},{y-14}" stroke="{STEM}" stroke-width="3.4" fill="none" stroke-linecap="round"/>'
+            + leaf(sx, y - 14, .6, -150) + leaf(sx, y - 14, .6, -30)
+            + seed(sx, sy, s=1.1, rot=20))
+
+
+# ---------------------------------------------------------------- story 14 props
+# Story 14 is a playground that is the wrong size for everybody, then an apple tree
+# that is the right size for two friends together. Playground kit is bright primary
+# plastic so it never reads as part of the meadow.
+PLAY, PLAY_DK = "#74C8E4", "#3C90AE"
+CHUTE, CHUTE_DK = "#FFD166", "#E8B800"
+
+
+def ladder(x, y0, y1, w=26, color=PLAY, line=PLAY_DK):
+    """A ladder standing at `x` from the ground `y0` up to `y1`."""
+    rungs = "".join(f'<line x1="{x-w/2}" y1="{yy:.0f}" x2="{x+w/2}" y2="{yy:.0f}"/>'
+                    for yy in [y0 - 14 - i*20 for i in range(int((y0 - y1 - 10) // 20))])
+    return (f'<g stroke="{line}" stroke-width="4" stroke-linecap="round">{rungs}</g>'
+            f'<path d="M{x-w/2},{y0} V{y1} M{x+w/2},{y0} V{y1}" stroke="{color}" stroke-width="6" stroke-linecap="round"/>')
+
+
+def slide_top(x, y, h=150):
+    """Where a rider sits at the top of slide(x, y, h)."""
+    return x + 22, y - h
+
+
+def slide(x, y, h=150, w=200, rider=""):
+    """A playground slide: ladder up the left at `x`, platform on top, chute running
+    down to the right. It draws its rider, then the top guard rails OVER them - which
+    is what makes an elephant look properly wedged in."""
+    top = y - h
+    chute = f'M{x+30},{top} C{x+90},{top} {x+w-80},{y-10} {x+w},{y-8}'
+    return (ladder(x, y, top - 4)
+            + f'<path d="M{x+46},{y} V{top+10}" stroke="{PLAY_DK}" stroke-width="7" stroke-linecap="round"/>'
+            + f'<path d="{chute}" stroke="{CHUTE_DK}" stroke-width="22" fill="none" stroke-linecap="round"/>'
+            f'<path d="{chute}" stroke="{CHUTE}" stroke-width="17" fill="none" stroke-linecap="round"/>'
+            f'<path d="{chute}" stroke="#FFF1C2" stroke-width="3" fill="none" stroke-linecap="round" transform="translate(0,-4)"/>'
+            + f'<rect x="{x-16}" y="{top-4}" width="54" height="10" rx="3" fill="{PLAY}" stroke="{PLAY_DK}" stroke-width="2"/>'
+            + rider
+            + f'<path d="M{x-14},{top-4} V{top-46} M{x+36},{top-4} V{top-46}" stroke="{PLAY_DK}" stroke-width="6" stroke-linecap="round"/>'
+            + f'<path d="M{x-14},{top-30} H{x+36}" stroke="{PLAY}" stroke-width="5" stroke-linecap="round"/>')
+
+
+def seesaw_end(x, y, w=320, tilt=0, side=1, lift=50):
+    """The seat at one end (`side` -1 left, +1 right) of seesaw(x, y, w, tilt)."""
+    import math as _m
+    a = _m.radians(tilt)
+    d = side * (w/2 - 34)
+    return x + _m.cos(a)*d, y - lift + _m.sin(a)*d - 6
+
+
+def seesaw(x, y, w=320, tilt=0, lift=50):
+    """A seesaw on a pivot at `x`, `y` the ground. Negative `tilt` drops the left end."""
+    pv = y - lift
+    return (f'<path d="M{x-30},{y} L{x},{pv} L{x+30},{y} Z" fill="#FF6B6B" stroke="#C0484A" stroke-width="2" stroke-linejoin="round"/>'
+            f'<g transform="rotate({tilt} {x} {pv})">'
+            f'<rect x="{x-w/2}" y="{pv-12}" width="{w}" height="13" rx="6" fill="{CHUTE}" stroke="{CHUTE_DK}" stroke-width="2"/>'
+            + "".join(f'<path d="M{x+sx*(w/2-62)},{pv-12} v-20 h{sx*-10}" stroke="{PLAY_DK}" stroke-width="5" fill="none" stroke-linecap="round"/>'
+                      for sx in (-1, 1)) + '</g>'
+            f'<circle cx="{x}" cy="{pv}" r="5" fill="#FFFFFF" stroke="#C0484A" stroke-width="2"/>')
+
+
+def treehouse(x, y, h=210, peek=""):
+    """A tree with a little house in it, `x` the trunk, `y` the ground. The ladder
+    leans up the left side; `peek` is drawn inside the window, clipped to it."""
+    top = y - h
+    hx, hw, hh = x - 66, 132, 78
+    return (f'<path d="M{x-14},{y} L{x-9},{top-30} L{x+9},{top-30} L{x+14},{y} Z" fill="{BARK}" stroke="{BARK_DK}" stroke-width="1.5"/>'
+            + "".join(f'<circle cx="{x+dx}" cy="{top+dy}" r="{r}" fill="{c}"/>'
+                      for dx, dy, r, c in ((-80, -100, 44, LEAF), (80, -96, 46, LEAF), (0, -136, 52, LEAF_LT), (-40, -128, 40, LEAF), (44, -132, 40, LEAF)))
+            + f'<rect x="{hx-10}" y="{top}" width="{hw+20}" height="10" rx="3" fill="#C89A72" stroke="{BARK_DK}" stroke-width="2"/>'
+            f'<rect x="{hx}" y="{top-hh}" width="{hw}" height="{hh}" fill="#F4C67A" stroke="#B98A56" stroke-width="2"/>'
+            + "".join(f'<line x1="{hx}" y1="{top-hh+i*16}" x2="{hx+hw}" y2="{top-hh+i*16}" stroke="#D9A75E" stroke-width="1.5"/>' for i in range(1, 5))
+            + f'<path d="M{hx-14},{top-hh+2} L{x},{top-hh-46} L{hx+hw+14},{top-hh+2} Z" fill="#FF6B6B" stroke="#C0484A" stroke-width="2" stroke-linejoin="round"/>'
+            f'<path d="M{hx+12},{top} V{top-52} Q{hx+28},{top-66} {hx+44},{top-52} V{top} Z" fill="#5A3E22" stroke="#B98A56" stroke-width="2"/>'
+            f'<defs><clipPath id="th-win-{x}"><rect x="{hx+76}" y="{top-60}" width="40" height="36" rx="4"/></clipPath></defs>'
+            f'<rect x="{hx+76}" y="{top-60}" width="40" height="36" rx="4" fill="#B8E8F8"/>'
+            f'<g clip-path="url(#th-win-{x})">{peek}</g>'
+            f'<rect x="{hx+76}" y="{top-60}" width="40" height="36" rx="4" fill="none" stroke="#B98A56" stroke-width="3"/>'
+            + ladder(hx - 2, y, top + 4, color="#C89A72", line=BARK_DK))
+
+
+def treehouse_door(x, y, h=210):
+    """The middle of treehouse(x, y, h)'s doorway."""
+    return x - 38, y - h - 26
+
+
+def apple_tree(x, y, h=250, apples=()):
+    """A big round apple tree, `y` the ground, `h` up to the top of the crown.
+    `apples` are scene points, so a page can hang them where a paw can reach."""
+    top = y - h
+    return (f'<path d="M{x-16},{y} L{x-10},{top+110} L{x+10},{top+110} L{x+16},{y} Z" fill="{BARK}" stroke="{BARK_DK}" stroke-width="1.5"/>'
+            f'<path d="M{x-6},{top+150} q-30,-14 -46,-44 M{x+6},{top+140} q30,-10 44,-40" stroke="{BARK}" stroke-width="8" fill="none" stroke-linecap="round"/>'
+            + "".join(f'<circle cx="{x+dx}" cy="{top+dy}" r="{r}" fill="{c}"/>'
+                      for dx, dy, r, c in ((-70, 90, 52, LEAF), (70, 86, 54, LEAF), (-30, 50, 50, LEAF), (34, 46, 50, LEAF),
+                                           (0, 92, 50, LEAF_LT), (-6, 40, 36, LEAF_LT)))
+            + "".join(apple(ax, ay, r=9) for ax, ay in apples))
+
+
+def bucket(x, y, s=1.0, rot=0):
+    """A little blue sand bucket, `x, y` the middle of its base."""
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            f'<path d="M{x-16*s:.0f},{y-30*s:.0f} Q{x:.0f},{y-52*s:.0f} {x+16*s:.0f},{y-30*s:.0f}" stroke="{PLAY_DK}" stroke-width="2.4" fill="none"/>'
+            f'<path d="M{x-18*s:.0f},{y-30*s:.0f} L{x-13*s:.0f},{y:.0f} L{x+13*s:.0f},{y:.0f} L{x+18*s:.0f},{y-30*s:.0f} Z" fill="{PLAY}" stroke="{PLAY_DK}" stroke-width="2"/>'
+            f'<rect x="{x-19*s:.0f}" y="{y-33*s:.0f}" width="{38*s:.0f}" height="{6*s:.0f}" rx="2" fill="#9BDCF0" stroke="{PLAY_DK}" stroke-width="1.5"/></g>')
+
+
+def pot(x, y, s=1.0, rot=0):
+    """A small terracotta flowerpot, `x, y` the middle of its base. rot=180 puts it on
+    somebody's head."""
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            f'<path d="M{x-15*s:.0f},{y-30*s:.0f} L{x-11*s:.0f},{y:.0f} L{x+11*s:.0f},{y:.0f} L{x+15*s:.0f},{y-30*s:.0f} Z" fill="#E08A5A" stroke="#B8643A" stroke-width="2"/>'
+            f'<rect x="{x-18*s:.0f}" y="{y-36*s:.0f}" width="{36*s:.0f}" height="{9*s:.0f}" rx="2" fill="#E8996A" stroke="#B8643A" stroke-width="2"/></g>')
+
+
+def crumble(x, y, s=1.0):
+    """A dish of hot apple crumble, `x, y` the middle of the dish's base."""
+    return (f'<path d="M{x-44*s:.0f},{y-22*s:.0f} L{x-36*s:.0f},{y:.0f} L{x+36*s:.0f},{y:.0f} L{x+44*s:.0f},{y-22*s:.0f} Z" fill="#FFFFFF" stroke="#74C8E4" stroke-width="2.5"/>'
+            f'<path d="M{x-44*s:.0f},{y-22*s:.0f} ' + " ".join(f'q{5*s:.1f},{-9*s:.1f} {11*s:.1f},0' for _ in range(8))
+            + f' Z" fill="#E8B86A" stroke="#C88A3A" stroke-width="1.5"/>'
+            + "".join(f'<circle cx="{x+dx*s:.0f}" cy="{y-27*s+dy*s:.0f}" r="{2*s:.1f}" fill="#C88A3A"/>' for dx, dy in ((-24, 0), (-6, -3), (14, 1), (30, -2)))
+            + f'<path d="M{x-40*s:.0f},{y-20*s:.0f} H{x+40*s:.0f}" stroke="#74C8E4" stroke-width="{4*s:.1f}"/>'
+            + steam(x, y - 34*s, s))

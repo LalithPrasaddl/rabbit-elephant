@@ -2481,6 +2481,423 @@ def p12_11():
             + _shout("Wheee!", 190, 110, size=34, rot=-8, color="#C77DFF"))
 
 
+# ---------------------------------------------------------------- story 13
+# One seed, from a paw to a sunflower. The seed is drawn far bigger than life and
+# sits in the same patch of garden (x≈250) on every page, so a two-year-old can find
+# it each time and watch the patch change: hole, puddle, hole again, shoot, flower.
+SEED_X = 250
+SQ = "#A2683F"     # Dr. Squirrel's bubbles
+
+
+def _garden(uid, mood='morning', **kw):
+    return S.sky(uid, mood, **kw) + S.ground(uid, tufts=(40, 176, 460), flowers=((40, 246), (450, 252), (150, 236)))
+
+
+def _marker(x, y):
+    """The little stick they push in to mark where the seed went."""
+    return (f'<path d="M{x},{y} V{y-34}" stroke="#A87A52" stroke-width="3" stroke-linecap="round"/>'
+            f'<rect x="{x-11}" y="{y-54}" width="22" height="24" rx="3" fill="#FFFDF6" stroke="#C8BCA4" stroke-width="1.5"/>'
+            + S.seed(x, y - 42, s=.6))
+
+
+@alt('Rabbit proudly holds up a big stripy seed she has found, next to a freshly dug hole, and Elephant points at the hole with his trunk.')
+def p13_1():
+    """'Let's plant it!' - dig, plop, pat."""
+    ra = (14, -58)
+    px, py = _rpaw(170, 352, 1.15, ra)
+    return (_garden('s13p1', rays=True, sun=(440, 52))
+            + S.hole(SEED_X, 318, rx=24)
+            + S.shadow(170, 350, 32)
+            + rabbit(170, 352, s=1.15, expr='excited', look=(.5, -.9), arm2=ra, arm=(-28, -6))
+            + S.seed(px, py - 12, s=1.7, rot=10)
+            + S.shadow(380, 348, 52)
+            + elephant(380, 350, s=1.25, expr='happy', look=(-.7, .3), trunk=(-74, 46))
+            + _shout("Dig, plop, pat!", 130, 110, size=22, rot=-6, color="#A87A52")
+            + S.bubble(["Let's", "plant it!"], 400, 104, tail=(384, 200), color="#4AA8C8"))
+
+
+@alt('Rabbit lies on her tummy with her ear pressed to the soil, listening for the seed, while Elephant stands with his arms folded, impatiently tapping his foot.')
+def p13_2():
+    """Five minutes later. Nothing."""
+    tap = "".join(f'<path d="M{d}" stroke="#8FA8C0" stroke-width="2.4" fill="none" stroke-linecap="round"/>'
+                  for d in ('152,326 q8,-4 14,2', '150,314 q10,-6 18,0'))
+    return (_garden('s13p2', 'tender', sun=(440, 52))
+            + S.dirt(SEED_X - 46, 330, rx=40, ry=9) + _marker(SEED_X - 70, 332)
+            + S.shadow(300, 350, 62)
+            + rabbit(SEED_X, 352, s=1.1, pose='lie', expr='calm', look=(-.8, .4))
+            + S.shadow(100, 348, 50)
+            + elephant(100, 350, s=1.15, expr='cross', look=(.7, .5), trunk=(30, 40), arm=(-10, 6))
+            + tap
+            + S.bubble(["Is it", "growing yet?"], 330, 196, tail=(270, 290))
+            + S.bubble(["Hurry UP,", "seed!"], 110, 98, tail=(104, 210), color="#4AA8C8"))
+
+
+@alt('Elephant sprays a huge arc of water from his trunk onto the seed patch. SPLOOSH! Rabbit is soaked and dripping, standing in a big muddy puddle.')
+def p13_3():
+    """'It must be thirsty!' SPLOOSH."""
+    et = (40, -60)
+    ex, ey = _etip(110, 350, 1.2, et)
+    return (_garden('s13p3', 'morning', sun=(440, 52))
+            + S.puddle(320, 342, rx=130, ry=16)
+            + S.shadow(110, 348, 52)
+            + elephant(110, 350, s=1.2, expr='excited', look=(.8, -.2), trunk=et)
+            + S.jet(ex, ey - 6, 300, 312, lift=90)
+            + S.shadow(370, 350, 30)
+            + rabbit(370, 352, s=1.1, expr='surprised', look=(-.6, -.2), ears=(-42, 44), arm=(-30, -30), arm2=(30, -30))
+            + S.splash(300, 336, s=1.1)
+            + S.drips([(330, 196), (408, 204), (336, 252), (402, 262), (372, 166), (318, 300)], s=1.2)
+            + _shout("SPLOOSH!", 300, 96, size=34, rot=-6, color="#3C90AE"))
+
+
+@alt('Rabbit, splattered with mud, holds up the muddy seed she has dug back out of the hole, and Elephant shouts that it has not done anything.')
+def p13_4():
+    """Dug up to check. Still just a seed."""
+    ra = (30, -30)
+    px, py = _rpaw(190, 352, 1.15, ra)
+    mud = "".join(S.splat(x, y) for x, y in ((172, 290), (208, 316), (180, 226), (204, 240)))
+    return (_garden('s13p4', 'tender', sun=None)
+            + S.puddle(250, 344, rx=150, ry=12)
+            + S.hole(SEED_X + 30, 330, rx=24)
+            + S.shadow(190, 350, 32)
+            + rabbit(190, 352, s=1.15, expr='worried', look=(1, .2), arm2=ra, arm=(-26, 10))
+            + mud
+            + S.seed(px + 4, py - 6, s=1.8, rot=24, muddy=True)
+            + S.shadow(400, 348, 50)
+            + elephant(400, 350, s=1.2, expr='shout', look=(-.8, .2), trunk=(-50, 30))
+            + S.bubble(["It hasn't done", "ANYTHING!"], 380, 104, tail=(394, 206), color="#4AA8C8"))
+
+
+@alt('Dr. Squirrel arrives on her morning walk and gasps at the muddy mess, while Rabbit holds out the seed and Elephant explains they want it to grow fast.')
+def p13_5():
+    """Dr. Squirrel - 'what are you doing to that poor seed?'"""
+    ra = (34, -24)
+    px, py = _rpaw(110, 352, 1.1, ra)
+    return (_garden('s13p5', 'morning', sun=(440, 52))
+            + S.puddle(240, 344, rx=110, ry=12) + S.hole(SEED_X, 340, rx=20)
+            + S.shadow(110, 350, 30)
+            + rabbit(110, 352, s=1.1, expr='calm', look=(.8, 0), arm2=ra)
+            + S.seed(px + 4, py - 8, s=1.5, rot=20, muddy=True)
+            + S.shadow(270, 348, 50)
+            + elephant(270, 350, s=1.15, expr='excited', look=(.8, 0), trunk=(40, 20))
+            + S.shadow(430, 348, 30)
+            + squirrel(430, 348, s=1.1, expr='surprised', look=(-.8, .2), arm=(-26, -40), arm2=(20, 10))
+            + S.bubble("Goodness!", 420, 118, tail=(428, 226), color=SQ)
+            + S.bubble(["Making", "it grow!"], 100, 104, tail=(108, 200))
+            + S.bubble("FAST!", 268, 96, tail=(270, 196), color="#4AA8C8"))
+
+
+@alt('Dr. Squirrel explains what a seed needs, pointing up at four pictures in a row: soil, water, sun, and a clock for time, while Rabbit and Elephant listen.')
+def p13_6():
+    """Three things - and one more: time."""
+    return (_garden('s13p6', 'morning', sun=None, clouds=((240, 160, 30, 10),))
+            + S.badge(66, 62, 'soil', label='Soil') + S.badge(180, 62, 'water', label='Water')
+            + S.badge(320, 62, 'sun', label='Sun') + S.badge(434, 62, 'time', label='Time', hot=True)
+            + S.shadow(90, 350, 30)
+            + rabbit(90, 352, s=1.1, expr='calm', look=(.6, -.3))
+            + S.shadow(250, 348, 30)
+            + squirrel(250, 348, s=1.2, expr='happy', look=(.5, -.6), arm2=(46, -54), arm=(-24, -10))
+            + S.bubble(["And one more:", "TIME."], 250, 164, tail=(250, 226), color=SQ)
+            + S.shadow(410, 348, 50)
+            + elephant(410, 350, s=1.2, expr='surprised', look=(-.6, -.2), trunk=(-30, 40)))
+
+
+@alt('Dr. Squirrel holds a giant magnifying glass over the ground, and through it Rabbit and Elephant can see under the soil, where the seed has a root wiggling down and a little shoot reaching up, and a worm.')
+def p13_7():
+    """Busy underground, where you can't see."""
+    lx, ly, r = 280, 236, 66
+    return (_garden('s13p7', 'morning', sun=(440, 52))
+            + S.dirt(lx, 336, rx=44, ry=9)
+            + S.shadow(70, 348, 46)
+            + elephant(70, 350, s=1.05, expr='surprised', look=(.9, .1), trunk=(30, 40))
+            + S.shadow(170, 350, 28)
+            + rabbit(170, 352, s=1.0, expr='excited', look=(.9, .1), arm2=(26, -20))
+            + S.magnifier('s13p7', lx, ly, r=r, inside=S.underground(lx, ly - 18, w=2*r, depth=r + 20))
+            + S.shadow(410, 348, 30)
+            + squirrel(410, 348, s=1.1, expr='happy', look=(-.8, -.2), arm=(-34, 8))
+            + S.bubble(["So it IS", "working!"], 150, 96, tail=(166, 200)))
+
+
+@alt('At sunset Elephant gives the replanted seed one tiny sprinkle of water from the tip of his trunk, while Rabbit kneels by it and whispers goodnight, next to a little sign that says Shh! Growing.')
+def p13_8():
+    """Planted again - a sprinkle, not a SPLOOSH."""
+    et = (-88, 18)
+    ex, ey = _etip(390, 350, 1.2, et)
+    return (_garden('s13p8', 'sunset', sun=(440, 60), clouds=((300, 50, 40, 14), (332, 42, 24, 12)))
+            + S.sign(70, 300, ["Shh! Growing"], w=112, color="#A87A52")
+            + S.dirt(SEED_X, 334, rx=40, ry=9)
+            + S.shadow(180, 350, 32)
+            + rabbit(180, 350, s=1.1, pose='sit', expr='calm', look=(.8, .6), arm2=(34, 10))
+            + S.shadow(390, 348, 50)
+            + elephant(390, 350, s=1.2, expr='calm', look=(-.8, .6), trunk=et)
+            + S.sprinkle(ex, ey)
+            + S.bubble(["Goodnight,", "little seed."], 120, 110, tail=(176, 200), size=12))
+
+
+@alt('One morning Rabbit and Elephant sit by the seed patch, thrilled, as a tiny green shoot with two leaves pokes up out of the soil. LOOK!')
+def p13_9():
+    """LOOK! A tiny green shoot."""
+    sparks = "".join(_pow(x, y, 6) for x, y in ((222, 276), (282, 268), (250, 252)))
+    return (_garden('s13p9', 'morning', sun=(440, 52), rays=True)
+            + S.dirt(SEED_X, 334, rx=40, ry=9)
+            + S.shoot(SEED_X, 332, s=1.7)
+            + sparks
+            + S.shadow(130, 350, 32)
+            + rabbit(130, 350, s=1.15, pose='sit', expr='excited', look=(.9, .5), arm=(-26, -40), arm2=(30, -40))
+            + S.shadow(380, 348, 52)
+            + elephant(380, 350, s=1.2, pose='sit', expr='excited', look=(-.9, .5), trunk=(-40, 10))
+            + _shout("LOOK!", 250, 120, size=40, rot=-6, color="#4A9B4A"))
+
+
+@alt('The sunflower has grown taller than Rabbit and even taller than Elephant, with its big bud still closed at the top, and Rabbit stretches up on tiptoe beside it while Elephant gazes up in surprise.')
+def p13_10():
+    """Taller than Rabbit - taller than Elephant."""
+    return (_garden('s13p10', 'morning', sun=(440, 52))
+            + S.sunflower(SEED_X, 336, h=286, s=1.1, bloom='bud')
+            + S.shadow(150, 350, 30)
+            + rabbit(150, 344, s=1.1, expr='excited', look=(.6, -.9), arm2=(18, -62), arm=(-24, -10))
+            + S.shadow(380, 348, 52)
+            + elephant(380, 350, s=1.25, expr='surprised', look=(-.6, -.9), trunk=(-40, 30))
+            + S.bubble(["How did it", "get so BIG?"], 400, 84, tail=(384, 186), color="#4AA8C8"))
+
+
+@alt('A great big sunflower has opened as bright as the sun, dropping new stripy seeds, and Rabbit, Elephant and Dr. Squirrel stand smiling beneath it.')
+def p13_11():
+    """A great big sunflower, and a pawful of new seeds."""
+    falling = "".join(S.seed(x, y, s=.9, rot=r) for x, y, r in ((196, 196, -20), (226, 230, 30), (176, 244, 10)))
+    ra = (24, -36)
+    px, py = _rpaw(110, 352, 1.1, ra)
+    return (_garden('s13p11', 'golden', sun=(446, 46), rays=True, clouds=((70, 60, 40, 15), (100, 52, 24, 12)))
+            + S.sunflower(SEED_X, 338, h=244, s=1.6)
+            + falling
+            + S.shadow(110, 350, 30)
+            + rabbit(110, 352, s=1.1, expr='happy', look=(.6, -.6), arm2=ra)
+            + S.seed(px, py - 4, s=.9, rot=-10) + S.seed(px + 10, py - 2, s=.9, rot=20)
+            + S.shadow(320, 348, 28)
+            + squirrel(320, 348, s=1.0, expr='happy', look=(-.4, -.6))
+            + S.shadow(424, 348, 50)
+            + elephant(424, 350, s=1.2, expr='happy', look=(-.6, -.6), trunk=(-44, 34))
+            + S.bubble(["Now we have", "LOTS to plant!"], 400, 116, tail=(420, 200), color="#4AA8C8"))
+
+
+# ---------------------------------------------------------------- story 14
+# Too big for the playground, too small for the apple tree - then exactly the right
+# size together. The apple tree stands in the same place (x≈330-380) on every
+# orchard page so the picking reads as one continuous afternoon.
+BE = "#A87A52"     # Bear's bubbles
+TREE14 = 380
+
+
+def _orchard(uid, mood='morning', **kw):
+    return S.sky(uid, mood, **kw) + S.ground(uid, tufts=(40, 176, 300), flowers=((40, 246), (200, 238), (470, 252)))
+
+
+def _trunk_at(x, y, s, t, u=.5, pose='stand'):
+    """A point `u` of the way along Elephant's trunk, and its slope in degrees -
+    the same quadratic _limb draws, so a rider sits ON the trunk, not near it."""
+    import math
+    hy = {'stand': -100, 'sit': -92}[pose]
+    x0, y0 = t[0]*.42, 20
+    dx, dy = t[0]*.72, t[1]
+    mx, my = x0 + dx*.5 - dy*.2, y0 + dy*.5 + dx*.2
+    x1, y1 = x0 + dx, y0 + dy
+    px = (1-u)**2*x0 + 2*(1-u)*u*mx + u*u*x1
+    py = (1-u)**2*y0 + 2*(1-u)*u*my + u*u*y1
+    tx = 2*(1-u)*(mx-x0) + 2*u*(x1-mx)
+    ty = 2*(1-u)*(my-y0) + 2*u*(y1-my)
+    return x + s*px, y + s*(hy + py), math.degrees(math.atan2(ty, tx))
+
+
+@alt('At the playground Elephant is wedged tight at the top of the slide, sweating, while Rabbit giggles at the bottom.')
+def p14_1():
+    """Up, up, up - and stuck. 'I'm too BIG!'"""
+    sx, sy = S.slide_top(150, 350, h=150)
+    return (S.sky('s14p1', 'morning', sun=(440, 52), rays=True) + S.ground('s14p1', tufts=(40, 300, 460), flowers=((40, 246), (300, 252)))
+            + S.slide(150, 350, h=150, w=250,
+                      rider=elephant(sx, sy + 4, s=1.0, pose='sit', expr='worried', look=(.5, .4), trunk=(30, 20))
+                            + S.sweat(sx + 46, sy - 112))
+            + S.shadow(440, 350, 30)
+            + rabbit(440, 352, s=1.05, expr='happy', look=(-.8, -.6), arm=(-28, -30))
+            + S.bubble(["Uh-oh!", "I'm too BIG!"], 330, 90, tail=(216, 110), color="#4AA8C8"))
+
+
+@alt('Elephant sits on one end of the seesaw, which has thumped down to the ground, and Rabbit is flung up into the air above the other end, squeaking to be let down. BOING!')
+def p14_2():
+    """BOING! - and Rabbit stays up there."""
+    tilt = -18
+    lx, ly = S.seesaw_end(250, 350, 320, tilt, -1)
+    rx, ry = S.seesaw_end(250, 350, 320, tilt, 1)
+    bounce = "".join(f'<path d="M{rx+dx:.0f},{ry-8:.0f} v-20" stroke="#B9C8D0" stroke-width="3" stroke-linecap="round"/>' for dx in (-14, 0, 14))
+    return (_orchard('s14p2', 'tender', sun=(60, 52))
+            + S.shadow(250, 352, 120, op=.1)
+            + S.seesaw(250, 350, 320, tilt)
+            + elephant(lx, ly + 4, s=1.1, pose='sit', expr='surprised', look=(.8, -.8), trunk=(40, -20))
+            + bounce
+            + rabbit(rx + 6, ry - 44, s=.95, pose='sit', expr='worried', look=(-.2, .8), ears=(-30, 30), arm=(-30, -40), arm2=(30, -40))
+            + _shout("BOING!", 250, 220, size=30, rot=-10, color="#FF6B6B")
+            + S.bubble(["Get me", "DOWN!"], 236, 90, tail=(350, 120)))
+
+
+@alt('Rabbit waves from the window of a treehouse, but only Elephant\'s trunk fits through the little door, and Elephant looks sad down below.')
+def p14_3():
+    """Only his trunk fits through the door."""
+    tx, ty = S.treehouse_door(350, 350, h=200)
+    et = ((tx - 160) / (1.2*1.14), (ty - 350) / 1.2 + 80)
+    peek = rabbit(380, 176, s=.6, expr='happy', look=(-.6, .4), arm=(-26, -30))
+    return (_orchard('s14p3', 'tender', sun=(60, 52))
+            + S.treehouse(350, 350, h=200, peek=peek)
+            + S.shadow(160, 348, 52)
+            + elephant(160, 350, s=1.2, expr='sad', look=(.6, -.7), trunk=et)
+            + S.bubble(["I'm too big for", "EVERYTHING."], 120, 92, tail=(150, 196), color="#4AA8C8"))
+
+
+APPLES_HIGH = ((330, 150), (360, 112), (410, 140), (444, 112), (392, 88), (346, 78), (300, 122))
+
+
+@alt('Under his apple tree Bear looks up at the apples with an empty basket, and Rabbit jumps as high as she can with her paw stretched up, but she can\'t reach them.')
+def p14_4():
+    """'I'm too SMALL!'"""
+    ra = (12, -62)
+    return (_orchard('s14p4', 'morning', sun=(60, 52))
+            + S.apple_tree(TREE14, 350, h=270, apples=APPLES_HIGH)
+            + S.basket(452, 350, w=60, full=False)
+            + S.shadow(406, 348, 32)
+            + bear(406, 348, s=1.1, expr='worried', look=(-.3, -.9), arm=(-20, 20))
+            + S.shadow(220, 352, 26, op=.09)
+            + rabbit(220, 296, s=1.1, expr='shout', look=(.6, -.9), arm2=ra, arm=(-20, -50))
+            + ''.join(f'<path d="M{220+dx},{316} v24" stroke="#B9C8D0" stroke-width="3" stroke-linecap="round"/>' for dx in (-14, 0, 14))
+            + S.bubble(["I'm too", "SMALL!"], 100, 104, tail=(188, 150)))
+
+
+@alt('Rabbit\'s wobbly pile of a bucket, a box and a flowerpot has crashed down; she sits dazed on the grass with the flowerpot upside down on her head while Bear gasps.')
+def p14_5():
+    """Wibble, wobble, CRASH!"""
+    dizzy = "".join(_pow(x, y, 7) for x, y in ((176, 180), (264, 172), (220, 156)))
+    return (_orchard('s14p5', 'tender', sun=(60, 52))
+            + S.apple_tree(TREE14, 350, h=270, apples=APPLES_HIGH)
+            + S.shadow(406, 348, 32)
+            + bear(406, 348, s=1.1, expr='surprised', look=(-.8, .2), arm=(-26, -40), arm2=(26, -40))
+            + S.spin(-24, 110, 348, S.parcel(110, 348, s=1.2))
+            + S.bucket(300, 340, s=1.0, rot=96)
+            + S.shadow(220, 350, 34)
+            + rabbit(220, 350, s=1.1, pose='sit', expr='surprised', look=(0, -.3), ears=(-74, 74), arm=(-30, 10), arm2=(30, 10))
+            + S.pot(220, 194, s=1.15, rot=180)
+            + dizzy
+            + _shout("CRASH!", 250, 100, size=36, rot=-8, color="#E8892E"))
+
+
+@alt('Rabbit and Elephant sit glumly side by side under the apple tree, one too big and one too small, while Bear scratches his head and thinks.')
+def p14_6():
+    """'Too big.' 'Too small.' 'Hmm.'"""
+    return (_orchard('s14p6', 'tender', sun=None)
+            + S.apple_tree(TREE14, 350, h=270, apples=APPLES_HIGH)
+            + S.shadow(120, 350, 52)
+            + elephant(120, 350, s=1.15, pose='sit', expr='sad', look=(.4, .5), trunk=(10, 30))
+            + S.shadow(250, 350, 30)
+            + rabbit(250, 350, s=1.0, pose='sit', expr='sad', look=(-.4, .5))
+            + S.pot(296, 348, s=.8)
+            + S.shadow(410, 348, 32)
+            + bear(410, 348, s=1.1, expr='calm', look=(.2, -.8), arm2=(-4, -62))
+            + S.bubble(["I'm too", "big."], 100, 114, tail=(116, 214), color="#4AA8C8")
+            + S.bubble(["I'm too", "small."], 262, 136, tail=(254, 226))
+            + S.thought("Hmm…", 420, 140, (410, 204), size=14))
+
+
+APPLES_UP = ((266, 80), (308, 94), (356, 70), (394, 112), (338, 140), (420, 70))
+
+
+@alt('Elephant lifts Rabbit high into the branches on the tip of his trunk, and she stretches up and touches an apple, while Bear cheers below.')
+def p14_7():
+    """'Hop on!' - up, up, up. 'I can reach!'"""
+    et = (40, -70)
+    ex, ey = _etip(170, 350, 1.2, et)
+    return (_orchard('s14p7', 'golden', sun=(60, 52), rays=True)
+            + S.apple_tree(340, 350, h=320, apples=APPLES_UP)
+            + S.shadow(170, 348, 52)
+            + elephant(170, 350, s=1.2, expr='happy', look=(.6, -.9), trunk=et)
+            + rabbit(ex + 2, ey + 2, s=.8, expr='excited', look=(.7, -.8), arm2=(20, -50), arm=(-26, -24))
+            + S.shadow(430, 348, 32)
+            + bear(430, 348, s=1.05, expr='excited', look=(-.6, -.8), arm=(-24, -46), arm2=(24, -46))
+            + S.bubble(["I can", "reach!"], 92, 80, tail=(200, 90)))
+
+
+@alt('Rabbit sits on Elephant\'s head picking apples and dropping them down, and Elephant catches them in Bear\'s basket while they count: seven, eight, nine!')
+def p14_8():
+    """Counting apples into the basket."""
+    ra = (34, -48)
+    px, py = _rpaw(190, 186, .85, ra)
+    inbasket = "".join(S.apple(x, y, r=9, color=c) for x, y, c in
+                       ((268, 280, "#FF6B6B"), (288, 276, "#FF6B6B"), (308, 280, "#FF6B6B"), (278, 268, "#FF9BAE"), (298, 268, "#FF6B6B")))
+    return (_orchard('s14p8', 'golden', sun=(60, 52))
+            + S.apple_tree(340, 350, h=320, apples=((308, 94), (356, 70), (394, 112), (420, 70)))
+            + S.shadow(190, 348, 52)
+            + elephant(190, 350, s=1.2, expr='happy', look=(.8, .4), trunk=(-30, 40), arm=(36, 8))
+            + inbasket
+            + S.basket(290, 334, w=84, full=False)
+            + rabbit(190, 186, s=.85, pose='sit', expr='happy', look=(.8, -.6), arm2=ra, arm=(-30, -10))
+            + S.apple(px + 4, py - 4, r=9)
+            + S.flight([(px + 10, py + 14), (270, 160), (284, 220), (288, 252)], color="#C8A030")
+            + S.apple(282, 200, r=9)
+            + S.shadow(436, 348, 32)
+            + bear(436, 348, s=1.05, expr='excited', look=(-.6, -.4), arm=(-24, -46))
+            + _shout("…7, 8, 9!", 96, 110, size=28, rot=-6, color="#C77DFF"))
+
+
+@alt('Rabbit pokes her head out of a little hole in a hollow log, holding up the tenth apple, while Elephant, whose trunk was too big to fit, and Bear cheer.')
+def p14_9():
+    """Apple number ten - and only Rabbit fits."""
+    lx, ly, r = 290, 350, 60
+    cy = ly - r
+    inside = (f'<defs><clipPath id="s14p9-hole"><ellipse cx="{lx}" cy="{cy}" rx="{r*.34:.0f}" ry="{r*.78:.0f}"/></clipPath></defs>'
+              f'<g clip-path="url(#s14p9-hole)">'
+              + rabbit(lx, cy + 50, s=.75, pose='seated', expr='happy', look=(-.6, 0))
+              + S.apple(lx, cy + 26, r=11) + '</g>')
+    return (_orchard('s14p9', 'golden', sun=(60, 52))
+            + S.shadow(430, 348, 30)
+            + bear(430, 348, s=1.05, expr='excited', look=(-.8, .2), arm=(-24, -46), arm2=(24, -46))
+            + S.log(lx, ly, w=180, r=r, inside=inside)
+            + S.shadow(120, 348, 52)
+            + elephant(120, 350, s=1.2, expr='happy', look=(.9, .3), trunk=(92, 32))
+            + S.bubble("Got it!", 290, 170, tail=(290, 236)))
+
+
+@alt('Bear, Rabbit and Elephant sit round a table sharing a steaming dish of apple crumble, and Bear thanks them both.')
+def p14_10():
+    """The most delicious apple crumble ever."""
+    return (_orchard('s14p10', 'golden', sun=(440, 52), rays=True)
+            + elephant(110, 296, s=1.15, pose='seated', expr='happy', look=(.6, .3), trunk=(20, 20))
+            + bear(250, 272, s=1.1, pose='seated', expr='happy', look=(0, .3))
+            + rabbit(390, 296, s=1.1, pose='seated', expr='happy', look=(-.6, .3))
+            + S.table(250, 280, w=330)
+            + S.crumble(250, 280, s=1.1)
+            + S.bowl(120, 280, 'halwa', s=.9) + S.bowl(380, 280, 'halwa', s=.9)
+            + S.bubble(["I couldn't have done", "it without you!"], 250, 80, tail=(250, 160), color=BE))
+
+
+@alt('Back at the playground, Elephant sits with his long trunk stretched down to the grass, and Rabbit whizzes down it like a slide, shouting that he is the best slide ever.')
+def p14_11():
+    """The best slide ever."""
+    # the trunk is drawn here as one long ramp rather than through elephant(trunk=),
+    # whose trunk root sits too far out on the cheek once it reaches this far
+    sx, sy, cx, cy, ex, ey = 120, 278, 210, 258, 350, 346
+    d = f'M{sx},{sy} Q{cx},{cy} {ex},{ey}'
+    ramp = (f'<path d="{d}" stroke="{E_LINE}" stroke-width="21" fill="none" stroke-linecap="round"/>'
+            f'<path d="{d}" stroke="{E_BODY}" stroke-width="18" fill="none" stroke-linecap="round"/>')
+    t = .42
+    rx = (1-t)**2*sx + 2*(1-t)*t*cx + t*t*ex
+    ry = (1-t)**2*sy + 2*(1-t)*t*cy + t*t*ey
+    import math
+    ang = math.degrees(math.atan2((1-t)*(cy-sy) + t*(ey-cy), (1-t)*(cx-sx) + t*(ex-cx)))
+    return (S.sky('s14p11', 'golden', sun=(440, 52), rays=True) + S.ground('s14p11', tufts=(40, 300, 460), flowers=((40, 246), (300, 252)))
+            + S.shadow(120, 350, 56)
+            + elephant(120, 350, s=1.2, pose='sit', expr='happy', look=(.8, .4), trunk=(2, 6))
+            + ramp
+            + S.speedlines(rx - 34, ry - 30, n=3, length=24)
+            + S.spin(ang, rx, ry - 6, rabbit(rx, ry - 6, s=.75, pose='sit', expr='excited', look=(.6, .2),
+                                           arm=(-24, -40), arm2=(24, -40)))
+            + _shout("Wheee!", 390, 230, size=36, rot=-8, color="#C77DFF")
+            + S.bubble(["You're the best", "slide EVER!"], 260, 92, tail=(rx, ry - 80)))
+
+
 PAGES = {
     '02-ouch-the-big-thorn': [p02_1, p02_2, p02_3, p02_4, p02_5,
                               p02_6, p02_7, p02_8, p02_9, p02_10],
@@ -2505,4 +2922,8 @@ PAGES = {
                               p11_7, p11_8, p11_9, p11_10, p11_11],
     '12-whoosh-the-kite-day': [p12_1, p12_2, p12_3, p12_4, p12_5, p12_6,
                                p12_7, p12_8, p12_9, p12_10, p12_11],
+    '13-grow-seed-grow': [p13_1, p13_2, p13_3, p13_4, p13_5, p13_6,
+                          p13_7, p13_8, p13_9, p13_10, p13_11],
+    '14-too-big-too-small': [p14_1, p14_2, p14_3, p14_4, p14_5, p14_6,
+                             p14_7, p14_8, p14_9, p14_10, p14_11],
 }

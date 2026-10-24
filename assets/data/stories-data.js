@@ -182,7 +182,46 @@ const STORIES = [
     comingSoon: false
   },
   {
-    id: 'coming-soon-15',
+    id: '15-brush-brush-splash',
+    title: 'Brush, Brush, Splash!',
+    subtitle: 'A story about brushing your teeth',
+    emoji: '🪥',
+    description: 'Elephant has never brushed his teeth. He tries a teeny-tiny toothbrush, a broom and a whole tube of toothpaste, then Dr. Sheep shows him how: a pea-sized blob, round and round, for two whole minutes.',
+    tags: ['Healthy Habits', 'Bedtime', 'Friendship'],
+    characters: ['Rabbit', 'Elephant', 'Dr. Sheep'],
+    readTime: '7 min read',
+    path: 'stories/15-brush-brush-splash/',
+    cardColor: '#7FD8B8',
+    comingSoon: false
+  },
+  {
+    id: '16-mine-the-new-friend',
+    title: 'Mine! The New Friend',
+    subtitle: 'A story about making room for one more',
+    emoji: '🐢',
+    description: 'Little Tortoise moves in next door, and Rabbit is sure Elephant has stopped being HER friend. Her tricks end in a bush, a racket and a pond, until a skipping rope shows her that three is even better than two.',
+    tags: ['Jealousy', 'Including Others', 'Friendship'],
+    characters: ['Rabbit', 'Elephant', 'Little Tortoise'],
+    readTime: '7 min read',
+    path: 'stories/16-mine-the-new-friend/',
+    cardColor: '#B8DC8A',
+    comingSoon: false
+  },
+  {
+    id: '17-thank-you-dr-squirrel',
+    title: 'Thank You, Dr. Squirrel!',
+    subtitle: 'A story about saying thank you',
+    emoji: '🎈',
+    description: 'The clinic helpers are worn out from looking after everybody, so Rabbit and Elephant throw them a surprise thank-you party, with paint splats, a wobbly tower of treats and one very loud balloon.',
+    tags: ['Gratitude', 'Kindness', 'Friendship'],
+    characters: ['Rabbit', 'Elephant', 'Dr. Squirrel', 'Nurse Giraffe', 'Dr. Sheep'],
+    readTime: '7 min read',
+    path: 'stories/17-thank-you-dr-squirrel/',
+    cardColor: '#D9B8FF',
+    comingSoon: false
+  },
+  {
+    id: 'coming-soon-18',
     title: 'Coming Soon…',
     subtitle: 'More fun is brewing!',
     emoji: '🌟',

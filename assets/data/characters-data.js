@@ -10,7 +10,7 @@ const CHARACTERS = [
     favoriteFood: 'Carrot Halwa 🥕',
     quirk: 'Never gives up asking questions — even when the answer is written all over Elephant\'s face!',
     quote: '"My tummy is GROWLING!"',
-    appearances: ['The Hungry Friends', 'Ouch! The Big Thorn', 'Watch Your Step!', 'Splash! The Pool Party', 'Bonk! The Bumpy Ride Home', 'Shh! The Noisy Night', 'Hide and Squeak', 'Wobble! The Big Bike Day', 'Achoo! The Sneezy Day', 'The Great Big Cake', 'Whoosh! The Kite Day', 'Grow, Seed, Grow!', 'Too Big, Too Small']
+    appearances: ['The Hungry Friends', 'Ouch! The Big Thorn', 'Watch Your Step!', 'Splash! The Pool Party', 'Bonk! The Bumpy Ride Home', 'Shh! The Noisy Night', 'Hide and Squeak', 'Wobble! The Big Bike Day', 'Achoo! The Sneezy Day', 'The Great Big Cake', 'Whoosh! The Kite Day', 'Grow, Seed, Grow!', 'Too Big, Too Small', 'Brush, Brush, Splash!', 'Mine! The New Friend', 'Thank You, Dr. Squirrel!']
   },
   {
     id: 'elephant',
@@ -23,7 +23,7 @@ const CHARACTERS = [
     favoriteFood: 'Fruit Salad 🍇',
     quirk: 'Means well — but his tummy sometimes overrules his brain. He always makes it right in the end!',
     quote: '"No idea... okay, fine, I ate it."',
-    appearances: ['The Hungry Friends', 'Ouch! The Big Thorn', 'Watch Your Step!', 'Splash! The Pool Party', 'Bonk! The Bumpy Ride Home', 'Shh! The Noisy Night', 'Hide and Squeak', 'Wobble! The Big Bike Day', 'Achoo! The Sneezy Day', 'The Great Big Cake', 'Whoosh! The Kite Day', 'Grow, Seed, Grow!', 'Too Big, Too Small']
+    appearances: ['The Hungry Friends', 'Ouch! The Big Thorn', 'Watch Your Step!', 'Splash! The Pool Party', 'Bonk! The Bumpy Ride Home', 'Shh! The Noisy Night', 'Hide and Squeak', 'Wobble! The Big Bike Day', 'Achoo! The Sneezy Day', 'The Great Big Cake', 'Whoosh! The Kite Day', 'Grow, Seed, Grow!', 'Too Big, Too Small', 'Brush, Brush, Splash!', 'Mine! The New Friend', 'Thank You, Dr. Squirrel!']
   },
   {
     id: 'squirrel',
@@ -36,7 +36,7 @@ const CHARACTERS = [
     favoriteFood: 'Acorn Pudding 🌰',
     quirk: 'Can remove even the biggest thorn without breaking a sweat — but will absolutely laugh at a good joke between procedures.',
     quote: '"Three days of rest. No running, no planting, no adventures!"',
-    appearances: ['Ouch! The Big Thorn', 'Bonk! The Bumpy Ride Home', 'Wobble! The Big Bike Day', 'Grow, Seed, Grow!']
+    appearances: ['Ouch! The Big Thorn', 'Bonk! The Bumpy Ride Home', 'Wobble! The Big Bike Day', 'Grow, Seed, Grow!', 'Thank You, Dr. Squirrel!']
   },
   {
     id: 'sheep',
@@ -49,7 +49,7 @@ const CHARACTERS = [
     favoriteFood: 'Clover Tea 🍵',
     quirk: 'Gives everyone exactly one more chance — and somehow, it always turns out to be the right call.',
     quote: '"One more chance. Let\'s see how you do."',
-    appearances: ['Snow Much Help!', 'Watch Your Step!', 'Achoo! The Sneezy Day']
+    appearances: ['Snow Much Help!', 'Watch Your Step!', 'Achoo! The Sneezy Day', 'Brush, Brush, Splash!', 'Thank You, Dr. Squirrel!']
   },
   {
     id: 'giraffe',
@@ -62,7 +62,7 @@ const CHARACTERS = [
     favoriteFood: 'Acacia Leaf Salad 🌿',
     quirk: 'Can spot a mixed-up mask or bandage from all the way across the ward — thanks to that very long neck.',
     quote: '"Let\'s double-check that together, shall we?"',
-    appearances: ['Snow Much Help!', 'Bonk! The Bumpy Ride Home', 'Hide and Squeak', 'Achoo! The Sneezy Day', 'Whoosh! The Kite Day']
+    appearances: ['Snow Much Help!', 'Bonk! The Bumpy Ride Home', 'Hide and Squeak', 'Achoo! The Sneezy Day', 'Whoosh! The Kite Day', 'Thank You, Dr. Squirrel!']
   },
   {
     id: 'bear',
@@ -76,5 +76,18 @@ const CHARACTERS = [
     quirk: 'Waves at every friend they spot — even when they really should be watching the road!',
     quote: '"Oh no — I am SO sorry, are you two alright?"',
     appearances: ['Bonk! The Bumpy Ride Home', 'The Great Big Cake', 'Too Big, Too Small']
+  },
+  {
+    id: 'tortoise',
+    name: 'Little Tortoise',
+    pronouns: 'he/him',
+    tagline: 'Slow, steady, and always ready to make a new friend!',
+    bgColor: '#F1F7EA',
+    chipColor: '#8FC45A',
+    personality: ['Friendly', 'Patient', 'Brave swimmer', 'Kind'],
+    favoriteFood: 'Strawberries 🍓',
+    quirk: 'Tucks into his shell and spins round like a top, and paddles friends across the pond like a little green boat.',
+    quote: '"It\'s my shell, silly!"',
+    appearances: ['Mine! The New Friend']
   }
 ];

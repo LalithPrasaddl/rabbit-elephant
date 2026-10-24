@@ -497,19 +497,35 @@ def critter(kind, x, y, s=1.0, expr='calm', look=(0, 0), arm=None, arm2=None,
     return _wrap(x, y, s, "".join(p) + extra)
 
 
-def tortoise(x, y, s=1.0, expr='calm', look=(0, 0), specs=True, extra=""):
+def tortoise(x, y, s=1.0, expr='calm', look=(0, 0), specs=True, arm=None, arm2=None,
+             tucked=False, extra=""):
     """Old Tortoise - a domed shell with his head out the front, and his reading
-    glasses, because he is OLD Tortoise. Front-facing like everyone else."""
+    glasses, because he is OLD Tortoise. Front-facing like everyone else.
+
+    Little Tortoise (story 16) is the same drawing without the glasses. `arm` and
+    `arm2` swing his front legs out from under the shell rim, to hold a skipping
+    rope; `tucked` pulls head and legs in, leaving two eyes peeping out of the
+    shell - his spinning-top trick."""
     e = EXPR[expr]
-    shell = "#7FAE5A"
-    p = [f'<ellipse cx="{sx*30}" cy="-7" rx="13" ry="9" fill="#B8C878" stroke="#8A9A50" stroke-width="1.5"/>'
-         for sx in (-1, 1)]
+    shell, skin, skin_line = "#7FAE5A", "#B8C878", "#8A9A50"
+    p = []
+    if not tucked:
+        p += [f'<ellipse cx="{sx*30}" cy="-7" rx="13" ry="9" fill="{skin}" stroke="{skin_line}" stroke-width="1.5"/>'
+              for sx in (-1, 1)]
     p.append(f'<path d="M-58,-14 Q-56,-78 0,-80 Q56,-78 58,-14 Z" fill="{shell}" stroke="#4E7A34" stroke-width="2"/>'
              f'<path d="M-60,-14 h120" stroke="#4E7A34" stroke-width="5" stroke-linecap="round"/>'
              f'<path d="M-16,-62 l16,-8 l16,8 v16 l-16,8 l-16,-8 Z M-44,-30 l-10,-18 M44,-30 l10,-18 '
              f'M-16,-46 l-20,10 v14 M16,-46 l20,10 v14" stroke="#4E7A34" stroke-width="2" fill="none" stroke-linejoin="round"/>')
+    if tucked:
+        p.append('<ellipse cx="0" cy="-18" rx="20" ry="9" fill="#2E3A22"/>'
+                 + "".join(f'<ellipse cx="{sx*36}" cy="-14" rx="8" ry="4" fill="#2E3A22"/>' for sx in (-1, 1))
+                 + "".join(f'<circle cx="{sx*7 + look[0]*2:.1f}" cy="-19" r="2.6" fill="#FFFFFF"/>' for sx in (-1, 1)))
+        return _wrap(x, y, s, "".join(p) + extra)
+    for i, a in enumerate((arm, arm2)):
+        if a:
+            p.append(_limb(-46 if i == 0 else 46, -20, a[0], a[1], skin, skin_line, 11))
     hx, hy = 0, -30
-    p.append(f'<ellipse cx="{hx}" cy="{hy}" rx="21" ry="19" fill="#B8C878" stroke="#8A9A50" stroke-width="1.5"/>')
+    p.append(f'<ellipse cx="{hx}" cy="{hy}" rx="21" ry="19" fill="{skin}" stroke="{skin_line}" stroke-width="1.5"/>')
     if e.get('blush'):
         p += [f'<ellipse cx="{hx+sx*14}" cy="{hy+7}" rx="5" ry="3.5" fill="{BLUSH}" opacity=".55"/>' for sx in (-1, 1)]
     p += [f'<g transform="translate({hx},{hy})">', _brow(e['brow'], -9, 8, 4.6), _eyes(-3, 8, 4.6, expr, look)]

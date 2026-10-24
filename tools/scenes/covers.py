@@ -890,6 +890,213 @@ def build_14():
     add(S.vignette(P))
     return S.wrap(P, "".join(d), "".join(b))
 
+
+def _toothbrush(P, x0, y0, x1, y1, w=7, col="#4FB3D9", light="#A8E0F2", paste=True):
+    """A toothbrush from its handle end (x0, y0) to its bristle head (x1, y1),
+    lit upper-right: a handle with a highlight, white bristles, a curl of paste."""
+    ang = math.degrees(math.atan2(y1 - y0, x1 - x0))
+    L = math.hypot(x1 - x0, y1 - y0)
+    g = [f'<g transform="translate({x0:.1f},{y0:.1f}) rotate({ang:.1f})">',
+         f'<rect x="0" y="{-w/2:.1f}" width="{L:.1f}" height="{w:.1f}" rx="{w/2:.1f}" fill="{col}"/>',
+         f'<rect x="{w:.1f}" y="{-w/2+1:.1f}" width="{L-w*2:.1f}" height="{w*.3:.1f}" rx="{w*.15:.1f}" fill="{light}" opacity=".8"/>',
+         # the bristles stand up off the handle's top edge, towards the light
+         f'<rect x="{L-w*3.4:.1f}" y="{-w*2.3:.1f}" width="{w*3.2:.1f}" height="{w*1.9:.1f}" rx="{w*.4:.1f}" fill="#F4FAFC"/>',
+         f'<rect x="{L-w*3.4:.1f}" y="{-w*.9:.1f}" width="{w*3.2:.1f}" height="{w*.5:.1f}" fill="#C6DCE4" opacity=".7"/>']
+    g += [f'<line x1="{L-w*3.1+i*w*.7:.1f}" y1="{-w*2.2:.1f}" x2="{L-w*3.1+i*w*.7:.1f}" y2="{-w*.6:.1f}" stroke="#C6DCE4" stroke-width=".8"/>'
+          for i in range(5)]
+    if paste:
+        g.append(f'<path d="M{L-w*3.5:.1f},{-w*2.2:.1f} q{w*.6:.1f},{-w*1.5:.1f} {w*1.6:.1f},{-w*.7:.1f} q{w*.9:.1f},{-w*1.4:.1f} {w*1.8:.1f},{-w*.1:.1f} '
+                 f'q{w*.4:.1f},{w*.3:.1f} 0,{w*.2:.1f} Z" fill="#FFFFFF"/>'
+                 f'<path d="M{L-w*3.1:.1f},{-w*2.6:.1f} q{w*.8:.1f},{-w*.8:.1f} {w*1.6:.1f},{-w*.4:.1f} q{w*.6:.1f},{-w*.7:.1f} {w*1.2:.1f},{w*.1:.1f}" '
+                 f'stroke="#7FD8B8" stroke-width="{w*.35:.1f}" fill="none" stroke-linecap="round"/>')
+    return "".join(g) + '</g>'
+
+
+def _bubbles(P, pts):
+    """Soap-and-toothpaste bubbles floating up: a thin iridescent rim and a shine,
+    nearly clear, lit upper-right."""
+    d = S.rad(f"{P}-bub", [(0, "#FFFFFF", "0.0"), (.72, "#E8F7FF", "0.18"), (.9, "#C9B8FF", "0.5"), (1, "#9EE2F5", "0.8")])
+    b = "".join(f'<circle cx="{x}" cy="{y}" r="{r}" fill="url(#{P}-bub)"/>'
+                f'<ellipse cx="{x+r*.38:.1f}" cy="{y-r*.4:.1f}" rx="{r*.22:.1f}" ry="{r*.13:.1f}" fill="#FFFFFF" opacity=".85" '
+                f'transform="rotate(-40 {x+r*.38:.1f} {y-r*.4:.1f})"/>' for x, y, r in pts)
+    return d, b
+
+
+def build_15():
+    """Bedtime: Elephant with a big new toothbrush, Rabbit with her little one,
+    Dr. Sheep beside them, and bubbles drifting up into the evening sky."""
+    P = "cv15"
+    rng = random.Random(1515)
+    d, b = [], []
+    add = lambda p: (d.append(p[0]), b.append(p[1]))
+
+    add(S.sky(P, 'twilight', HORIZON))
+    b.append(_stars(rng, avoid=(436, 64, 52)))
+    add(S.sun(P, 436, 64, 24, warm="#FFFBEA", glow="#FFF0C6"))
+    b.append(S.clouds(P, [(96, 92, 44, 13, .55), (138, 86, 24, 9, .5)]))
+    add(S.hills(P, rng, HORIZON, far="#9C93B8", near="#7E9E78"))
+
+    gd, gback, gfront = S.meadow(P, rng, HORIZON, top="#8DB86A", bot="#3D6638", flowers=16,
+                                 avoid=[(150, 262, 90, 60), (300, 262, 60, 50), (400, 262, 50, 40)])
+    d.append(gd); b.append(gback)
+
+    ele, rab, shp = F.load('elephant', DENSITY), F.load('rabbit', DENSITY), F.load('sheep', DENSITY)
+    d += [ele[0], rab[0], shp[0]]
+
+    b.append(S.cast_shadow(P, 382, 268, 46))
+    b.append(F.place(shp[1], 380, 268, 160))
+
+    b.append(S.cast_shadow(P, 146, 282, 78))
+    b.append(F.place(ele[1], 144, 282, 248))
+    # the big blue toothbrush, its handle gripped in the curl of the trunk
+    tx, ty = _pt(218, 312, 144, 282, 248)
+    b.append(_toothbrush(P, tx - 4, ty + 4, tx + 34, ty - 104, w=8))
+
+    b.append(S.cast_shadow(P, 284, 278, 54))
+    b.append(F.place(rab[1], 282, 278, 196))
+    px, py = _pt(167, 318, 282, 278, 196)
+    b.append(_toothbrush(P, px, py + 2, px + 14, py - 50, w=4.6, col="#FF6B6B", light="#FFB3B3"))
+
+    add(_bubbles(P, [(84, 120, 13), (110, 84, 8), (232, 96, 11), (258, 60, 7), (350, 124, 10),
+                     (372, 92, 6), (206, 150, 6), (440, 150, 9), (60, 168, 7), (300, 40, 9)]))
+
+    b.append(gfront)
+    add(S.sunwash(P, 436, 64))
+    add(S.vignette(P))
+    return S.wrap(P, "".join(d), "".join(b))
+
+
+def build_16():
+    """Three friends: Elephant, Rabbit and Little Tortoise, the red skipping rope
+    running along the grass from Elephant's trunk to Tortoise's foot."""
+    P = "cv16"
+    rng = random.Random(1616)
+    d, b = [], []
+    add = lambda p: (d.append(p[0]), b.append(p[1]))
+
+    add(S.sky(P, 'morning', HORIZON))
+    add(S.sun(P, 440, 68, 30))
+    b.append(S.clouds(P, [(80, 76, 46, 15, .9), (122, 68, 26, 11, .85), (250, 54, 34, 11, .6)]))
+    add(S.hills(P, rng, HORIZON))
+    add(S.foliage(P, rng, 470, 120, 40))
+    b.insert(len(b) - 1, S.trunk(472, 130, 190, 10))
+
+    gd, gback, gfront = S.meadow(P, rng, HORIZON, avoid=[(140, 262, 90, 60), (270, 262, 56, 50), (390, 270, 70, 30)])
+    d.append(gd); b.append(gback)
+
+    ele, rab, tor = F.load('elephant', DENSITY), F.load('rabbit', DENSITY), F.load('tortoise', DENSITY)
+    d += [ele[0], rab[0], tor[0]]
+
+    b.append(S.cast_shadow(P, 136, 282, 78))
+    b.append(F.place(ele[1], 134, 282, 244))
+    b.append(S.cast_shadow(P, 252, 278, 52))
+    b.append(F.place(rab[1], 250, 278, 192))
+    b.append(S.cast_shadow(P, 350, 280, 50))
+    b.append(F.place(tor[1], 362, 280, 150))
+
+    # the rope: from the trunk tip, across the grass in front of Rabbit, to Tortoise's front foot
+    tx, ty = _pt(218, 312, 134, 282, 244)
+    fx, fy = _pt(212, 318, 362, 280, 150)
+    b.append(f'<path d="M{tx:.0f},{ty:.0f} C{tx+30:.0f},{ty+26:.0f} {tx+70:.0f},300 {(tx+fx)/2:.0f},298 S{fx-30:.0f},{fy+16:.0f} {fx:.0f},{fy:.0f}" '
+             f'stroke="#A32F35" stroke-width="4.4" fill="none" stroke-linecap="round"/>'
+             f'<path d="M{tx:.0f},{ty:.0f} C{tx+30:.0f},{ty+26:.0f} {tx+70:.0f},300 {(tx+fx)/2:.0f},298 S{fx-30:.0f},{fy+16:.0f} {fx:.0f},{fy:.0f}" '
+             f'stroke="#FF6B6B" stroke-width="2.6" fill="none" stroke-linecap="round"/>')
+    b += [f'<g transform="rotate({r} {hx:.0f} {hy:.0f})"><rect x="{hx-4:.0f}" y="{hy-2:.0f}" width="8" height="18" rx="4" fill="#FFD166"/>'
+          f'<rect x="{hx-1:.0f}" y="{hy:.0f}" width="2.4" height="14" rx="1.2" fill="#FFF3C4" opacity=".8"/></g>'
+          for hx, hy, r in ((tx, ty - 2, 20), (fx, fy - 4, -30))]
+
+    b.append(gfront)
+    add(S.sunwash(P, 440, 68))
+    add(S.vignette(P))
+    return S.wrap(P, "".join(d), "".join(b))
+
+
+def _clinic(P, x, ybase, w=230, h=150):
+    """The clinic, painted: a cream front lit from the right, a red-cross sign on the
+    roof, windows and a door - with the THANK YOU banner strung across it."""
+    d = (S.lin(f"{P}-wall", [(0, "#E8DCC8", None), (.6, "#FFF6E8", None), (1, "#FFFDF6", None)], x2=1, y2=0)
+         + S.lin(f"{P}-roof", [(0, "#C9C0B0", None), (1, "#EDE6DA", None)], x2=1, y2=0))
+    top = ybase - h
+    g = [f'<rect x="{x-w/2:.0f}" y="{top:.0f}" width="{w}" height="{h}" rx="5" fill="url(#{P}-wall)"/>',
+         f'<rect x="{x-w/2-8:.0f}" y="{top-10:.0f}" width="{w+16}" height="16" rx="5" fill="url(#{P}-roof)"/>',
+         # a badge sitting on the roof edge rather than a sign above it: a desktop card
+         # crops the frame at y≈54, which slices anything taller off the roofline
+         f'<circle cx="{x}" cy="{top-6:.0f}" r="16" fill="#FFFDF6"/>',
+         f'<rect x="{x-3.5:.1f}" y="{top-17:.0f}" width="7" height="22" rx="2" fill="#E8533F"/>'
+         f'<rect x="{x-11:.0f}" y="{top-9.5:.1f}" width="22" height="7" rx="2" fill="#E8533F"/>']
+    for fx in (-.4, -.22, .22, .4):
+        wx = x + fx*w
+        g.append(f'<rect x="{wx-13:.0f}" y="{top+68:.0f}" width="26" height="28" rx="3" fill="#9FD4EA"/>'
+                 f'<rect x="{wx+3:.0f}" y="{top+70:.0f}" width="7" height="24" fill="#FFFFFF" opacity=".45"/>')
+    g.append(f'<rect x="{x-24:.0f}" y="{ybase-58:.0f}" width="48" height="58" rx="4" fill="#9FD4EA"/>'
+             f'<rect x="{x-1:.0f}" y="{ybase-58:.0f}" width="2" height="58" fill="#7DB4CC"/>')
+    # the banner, strung from the roof corners
+    by = top + 26
+    letters = "THANK YOU"
+    g.append(f'<path d="M{x-w/2+6:.0f},{top+6:.0f} L{x-98:.0f},{by-12:.0f} M{x+w/2-6:.0f},{top+6:.0f} L{x+98:.0f},{by-12:.0f}" stroke="#9A8E78" stroke-width="1.2"/>'
+             f'<path d="M{x-100:.0f},{by-14:.0f} Q{x:.0f},{by-8:.0f} {x+100:.0f},{by-14:.0f} L{x+100:.0f},{by+16:.0f} Q{x:.0f},{by+22:.0f} {x-100:.0f},{by+16:.0f} Z" fill="#FFFDF6"/>'
+             f'<path d="M{x-100:.0f},{by+12:.0f} Q{x:.0f},{by+18:.0f} {x+100:.0f},{by+12:.0f} L{x+100:.0f},{by+16:.0f} Q{x:.0f},{by+22:.0f} {x-100:.0f},{by+16:.0f} Z" fill="#E4D8C2"/>')
+    g += [f'<text x="{x-80+i*20:.0f}" y="{by+9+(3 if i % 2 else -2)}" font-size="21" fill="#B66FE8" text-anchor="middle" '
+          f'font-family="Fredoka One, sans-serif" transform="rotate({7 if i % 2 else -7} {x-80+i*20:.0f} {by})">{c}</text>'
+          for i, c in enumerate(letters) if c != ' ']
+    return d, "".join(g)
+
+
+def _balloons(P, x, y, cols, r=13, tag="a"):
+    """A painted bunch of balloons tied at (x, y)."""
+    d = "".join(S.rad(f"{P}-bl{tag}{i}", [(0, "#FFFFFF", None), (.25, c, None), (1, c, None)], cx="66%", cy="28%", r="75%")
+                for i, c in enumerate(cols))
+    g = []
+    for i, c in enumerate(cols):
+        bx, by = x + (i - (len(cols)-1)/2)*r*1.5, y - r*3.6 - (i % 2)*r*.9
+        g.append(f'<path d="M{x},{y} Q{bx-4:.0f},{(y+by)/2:.0f} {bx:.0f},{by+r:.0f}" stroke="#8A7E68" stroke-width="1" fill="none"/>'
+                 f'<ellipse cx="{bx:.0f}" cy="{by:.0f}" rx="{r*.86:.1f}" ry="{r}" fill="url(#{P}-bl{tag}{i})"/>'
+                 f'<path d="M{bx-2.5:.0f},{by+r+3:.0f} l2.5,-4 l2.5,4 Z" fill="{c}"/>')
+    return d, "".join(g)
+
+
+def build_17():
+    """The thank-you party: the whole clinic team outside under the THANK YOU
+    banner, with Rabbit and Elephant in front and balloons either side."""
+    P = "cv17"
+    rng = random.Random(1717)
+    d, b = [], []
+    add = lambda p: (d.append(p[0]), b.append(p[1]))
+
+    add(S.sky(P, 'golden', HORIZON))
+    add(S.sun(P, 444, 70, 28))
+    b.append(S.clouds(P, [(70, 72, 44, 14, .9), (108, 64, 26, 10, .85)]))
+    add(S.hills(P, rng, HORIZON))
+
+    gd, gback, gfront = S.meadow(P, rng, HORIZON, avoid=[(116, 266, 90, 60), (270, 250, 120, 40), (416, 266, 60, 40)])
+    d.append(gd); b.append(gback)
+    add(_clinic(P, 266, 232, w=240, h=158))
+    add(_balloons(P, 140, 196, ("#FF6B6B", "#FFD166", "#74C8E4")))
+    add(_balloons(P, 396, 196, ("#C77DFF", "#8ECB7E", "#FF9BAE"), tag="b"))
+
+    sqr, gir, shp = F.load('squirrel', DENSITY), F.load('giraffe', DENSITY), F.load('sheep', DENSITY)
+    ele, rab = F.load('elephant', DENSITY), F.load('rabbit', DENSITY)
+    d += [sqr[0], gir[0], shp[0], ele[0], rab[0]]
+
+    # the doctors, a step back by the clinic door
+    b.append(S.cast_shadow(P, 282, 246, 34, op=.36))
+    b.append(F.place(gir[1], 280, 246, 172))
+    b.append(S.cast_shadow(P, 334, 250, 34, op=.36))
+    b.append(F.place(shp[1], 332, 250, 126))
+    b.append(S.cast_shadow(P, 240, 262, 34, op=.4))
+    b.append(F.place(sqr[1], 238, 262, 140))
+    # Rabbit and Elephant out in front
+    b.append(S.cast_shadow(P, 124, 292, 68))
+    b.append(F.place(ele[1], 122, 292, 188))
+    b.append(S.cast_shadow(P, 392, 290, 46))
+    b.append(F.place(rab[1], 390, 290, 164))
+
+    b.append(gfront)
+    add(S.sunwash(P, 444, 70))
+    add(S.vignette(P))
+    return S.wrap(P, "".join(d), "".join(b))
+
+
 COVERS = {
     '01-the-hungry-friends': build_01,
     '02-ouch-the-big-thorn': build_02,
@@ -905,4 +1112,7 @@ COVERS = {
     '12-whoosh-the-kite-day': build_12,
     '13-grow-seed-grow': build_13,
     '14-too-big-too-small': build_14,
+    '15-brush-brush-splash': build_15,
+    '16-mine-the-new-friend': build_16,
+    '17-thank-you-dr-squirrel': build_17,
 }

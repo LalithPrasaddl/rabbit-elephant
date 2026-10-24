@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regenerate the six character portraits and inject them into characters.html.
+"""Regenerate the seven character portraits and inject them into characters.html.
 
     python3 tools/portraits/build.py
 
@@ -12,7 +12,7 @@ import os, re, subprocess, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))
 PAGE = os.path.join(ROOT, 'characters.html')
-NAMES = ['rabbit', 'elephant', 'bear', 'squirrel', 'sheep', 'giraffe']
+NAMES = ['rabbit', 'elephant', 'bear', 'squirrel', 'sheep', 'giraffe', 'tortoise']
 
 
 def main():

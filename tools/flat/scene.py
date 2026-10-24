@@ -2207,3 +2207,364 @@ def crumble(x, y, s=1.0):
             + "".join(f'<circle cx="{x+dx*s:.0f}" cy="{y-27*s+dy*s:.0f}" r="{2*s:.1f}" fill="#C88A3A"/>' for dx, dy in ((-24, 0), (-6, -3), (14, 1), (30, -2)))
             + f'<path d="M{x-40*s:.0f},{y-20*s:.0f} H{x+40*s:.0f}" stroke="#74C8E4" stroke-width="{4*s:.1f}"/>'
             + steam(x, y - 34*s, s))
+
+
+# ---------------------------------------------------------------- story 15 props
+# Story 15 is bedtime in Elephant's bathroom: a tiled room, a sink under a mirror,
+# and a toothbrush problem that gets wetter on every page. Toothpaste is white with
+# a mint stripe everywhere it lands, so a splat reads as toothpaste, not as snow.
+TILE, TILE_DK = "#E2F2F7", "#B8D8E4"
+MINT, MINT_DK = "#7FD8B8", "#3FAF88"
+BRUSH = "#FF6B6B"
+
+
+def bathroom(uid, floor=262):
+    """Elephant's bathroom: a tiled wall, a chequered floor and a bath mat."""
+    rows = "".join(f'<line x1="0" y1="{y}" x2="500" y2="{y}"/>' for y in range(30, floor, 34))
+    cols = "".join(f'<line x1="{x}" y1="0" x2="{x}" y2="{floor}"/>' for x in range(24, 500, 34))
+    checks = "".join(f'<rect x="{x}" y="{floor + r*32}" width="40" height="32" fill="#E8DCC8"/>'
+                     for r in range(4) for x in range(-40 + (r % 2)*40, 500, 80))
+    return (f'<rect width="500" height="360" fill="{TILE}"/>'
+            f'<g stroke="{TILE_DK}" stroke-width="1.4" opacity=".7">{rows}{cols}</g>'
+            f'<rect y="{floor}" width="500" height="{360-floor}" fill="#F6EEE0"/>' + checks
+            + f'<line x1="0" y1="{floor}" x2="500" y2="{floor}" stroke="{TILE_DK}" stroke-width="3"/>')
+
+
+def mirror(x, y, w=110, h=84, fog=False):
+    """An oval mirror on the wall, `x, y` its middle."""
+    return (f'<ellipse cx="{x}" cy="{y}" rx="{w/2+7:.0f}" ry="{h/2+7:.0f}" fill="{WOOD}" stroke="{WOOD_DK}" stroke-width="2"/>'
+            f'<ellipse cx="{x}" cy="{y}" rx="{w/2:.0f}" ry="{h/2:.0f}" fill="{"#E4EEF2" if fog else "#CFEAF6"}"/>'
+            f'<path d="M{x-w*.3:.0f},{y+h*.1:.0f} l{w*.22:.0f},{-h*.36:.0f} M{x-w*.14:.0f},{y+h*.2:.0f} l{w*.3:.0f},{-h*.5:.0f}" '
+            f'stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" opacity=".7"/>')
+
+
+def toothbrush(x, y, s=1.0, rot=0, color=BRUSH, paste=False):
+    """A toothbrush. `x, y` is the middle of the bristles; the handle runs off along
+    +x, then the whole brush turns by `rot`, so the bristles can be aimed at a mouth."""
+    L = 58 * s
+    out = (f'<g transform="rotate({rot} {x:.1f} {y:.1f})">'
+           f'<rect x="{x-9*s:.1f}" y="{y-2*s:.1f}" width="{L+9*s:.1f}" height="{7*s:.1f}" rx="{3.5*s:.1f}" fill="{color}" stroke="#00000033" stroke-width="1"/>'
+           f'<rect x="{x-9*s:.1f}" y="{y-9*s:.1f}" width="{20*s:.1f}" height="{8*s:.1f}" rx="{2*s:.1f}" fill="#FFFFFF" stroke="#9BCFE4" stroke-width="1.2"/>'
+           + "".join(f'<line x1="{x+dx*s:.1f}" y1="{y-9*s:.1f}" x2="{x+dx*s:.1f}" y2="{y-2*s:.1f}" stroke="#9BCFE4" stroke-width="1"/>'
+                     for dx in (-5, 0, 5)))
+    if paste:
+        out += (f'<path d="M{x-7*s:.1f},{y-9*s:.1f} q{3*s:.1f},{-7*s:.1f} {7*s:.1f},{-3*s:.1f} q{4*s:.1f},{-6*s:.1f} {7*s:.1f},{3*s:.1f} Z" '
+                f'fill="#FFFFFF" stroke="{MINT_DK}" stroke-width="1"/>'
+                f'<path d="M{x-4*s:.1f},{y-11*s:.1f} q{4*s:.1f},{-3*s:.1f} {8*s:.1f},0" stroke="{MINT}" stroke-width="{1.8*s:.1f}" fill="none"/>')
+    return out + '</g>'
+
+
+def pea_blob(x, y, s=1.0):
+    """A blob of toothpaste the size of a pea - the right amount."""
+    return (f'<circle cx="{x}" cy="{y}" r="{5*s:.1f}" fill="#FFFFFF" stroke="{MINT_DK}" stroke-width="1.2"/>'
+            f'<path d="M{x-3*s:.1f},{y-1*s:.1f} q{3*s:.1f},{-3*s:.1f} {6*s:.1f},0" stroke="{MINT}" stroke-width="{1.6*s:.1f}" fill="none"/>')
+
+
+def tube(x, y, s=1.0, rot=0, squashed=False):
+    """A toothpaste tube lying down, cap end at `x, y`, crimped end off along +x.
+    `squashed` is what it looks like with an elephant's foot on it."""
+    h = 9 if squashed else 20
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            f'<rect x="{x-8*s:.0f}" y="{y-7*s:.0f}" width="{10*s:.0f}" height="{14*s:.0f}" rx="2" fill="{MINT_DK}"/>'
+            f'<path d="M{x+2*s:.0f},{y-h/2*s:.0f} L{x+64*s:.0f},{y-(h/2+6)*s:.0f} L{x+64*s:.0f},{y+(h/2+6)*s:.0f} L{x+2*s:.0f},{y+h/2*s:.0f} Z" '
+            f'fill="#FFFFFF" stroke="#C8D4DC" stroke-width="1.5" stroke-linejoin="round"/>'
+            f'<path d="M{x+18*s:.0f},{y-(h/2+1.5)*s:.0f} L{x+40*s:.0f},{y-(h/2+3.5)*s:.0f} L{x+40*s:.0f},{y+(h/2+3.5)*s:.0f} L{x+18*s:.0f},{y+(h/2+1.5)*s:.0f} Z" fill="{BRUSH}"/>'
+            f'<rect x="{x+62*s:.0f}" y="{y-(h/2+7)*s:.0f}" width="{5*s:.0f}" height="{(h+14)*s:.0f}" rx="1" fill="#E4EAEE" stroke="#C8D4DC" stroke-width="1"/></g>')
+
+
+def paste_jet(x0, y0, x1, y1, lift=50, w=10):
+    """A stripy rope of toothpaste squirting from (x0, y0) and landing on (x1, y1)."""
+    mx, my = (x0 + x1)/2, min(y0, y1) - lift
+    d = f'M{x0:.0f},{y0:.0f} Q{mx:.0f},{my:.0f} {x1:.0f},{y1:.0f}'
+    return (f'<path d="{d}" stroke="#C8D4DC" stroke-width="{w+2}" fill="none" stroke-linecap="round"/>'
+            f'<path d="{d}" stroke="#FFFFFF" stroke-width="{w}" fill="none" stroke-linecap="round"/>'
+            f'<path d="{d}" stroke="{MINT}" stroke-width="{w*.28:.1f}" fill="none" stroke-linecap="round"/>')
+
+
+def foam(pts):
+    """Toothpaste froth stuck all over somebody: (x, y, r) each."""
+    return "".join(f'<circle cx="{x}" cy="{y}" r="{r}" fill="#FFFFFF" stroke="#C8D4DC" stroke-width="1.2"/>'
+                   f'<path d="M{x-r*.5:.1f},{y:.1f} q{r*.5:.1f},{-r*.4:.1f} {r:.1f},0" stroke="{MINT}" stroke-width="{max(1.2, r*.16):.1f}" fill="none" opacity=".8"/>'
+                   for x, y, r in pts)
+
+
+def broom(x, y, s=1.0, rot=0):
+    """A kitchen broom, `x, y` the middle of its brush, the long handle along +x."""
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            f'<rect x="{x+14*s:.0f}" y="{y-3*s:.0f}" width="{120*s:.0f}" height="{6*s:.0f}" rx="3" fill="{WOOD}" stroke="{WOOD_DK}" stroke-width="1.2"/>'
+            f'<path d="M{x+16*s:.0f},{y-9*s:.0f} L{x-12*s:.0f},{y-22*s:.0f} L{x-12*s:.0f},{y+22*s:.0f} L{x+16*s:.0f},{y+9*s:.0f} Z" fill="#E8C468" stroke="#B8923A" stroke-width="1.5"/>'
+            + "".join(f'<line x1="{x+14*s:.0f}" y1="{y+dy*s*.4:.0f}" x2="{x-12*s:.0f}" y2="{y+dy*s:.0f}" stroke="#B8923A" stroke-width="1.1"/>'
+                      for dy in (-16, -8, 0, 8, 16))
+            + f'<rect x="{x+12*s:.0f}" y="{y-10*s:.0f}" width="{6*s:.0f}" height="{20*s:.0f}" rx="2" fill="{BRUSH}"/></g>')
+
+
+def straws(pts):
+    """Broom bristles flying loose: (x, y, rot) each."""
+    return "".join(f'<path d="M{x-7},{y} q7,-3 14,0" stroke="#C8A040" stroke-width="2" fill="none" stroke-linecap="round" '
+                   f'transform="rotate({r} {x} {y})"/>' for x, y, r in pts)
+
+
+def flood(floor=262, depth=0):
+    """Water all over the floor, drawn OVER feet so the room reads as flooded. `depth`
+    raises the waterline above the floor's back edge."""
+    y = floor + 18 - depth
+    return (f'<path d="M0,{y} q30,-8 60,0 t60,0 t60,0 t60,0 t60,0 t60,0 t60,0 t60,0 t60,0 V360 H0 Z" fill="#8FD6F0" opacity=".55"/>'
+            + "".join(f'<path d="M{x},{y+dy} q10,-5 20,0" stroke="#FFFFFF" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".8"/>'
+                      for x, dy in ((40, 30), (150, 60), (260, 24), (370, 70), (450, 40), (90, 84))))
+
+
+def sand_timer(x, y, s=1.0, done=.5):
+    """A little sand timer, `y` its base; `done` is how much sand has run through."""
+    h, w = 64*s, 30*s
+    top, mid = y - h + 6*s, y - h/2
+    ts = (1 - done)            # sand left in the top bulb
+    return (f'<path d="M{x-w/2:.1f},{top:.1f} Q{x-w/2:.1f},{mid-6*s:.1f} {x-2*s:.1f},{mid:.1f} Q{x-w/2:.1f},{mid+6*s:.1f} {x-w/2:.1f},{y-6*s:.1f} '
+            f'L{x+w/2:.1f},{y-6*s:.1f} Q{x+w/2:.1f},{mid+6*s:.1f} {x+2*s:.1f},{mid:.1f} Q{x+w/2:.1f},{mid-6*s:.1f} {x+w/2:.1f},{top:.1f} Z" '
+            f'fill="#EAF6FB" stroke="#8FBCD0" stroke-width="1.5"/>'
+            f'<path d="M{x-w/2*ts*.9:.1f},{mid-(h/2-8*s)*ts:.1f} L{x+w/2*ts*.9:.1f},{mid-(h/2-8*s)*ts:.1f} L{x:.1f},{mid-1:.1f} Z" fill="#F2C46A"/>'
+            f'<path d="M{x-w*.44:.1f},{y-6*s:.1f} Q{x:.1f},{y-6*s-(h/2-6*s)*done*1.4:.1f} {x+w*.44:.1f},{y-6*s:.1f} Z" fill="#F2C46A"/>'
+            + (f'<line x1="{x}" y1="{mid}" x2="{x}" y2="{y-8*s:.1f}" stroke="#F2C46A" stroke-width="1.6"/>' if 0 < done < 1 else '')
+            + "".join(f'<rect x="{x-w/2-4*s:.1f}" y="{yy:.1f}" width="{w+8*s:.1f}" height="{6*s:.1f}" rx="2" fill="{WOOD}" stroke="{WOOD_DK}" stroke-width="1.2"/>'
+                      for yy in (top - 6*s, y - 6*s)))
+
+
+def cup(x, y, s=1.0, color="#74C8E4"):
+    """A tooth mug, `y` its base."""
+    return (f'<path d="M{x-11*s:.0f},{y-26*s:.0f} L{x-9*s:.0f},{y:.0f} L{x+9*s:.0f},{y:.0f} L{x+11*s:.0f},{y-26*s:.0f} Z" fill="{color}" stroke="#00000033" stroke-width="1.2"/>'
+            f'<path d="M{x+10*s:.0f},{y-20*s:.0f} q{8*s:.0f},{2*s:.0f} {1*s:.0f},{12*s:.0f}" stroke="{color}" stroke-width="{3*s:.1f}" fill="none"/>')
+
+
+def sparkles(pts, color="#FFD166"):
+    """Four-point twinkles: (x, y, r) each - clean teeth, a shiny mirror."""
+    return "".join(f'<path d="M{x},{y-r} Q{x+r*.18:.1f},{y-r*.18:.1f} {x+r},{y} Q{x+r*.18:.1f},{y+r*.18:.1f} {x},{y+r} '
+                   f'Q{x-r*.18:.1f},{y+r*.18:.1f} {x-r},{y} Q{x-r*.18:.1f},{y-r*.18:.1f} {x},{y-r} Z" fill="{color}"/>'
+                   for x, y, r in pts)
+
+
+def big_bed(x, y, w=300, sleepers="", quilt="#C77DFF", line="#9A52D8"):
+    """Elephant's big bed, `y` the floor. Like little_bed it owns its sleepers: the
+    quilt goes over them so only heads show above it."""
+    top = y - 70
+    return (f'<rect x="{x-w/2-12:.0f}" y="{top-80}" width="20" height="{y-top+80}" rx="6" fill="{WOOD_DK}"/>'
+            f'<rect x="{x+w/2-8:.0f}" y="{top-30}" width="20" height="{y-top+30}" rx="6" fill="{WOOD_DK}"/>'
+            f'<rect x="{x-w/2:.0f}" y="{top}" width="{w}" height="30" rx="8" fill="#FFFDF6" stroke="#D8C8A8" stroke-width="1.5"/>'
+            f'<rect x="{x-w/2+10:.0f}" y="{top-26}" width="{w*.6:.0f}" height="30" rx="12" fill="#FFFFFF" stroke="#D8C8A8" stroke-width="1.5"/>'
+            + sleepers
+            + f'<path d="M{x-w/2+4:.0f},{top-4} Q{x:.0f},{top-22} {x+w/2+4:.0f},{top-6} L{x+w/2+4:.0f},{top+38} L{x-w/2+4:.0f},{top+38} Z" '
+              f'fill="{quilt}" stroke="{line}" stroke-width="1.8"/>'
+            + "".join(f'<circle cx="{x+dx*w:.0f}" cy="{top+dy}" r="4" fill="#FFFDF6" opacity=".8"/>'
+                      for dx, dy in ((-.36, 14), (-.16, 6), (.04, 18), (.22, 8), (.38, 20)))
+            + f'<rect x="{x-w/2+6:.0f}" y="{top+38}" width="{w-12}" height="14" rx="4" fill="{WOOD}"/>')
+
+
+# ---------------------------------------------------------------- story 16 props
+# Story 16 is the meadow again, with a new neighbour: Little Tortoise and his
+# skipping rope. The rope is bright red so it reads across the whole page.
+ROPE, ROPE_DK = "#FF6B6B", "#C0484A"
+
+
+def spoon(x, y, s=1.0, rot=0):
+    """A wooden spoon, `x, y` the end of the handle, the bowl off along -y."""
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            f'<rect x="{x-3*s:.1f}" y="{y-40*s:.1f}" width="{6*s:.1f}" height="{40*s:.1f}" rx="3" fill="{WOOD}" stroke="{WOOD_DK}" stroke-width="1.2"/>'
+            f'<ellipse cx="{x}" cy="{y-48*s:.1f}" rx="{8*s:.1f}" ry="{11*s:.1f}" fill="{WOOD}" stroke="{WOOD_DK}" stroke-width="1.4"/></g>')
+
+
+def handle(x, y, rot=0):
+    """One wooden skipping-rope handle, `x, y` where the rope comes out of it."""
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            f'<rect x="{x-5}" y="{y}" width="10" height="24" rx="5" fill="#FFD166" stroke="#E8B800" stroke-width="1.5"/></g>')
+
+
+def skipping_rope(x0, y0, x1, y1, low):
+    """A skipping rope swung between two handles; `low` is the y the middle of the
+    rope swings down to (or up to, if it is above the ends)."""
+    mx = (x0 + x1) / 2
+    cy = 2*low - (y0 + y1)/2           # the control point that puts the curve's middle at `low`
+    d = f'M{x0:.0f},{y0:.0f} Q{mx:.0f},{cy:.0f} {x1:.0f},{y1:.0f}'
+    return (f'<path d="{d}" stroke="{ROPE_DK}" stroke-width="5" fill="none" stroke-linecap="round"/>'
+            f'<path d="{d}" stroke="{ROPE}" stroke-width="3" fill="none" stroke-linecap="round"/>')
+
+
+def rope_coil(x, y):
+    """The skipping rope looped up for carrying, `x, y` the middle of the loops."""
+    return ("".join(f'<ellipse cx="{x}" cy="{y}" rx="{rx}" ry="{rx*.8:.0f}" fill="none" stroke="{ROPE}" stroke-width="3"/>'
+                    for rx in (18, 14, 10))
+            + handle(x - 18, y + 8, rot=20) + handle(x + 18, y + 8, rot=-20))
+
+
+def whirl(x, y, r=50):
+    """Spinning-top swooshes round something going round and round."""
+    return "".join(f'<path d="M{x-r*k:.0f},{y-r*.25*k:.0f} A{r*k:.0f},{r*.4*k:.0f} 0 0 0 {x+r*k:.0f},{y-r*.25*k:.0f}" '
+                   f'stroke="#8FA8C0" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-dasharray="14 8" opacity="{o}"/>'
+                   for k, o in ((1, .9), (1.25, .55)))
+
+
+def berries(x, y, s=1.0):
+    """A bowl heaped with strawberries, `x, y` the middle of its rim."""
+    pts = ((-16, -2), (-6, -6), (6, -5), (16, -1), (-10, -12), (2, -14), (12, -11))
+    return (f'<path d="M{x-28*s:.0f},{y:.0f} q{28*s:.0f},{30*s:.0f} {56*s:.0f},0 Z" fill="#FFFFFF" stroke="#C8BCA4" stroke-width="1.5"/>'
+            + "".join(f'<path d="M{x+dx*s-6*s:.1f},{y+dy*s-3*s:.1f} q{6*s:.1f},{-3*s:.1f} {12*s:.1f},0 q{-1*s:.1f},{9*s:.1f} {-6*s:.1f},{12*s:.1f} '
+                      f'q{-5*s:.1f},{-3*s:.1f} {-6*s:.1f},{-12*s:.1f} Z" fill="#FF4F5E" stroke="#C0303E" stroke-width="1"/>'
+                      f'<path d="M{x+dx*s-4*s:.1f},{y+dy*s-4*s:.1f} l{4*s:.1f},{-3*s:.1f} l{4*s:.1f},{3*s:.1f}" stroke="#4A9B4A" stroke-width="{2*s:.1f}" fill="none"/>'
+                      for dx, dy in pts))
+
+
+def hearts(pts, color="#FF6B6B"):
+    """Little hearts floating up: (x, y, size) each."""
+    return "".join(f'<text x="{x}" y="{y}" font-size="{f}" fill="{color}" text-anchor="middle">&#9829;</text>' for x, y, f in pts)
+
+
+def hillside(uid, top=170, foot=330):
+    """A grassy slope running down from the left to a pond on the right."""
+    return (f'<path d="M0,{top} Q120,{top-6} 220,{(top+foot)/2:.0f} T420,{foot+10} L0,{foot+10} Z" fill="url(#gnd-{uid})"/>'
+            f'<path d="M0,{top+24} Q120,{top+18} 210,{(top+foot)/2+22:.0f} T380,{foot+10} L0,{foot+10} Z" fill="#4A9B4A" opacity=".18"/>')
+
+
+# ---------------------------------------------------------------- story 17 props
+# Story 17 is a surprise thank-you party in the clinic waiting room. The banner,
+# the paint and the balloons are all the same party purple, so the room visibly
+# fills up with the surprise as the pages go on.
+PARTY, PARTY_DK = "#C77DFF", "#9A52D8"
+BALLOONS = ("#FF6B6B", "#FFD166", "#74C8E4", "#C77DFF", "#8ECB7E", "#FF9BAE")
+
+
+def waiting_room(uid, floor=262, door=True):
+    """The clinic waiting room: pale wall, a red-cross poster, a door on the right."""
+    out = (indoors(uid, wall="#EEF4F7", floor="#DCE6EC", y=floor)
+           + f'<rect x="196" y="96" width="56" height="56" rx="6" fill="#FFFFFF" stroke="#D0D8DE" stroke-width="2"/>'
+           f'<rect x="218" y="104" width="12" height="40" rx="2" fill="{MEDRED_}"/><rect x="204" y="118" width="40" height="12" rx="2" fill="{MEDRED_}"/>')
+    if door:
+        out += (f'<rect x="404" y="{floor-170}" width="84" height="170" rx="4" fill="#E8D2B0" stroke="{WOOD_DK}" stroke-width="3"/>'
+                f'<circle cx="418" cy="{floor-84}" r="4" fill="{WOOD_DK}"/>'
+                f'<rect x="420" y="{floor-150}" width="52" height="36" rx="3" fill="#CFEAF6"/>')
+    return out
+
+
+MEDRED_ = "#E4453F"
+
+
+def open_door(x0=404, floor=262, w=84, h=170):
+    """The waiting-room door swung open, the corridor bright beyond it."""
+    return (f'<rect x="{x0}" y="{floor-h}" width="{w}" height="{h}" fill="#FFF6E0"/>'
+            f'<path d="M{x0+w},{floor-h} L{x0+w+14},{floor-h-8} L{x0+w+14},{floor+10} L{x0+w},{floor} Z" fill="#E8D2B0" stroke="{WOOD_DK}" stroke-width="2"/>'
+            f'<rect x="{x0}" y="{floor-h}" width="{w}" height="{h}" fill="none" stroke="{WOOD_DK}" stroke-width="3"/>')
+
+
+def chair(x, y, color="#74C8E4", line="#3C90AE"):
+    """A waiting-room chair, `y` the floor, seat at about y-46."""
+    return (f'<rect x="{x-24}" y="{y-96}" width="48" height="52" rx="10" fill="{color}" stroke="{line}" stroke-width="2"/>'
+            f'<rect x="{x-28}" y="{y-50}" width="56" height="12" rx="5" fill="{color}" stroke="{line}" stroke-width="2"/>'
+            + "".join(f'<rect x="{x+dx}" y="{y-38}" width="6" height="38" fill="#9AA6AE"/>' for dx in (-24, 18)))
+
+
+def coat_stand(x, y, rot=0, coat=True):
+    """A coat stand, `y` the floor; `rot` tips it over from its foot."""
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            f'<rect x="{x-3}" y="{y-170}" width="6" height="170" fill="{WOOD_DK}"/>'
+            f'<path d="M{x-24},{y} L{x},{y-14} L{x+24},{y}" stroke="{WOOD_DK}" stroke-width="5" fill="none" stroke-linecap="round"/>'
+            f'<path d="M{x},{y-164} l-16,-8 M{x},{y-164} l16,-8" stroke="{WOOD_DK}" stroke-width="4" stroke-linecap="round"/>'
+            + (f'<path d="M{x+14},{y-170} q10,40 6,90 h-26 q-6,-50 6,-90 Z" fill="#FFFFFF" stroke="#C8D4DC" stroke-width="1.5"/>' if coat else '')
+            + '</g>')
+
+
+def white_coat(x, y, s=1.0):
+    """A white doctor's coat landed on somebody's head: `x, y` the top of the head."""
+    return (f'<path d="M{x-40*s:.0f},{y+44*s:.0f} Q{x-48*s:.0f},{y-6*s:.0f} {x:.0f},{y-12*s:.0f} Q{x+48*s:.0f},{y-6*s:.0f} {x+40*s:.0f},{y+44*s:.0f} '
+            f'l{-10*s:.0f},{-8*s:.0f} l{-8*s:.0f},{10*s:.0f} l{-10*s:.0f},{-12*s:.0f} l{-12*s:.0f},{12*s:.0f} l{-12*s:.0f},{-12*s:.0f} l{-10*s:.0f},{12*s:.0f} Z" '
+            f'fill="#FFFFFF" stroke="#C8D4DC" stroke-width="1.6"/>'
+            f'<path d="M{x-36*s:.0f},{y+30*s:.0f} q{-22*s:.0f},{20*s:.0f} {-16*s:.0f},{48*s:.0f}" stroke="#FFFFFF" stroke-width="{12*s:.0f}" fill="none" stroke-linecap="round"/>'
+            f'<circle cx="{x+20*s:.0f}" cy="{y+16*s:.0f}" r="{5*s:.1f}" fill="{MEDRED_}"/>')
+
+
+def banner(x, y, w=260, h=56, text="THANK YOU", rot=0, hung=False, wiggle=True):
+    """The THANK YOU banner, `x, y` its middle. `hung` adds the strings it hangs by."""
+    letters = "".join(f'<text x="{x - w*.4 + i*w*.8/(len(text)-1):.0f}" y="{y + 11 + (5 if wiggle and i % 2 else -3)}" '
+                      f'font-size="{h*.62:.0f}" fill="{PARTY}" text-anchor="middle" font-family="Fredoka One, sans-serif" '
+                      f'transform="rotate({(8 if i % 2 else -8) if wiggle else 0} {x - w*.4 + i*w*.8/(len(text)-1):.0f} {y})">{c}</text>'
+                      for i, c in enumerate(text) if c != ' ')
+    strings = (f'<path d="M{x-w/2},{y-h/2} L{x-w/2-20},{y-h/2-40} M{x+w/2},{y-h/2} L{x+w/2+20},{y-h/2-40}" stroke="#9A8E78" stroke-width="1.6"/>'
+               if hung else '')
+    return (f'<g transform="rotate({rot} {x} {y})">{strings}'
+            f'<path d="M{x-w/2},{y-h/2} Q{x},{y-h/2+6} {x+w/2},{y-h/2} L{x+w/2},{y+h/2} Q{x},{y+h/2+6} {x-w/2},{y+h/2} Z" '
+            f'fill="#FFFDF6" stroke="#D8C8A8" stroke-width="2"/>{letters}</g>')
+
+
+def paint_pot(x, y, color=PARTY, line=PARTY_DK):
+    """A tin of paint, `y` its base, drips down the side."""
+    return (f'<rect x="{x-16}" y="{y-28}" width="32" height="28" rx="3" fill="#B8C2CA" stroke="#7E8A92" stroke-width="1.5"/>'
+            f'<ellipse cx="{x}" cy="{y-28}" rx="16" ry="5" fill="{color}" stroke="{line}" stroke-width="1.2"/>'
+            f'<path d="M{x-10},{y-26} q2,10 0,14 q4,2 4,-14 M{x+6},{y-26} v8 q3,2 3,-8" fill="{color}"/>')
+
+
+def spots(pts, color=PARTY):
+    """Paint spatters: (x, y, r) each."""
+    return "".join(f'<circle cx="{x}" cy="{y}" r="{r}" fill="{color}"/>'
+                   f'<circle cx="{x+r*1.2:.1f}" cy="{y-r*.8:.1f}" r="{r*.35:.1f}" fill="{color}"/>' for x, y, r in pts)
+
+
+def balloon(x, y, color="#FF6B6B", r=18, string=None):
+    """A party balloon, `x, y` its middle; `string` is where the string ends."""
+    sx, sy = string or (x, y + r*3)
+    return (f'<path d="M{x},{y+r*1.15:.0f} Q{(x+sx)/2-8:.0f},{(y+sy)/2:.0f} {sx},{sy}" stroke="#9A8E78" stroke-width="1.2" fill="none"/>'
+            f'<ellipse cx="{x}" cy="{y}" rx="{r*.86:.1f}" ry="{r}" fill="{color}" stroke="#00000022" stroke-width="1.2"/>'
+            f'<path d="M{x-3},{y+r+4:.0f} l3,-5 l3,5 Z" fill="{color}"/>'
+            f'<ellipse cx="{x-r*.3:.1f}" cy="{y-r*.4:.1f}" rx="{r*.18:.1f}" ry="{r*.3:.1f}" fill="#FFFFFF" opacity=".6"/>')
+
+
+def balloons(x, y, n=3, r=18, i0=0):
+    """A bunch of balloons tied at `x, y`."""
+    return "".join(balloon(x + (k - (n-1)/2)*r*1.5, y - r*3.4 - (k % 2)*r*.8, BALLOONS[(i0 + k) % 6], r, (x, y)) for k in range(n))
+
+
+def burst(x, y, r=46, color="#FF6B6B"):
+    """A balloon going BANG: a jagged star and flying scraps of rubber."""
+    import math as _m
+    pts = " ".join(f'{x + _m.cos(i*_m.pi/8)*(r if i % 2 == 0 else r*.5):.0f},{y + _m.sin(i*_m.pi/8)*(r if i % 2 == 0 else r*.5):.0f}'
+                   for i in range(16))
+    return (f'<polygon points="{pts}" fill="#FFE9A8" stroke="#FFD166" stroke-width="3"/>'
+            + "".join(f'<path d="M{x+dx},{y+dy} q6,-6 12,-2" stroke="{color}" stroke-width="5" fill="none" stroke-linecap="round"/>'
+                      for dx, dy in ((-r-14, -10), (r+4, -20), (-r+6, r), (r, r-6), (-8, -r-16))))
+
+
+def pudding(x, y, s=1.0):
+    """A bowl of acorn pudding with an acorn on top, `x, y` the middle of the rim."""
+    return (f'<path d="M{x-24*s:.0f},{y:.0f} Q{x:.0f},{y+26*s:.0f} {x+24*s:.0f},{y:.0f} Z" fill="#FFFFFF" stroke="#C8BCA4" stroke-width="1.5"/>'
+            f'<path d="M{x-20*s:.0f},{y:.0f} Q{x:.0f},{y-22*s:.0f} {x+20*s:.0f},{y:.0f} Z" fill="#B87A48" stroke="#8A5A2E" stroke-width="1.2"/>'
+            f'<ellipse cx="{x}" cy="{y-17*s:.0f}" rx="{6*s:.1f}" ry="{7*s:.1f}" fill="#C8904E"/>'
+            f'<path d="M{x-7*s:.1f},{y-21*s:.1f} q{7*s:.1f},{-7*s:.1f} {14*s:.1f},0 Z" fill="#7A4E2A"/>'
+            f'<path d="M{x},{y-26*s:.0f} v{-4*s:.0f}" stroke="#7A4E2A" stroke-width="{2*s:.1f}" stroke-linecap="round"/>')
+
+
+def teacup(x, y, s=1.0):
+    """A cup of clover tea on a saucer, `y` the saucer."""
+    return (f'<ellipse cx="{x}" cy="{y}" rx="{18*s:.0f}" ry="{4*s:.0f}" fill="#FFFFFF" stroke="#C8D4DC" stroke-width="1.3"/>'
+            f'<path d="M{x-12*s:.0f},{y-18*s:.0f} Q{x-12*s:.0f},{y-1:.0f} {x:.0f},{y-1:.0f} Q{x+12*s:.0f},{y-1:.0f} {x+12*s:.0f},{y-18*s:.0f} Z" fill="#FFFFFF" stroke="#C8D4DC" stroke-width="1.3"/>'
+            f'<path d="M{x+11*s:.0f},{y-14*s:.0f} q{8*s:.0f},{1*s:.0f} {1*s:.0f},{9*s:.0f}" stroke="#C8D4DC" stroke-width="{2.4*s:.1f}" fill="none"/>'
+            + "".join(f'<circle cx="{x+dx*s:.1f}" cy="{y-10*s+dy*s:.1f}" r="{2.6*s:.1f}" fill="#4CC38A"/>' for dx, dy in ((-2, -2), (2, -2), (0, 1.5)))
+            + steam(x, y - 22*s, s*.7))
+
+
+def salad(x, y, s=1.0):
+    """A big leafy salad bowl, `x, y` the middle of the rim."""
+    return (f'<path d="M{x-30*s:.0f},{y:.0f} Q{x:.0f},{y+30*s:.0f} {x+30*s:.0f},{y:.0f} Z" fill="#FFD166" stroke="#E8B800" stroke-width="1.5"/>'
+            + "".join(f'<ellipse cx="{x+dx*s:.0f}" cy="{y-4*s+dy*s:.0f}" rx="{11*s:.0f}" ry="{6*s:.0f}" fill="{c}" '
+                      f'transform="rotate({r} {x+dx*s:.0f} {y-4*s+dy*s:.0f})"/>'
+                      for dx, dy, r, c in ((-16, 0, -30, "#5AA350"), (0, -6, 10, "#8ECB7E"), (16, 0, 30, "#5AA350"), (-6, -2, -60, "#4A8F44"), (8, -10, 70, "#6BAF5E"))))
+
+
+def flowers(x, y, s=1.0):
+    """A little bunch of flowers, `x, y` where the stalks are held."""
+    heads = ((-10, -34, "#FF6B6B"), (0, -42, "#FFD166"), (10, -34, "#C77DFF"), (-4, -26, "#FF9BAE"), (6, -24, "#74C8E4"))
+    return (f'<path d="M{x},{y} ' + " ".join(f'M{x},{y} L{x+dx*s*.8:.0f},{y+dy*s*.7:.0f}' for dx, dy, _ in heads)
+            + f'" stroke="#4A9B4A" stroke-width="2" fill="none"/>'
+            + "".join(f'<circle cx="{x+dx*s:.0f}" cy="{y+dy*s:.0f}" r="{6*s:.1f}" fill="{c}"/><circle cx="{x+dx*s:.0f}" cy="{y+dy*s:.0f}" r="{2.2*s:.1f}" fill="#FFF6D0"/>'
+                      for dx, dy, c in heads)
+            + f'<path d="M{x-6*s:.0f},{y-8*s:.0f} l{12*s:.0f},0 l{-4*s:.0f},{10*s:.0f} l{-4*s:.0f},0 Z" fill="#FF9BAE"/>')
+
+
+def card(x, y, s=1.0, rot=-8):
+    """A folded thank-you card with a heart on it, `x, y` its middle."""
+    return (f'<g transform="rotate({rot} {x} {y})">'
+            f'<rect x="{x-18*s:.0f}" y="{y-24*s:.0f}" width="{36*s:.0f}" height="{48*s:.0f}" rx="3" fill="#FFFDF6" stroke="#D8C8A8" stroke-width="1.5"/>'
+            f'<text x="{x}" y="{y+8*s:.0f}" font-size="{24*s:.0f}" fill="#FF6B6B" text-anchor="middle">&#9829;</text></g>')
